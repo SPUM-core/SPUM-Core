@@ -42,7 +42,7 @@ SPUM将辐射计叶片视为嵌入空间网络（κ网络）的宏观子图。�
 - 台湾中小学教学仪器网. (2024). 辐射计演示实验.
 - University of Maryland. (2014). Physics Demo I2-03: Crookes Radiometer.
 - Simon Fraser University. (2021). Physics Demo 4D20.10: Radiometer.
-
+- 谭庆仁, 周小奋. 辐射计是如何工作的. 物理通报, 2013(5).
 ---
 
 **报告日期**：2026年3月22日  
