@@ -1,7 +1,0 @@
-source_id,year,author,material_black,material_mirror,gas,pressure_pa,temp_k,rotation_direction,illumination,notes
-BaiduBaike_Crookes,2025,科普中国,深黑色/暗面,银白色/亮面,空气,部分真空,低于环境,black_forward,none,冷却时旋转方向相反
-LaboratoryTW_radiometer,2024,台湾教学仪器,黑色面,银色面,空气,部分真空,加热（热风）,black_forward,none,加热时黑面超前；冷却（冰水）方向反转
-UMD_I2-03,2014,马里兰大学,黑色面,白色面,空气,部分真空,冷却（停止加热后）,black_forward,none,冷却时黑色面温度低于白色面，导致反转
-SFU_4D20.10,2021,西蒙弗雷泽大学,黑色面,镜面,空气,部分真空,常温,,none,综述历史，指出无统一解释
-Tan_Qingren_2013,2013,谭庆仁,碳黑,氧化镁,空气,1,293,black_forward,直接光照,阳光照射时黑面超前
-Tan_Qingren_2013,2013,谭庆仁,碳黑,氧化镁,空气,1,273,mirror_forward,无,冰水浇淋时方向反转（镜面超前）
