@@ -1,8 +1,0 @@
-# Jupyter Notebook 分析目录
-
-本目录存放用于数据分析、可视化的 Jupyter Notebook。
-
-建议命名格式：`NN_描述.ipynb`，例如：
-- `01_data_exploration.ipynb` – 数据探索与质量检查
-- `02_direction_analysis.ipynb` – 方向与温度关系分析
-- `03_fitting_material_properties.ipynb` – 拟合材料耦合系数
