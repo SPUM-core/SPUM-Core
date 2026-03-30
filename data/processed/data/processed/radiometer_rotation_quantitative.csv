@@ -1,4 +1,0 @@
-source_id,year,author,material_black,material_mirror,gas,pressure_pa,temp_k,rotation_speed_rpm,illumination,notes
-source_id,year,author,material_black,material_mirror,gas,pressure_pa,temp_k,rotation_direction,illumination,notes
-Tan_Qingren_2013,2013,谭庆仁,碳黑,氧化镁,空气,1,293,black_forward,直接光照,阳光照射时黑面超前
-Tan_Qingren_2013,2013,谭庆仁,碳黑,氧化镁,空气,1,273,mirror_forward,none,冰水浇淋时方向反转（镜面超前）
