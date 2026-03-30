@@ -1,0 +1,39 @@
+name: SPUM CI 自动评分与版本生成
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install networkx
+
+      - name: 运行 AI 架构评分系统
+        run: |
+          python tools/score_calculator.py core/v1.0/theory.md theory
+
+      - name: 显示评分结果
+        run: |
+          cat score_result.json
+
+      - name: 上传评分报告
+        uses: actions/upload-artifact@v4
+        with:
+          name: score-result
+          path: score_result.json
