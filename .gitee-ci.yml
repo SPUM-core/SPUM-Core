@@ -1,0 +1,76 @@
+# .gitee-ci.yml
+# SPUM 自动评分与版本号生成流水线（Gitee Go 版）
+
+name: SPUM CI
+
+# 触发条件
+triggers:
+  push:
+    branches:
+      include:
+        - master
+  pull_request:
+    branches:
+      include:
+        - master
+
+# 环境变量
+env:
+  PYTHON_VERSION: "3.11"
+
+# 构建阶段
+stages:
+  - name: 评分与版本生成
+    jobs:
+      - name: run-score
+        runs-on: ubuntu-latest
+        steps:
+          - name: 检出代码
+            script: git clone $GITEE_REPO_URL .
+            # Gitee Go 会自动检出，通常不需要手动写
+
+          - name: 安装 Python
+            script: |
+              apt-get update
+              apt-get install -y python3.11 python3-pip jq
+
+          - name: 安装依赖
+            script: pip3 install -r tools/requirements.txt
+
+          - name: 运行评分脚本
+            script: python3 tools/score_calculator.py core/v1.0/theory.md theory
+
+          - name: 生成 Merkle 根
+            script: python3 tools/hash_validator.py generate core/v1.0
+
+          - name: 生成版本号并写入 version.json
+            script: |
+              # 读取评分结果
+              A=$(jq -r '.A' score_result.json)
+              B=$(jq -r '.B' score_result.json)
+              C=$(jq -r '.C' score_result.json)
+              D=$(jq -r '.D' score_result.json)
+              LE=$(jq -r '.LE' score_result.json)
+              MERKLE_PREFIX=$(jq -r '.merkle_prefix' merkle_result.json)
+              TIMESTAMP=$(date +%s)
+              VERSION="a7f3e2d8.theory.${A}.${B}.${C}.${D}.${LE}.${MERKLE_PREFIX}.${TIMESTAMP}"
+              echo "生成版本号: $VERSION"
+              # 写入 version.json
+              cat > core/v1.0/version.json << EOF
+              {
+                "version": "$VERSION",
+                "content_type": "theory",
+                "merkle_root": "$(jq -r '.merkle_root' merkle_result.json)",
+                "timestamp": $TIMESTAMP,
+                "score": {"A": $A, "B": $B, "C": $C, "D": $D, "LE": $LE}
+              }
+              EOF
+
+          - name: 提交版本号更新（可选）
+            script: |
+              git config user.name "SPUM Bot"
+              git config user.email "bot@spum.local"
+              git add core/v1.0/version.json
+              git commit -m "auto: 更新版本号" || echo "无变更"
+              git push https://${GITEE_TOKEN}@gitee.com/${GITEE_REPO_OWNER}/${GITEE_REPO_NAME}.git master
+            # 注意：需要提前在仓库设置中配置 GITEE_TOKEN 作为环境变量
