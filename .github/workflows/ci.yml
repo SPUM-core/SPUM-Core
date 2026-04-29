@@ -1,38 +1,23 @@
-name: SPUM AI 架构评分流水线
+name: spum-core-pipeline
+displayName: "SPUM Core CI"
 
-on:
+triggers:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    - matchType: PRECISE
+      branch: main
+    - matchType: PRECISE
+      branch: master
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
-
-      - name: 配置Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: 安装依赖
-        run: |
-          python -m pip install --upgrade pip
-          pip install networkx
-
-      - name: 运行SPUM AI评分
-        run: |
-          python tools/score_calculator.py core/v1.0/theory.md theory
-
-      - name: 输出评分结果
-        run: |
-          cat score_result.json
-
-      - name: 上传评分报告
-        uses: actions/upload-artifact@v4
-        with:
-          name: SPUM-评分报告
-          path: score_result.json
+stages:
+  - stage:
+      name: score
+      displayName: "AI 架构评分"
+      steps:
+        - step: shell@1
+          name: run-score
+          displayName: "运行 score_calculator"
+          inputs:
+            script: |
+              python3 -m pip install --upgrade pip
+              pip install -r tools/requirements.txt
+              python tools/score_calculator.py core/v1.0/theory.md theory
