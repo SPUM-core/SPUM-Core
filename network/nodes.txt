@@ -1,0 +1,21 @@
+ID | 名称 | 类型 | 状态 | 简短说明
+N001 | 宇宙存在 | axiom | stable | 一切推导的起点
+N002 | 差异 | theorem | stable | 存在→差异
+N003 | 边界 | theorem | stable | 差异→边界
+N004 | 节点(空间粒子) | definition | stable | κ‑particle
+N005 | 边(连接) | definition | stable | 连接关系 ε
+N006 | 闭合网络 | theorem | stable | 无悬挂边,最小度≥2
+N007 | 最小度数≥2 | constraint | stable | 闭合网络的必要条件
+N008 | 总边数守恒 | axiom | stable | |ε| = 常数
+N009 | 创生事件 V⁺ | definition | stable | 边创建
+N010 | 湮灭事件 V⁻ | definition | stable | 边删除+级联消解
+N011 | 创生-湮灭对偶 | theorem | stable | V⁺与V⁻严格对偶
+N012 | 空间密度 σ | definition | stable | σ = |P|/|ε|
+N013 | 晶子 | definition | stable | D=4κ饱和空间粒子
+N014 | 正二十面体(12顶点) | theorem | stable | 最小稳定闭合子图
+N015 | 永恒粒子 | definition | stable | 带开口的自持位移子图
+N016 | 光子 | definition | stable | 大开口永恒粒子
+N017 | 电子 | definition | stable | 小开口永恒粒子
+N018 | 引力场 | theorem | stable | σ梯度分布
+N019 | 温差力矩 | experiment | stable | 空间搬运实验验证
+N020 | 星系旋转曲线 | phenomenon | stable | 子图协动解释
