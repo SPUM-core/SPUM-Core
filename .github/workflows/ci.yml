@@ -1,0 +1,23 @@
+name: spum-core-pipeline
+displayName: "SPUM Core CI"
+
+triggers:
+  push:
+    - matchType: PRECISE
+      branch: main
+    - matchType: PRECISE
+      branch: master
+
+stages:
+  - stage:
+      name: score
+      displayName: "AI 架构评分"
+      steps:
+        - step: shell@1
+          name: run-score
+          displayName: "运行 score_calculator"
+          inputs:
+            script: |
+              python3 -m pip install --upgrade pip
+              pip install -r tools/requirements.txt
+              python tools/score_calculator.py core/v1.0/theory.md theory
