@@ -1,26 +1,24 @@
-源节点 | 关系类型 | 目标节点
-N002 | derives_from | N001
-N003 | derives_from | N002
-N004 | derives_from | N003
-N005 | derives_from | N004
-N006 | derives_from | N005
-N007 | requires | N006
-N008 | derives_from | N006
-N009 | derives_from | N008
-N010 | derives_from | N008
-N011 | derives_from | N009
-N011 | derives_from | N010
-N012 | derives_from | N004
-N012 | derives_from | N005
-N013 | refines | N004
-N014 | derives_from | N013
-N014 | requires | N008
-N015 | derives_from | N014
-N016 | refines | N015
-N017 | refines | N015
-N018 | derives_from | N012
-N018 | derives_from | N010
-N019 | supports | N009
-N019 | supports | N010
-N020 | derives_from | N015
-N020 | derives_from | N018
+N001 | N002 | derives_from | 存在是第一性的，差异是存在自身的第一刻痕
+N002 | N003 | derives_from | 差异需要边界来界定和稳定
+N003 | N004 | derives_from | 边界在离散逻辑下的最小单元是节点
+N004 | N005 | derives_from | 节点必须通过边相互关联才能被确认存在
+N005 | N006 | derives_from | 开放的关系链必须闭合，才能自洽定义存在
+N006 | N007 | requires | 闭合网络强制要求每个节点的度数至少为2
+N007 | N008 | derives_from | 总边数守恒是关系总量等于存在总量的必然推论
+N008 | N009 | derives_from | 创生事件是网络在守恒约束下的唯一合法扩展方式
+N009 | N010 | derives_from | 创生带来新连接，新连接改变节点的体积权重
+N010 | N011 | requires | 体积变化后必须检查并修剪悬挂边，以维持逻辑自洽
+N011 | N012 | derives_from | 上述五个步骤的完整序列，定义为一个离散帧
+N012 | N013 | derives_from | 一帧结束时必然残留的悬挂边，证明“不完美”是网络的固有属性
+N013 | N009 | drives | 不完美是下一帧创生事件的启动信号。旧帧的残留，是新帧的动力。
+N004 | N014 | refines | 晶子是空间粒子的一种特殊饱和形态
+N014 | N015 | derives_from | 0层级晶子之间的缝隙，强制生成1层级及以下的空间粒子
+N015 | N016 | requires | 分形约束生长的层级比例由拓扑常数12锁定
+N016 | N017 | explains | 拓扑常数12揭示了π只是认知投影，而非本体常数
+N014 | N018 | derives_from | 多个晶子通过拓扑锁定，形成永恒粒子
+N005 | N019 | derives_from | 几何结构是边连接关系的统计投影
+N018 | N020 | derives_from | 永恒粒子的聚合形成引力源，运动是网络拓扑更新的宏观表现
+N015 | N020 | derives_from | 空间密度梯度是引力现象的底层原因
+N010 | N020 | derives_from | 体积权重的变化，在宏观上表现为运动与引力
+N008 | N020 | requires | 总边数守恒是所有宏观运动必须遵守的底层约束
+N007 | N011 | requires | 悬挂边删除是维持最小度数≥2的自洽操作
