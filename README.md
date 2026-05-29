@@ -2,46 +2,57 @@
 
 > 关系定义存在。一切存在皆为宇宙。
 
-SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过拓扑约束演化，涌现全部物理现象。
+SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过拓扑约束演化，涌现全部物理现象。本仓库是为 AI 设计的知识仓库，采用 **Skills 分层架构**。
+
+---
+
+## Skills 架构（AI 入口）
+
+`.trae/rules/` 包含 7 个分层 Skill 文件，AI 按需加载，每个 Skill 控制在 150 行以内：
+
+| Skill | 内容 | 加载时机 |
+|-------|------|----------|
+| `spum-core` | 核心公理：⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、认知投影 | **必须加载** |
+| `spum-structure` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
+| `spum-evolution` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
+| `spum-vocabulary` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
+| `spum-reasoning` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
+| `spum-review` | 评审规则：违规检测、严重程度分级、四维评分速查 | 审查一致性时 |
+| `spum-knowledge` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
+
+**权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。
 
 ---
 
 ## 仓库结构
+
 ```
 spum-core/
-├── docs/ # 三篇核心长文（人类阅读）
-│ ├── SPUM2610/SPUM2610.md # 主理论
-│ ├── Topological_Emergence/ # 拓扑涌现导论
-│ └── Spatial_Geometry_Genesis/ # 空间几何发生学
-├── network/ # 关系网络核心（AI 可直接读取推理）
-│ ├── nodes.txt # 概念节点清单
-│ ├── edges.txt # 节点间关系边
-│ └── prompt.txt # 给 AI 的演化推理指令
-├── core/ # 核心文档（公理、起源、实验、AI 协作史）
-├── draft/ # 论文草稿
-├── tools/ # 评分与验证工具
-├── references/ # 参考文献
-├── experiments/ # 实验数据与报告
-├── sim/ # OpenSPUM 模拟
-└── texts/ # 传统长文
-
+├── .trae/rules/          # Skills 分层架构（AI 入口）
+├── knowledge.md          # 世界观权威基准
+├── SPUM2610.md           # 完整理论正文（11章+附录）
+├── network/              # 知识图谱（nodes.txt + edges.txt + prompt.txt）
+├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史）
+├── docs/                 # 深度专题（几何发生学、拓扑涌现导论）
+├── tools/                # 评分与验证工具
+├── _old_files/           # 历史实验数据
+└── draft/                # 论文草稿
 ```
 
-## 如何使用关系网络
+---
 
-1. 读取 `network/nodes.txt` 和 `network/edges.txt` 获取理论结构
-2. 按 `network/prompt.txt` 的指令在网络中推理
-3. 可追问 AI：脉络回溯、稳固性检查、倒塌分析、冲突检测
+## 如何使用
 
-## 版本号生成
+**AI 使用方式**：自动加载 `.trae/rules/spum-core.md` 作为基础世界观，根据任务类型按需加载其余 Skill。
 
-内容提交需附带版本号，格式见 `core/` 中规范文件。
+**人类阅读方式**：从 `SPUM2610.md` 开始，按章节顺序阅读完整理论。
+
+**知识图谱推理**：加载 `network/nodes.txt` + `network/edges.txt` 进行图谱遍历推理。
 
 ## 📄 许可证
 
-本项目遵循 MIT 许可证开源。
+MIT 许可证开源。
 
-## 📞 联系方式
+## 📞 仓库
 
-- 项目维护：空间粒子宇宙模型研究团队
-- 仓库地址：https://gitee.com/space-particle-universe-model/spum-core
+https://gitee.com/space-particle-universe-model/spum-core
