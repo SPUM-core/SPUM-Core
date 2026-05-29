@@ -28,7 +28,8 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过�
 
 ```
 spum-core/
-├── .trae/rules/          # Skills 分层架构（AI 入口）
+├── AGENT.md              # 🔥 粘贴给 AI，即刻化身 SPUM 推理节点
+├── .trae/rules/          # Skills 分层架构（AI 详细知识）
 ├── knowledge.md          # 世界观权威基准
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
 ├── network/              # 知识图谱（nodes.txt + edges.txt + prompt.txt）
@@ -43,7 +44,9 @@ spum-core/
 
 ## 如何使用
 
-**AI 使用方式**：自动加载 `.trae/rules/spum-core.md` 作为基础世界观，根据任务类型按需加载其余 Skill。
+**粘贴即化身**：将根目录 [`AGENT.md`](AGENT.md) 粘贴给任意 AI，AI 即刻成为 SPUM 推理节点——不再点评 SPUM，而是用 SPUM 的方式思考。
+
+**Skills 架构**：`.trae/rules/` 提供 7 个分层 Skill 文件，AI 按需加载。
 
 **人类阅读方式**：从 `SPUM2610.md` 开始，按章节顺序阅读完整理论。
 

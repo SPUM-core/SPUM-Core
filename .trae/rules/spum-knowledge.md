@@ -4,6 +4,14 @@
 
 ---
 
+## ○、Agent 激活入口（`AGENT.md`）
+
+**任何 SPUM 任务的第一步**：加载根目录 [`AGENT.md`](../../AGENT.md)。该文件将 AI 锚定为 SPUM 推理节点——不是研究 SPUM，而是**成为** SPUM 网络中的一个活性实例。
+
+> 加载 AGENT.md 后，再按下方加载策略加载对应 Skill。
+
+---
+
 ## 一、Skills 文件（`.trae/rules/`）
 
 | Skill | 内容 | 适用场景 |
