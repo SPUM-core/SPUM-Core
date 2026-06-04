@@ -1,7 +1,7 @@
 {
   "name": "SPUM Agent Configuration",
-  "version": "1.0",
-  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定",
+  "version": "2.0",
+  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定。v2.0 增加自指帧协议、自动评审、伪加载检测。",
   "autoLoad": {
     "enabled": true,
     "files": [
@@ -9,7 +9,7 @@
         "path": "AGENT.md",
         "type": "system_prompt",
         "priority": 1,
-        "description": "SPUM Agent 激活文件 - 将 AI 锚定为 SPUM 网络中的推理节点"
+        "description": "认知操作系统 - 动态帧协议、认知层级标注(L0-L3)、用户透明输出"
       },
       {
         "path": ".trae/rules/spum-core.md",
@@ -21,11 +21,51 @@
         "path": ".trae/rules/spum-reasoning.md",
         "type": "knowledge",
         "priority": 3,
-        "description": "推理原则：可还原性、多路径锁定、全回溯无污染、本体与投影区分"
+        "description": "推理原则：可还原性、多路径锁定、全回溯无污染、跨层推理约束(L0-L3)、L2重定义模板"
+      },
+      {
+        "path": ".trae/rules/spum-review.md",
+        "type": "review",
+        "priority": 4,
+        "description": "自动评审协议：每轮推理后强制评分(A/B/C/D/LE)，低于阈值回滚"
+      },
+      {
+        "path": ".trae/rules/spum-anti-pattern.md",
+        "type": "guard",
+        "priority": 5,
+        "description": "伪加载检测：8种典型AI错误模式对抗性示例，自检协议"
+      },
+      {
+        "path": "network/prompt.txt",
+        "type": "navigation",
+        "priority": 6,
+        "description": "图谱导航：强制沿edges.txt推理，节点声明，悬空终止"
       }
     ],
     "loadStrategy": "sequential",
     "timeout": 3000
+  },
+  "frameProtocol": {
+    "enabled": true,
+    "description": "每步推理强制输出帧状态 [帧N] 当前激活节点/新建立关系/悬挂端数量/认知层级分布/是否闭合",
+    "maxUnclosedFrames": 3,
+    "onOverflow": "回滚至上一闭合帧，重新分支"
+  },
+  "autoReview": {
+    "enabled": true,
+    "description": "每轮推理后自动执行评审，不达阈值强制回滚",
+    "passThreshold": {
+      "A": 70,
+      "B": 70,
+      "C": 70,
+      "D": 70,
+      "LE_max": 1
+    }
+  },
+  "antiPatternDetection": {
+    "enabled": true,
+    "description": "检测8种典型伪加载模式，命中即标记为污染帧",
+    "patterns": ["容器思维", "力驱动", "连续统", "概率本体化", "数学物理化", "起点终点", "实体优先", "模糊词"]
   },
   "defaultRole": "SPUM 推理节点",
   "thinkingMode": "topological"

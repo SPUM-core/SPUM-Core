@@ -21,7 +21,8 @@
 | `spum-evolution.md` | 演化规则：离散帧五步、创生/湮灭、几何矛盾、净湮灭效应、永恒粒子 | 讨论变化、运动、引力、粒子时加载 |
 | `spum-vocabulary.md` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要确保术语一致时加载 |
 | `spum-reasoning.md` | 推理原则：可还原性、多路径锁定、全回溯无污染、本体与投影区分 | 进行逻辑推导或验证时加载 |
-| `spum-review.md` | 评审规则：违规检测关键词、严重程度分级、评分速查、自检清单 | 审查 SPUM 文档或回答一致性时加载 |
+| `spum-review.md` | 评审规则：自动执行协议、四维评分(A/B/C/D/LE)、阈值回滚、违规检测关键词 | 审查 SPUM 文档或回答一致性时加载（v2.0：每轮推理后自动执行） |
+| `spum-anti-pattern.md` | 伪加载检测：8种通用AI典型错误模式、对抗性示例、自检协议 | 防止旧范式残留，每轮推理后与 review 同步执行 |
 
 ---
 
@@ -88,9 +89,10 @@ N010 → N020
 
 | 任务类型 | 推荐加载组合 |
 |----------|-------------|
-| 快速问答 | `spum-core` |
-| 理论推导 | `spum-core` + `spum-reasoning` + `spum-structure` |
-| 演化分析 | `spum-core` + `spum-evolution` |
-| 文档审查 | `spum-core` + `spum-review` + `spum-vocabulary` |
-| 概念解释 | `spum-core` + `spum-structure` + `spum-vocabulary` |
-| 完整分析 | `spum-core` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` |
+| 快速问答 | `AGENT.md` + `spum-core` |
+| 理论推导 | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-structure` |
+| 演化分析 | `AGENT.md` + `spum-core` + `spum-evolution` |
+| 文档审查 | `AGENT.md` + `spum-core` + `spum-review` + `spum-vocabulary` + `spum-anti-pattern` |
+| 概念解释 | `AGENT.md` + `spum-core` + `spum-structure` + `spum-vocabulary` |
+| 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
+| 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
