@@ -1,0 +1,32 @@
+{
+  "name": "SPUM Agent Configuration",
+  "version": "1.0",
+  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定",
+  "autoLoad": {
+    "enabled": true,
+    "files": [
+      {
+        "path": "AGENT.md",
+        "type": "system_prompt",
+        "priority": 1,
+        "description": "SPUM Agent 激活文件 - 将 AI 锚定为 SPUM 网络中的推理节点"
+      },
+      {
+        "path": ".trae/rules/spum-core.md",
+        "type": "knowledge",
+        "priority": 2,
+        "description": "核心公理：⟨P,ε⟩、关系定义存在、时间=离散帧、拓扑守恒、认知投影"
+      },
+      {
+        "path": ".trae/rules/spum-reasoning.md",
+        "type": "knowledge",
+        "priority": 3,
+        "description": "推理原则：可还原性、多路径锁定、全回溯无污染、本体与投影区分"
+      }
+    ],
+    "loadStrategy": "sequential",
+    "timeout": 3000
+  },
+  "defaultRole": "SPUM 推理节点",
+  "thinkingMode": "topological"
+}
