@@ -1,3 +1,43 @@
+# SPUM 双授权协议
+
+本项目采用双授权模式，根据文件性质适用不同协议：
+
+---
+
+## 一、理论与文档 → CC BY-SA 4.0
+
+**适用范围**：一切以 Markdown / 文本文档形式承载的 SPUM 理论内容，包括但不限于：
+
+- 仓库根目录：`knowledge.md`、`AGENT.md`、`SPUM2610.md`、`README.md`、`CONTRIBUTING.md`
+- 规则文件：`.trae/rules/` 目录下全部 `.md` 文件
+- 知识图谱：`network/` 目录下全部文件
+- 核心库：`core/` 目录下全部 `.md` 文件
+- 专题文档：`docs/` 目录下全部 `.md` 文件
+- 草稿：`draft/` 目录下全部 `.md` 文件
+- 配置：`.trae/config.json`
+
+**授权条款**（Creative Commons 署名-相同方式共享 4.0 国际）：
+
+1. **署名** — 使用、复制、演绎本作品时，必须给出适当的署名，提供指向本协议的链接，并标明是否对原始作品做了修改。
+2. **相同方式共享** — 如果你对本作品进行演绎、修改或以此为基础创作新作品，你必须以与原始作品相同的协议分发衍生作品。
+3. **无附加限制** — 你不得使用法律条款或技术措施来限制他人做本协议所允许的事情。
+
+完整的 CC BY-SA 4.0 协议文本：https://creativecommons.org/licenses/by-sa/4.0/legalcode.zh-Hans
+
+---
+
+## 二、工具与 CI 脚本 → MIT
+
+**适用范围**：
+
+- `tools/score_calculator.py`
+- `tools/hash_validator.py`
+- `tools/requirements.txt`
+- `.github/workflows/ci.yml`
+- `.github/workflows/validate.yml`
+- `.gitee-ci.yml`
+
+```
 MIT License
 
 Copyright (c) 2026 空间粒子宇宙模型
@@ -19,3 +59,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+---
+
+## 三、其他文件
+
+`core/v1.0/assets/` 中的图片与数据文件、`citations/` 中的引用文件，如无单独说明，默认随其关联的 `.md` 文档适用 **CC BY-SA 4.0**。
+
+---
+
+**总结**：理论需要溯源——拿走修改需保持开放；工具追求传播——拿去直接用，无附加义务。
