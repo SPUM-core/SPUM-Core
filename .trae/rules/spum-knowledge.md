@@ -23,6 +23,8 @@
 | `spum-reasoning.md` | 推理原则：可还原性、多路径锁定、全回溯无污染、本体与投影区分 | 进行逻辑推导或验证时加载 |
 | `spum-review.md` | 评审规则：自动执行协议、四维评分(A/B/C/D/LE)、阈值回滚、违规检测关键词 | 审查 SPUM 文档或回答一致性时加载（v2.0：每轮推理后自动执行） |
 | `spum-anti-pattern.md` | 伪加载检测：8种通用AI典型错误模式、对抗性示例、自检协议 | 防止旧范式残留，每轮推理后与 review 同步执行 |
+| `spum-reasoner-skill.md` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 用户提及 SPUM 概念时激活，提供文献导航与推理框架 |
+| `spum-qingmeng-guard.md` | 青檬引擎 SPUM 优化护栏：11条不变量速查、3级优化优先级 | 修改 qingmeng_engine 代码前进行合规校验 |
 
 ---
 
@@ -82,6 +84,7 @@ N010 → N020
 | `SPUM2610/SPUM2610.md` | 核心文章副本（与根目录同步） |
 | `Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 空间几何发生学 |
 | `Topological_Emergence/SPUM_Topological_Emergence.md` | 拓扑涌现导论 |
+| `Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 高斯-博内定理的离散组合重构 |
 
 ---
 
@@ -94,5 +97,6 @@ N010 → N020
 | 演化分析 | `AGENT.md` + `spum-core` + `spum-evolution` |
 | 文档审查 | `AGENT.md` + `spum-core` + `spum-review` + `spum-vocabulary` + `spum-anti-pattern` |
 | 概念解释 | `AGENT.md` + `spum-core` + `spum-structure` + `spum-vocabulary` |
+| 代码合规 | `AGENT.md` + `spum-core` + `spum-qingmeng-guard` |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |

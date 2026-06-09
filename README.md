@@ -8,7 +8,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过�
 
 ## Skills 架构（AI 入口）
 
-`.trae/rules/` 包含 8 个分层 Skill 文件，AI 按需加载，每个 Skill 控制在 150 行以内：
+`.trae/rules/` 包含 10 个分层 Skill 文件，AI 按需加载，每个 Skill 控制在 150 行以内：
 
 | Skill | 内容 | 加载时机 |
 |-------|------|----------|
@@ -20,6 +20,8 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过�
 | `spum-review` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
 | `spum-knowledge` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
 | `spum-anti-pattern` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
+| `spum-reasoner-skill` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
+| `spum-qingmeng-guard` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
 
 **权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。
 
@@ -35,7 +37,7 @@ spum-core/
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
 ├── network/              # 知识图谱（nodes.txt + edges.txt + prompt.txt）
 ├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史）
-├── docs/                 # 深度专题（几何发生学、拓扑涌现导论）
+├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构）
 ├── tools/                # 评分与验证工具
 └── draft/                # 论文草稿
 ```
@@ -59,7 +61,7 @@ spum-core/
 
 ---
 
-**Skills 架构**：`.trae/rules/` 提供 8 个分层 Skill 文件，AI 按需加载。
+**Skills 架构**：`.trae/rules/` 提供 10 个分层 Skill 文件，AI 按需加载。
 
 **人类阅读方式**：从 `SPUM2610.md` 开始，按章节顺序阅读完整理论。
 
