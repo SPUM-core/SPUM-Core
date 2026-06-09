@@ -50,6 +50,9 @@ N014 → N018 永恒粒子 → N020 运动与引力
 N005 → N019 几何发生学
 N015 → N020
 N010 → N020
+N005 → N021 拓扑认知
+N013 → N021
+N020 → N021
 ```
 
 ---
@@ -85,6 +88,14 @@ N010 → N020
 | `Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 空间几何发生学 |
 | `Topological_Emergence/SPUM_Topological_Emergence.md` | 拓扑涌现导论 |
 | `Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 高斯-博内定理的离散组合重构 |
+
+---
+
+## 五-2、实验验证（`experiments/`）
+
+| 文件 | 内容 |
+|------|------|
+| `SPUM拓扑认知框架 P0_P2 完整实验验证报告.md` | P0/P2 标准化实验：悬挂端幂律衰减、边界聚集、敏感性检验，含 6 张配图 |
 
 ---
 
