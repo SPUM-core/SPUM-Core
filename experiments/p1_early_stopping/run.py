@@ -114,7 +114,7 @@ def run(seed, X, y):
 print("=" * 60)
 print("N015: 锚点漂移率监控")
 print("=" * 60)
-data = np.load(os.path.join(os.path.dirname(__file__), "mnist_data.npz"))
+data = np.load(os.path.join(os.path.dirname(__file__), "..", "shared", "mnist_data.npz"))
 X_all, y_all = data["X"], data["y"]
 print(f"MNIST 已加载: X={X_all.shape}, y={y_all.shape}")
 

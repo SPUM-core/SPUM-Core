@@ -78,13 +78,13 @@
 
 > 悬挂端样本的隐藏层梯度范数、雅可比范数均为非悬挂端的 2.4–2.5 倍，差异极显著（p≈0）。
 
-![图1a 梯度范数箱线对比](./p0_gradient_norm.png)
+![图1a 梯度范数箱线对比](./p0_gradient_norm/p0_gradient_norm.png)
 *图1a：梯度范数与雅可比范数对比，悬挂端敏感性显著高于非悬挂端*
 
-![图1b 同层Lipschitz/L2范数对比](./p0_same_layer_lipschitz.png)
+![图1b 同层Lipschitz/L2范数对比](./p0_gradient_norm/p0_same_layer_lipschitz.png)
 *图1b：多尺度噪声下的同层 Lipschitz 分布（证实线性层 Lipschitz 不适用于此分析）*
 
-![图1c 敏感性散点分布](./p0_lipschitz_scatter.png)
+![图1c 敏感性散点分布](./p0_gradient_norm/p0_lipschitz_scatter.png)
 *图1c：每个样本的 Lipschitz 值散点分布（红色=悬挂端）*
 
 ---
@@ -155,7 +155,7 @@
 | 非均匀标签分布 | χ² p 值极小，拒绝均匀分布假设 |
 | 类别差异 | 类别 3 悬挂端占比 34.4%（最高），类别 0 为 22.9%（最低） |
 
-![图2 语义空间悬挂端PCA投影分布](./p2_dangling_distribution.png)
+![图2 语义空间悬挂端PCA投影分布](./p2_dangling_distribution/p2_dangling_distribution.png)
 *图2：PCA 投影，红色=悬挂端，集中于簇间过渡带与孤立簇*
 
 ### MNIST 结果
@@ -167,7 +167,7 @@
 
 > 永久悬挂端在语义边界聚集，非均匀分布。90.5% 正确率构成 SPUM 独有预测能力：**悬挂端是多锚点隶属的认知歧义节点**，模型在拓扑不确定前提下仍输出最优分类。
 
-![图3 P0/P2 实验总结](./p0_p2_summary.png)
+![图3 P0/P2 实验总结](./p0_gradient_norm/p0_p2_summary.png)
 *图3：密度衰减 + 双对数 + PCA + 梯度范数四合一总览*
 
 ---
@@ -265,7 +265,7 @@ threshold(0.01) ──────────── 从未触及！
 
 > **锚点在 SGD 训练中持续震荡，永不收敛。完整闭合（δ 停止 ∩ 漂移 < 0.01 持续）在标准训练中不可达。**
 
-![图4 DeepCNN 锚点漂移曲线](./n016_deepcnn_results.png)
+![图4 DeepCNN 锚点漂移曲线](./n016_topological_closure/results/n016_deepcnn_results.png)
 *图4：DeepCNN 训练全过程锚点漂移轨迹，周期反弹与学习率同步*
 
 ---
@@ -334,20 +334,20 @@ threshold(0.01) ──────────── 从未触及！
 
 | 文件 | 功能 |
 |---|---|
-| `analyze_p0_p2_synthetic.py` | P0 梯度范数 + P2 分布分析（合成数据，可独立运行） |
-| `analyze_p0_p2.py` | P0 + P2 MNIST 完整分析（含训练） |
-| `p1_early_stopping.py` | P1 δ-ES + N015 锚点漂移率（5 seeds, MNIST） |
-| `n016_resnet_mnist.py` | N016 DeepCNN 锚点稳定性验证 |
-| `n016_out.txt` | N016 完整训练日志 |
-| `n016_res.json` | N016 汇总指标 |
-| `p1_mnist_results.json` | P1 5 seeds 详细数据 |
-| `dangling_density_experiment.png` | δ 密度衰减 + 双对数曲线 |
-| `p0_gradient_norm.png` | P0 梯度范数 + 雅可比范数箱线图 |
-| `p0_same_layer_lipschitz.png` | P0 多尺度 Lipschitz 验证 |
-| `p0_lipschitz_scatter.png` | P0 样本级 Lipschitz 散点图 |
-| `p2_dangling_distribution.png` | P2 PCA 投影 + dist_diff 分布 |
-| `p0_p2_summary.png` | P0+P2 四合一汇总图 |
-| `n016_deepcnn_results.png` | N016 DeepCNN 漂移曲线 |
+| `p0_gradient_norm/run.py` | P0 梯度范数 + P2 分布分析（合成数据，可独立运行） |
+| `p2_dangling_distribution/run.py` | P0 + P2 MNIST 完整分析（含训练） |
+| `p1_early_stopping/run.py` | P1 δ-ES + N015 锚点漂移率（5 seeds, MNIST） |
+| `n016_topological_closure/run.py` | N016 DeepCNN 锚点稳定性验证 |
+| `n016_topological_closure/results/n016_out.txt` | N016 完整训练日志 |
+| `n016_topological_closure/results/n016_res.json` | N016 汇总指标 |
+| `p1_early_stopping/results/p1_mnist_results.json` | P1 5 seeds 详细数据 |
+| `p0_gradient_norm/dangling_density_experiment.png` | δ 密度衰减 + 双对数曲线 |
+| `p0_gradient_norm/p0_gradient_norm.png` | P0 梯度范数 + 雅可比范数箱线图 |
+| `p0_gradient_norm/p0_same_layer_lipschitz.png` | P0 多尺度 Lipschitz 验证 |
+| `p0_gradient_norm/p0_lipschitz_scatter.png` | P0 样本级 Lipschitz 散点图 |
+| `p2_dangling_distribution/p2_dangling_distribution.png` | P2 PCA 投影 + dist_diff 分布 |
+| `p0_gradient_norm/p0_p2_summary.png` | P0+P2 四合一汇总图 |
+| `n016_topological_closure/results/n016_deepcnn_results.png` | N016 DeepCNN 漂移曲线 |
 
 ---
 

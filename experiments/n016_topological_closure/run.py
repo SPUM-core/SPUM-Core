@@ -1,8 +1,9 @@
-import time, json, sys, numpy as np
+import time, json, sys, numpy as np, os
 import torch, torch.nn as nn
 import warnings; warnings.filterwarnings("ignore")
 
-log = open("f:/qingmeng_spum/qingmeng_engine/experiments/n016_out.txt", "w", 1)
+BASE_DIR = os.path.dirname(__file__)
+log = open(os.path.join(BASE_DIR, "results", "n016_out.txt"), "w", 1)
 def p(s):
     print(s, flush=True)
     log.write(s + "\n"); log.flush()
@@ -37,7 +38,7 @@ class CNN(nn.Module):
         return self.out(self.h)
 
 p("Loading...")
-data = np.load("f:/qingmeng_spum/qingmeng_engine/experiments/mnist_data.npz")
+data = np.load(os.path.join(BASE_DIR, "..", "shared", "mnist_data.npz"))
 from sklearn.model_selection import train_test_split
 X, y = data["X"].astype(np.float32), data["y"]
 X_tr, X_va, y_tr, y_va = train_test_split(X, y, test_size=10000, random_state=42)
@@ -154,7 +155,7 @@ res = {"epochs": len(hist["ep"]), "ep_loss": el, "ep_delta": ed, "acc": ac,
        "min_drift": float(drifts.min()) if len(drifts) else None,
        "drift_below_thresh": int((drifts < DRIFT_TH).sum()) if len(drifts) else 0,
        "checks": len(drifts)}
-json.dump(res, open("f:/qingmeng_spum/qingmeng_engine/experiments/n016_res.json", "w"))
+json.dump(res, open(os.path.join(BASE_DIR, "results", "n016_res.json"), "w"))
 
 # Plot
 import matplotlib; matplotlib.use("Agg")
@@ -167,7 +168,7 @@ if dr_plot:
     xe = list(range(1, len(dr_plot) * ANCHOR_EVERY + 1, ANCHOR_EVERY))
     ax[1,0].plot(xe, dr_plot, "b-o"); ax[1,0].axhline(DRIFT_TH, c="gray", ls=":"); ax[1,0].grid()
 ax[1,1].plot(hist["ep"], hist["acc"], "purple"); ax[1,1].grid()
-plt.savefig("f:/qingmeng_spum/qingmeng_engine/experiments/n016_deepcnn_results.png", dpi=150)
+plt.savefig(os.path.join(BASE_DIR, "results", "n016_deepcnn_results.png"), dpi=150)
 p("Plot saved")
 
 if len(drifts) >= 3 and all(d < DRIFT_TH for d in drifts[-3:]):

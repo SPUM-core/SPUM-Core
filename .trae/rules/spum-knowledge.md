@@ -103,6 +103,20 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 文件 | 内容 |
 |------|------|
 | `SPUM拓扑认知框架 P0_P2 完整实验验证报告.md` | P0/P1/P2/N015/N016 多层级实验：悬挂端梯度范数、幂律衰减、边界聚集、锚点漂移，含 N013 证伪与 N014 因果反转 |
+| `shared/` | 共享组件：MLP/DeepCNN 模型、合成数据/MNIST 加载、SPUM 训练钩子 |
+| `p0_gradient_norm/` | P0: 悬挂端梯度范数 2.5× 分析（合成数据） |
+| `p1_early_stopping/` | P1: δ 驱动 Early Stopping（5 seeds MNIST） |
+| `p2_dangling_distribution/` | P2: 永久悬挂端语义边界分布 |
+| `n015_anchor_drift/` | N015: 锚点漂移率监控（待实现独立脚本） |
+| `n016_topological_closure/` | N016: DeepCNN 完整闭合验证（28.8万参数，93 epoch） |
+
+## 五-3、SPUM-图论代码模块（`src/spum_graph/`）
+
+| 文件 | 内容 |
+|------|------|
+| `graph.py` | FrameGraph — 帧内图结构，5条公理的 Python 实现 |
+| `dangling.py` | DanglingDetector — 悬挂端检测 + 双层闭合判据 |
+| `handshaking.py` | HandshakingVerifier — 握手引理 + 欧拉示性数 + Σ(6-deg) |
 
 ---
 
@@ -116,5 +130,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 文档审查 | `AGENT.md` + `spum-core` + `spum-review` + `spum-vocabulary` + `spum-anti-pattern` |
 | 概念解释 | `AGENT.md` + `spum-core` + `spum-structure` + `spum-vocabulary` |
 | 代码合规 | `AGENT.md` + `spum-core` + `spum-qingmeng-guard` |
+| 图论编码 | `AGENT.md` + `spum-core` + `spum-evolution` + `src/spum_graph/` 模块 |
+| 实验开发 | `AGENT.md` + `spum-core` + `experiments/shared/` + `src/spum_graph/` |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |

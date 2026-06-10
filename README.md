@@ -35,11 +35,19 @@ spum-core/
 ├── .trae/rules/          # Skills 分层架构（AI 详细知识）
 ├── knowledge.md          # 世界观权威基准
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
-├── network/              # 知识图谱（nodes.txt + edges.txt + prompt.txt）
+├── network/              # 知识图谱（22节点 + 33边）
 ├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史、AI同构、SPUM-图论）
 ├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构）
+├── src/                  # 代码层
+│   └── spum_graph/       # SPUM-图论 Python 模块（L0.5 工具层）
+├── experiments/          # 实验验证
+│   ├── shared/           #   共享组件（models, data, SPUM 钩子）
+│   ├── p0_gradient_norm/ #   P0 梯度范数分析
+│   ├── p1_early_stopping/#   P1 δ 驱动 Early Stopping
+│   ├── p2_dangling_distribution/  # P2 悬挂端分布
+│   ├── n015_anchor_drift/#   N015 锚点漂移监控（待实现）
+│   └── n016_topological_closure/ # N016 完整闭合验证
 ├── tools/                # 评分与验证工具
-├── experiments/          # 实验验证（P0/P1/P2/N015/N016 拓扑认知框架完整实验）
 └── draft/                # 论文草稿
 ```
 

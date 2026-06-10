@@ -37,12 +37,12 @@ transform = transforms.Compose([
     transforms.Normalize((0.1307,), (0.3081,)),
 ])
 train_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(os.path.join(os.path.dirname(__file__), "..", "..", "data"),
+    datasets.MNIST(os.path.join(os.path.dirname(__file__), ".."),
                    train=True, download=True, transform=transform),
     batch_size=BATCH_SIZE, shuffle=True, pin_memory=True,
 )
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST(os.path.join(os.path.dirname(__file__), "..", "..", "data"),
+    datasets.MNIST(os.path.join(os.path.dirname(__file__), ".."),
                    train=False, download=True, transform=transform),
     batch_size=BATCH_SIZE, shuffle=False, pin_memory=True,
 )
