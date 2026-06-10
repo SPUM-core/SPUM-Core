@@ -118,6 +118,14 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `dangling.py` | DanglingDetector — 悬挂端检测 + 双层闭合判据 |
 | `handshaking.py` | HandshakingVerifier — 握手引理 + 欧拉示性数 + Σ(6-deg) |
 
+## 五-4、帧协议自动化（`src/core/`）
+
+| 文件 | 内容 |
+|------|------|
+| `frame.py` | FrameProtocol — AGENT.md 动态帧协议的 Python 实现：帧序列管理、悬挂端追踪、栈溢出检测、历史回退、五步序列标记 |
+| `review.py` | ReviewBridge — spum-review.md 评审结果自动触发 FrameProtocol.rollback()：四维评分 (A/B/C/D/LE)、阈值判决、回调机制 |
+| `__init__.py` | 导出 `FrameState`, `FrameProtocol`, `FrameLogger`, `ReviewResult`, `ReviewBridge`, `ReviewVerdict` |
+
 ---
 
 ## 六、加载策略
@@ -131,6 +139,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 概念解释 | `AGENT.md` + `spum-core` + `spum-structure` + `spum-vocabulary` |
 | 代码合规 | `AGENT.md` + `spum-core` + `spum-qingmeng-guard` |
 | 图论编码 | `AGENT.md` + `spum-core` + `spum-evolution` + `src/spum_graph/` 模块 |
+| 帧自动化 | `AGENT.md` + `src/core/frame.py` — 推理帧状态追踪 |
 | 实验开发 | `AGENT.md` + `spum-core` + `experiments/shared/` + `src/spum_graph/` |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |

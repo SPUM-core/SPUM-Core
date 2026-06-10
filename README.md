@@ -39,7 +39,8 @@ spum-core/
 ├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史、AI同构、SPUM-图论）
 ├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构）
 ├── src/                  # 代码层
-│   └── spum_graph/       # SPUM-图论 Python 模块（L0.5 工具层）
+│   ├── core/             #   帧协议自动化（FrameProtocol + 评审回滚闭环）
+│   └── spum_graph/       #   SPUM-图论 Python 模块（L0.5 工具层）
 ├── experiments/          # 实验验证
 │   ├── shared/           #   共享组件（models, data, SPUM 钩子）
 │   ├── p0_gradient_norm/ #   P0 梯度范数分析
