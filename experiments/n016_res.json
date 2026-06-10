@@ -1,0 +1,1 @@
+{"epochs": 93, "ep_loss": 72, "ep_delta": 73, "acc": 0.971, "min_drift": 6.160771369934082, "drift_below_thresh": 0, "checks": 18}

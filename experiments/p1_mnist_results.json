@@ -1,0 +1,61 @@
+{
+  "dataset": "MNIST",
+  "n_seeds": 5,
+  "ep_l_mean": 8.6,
+  "ep_l_std": 0.7999999999999999,
+  "ep_d_mean": 10.0,
+  "ep_d_std": 6.985699678629192,
+  "acc_l_mean": 0.9289999999999999,
+  "acc_d_mean": 0.9221199999999999,
+  "acc_final_mean": 0.9307399999999999,
+  "n_d_first": 3,
+  "n_l_first": 2,
+  "n_same": 0,
+  "seeds": [
+    {
+      "seed": 42,
+      "ep_l": 9,
+      "ep_d": 5,
+      "acc_l": 0.9328,
+      "acc_d": 0.9242,
+      "acc_final": 0.9315,
+      "who_first": "density"
+    },
+    {
+      "seed": 52,
+      "ep_l": 10,
+      "ep_d": 19,
+      "acc_l": 0.9283,
+      "acc_d": 0.9304,
+      "acc_final": 0.934,
+      "who_first": "loss"
+    },
+    {
+      "seed": 62,
+      "ep_l": 8,
+      "ep_d": 3,
+      "acc_l": 0.9271,
+      "acc_d": 0.9089,
+      "acc_final": 0.9272,
+      "who_first": "density"
+    },
+    {
+      "seed": 72,
+      "ep_l": 8,
+      "ep_d": 18,
+      "acc_l": 0.9292,
+      "acc_d": 0.9294,
+      "acc_final": 0.9325,
+      "who_first": "loss"
+    },
+    {
+      "seed": 82,
+      "ep_l": 8,
+      "ep_d": 5,
+      "acc_l": 0.9276,
+      "acc_d": 0.9177,
+      "acc_final": 0.9285,
+      "who_first": "density"
+    }
+  ]
+}

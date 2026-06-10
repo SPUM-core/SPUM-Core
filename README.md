@@ -36,10 +36,10 @@ spum-core/
 ├── knowledge.md          # 世界观权威基准
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
 ├── network/              # 知识图谱（nodes.txt + edges.txt + prompt.txt）
-├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史）
+├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史、AI同构、SPUM-图论）
 ├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构）
 ├── tools/                # 评分与验证工具
-├── experiments/          # 实验验证（P0/P2 拓扑认知框架实验报告）
+├── experiments/          # 实验验证（P0/P1/P2/N015/N016 拓扑认知框架完整实验）
 └── draft/                # 论文草稿
 ```
 
