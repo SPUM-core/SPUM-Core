@@ -13,7 +13,8 @@ description: "基于 SPUM（空间粒子宇宙模型）范式进行推理与分�
 | `docs/Topological_Emergence/SPUM_Topological_Emergence.md` | 基础理论 — 16 定义 + 7 公理，创生-湮灭不对等定理 |
 | `docs/Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 9 个发生的涌现序列（点→线→面→体→维度→距离→面积→体积）|
 | `docs/Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | Σ(6−deg)=12 推导，π 的认知投影本质，范式不可通约性 |
-| `tools/SPUM 版本号生成与审核规范 v4.0.md` | 版本号格式与四维评分体系 |
+| `docs/Subgraph_CoMotion/SPUM_Subgraph_CoMotion.md` | 子图协动 — 星系旋转曲线的拓扑替代方案。SPARC 175 星系定量验证，3 参数替代暗物质 |
+| `tools/SPUM 版本号生成与审核规范 v5.0.md` | 版本号格式与四维评分体系 (v5.0: +L0.5检测、双层闭合、7种内容类型、N001-N022) |
 
 ## 范式总纲
 

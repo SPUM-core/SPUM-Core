@@ -36,6 +36,7 @@ SPUM2610（空间粒子宇宙模型）是一套以离散关系拓扑为核心的
   docs/SPUM2610/SPUM2610.md   —— 核心文章副本（与根目录同步）
   docs/Spatial_Geometry_Genesis/ —— 空间几何发生学
   docs/Topological_Emergence/    —— 拓扑涌现导论
+  docs/Subgraph_CoMotion/    —— 子图协动（星系旋转曲线实证支撑）
 ```
 
 四、开源声明

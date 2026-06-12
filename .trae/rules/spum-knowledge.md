@@ -96,9 +96,14 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `Topological_Emergence/SPUM_Topological_Emergence.md` | 拓扑涌现导论 |
 | `Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 高斯-博内定理的离散组合重构 |
 
----
+## 五-2、实证支撑模块（`docs/`）
 
-## 五-2、实验验证（`experiments/`）
+| 文件 | 内容 |
+|------|------|
+| `Subgraph_CoMotion/SPUM_Subgraph_CoMotion.md` | 子图协动：星系旋转曲线的拓扑替代方案。SPUM2610 第 8 章独立抽取，以子图协动机制替代暗物质解释星系旋转曲线，基于 SPARC 175 星系定量验证（3 参数，94.3% 有效，χ² 中位数 0.68，AIC/BIC 优于 NFW）。附带可运行拟合代码 `fit_galaxy.py` |
+| `Subgraph_CoMotion/fit_galaxy.py` | 子图协动 Python 拟合器：单星系/批量模式，支持 `--nfw` 比较，SPARC 数据自动加载 |
+
+## 五-3、实验验证（`experiments/`）
 
 | 文件 | 内容 |
 |------|------|
@@ -110,7 +115,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `n015_anchor_drift/` | N015: 锚点漂移率监控（待实现独立脚本） |
 | `n016_topological_closure/` | N016: DeepCNN 完整闭合验证（28.8万参数，93 epoch） |
 
-## 五-3、SPUM-图论代码模块（`src/spum_graph/`）
+## 五-4、SPUM-图论代码模块（`src/spum_graph/`）
 
 | 文件 | 内容 |
 |------|------|
@@ -118,7 +123,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `dangling.py` | DanglingDetector — 悬挂端检测 + 双层闭合判据 |
 | `handshaking.py` | HandshakingVerifier — 握手引理 + 欧拉示性数 + Σ(6-deg) |
 
-## 五-4、帧协议自动化（`src/core/`）
+## 五-5、帧协议自动化（`src/core/`）
 
 | 文件 | 内容 |
 |------|------|
@@ -140,6 +145,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 代码合规 | `AGENT.md` + `spum-core` + `spum-qingmeng-guard` |
 | 图论编码 | `AGENT.md` + `spum-core` + `spum-evolution` + `src/spum_graph/` 模块 |
 | 帧自动化 | `AGENT.md` + `src/core/frame.py` — 推理帧状态追踪 |
+| 实证验证 | `AGENT.md` + `spum-core` + `docs/Subgraph_CoMotion/` — 子图协动星系旋转曲线分析 |
 | 实验开发 | `AGENT.md` + `spum-core` + `experiments/shared/` + `src/spum_graph/` |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
