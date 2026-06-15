@@ -1,7 +1,7 @@
 {
   "name": "SPUM Agent Configuration",
-  "version": "2.0",
-  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定。v2.0 增加自指帧协议、自动评审、伪加载检测。",
+  "version": "2.1",
+  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定。v2.1 增加外部知识库 zhihu-knowledge 支持。",
   "autoLoad": {
     "enabled": true,
     "files": [
@@ -40,10 +40,33 @@
         "type": "navigation",
         "priority": 6,
         "description": "图谱导航：强制沿edges.txt推理，节点声明，悬空终止"
+      },
+      {
+        "path": ".trae/skills/zhihu-knowledge/skill.md",
+        "type": "skill",
+        "priority": 7,
+        "description": "知乎问答外部知识库 — SPUM 视角的问答、科普与批判性写作模板"
       }
     ],
     "loadStrategy": "sequential",
     "timeout": 3000
+  },
+  "externalKnowledgeBases": {
+    "zhihu-knowledge": {
+      "name": "知乎问答知识库",
+      "rootPath": "F:/知乎问答",
+      "description": "按月份组织的知乎问答文章、科普写作与批判性论证素材",
+      "indexedAt": "2026-06-15",
+      "directories": {
+        "26-4": "2026年4月 — 早期探索性问答（潮汐、信息、哥德尔、诺特悖论、赋予关系、民科回应）",
+        "26-5": "2026年5月 — 中期定型论证（6G波形、离散高斯博内、光粒二象性、大统一模型、科学常识去魅）",
+        "26-6": "2026年6月 — 最新发布（拓扑认知实验、数学有效性、空间围城）",
+        "知乎": "API 配置与运营工具"
+      },
+      "skillPath": ".trae/skills/zhihu-knowledge/skill.md",
+      "autoIndex": true,
+      "watchForChanges": true
+    }
   },
   "frameProtocol": {
     "enabled": true,

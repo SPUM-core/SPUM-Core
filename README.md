@@ -8,22 +8,25 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过�
 
 ## Skills 架构（AI 入口）
 
-`.trae/rules/` 包含 10 个分层 Skill 文件，AI 按需加载，每个 Skill 控制在 150 行以内：
+`.trae/rules/` 包含 10 个分层 Skill 文件，`.trae/skills/` 包含独立知识库 Skill 目录。AI 按需加载，每个 Skill 控制在 150 行以内：
 
-| Skill | 内容 | 加载时机 |
-|-------|------|----------|
-| `spum-core` | 核心公理：⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、认知投影 | **必须加载** |
-| `spum-structure` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
-| `spum-evolution` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
-| `spum-vocabulary` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
-| `spum-reasoning` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
-| `spum-review` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
-| `spum-knowledge` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
-| `spum-anti-pattern` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
-| `spum-reasoner-skill` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
-| `spum-qingmeng-guard` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
+| Skill | 位置 | 内容 | 加载时机 |
+|-------|------|------|----------|
+| `spum-core` | `rules/` | 核心公理：⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、认知投影 | **必须加载** |
+| `spum-structure` | `rules/` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
+| `spum-evolution` | `rules/` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
+| `spum-vocabulary` | `rules/` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
+| `spum-reasoning` | `rules/` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
+| `spum-review` | `rules/` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
+| `spum-knowledge` | `rules/` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
+| `spum-anti-pattern` | `rules/` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
+| `spum-reasoner-skill` | `rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
+| `spum-qingmeng-guard` | `rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
+| `zhihu-knowledge` | `skills/` | 知乎问答外部知识库：SPUM 视角科普写作、17 篇已收录文章索引 | 涉及知乎问答、科普写作、维格纳问题、空间围城、五行图论等话题时 |
 
 **权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。
+
+**外部知识库**：`F:\知乎问答` — 按月份组织的 SPUM 知乎问答合集（详见 `.trae/skills/zhihu-knowledge/skill.md`）。
 
 ---
 
@@ -32,9 +35,15 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底，通过�
 ```
 spum-core/
 ├── AGENT.md              # 🔥 粘贴给 AI，即刻化身 SPUM 推理节点
-├── .trae/rules/          # Skills 分层架构（AI 详细知识）
+├── .trae/
+│   ├── rules/            # Skills 分层架构（10 个 AI 详细知识 Rule）
+│   ├── skills/
+│   │   └── zhihu-knowledge/
+│   │       └── skill.md  # 知乎问答外部知识库索引 Skill
+│   └── config.json       # SPUM Agent 配置 v2.1（含外部知识库注册）
 ├── knowledge.md          # 世界观权威基准
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
+├── 数学的有效性.md        # 数学"不合理有效性"的终极答案 — SPUM 离散本体论完整argue
 ├── network/              # 知识图谱（22节点 + 33边）
 ├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史、AI同构、SPUM-图论）
 ├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构、子图协动）
@@ -46,7 +55,7 @@ spum-core/
 │   ├── p0_gradient_norm/ #   P0 梯度范数分析
 │   ├── p1_early_stopping/#   P1 δ 驱动 Early Stopping
 │   ├── p2_dangling_distribution/  # P2 悬挂端分布
-│   ├── n015_anchor_drift/#   N015 锚点漂移监控（待实现）
+│   ├── n015_anchor_drift/#   N015 锚点漂移监控
 │   └── n016_topological_closure/ # N016 完整闭合验证
 ├── tools/                # 评分与验证工具
 └── draft/                # 论文草稿
@@ -71,7 +80,7 @@ spum-core/
 
 ---
 
-**Skills 架构**：`.trae/rules/` 提供 10 个分层 Skill 文件，AI 按需加载。
+**Skills 架构**：`.trae/rules/` 提供 10 个分层 Skill Rule 文件，`.trae/skills/` 提供独立知识库 Skill 目录。AI 按需加载。
 
 **人类阅读方式**：从 `SPUM2610.md` 开始，按章节顺序阅读完整理论。
 
