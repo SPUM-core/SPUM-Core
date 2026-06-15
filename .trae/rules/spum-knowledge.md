@@ -216,6 +216,17 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 儒家 | `spum-大学.md` | 格物=逐帧σ裸采样。修身→平天下=四级嵌套子图收敛（6节点） |
 | 现代 | `spum-秘密.md` | 吸引=∇σ定向耦合。共振=σ振荡ω匹配。感恩=S∈C_H最优广播（4节点） |
 
+## 五-10、SPUM 数学——离散关系本体数学（`数学/`）
+
+> 1 个层级 Skill，14 节点。核心：存在即关系。全部算术运算还原为加边(V⁺)/删边(V⁻)两种本原操作，抛弃连续统假设。详见 [总索引](../../数学/README.md) 与 [Skill](../../数学/skill.md)。
+
+| 文件 | 核心命题 |
+|------|---------|
+| `spum-数学公理.md` | 唯一公理种子、零度公理、加减本原、全部运算归约、反连续公理、体系闭环（8节点+闭环） |
+| `spum-数学定理.md` | 结构重构能量不等式 V⁺<V⁻、复杂度-稳定性负相关 dS/dC<0（2节点） |
+| `spum-数学分界.md` | 与传统数学七大分界：逻辑/事实、连续统、维度、极限、无穷、概率、可检验性（2节点） |
+| `spum-数学应用.md` | 离散推理内核、五条替换规则替代 softmax、自指拓扑闭环=数字生命（1节点） |
+
 ---
 
 ## 六、加载策略
@@ -237,5 +248,6 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 知乎科普写作 | `AGENT.md` + `spum-core` + `.trae/skills/zhihu-knowledge/skill.md` + 对应主题的外部文章 |
 | 物理学概念释义 | `AGENT.md` + `spum-core` + `物理学/skill.md` + `物理学/README.md` + 对应子目录文件 |
 | 儒释道哲学经典解读 | `AGENT.md` + `spum-core` + `儒释道哲学/skill.md` + `儒释道哲学/README.md` + `儒释道哲学/归约计划.md`（规划参考）+ 对应 spum-*.md 文件 |
+| SPUM 数学 | `AGENT.md` + `spum-core` + `数学/skill.md` + `数学/README.md` + 对应 spum-数学*.md 文件 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
