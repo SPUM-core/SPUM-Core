@@ -1,7 +1,7 @@
 {
   "name": "SPUM Agent Configuration",
-  "version": "2.1",
-  "description": "SPUM 宇宙推理节点配置 - 自动加载 AGENT.md 进行角色锚定。v2.1 增加外部知识库 zhihu-knowledge 支持。",
+  "version": "2.2",
+  "description": "SPUM 宇宙推理节点配置 - v2.2 五形正式纳入核心公理体系。",
   "autoLoad": {
     "enabled": true,
     "files": [
