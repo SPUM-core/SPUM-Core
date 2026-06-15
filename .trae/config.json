@@ -1,7 +1,7 @@
 {
   "name": "SPUM Agent Configuration",
-  "version": "2.2",
-  "description": "SPUM 宇宙推理节点配置 - v2.2 五形正式纳入核心公理体系。",
+  "version": "2.3",
+  "description": "SPUM 宇宙推理节点配置 - v2.3 五形理论拓展：中医(黄帝内经)、风水(葬书) Relations-net 重构。",
   "autoLoad": {
     "enabled": true,
     "files": [
@@ -60,7 +60,7 @@
       "directories": {
         "26-4": "2026年4月 — 早期探索性问答（潮汐、信息、哥德尔、诺特悖论、赋予关系、民科回应）",
         "26-5": "2026年5月 — 中期定型论证（6G波形、离散高斯博内、光粒二象性、大统一模型、科学常识去魅）",
-        "26-6": "2026年6月 — 最新发布（拓扑认知实验、数学有效性、空间围城）",
+        "26-6": "2026年6月 — 当前主力（拓扑认知实验、数学有效性、空间围城、五形网络形式化）",
         "知乎": "API 配置与运营工具"
       },
       "skillPath": ".trae/skills/zhihu-knowledge/skill.md",

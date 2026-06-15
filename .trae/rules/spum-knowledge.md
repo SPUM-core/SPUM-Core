@@ -131,6 +131,24 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `review.py` | ReviewBridge — spum-review.md 评审结果自动触发 FrameProtocol.rollback()：四维评分 (A/B/C/D/LE)、阈值判决、回调机制 |
 | `__init__.py` | 导出 `FrameState`, `FrameProtocol`, `FrameLogger`, `ReviewResult`, `ReviewBridge`, `ReviewVerdict` |
 
+## 五-6、五形理论研究（`五行/`）
+
+| 文件 | 内容 |
+|------|------|
+| `五行/README.md` | 五形理论总索引：核心定位表、速查表、耦合闭环、目录规划、引用规范 |
+| `五行/spum-黄帝内经.md` | 以 SPUM 五形框架重读黄帝内经：阴阳=σ梯度、五脏=区域占优相位、经络=水形主干、治则=网络干预五策略、四诊拓扑读解 |
+| `五行/spum-葬书.md` | 以 SPUM 五形框架重读葬书：龙=低σ脊线、穴=∇σ收敛点、砂=木形环、水=高介数链、向=链方向导数、可计算风水路线图 |
+| `F:\知乎问答\26-6\五形的离散网络形式化.md` | 完整数学形式化：每个形的图论指标集、公式、健康判据凸多面体、网格vs树对比 |
+
+## 五-7、知乎问答外部知识库（`F:\知乎问答` + `.trae/skills/zhihu-knowledge/`）
+
+| 文件 | 内容 |
+|------|------|
+| `.trae/skills/zhihu-knowledge/skill.md` | 知识库索引 Skill：17篇已收录文章 + 加载策略 + 写作风格指南 |
+| `F:\知乎问答\26-4\` | 早期探索性问答（潮汐、信息、哥德尔、诺特悖论、赋予关系、民科回应） |
+| `F:\知乎问答\26-5\` | 中期定型论证（离散高斯博内、光粒二象性、大统一模型、科学常识去魅） |
+| `F:\知乎问答\26-6\` | 当前主力内容（数学有效性、空间围城、五形网络形式化、拓扑认知实验） |
+
 ---
 
 ## 六、加载策略
@@ -147,5 +165,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 帧自动化 | `AGENT.md` + `src/core/frame.py` — 推理帧状态追踪 |
 | 实证验证 | `AGENT.md` + `spum-core` + `docs/Subgraph_CoMotion/` — 子图协动星系旋转曲线分析 |
 | 实验开发 | `AGENT.md` + `spum-core` + `experiments/shared/` + `src/spum_graph/` |
+| 五形/中医/风水 | `AGENT.md` + `spum-core` + `spum-vocabulary` + `五行/README.md` + 对应经典子文件 |
+| 知乎科普写作 | `AGENT.md` + `spum-core` + `.trae/skills/zhihu-knowledge/skill.md` + 对应主题的外部文章 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
