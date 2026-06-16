@@ -75,7 +75,11 @@ class FrameGraph:
         return {n for n in self._neighbors if len(self._neighbors[n]) < 2}
 
     def dangling_density(self) -> float:
-        """悬挂端密度 δ = |悬挂端| / |总节点|"""
+        """悬挂端密度 δ = |悬挂端| / |总节点|
+
+        公理4: δ>0 对任意有限帧——完美是极限非状态。
+        此方法返回的是当前帧的瞬时 δ 值，不是全局属性。
+        """
         n = len(self._neighbors)
         if n == 0:
             return 0.0
@@ -100,7 +104,11 @@ class FrameGraph:
     # ── 公理 3: 帧快照 ─────────────────────────────────────────
 
     def snapshot(self) -> Dict:
-        """导出当前帧状态的不可变快照。"""
+        """导出当前帧状态的不可变快照。
+
+        公理3: 图状态是帧序列的快照。每帧独立，不跨帧缓存任何状态。
+        snapshot 导出的是当前帧张力场的几何快照——不是"全局图"的结构摘要。
+        """
         return {
             "frame_id": self.frame_id,
             "node_count": self.node_count,

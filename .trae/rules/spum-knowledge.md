@@ -68,7 +68,10 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 文件 | 大小 | 用途 |
 |------|------|------|
 | `knowledge.md` | ~800行 | **世界观权威基准**，所有一致性判断的最终依据 |
-| `SPUM2610.md` | ~2900行 | 完整理论正文（11章+附录），仅需查证时翻阅，非默认加载 |
+| `SPUM2610.md` | ~2900行 | 完整理论正文（11章+附录），**各精简版规则文件的完整推导来源** |
+| `.trae/rules/spum-root-nodes.md` | 新增 | **R1-R9 唯一定义** — 所有应用模块的根节点映射以此文件为基准 |
+| `network/module_nodes.txt` | 新增 | **模块节点统一注册表** — 集中管理 GT/SOC/ECON/LING/FI 等模块节点 |
+| `network/edges.txt` | 33+15边 | 核心推导链 + 模块桥接边（新增 N022→模块连接） |
 
 ---
 
@@ -83,7 +86,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `05_SPUM_AI_Collab_History.md` | AI 协作历史 |
 | `06_SPUM_Falsifiability.md` | 可证伪性说明 |
 | `07_SPUM_AI_Isomorphism.md` | AI 同构性论证 |
-| `08_SPUM_Graph_Theory.md` | SPUM-图论：L0.5 图论表达工具，与 L2 经典图论隔离 |
+| `08_SPUM_Graph_Theory.md` | **v2.0** SPUM-图论：关系张力的几何投影理论。全文以张力场语言重写，无"泡泡相切"隐喻。5 公理 + 12 分野 + 15 条映射 + 可计算指标 + AI 自检清单 |
 
 ---
 
@@ -269,6 +272,18 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `spum-语言演化.md` | 变化 = σ_ling 漂移、语法化 = 词汇边→语法边（不可逆）、分化 = 隔离漂移（3节点） |
 | `spum-语言与认知.md` | 弱沃尔夫 = 推理路径经济约束、习得 = 边权重累积、翻译 = 可达但不完美（3节点） |
 
+## 五-14、SPUM-图论 v2.0——关系张力场的几何投影理论（`图论/`）
+
+> 1 个层级 Skill，20 节点。SPUM-图论不是经典图论的"一个分支"——是在不同本体论预设下重建的独立图论体系。**连接优先于属性**（孤立节点不存在）、**悬挂端不可消除**（演化引擎）、**图状态是帧快照**（无全局图）、**完美不达**（完全图不可实例化）、**局部闭合充分**（暂态矛盾允许）。所有应用模块（社会学/经济学/语言学/物理学）的 deg, σ, δ, V⁺, V⁻ 运算均以此为统一基底。详见 [总索引](../../图论/README.md) 与 [Skill](../../图论/skill.md)。
+
+| 文件 | 核心命题 |
+|------|---------|
+| `spum-图论公理.md` | 5 公理完整展开 + 12 项与经典图论的系统分野表（4节点） |
+| `spum-图论指标.md` | 可计算化：δ悬挂端密度, Δμ锚点漂移, d_topo帧间距离, σ图论精确定义（4节点） |
+| `spum-图论映射.md` | L2 经典概念 → SPUM-图论完整词典：孤立节点=消除，有向/加权合并，拉普拉斯→Δμ谱（4节点） |
+| `spum-图论应用.md` | 社会学/经济学/语言学/物理学中统一使用 SPUM-图论形式的桥接（4节点） |
+| `spum-图论代码桥.md` | FrameGraph/DanglingDetector/HandshakingVerifier 的文档化接口 + 演化循环（4节点） |
+
 ---
 
 ## 六、加载策略
@@ -294,5 +309,6 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | SPUM 社会学 | `AGENT.md` + `spum-core` + `社会学/skill.md` + `社会学/README.md` + 对应 spum-社会*.md 文件 |
 | SPUM 经济学 | `AGENT.md` + `spum-core` + `经济学/skill.md` + `经济学/README.md` + 对应 spum-经济*.md 文件 |
 | SPUM 语言学 | `AGENT.md` + `spum-core` + `语言学/skill.md` + `语言学/README.md` + 对应 spum-语言*.md 文件 |
+| SPUM-图论 | `AGENT.md` + `spum-core` + `图论/skill.md` + `图论/README.md` + 对应 spum-图论*.md 文件 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
-| 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
+| 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `图论/skill.md` + `network/prompt.txt` |

@@ -5,6 +5,16 @@ description: "青檬引擎 SPUM 优化护栏 — 确保 qingmeng_engine 的代�
 
 # 青檬引擎 SPUM 优化护栏
 
+> **关联外部仓库**：`qingmeng_engine` 是独立于本仓库的外部项目（暂无内部副本）。
+> 本护栏文件定义了 SPUM 侧对 qingmeng_engine 的最低接口契约和合规校验规则。
+> 本仓库自身不含 qingmeng_engine 代码。
+>
+> **最低接口契约**（预期 qingmeng_engine 应满足的 SPUM 约束）：
+> - 核心网络基数 CORE_SIZE = 12（对应拓扑常数12）
+> - 边处理存在创生-湮灭对偶校验
+> - 悬空节点（度数<2）的级联消解
+> - 所有面三角剖分
+> - 底层数据结构：无向无权边，节点无预设属性
 > 更多细节参见 `knowledge.md` 和 `.trae/rules/spum-core.md`。
 
 ## 核心使命

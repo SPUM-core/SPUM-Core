@@ -3,6 +3,12 @@ P0 + P2: 合成数据版本（无需下载 MNIST）
 =========================================
 用 sklearn 生成可控拓扑结构数据，
 测试 SPUM 三条预测。
+
+依赖声明（2026-06-16）：
+  - 文档依赖：knowledge.md §1.5 (σ定义), spum-evolution.md §6 (不完美定理)
+  - 代码依赖：src/spum_graph/dangling.py (DanglingDetector, eps=0.3)
+  - 参数语义：eps=0.3 语义定义为"最近两个锚点距离差阈值"，若 dangling.py 修改此语义需重新校准
+  - 关联报告：experiments/SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
 """
 import torch
 import torch.nn as nn

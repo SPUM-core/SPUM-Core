@@ -1,6 +1,7 @@
 # SPUM 空间结构：分形约束生长与拓扑常数 12
 
 > 权威基准：`knowledge.md` 第三、四章。本文件是其精简编译版。
+> 完整推导：拓扑常数12的双路径推导（几何容量+纯组合）见 `SPUM2610.md` §7-§8；离散高斯-博内定理详见 `docs/Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md`。
 
 ---
 

@@ -1,3 +1,13 @@
+"""
+N016: DeepCNN 拓扑闭合验证
+============================
+依赖声明（2026-06-16）：
+  - 文档依赖：knowledge.md §1.5 (N013修正), spum-evolution.md §6 (双层不完美)
+  - 代码依赖：src/spum_graph/dangling.py (DanglingDetector, DRIFT_TH=0.01)
+  - 关键参数：EPS=0.3 (悬挂端阈值), DRIFT_TH=0.01 (锚点漂移稳定阈值), ANCHOR_EVERY=5
+  - 核心发现：DeepCNN 97.1%正确率下 Δμ 最小 6.16，完整闭合在标准 SGD 不可达
+  - 关联报告：experiments/SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
+"""
 import time, json, sys, numpy as np, os
 import torch, torch.nn as nn
 import warnings; warnings.filterwarnings("ignore")
