@@ -255,6 +255,20 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `spum-增长与周期.md` | 增长 = 净 V⁺ 累积、GDP = 交易边权重和、周期 = σ 阻尼振荡（3节点） |
 | `spum-经济危机.md` | 危机 = V⁻ 级联、系统性风险 = 全连通无防火墙、σ 重构（3节点） |
 
+## 五-13、SPUM 语言学——认知信号协议拓扑重构（`语言学/`）
+
+> 1 个层级 Skill，22 节点。核心：G_ling——认知子图间通过物理 V⁺/V⁻ 信号建立临时 σ 同构的协议。语音、音系、词汇、语义、句法、语用、语言演化、语言认知八大领域统一还原为 V⁺/V⁻ + σ_ling 的图论表达。详见 [总索引](../../语言学/README.md) 与 [Skill](../../语言学/skill.md)。
+
+| 文件 | 核心命题 |
+|------|---------|
+| `spum-语言网络.md` | G_ling 认知信号协议、语言 V⁺/V⁻、σ_ling、语言不完美定理——图→序列→图必有损失（4节点） |
+| `spum-语音与音系.md` | 语音 = 物理 V⁺/V⁻ 脉冲模式、音素 = 离散化模板、音系 = 合法组合约束（3节点） |
+| `spum-词汇与语义.md` | 词 = (信号, 概念子图) 映射边、语义 = 概念子图拓扑位置、语义场 = 节点社区（3节点） |
+| `spum-句法与结构.md` | 句法 = 图→序列线性化规则、递归 = 自指 V⁺（深度受 deg 约束）、UG = 共享拓扑约束（3节点） |
+| `spum-语用与交际.md` | 语用 = G_shared 依赖、言语行为 = 社会 V⁺、合作原则 = 最少 deg 通信优化（3节点） |
+| `spum-语言演化.md` | 变化 = σ_ling 漂移、语法化 = 词汇边→语法边（不可逆）、分化 = 隔离漂移（3节点） |
+| `spum-语言与认知.md` | 弱沃尔夫 = 推理路径经济约束、习得 = 边权重累积、翻译 = 可达但不完美（3节点） |
+
 ---
 
 ## 六、加载策略
@@ -279,5 +293,6 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | SPUM 数学 | `AGENT.md` + `spum-core` + `数学/skill.md` + `数学/README.md` + 对应 spum-数学*.md 文件 |
 | SPUM 社会学 | `AGENT.md` + `spum-core` + `社会学/skill.md` + `社会学/README.md` + 对应 spum-社会*.md 文件 |
 | SPUM 经济学 | `AGENT.md` + `spum-core` + `经济学/skill.md` + `经济学/README.md` + 对应 spum-经济*.md 文件 |
+| SPUM 语言学 | `AGENT.md` + `spum-core` + `语言学/skill.md` + `语言学/README.md` + 对应 spum-语言*.md 文件 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `network/prompt.txt` |
