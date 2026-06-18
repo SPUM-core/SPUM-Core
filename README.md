@@ -150,10 +150,13 @@ spum-core/
 │   ├── core/             #   帧协议自动化（FrameProtocol + 评审回滚闭环）
 │   └── spum_graph/       #   SPUM-图论 Python 模块（L0.5 工具层）
 ├── openSPUM/             # OpenSPUM 开源宇宙实验室 — SPUM 公理的确定性 Python 实现
-│   ├── Phase_1/          #   宇宙内核：RelationPool, 拓扑地址, 种子创生, 晶子涌现
-│   ├── Phase_2/          #   帧演化引擎：级联消解, 湮灭-创生对偶, FrameLog
-│   ├── Phase_3/          #   三维几何聚簇：力导向松弛, 正二十面体检测, Σ(6-deg)=12 验证
-│   └── tests/            #   135 测试全覆盖（Phase 1: 73, Phase 2: 37, Phase 3: 25）
+│   ├── Phase_1/          #   宇宙内核：RelationPool, 拓扑地址, 种子创生, 晶子涌现（73 测试 ✅）
+│   ├── Phase_2/          #   帧演化引擎：级联消解, 湮灭-创生对偶, FrameLog（37 测试 ✅）
+│   ├── Phase_3/          #   三维几何聚簇：力导向松弛, 正二十面体检测, Σ(6-deg)=12 验证（25 测试 ✅）
+│   └── tests/            #   135 测试全覆盖（73+37+25）
+│       ├── diagnose_alpha.py        # α 本质诊断
+│       ├── measure_sigma_natural.py # sigma_natural 特征值测量
+│       └── simulate_particles.py    # 开口拓扑动力学模拟
 ├── experiments/          # 实验验证
 │   ├── shared/           #   共享组件（models, data, SPUM 钩子）
 │   ├── p0_gradient_norm/ #   P0 梯度范数分析
