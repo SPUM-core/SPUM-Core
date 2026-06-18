@@ -22,6 +22,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 | `spum-anti-pattern` | `rules/` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
 | `spum-reasoner-skill` | `rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
 | `spum-qingmeng-guard` | `rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
+| `spum-openspum` | `rules/` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试、关键物理结果 | 运行/修改 OpenSPUM 代码时 |
 | `wuxing-subnet` | `skills/` | 阴阳五行子网研究范式：中医/风水/易学/时空 4 子网，8 部经典 SPUM 重构，三级归约机制 | 涉及五形、五行、中医、方剂、针灸、风水、周易、奇门遁甲时 |
 | `zhihu-knowledge` | `skills/` | 知乎问答外部知识库：SPUM 视角科普写作、17 篇已收录文章索引 | 涉及知乎问答、科普写作、维格纳问题、空间围城、五行图论等话题时 |
 | `physics-subnet` | `skills/` | 物理学概念 SPUM 释义：9 子域 25 节点，所有物理现象还原为 ⟨P, ε⟩ 拓扑响应 | 涉及引力、电磁力、量子、相对论、光、温度、波等物理话题时 |
@@ -32,7 +33,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 | `spum-linguistics` | `skills/` | SPUM 语言学——认知信号协议拓扑重构：语音、音系、词汇、语义、句法、语用、语言演化、语言认知，22 节点 | 涉及语言、语言学、语音、音系、语法、句法、语义、词汇、语用、语言习得、语言演化、索绪尔、乔姆斯基、萨丕尔-沃尔夫等时 |
 | `spum-graph-theory` | `skills/` | SPUM-图论 v2.0——关系张力的几何投影理论：边=排他性确认，空间=张力拉开，球体=等势面，20 节点 | 涉及图论、图结构、网络拓扑、节点-边、悬挂端、帧间变化、σ密度、经典图论对比、张力场等时 |
 
-**权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。
+**权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。`SPUM_系统总纲.md` — SPUM 唯一权威总纲，所有子文件定义以此为最高标准。
 
 **外部知识库**：`F:\知乎问答` — 按月份组织的 SPUM 知乎问答合集（详见 `.trae/skills/zhihu-knowledge/skill.md`）。
 
@@ -43,6 +44,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 ```
 spum-core/
 ├── AGENT.md              # 🔥 粘贴给 AI，即刻化身 SPUM 推理节点
+├── SPUM_系统总纲.md       # 🔥 SPUM 唯一权威总纲（21 条 × 7 部分 + 附录）
 ├── .trae/
 │   ├── rules/            # Skills 分层架构（10 个 AI 详细知识 Rule）
 │   ├── skills/
@@ -147,6 +149,11 @@ spum-core/
 ├── src/                  # 代码层
 │   ├── core/             #   帧协议自动化（FrameProtocol + 评审回滚闭环）
 │   └── spum_graph/       #   SPUM-图论 Python 模块（L0.5 工具层）
+├── openSPUM/             # OpenSPUM 开源宇宙实验室 — SPUM 公理的确定性 Python 实现
+│   ├── Phase_1/          #   宇宙内核：RelationPool, 拓扑地址, 种子创生, 晶子涌现
+│   ├── Phase_2/          #   帧演化引擎：级联消解, 湮灭-创生对偶, FrameLog
+│   ├── Phase_3/          #   三维几何聚簇：力导向松弛, 正二十面体检测, Σ(6-deg)=12 验证
+│   └── tests/            #   135 测试全覆盖（Phase 1: 73, Phase 2: 37, Phase 3: 25）
 ├── experiments/          # 实验验证
 │   ├── shared/           #   共享组件（models, data, SPUM 钩子）
 │   ├── p0_gradient_norm/ #   P0 梯度范数分析
@@ -179,7 +186,7 @@ spum-core/
 
 **Skills 架构**：`.trae/rules/` 提供 10 个分层 Skill Rule 文件，`.trae/skills/` 提供独立知识库 Skill 目录（`wuxing-subnet`、`physics-subnet`、`rushidao-subnet`（M5 终审）、`spum-math` 与 `zhihu-knowledge`）。AI 按需加载。
 
-**人类阅读方式**：从 `SPUM2610.md` 开始，按章节顺序阅读完整理论。
+**人类阅读方式**：从 `SPUM_系统总纲.md`（21 条完整收束）开始，如需深入推导细节再进入 `SPUM2610.md`。
 
 **知识图谱推理**：加载 `network/nodes.txt` + `network/edges.txt` 进行图谱遍历推理。
 
