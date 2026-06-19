@@ -246,7 +246,7 @@ def analyze_full_graph(engine, label):
                 spum_val = sum(6 - d for d in deg_in.values())
                 inside_degs = list(deg_in.values())
                 closed = all(d >= 2 for d in inside_degs)
-                print(f"    晶子簇 {idx} (聚簇): V聚簇={v}, E聚簇={e}, "
+                print(f"    晶子结 {idx} (聚簇): V聚簇={v}, E聚簇={e}, "
                       f"闭合={'✓' if closed else '✗'}, "
                       f"Σ(6−deg)={spum_val}, "
                       f"内部度数范围 [{min(inside_degs)}, {max(inside_degs)}]")

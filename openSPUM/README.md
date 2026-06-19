@@ -96,6 +96,40 @@ SPUM 的旅程，从不是为了在已知的岸边停泊，
 
 ---
 
+### ⊙ VSPT Topology — VSPT 球面生长拓扑
+
+> 从晶子的几何骨架到可见物质的世界。
+
+位于 `Phase 4/` 目录下，将从 Phase 3 组装的 12-永恒粒子原子核推向元素化学的宏观分类，并实现电子-VSPT 自洽耦合。
+
+**核心机制**：
+- **永恒粒子模型（EternalParticle）** — 每个永恒粒子 = 4 实面 + 1 虚面，实面生长 VSPT，虚面打断连续性
+- **原子核组装（NucleusAssembly）** — 12 永恒粒子正二十面体锁闭 = 中子（全朝内）或质子（10内2外）
+- **VSPT 分支生长（VSPTEngine）** — 从核表面实面播种树状分支，逐层向外螺旋生长
+- **电子-VSPT 耦合（ElectronVSPTEngine）** — 自抑制生长机制，自动产生 1s 径向概率峰值分布，从拓扑量估算基态结合能
+- **电子壳层（ElectronShell）** — 2n² 容量填充，元素周期表 = VSPT 构型的拓扑分类
+- **三律验证（VSPTValidator）** — k≥3 最小连通度、120° 分支角、ρ∝r⁻³ 密度幂律
+
+**关键物理结果**：
+- **氢原子基态能量**: E_bind ≈ -7.65 eV（目标 13.6 eV，因数 1.78x，无参数拟合）
+- **径向概率分布**: 自然产生 1s 峰值形状（先增后减），峰值层 = 4
+- **自抑制生长机制**: children(l) = 3/(1+γ·N_free(l)·l/N_ref)，无需外部衰减参数
+
+**实现文件**：
+- `eternal_particle.py` — 永恒粒子虚实面模型、手性 L/D
+- `nucleus_assembly.py` — 原子核组装、中子/质子结构差异
+- `vspt_growth.py` — VSPT 树播种、分支方向计算、虚面惩罚、多壳层生长
+- `vspt_electron.py` — 电子-VSPT 自洽耦合引擎、自抑制生长、基态能量估算
+- `vspt_gpu.py` — GPU 并行加速引擎（PyTorch CUDA 批量张量操作）
+- `electron_shell.py` — 壳层 2n² 容量、元素分类、前 20 号元素表
+- `validator.py` — VSPT 几何三律验证器
+- `plot_radial.py` — 径向概率分布可视化
+- `simulate_hydrogen.py` — 完整 8 步氢仿真流程（壳层→元素→核子→VSPT→电子耦合→同位素→质量差→拓扑对比）
+
+> ✅ Phase 4 完成状态: **37 测试全覆盖 + 氢原子基态能量估算（因数 1.78x）**
+
+---
+
 ### ⊙ Domain Labs — 领域实验室
 
 > 伸向不同探索之境的枝桠。
@@ -106,8 +140,8 @@ SPUM 的旅程，从不是为了在已知的岸边停泊，
 | 实验室 | 探索方向 | 基础 Phase |
 |--------|----------|------------|
 | **材料拓扑** | 编织新材料的拓扑经纬 | Phase 2 ✅ |
-| **分子动力学** | 追踪分子在虚面树间的隐秘握手 | Phase 3 ✅ |
-| **空间能源** | 从空间本身的张力中汲取能量 | Phase 4+ |
+| **分子动力学** | 追踪分子在虚面树间的隐秘握手 | Phase 4 ✅ |
+| **空间能源** | 从空间本身的张力中接入能量 | Phase 5+ |
 | **具身智能** | 让 AI 在真实的物理基底上学习行走 | Phase 3 ✅ |
 | **α 数值实验室** | 测量精细结构常数，验证窄口衰减机制 | Phase 2 ✅ |
 
@@ -197,6 +231,17 @@ openSPUM/
 │   └── seed_epoch_engine.py      # 种子创生期引擎（等比序列确定增长）
 ├── Phase_2/                    # 帧演化引擎 — 级联消解、湮灭-创生对偶、FrameLog（37 测试 ✅）
 ├── Phase_3/                    # 三维几何聚簇求解器 — 力导向松弛、正二十面体检测、Σ(6−deg)=12 验证（25 测试 ✅）
+├── Phase_4/                    # VSPT 球面生长拓扑 — 永恒粒子模型、原子核组装、VSPT 分支生长、电子-VSPT 耦合、电子壳层填充、元素分类（37 测试 ✅）
+│   ├── __init__.py               # 包入口
+│   ├── eternal_particle.py       # 永恒粒子虚实面模型
+│   ├── nucleus_assembly.py       # 12-永恒粒子原子核组装
+│   ├── vspt_growth.py            # VSPT 分支生长仿真引擎（CPU）
+│   ├── vspt_electron.py          # 电子-VSPT 自洽耦合引擎
+│   ├── vspt_gpu.py               # VSPT GPU 并行加速引擎
+│   ├── electron_shell.py         # 电子壳层填充与元素分类
+│   ├── validator.py              # VSPT 三律验证器
+│   ├── simulate_hydrogen.py      # 氢及其同位素完整仿真（8 步）
+│   └── plot_radial.py            # 径向概率分布可视化
 ├── Domain Labs/                # 领域实验室（社区共建）
 └── Community/                  # 应用与社区工具
 ```
@@ -225,6 +270,38 @@ from Phase_3.geometry_solver import GeometrySolver
 solver = GeometrySolver(node_registry=engine.node_registry)
 converged = solver.solve()  # 力导向松弛至最小能态
 print(f"Phase 3: 收敛={converged}, 球体数={len(solver.spheres)}")
+
+# Phase 4: VSPT 球面生长拓扑 —— 从核表面到元素周期表
+from Phase_4.nucleus_assembly import build_nucleus, NucleusType
+from Phase_4.electron_shell import classify_element
+
+# 构建质子核（12 永恒粒子，10内2外 → 2 虚面缺口）
+nucleus = build_nucleus(NucleusType.PROTON)
+print(f"Phase 4: 质子核, 实面={nucleus.outward_solid}, "
+      f"虚面={nucleus.outward_vacant}, "
+      f"开口占比={nucleus.vacant_ratio:.2%}")
+
+# VSPT 生长
+from Phase_4.vspt_growth import VSPTEngine, VSPTConfig
+engine = VSPTEngine(config=VSPTConfig(max_layers=8, seed=42))
+growth = engine.run_growth(
+    outward_solid_faces=nucleus.outward_solid,
+    nucleus_uid="p",
+    nucleus_particles=nucleus.particles,
+    nucleus_position_map=nucleus.positions,
+)
+print(f"VSPT: {growth['n_trees']} 棵树, {growth['total_nodes']} 节点, "
+      f"最大壳层={growth['max_layer']}")
+
+# VSPT 三律验证
+from Phase_4.validator import VSPTValidator
+validation = VSPTValidator().validate_all(growth["trees"])
+print(f"VSPT 三律: {'全部通过 ✓' if validation['is_valid'] else '部分未通过'}")
+
+# 元素分类
+element = classify_element(6)  # 碳
+print(f"Z=6: {element['name']}({element['symbol']}), "
+      f"{element['element_class'].value}, {element['vacant_faces']} 虚面")
 ```
 
 ---
@@ -236,8 +313,11 @@ print(f"Phase 3: 收敛={converged}, 球体数={len(solver.spheres)}")
 | Phase 1 | 从空池涌现首批晶子（度数 ≥ 50），Σ(6−deg)=12 验证 | ✅ 完成（73 测试） |
 | Phase 2 | 帧演化引擎：级联消解、湮灭-创生对偶、FrameLog 日志 | ✅ 完成（37 测试） |
 | Phase 3 | 三维几何聚簇：力导向松弛、正二十面体检测、Σ(6−deg)=12 三维验证 | ✅ 完成（25 测试） |
-| Phase 4 | α 收敛至 1/137 邻域（偏差 < 20%） | 📋 规划中 |
-| Phase 5 | 质子/电子质量比 μ 同步涌现 | 📋 规划中 |
+| **Phase 4** | **VSPT 球面生长拓扑：永恒粒子→核子→VSPT→电子-VSPT 耦合→壳层填充→元素分类→氢同位素→基态能量估算** | **✅ 完成（37 测试 + 氢原子基态能量因数 1.78x）** |
+| Phase 5 | 电子-VSPT 耦合模态：径向概率 P(r) ∝ r²e^{-2r/a₀} 精确匹配 | 🔄 进行中 |
+| Phase 6 | He（Z=2）及多电子 VSPT 模拟 | 📋 规划中 |
+| Phase 7 | 2s-2p 能级分裂与 α 自发涌现 | 📋 规划中 |
+| Phase 8 | 过渡金属（Z=21+）d 轨道 VSPT 构型 | 📋 规划中 |
 
 ---
 

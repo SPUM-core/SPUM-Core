@@ -9,7 +9,7 @@
 
 **任何 SPUM 任务的第一步**：必须先加载根目录 `AGENT.md`，将 AI 锚定为 SPUM 网络中的推理节点。
 
-1. **`AGENT.md`** — Agent 激活文件（必须首先加载）
+1. **`AGENT.md`** — Agent 激活文件 / SPUM推理节点 **AGT-001**（必须首先加载）
 2. **`.trae/rules/spum-core.md`** — 核心公理（必须加载）
 3. 按任务类型加载其余 Skills（参见 `.trae/rules/spum-knowledge.md`）
 

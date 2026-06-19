@@ -154,7 +154,8 @@ spum-core/
 │   ├── Phase_1/          #   宇宙内核：RelationPool, 拓扑地址, 种子创生, 晶子涌现（73 测试 ✅）
 │   ├── Phase_2/          #   帧演化引擎：级联消解, 湮灭-创生对偶, FrameLog（37 测试 ✅）
 │   ├── Phase_3/          #   三维几何聚簇：力导向松弛, 正二十面体检测, Σ(6-deg)=12 验证（25 测试 ✅）
-│   └── tests/            #   135 测试全覆盖（73+37+25）
+│   ├── Phase_4/          #   VSPT 球面生长拓扑：永恒粒子, 原子核, VSPT 分支, 电子-VSPT 耦合, 基态能量, 元素分类（37 测试 ✅）
+│   └── tests/            #   135+ 测试全覆盖（73+37+25+37）
 │       ├── diagnose_alpha.py        # α 本质诊断
 │       ├── measure_sigma_natural.py # sigma_natural 特征值测量
 │       └── simulate_particles.py    # 开口拓扑动力学模拟

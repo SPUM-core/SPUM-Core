@@ -57,6 +57,23 @@
 | 正二十面体检测 | `icosahedron_assembly.py` | IcosahedronDetector: 12顶点/30边/deg=5/Σ(6-deg)=12 综合评分; 顶点映射 |
 | 拓扑验证 | `validator.py` | validate_spum_topology_3d: 度数分布/Σ(6-deg)/相切条件/对称性完整验证 |
 
+### Phase 4 — VSPT 球面生长拓扑
+
+**位置**: `openSPUM/Phase_4/`
+**37 测试全覆盖 + 氢原子基态能量估算（因数 1.78x）**。实现从原子核表面的 VSPT 分支生长到电子-VSPT 耦合。
+
+| 模块 | 文件 | 功能 |
+|------|------|------|
+| 永恒粒子 | `eternal_particle.py` | 4实面+1虚面, 手性L/D, Orientation |
+| 原子核组装 | `nucleus_assembly.py` | 12-永恒粒子正二十面体锁闭, 质子/中子 |
+| VSPT 分支生长 | `vspt_growth.py` | 实面播种, 三角网格方向, 多壳层生长 |
+| **电子-VSPT 耦合** | **`vspt_electron.py`** | **自抑制生长, 1s径向概率峰值, 基态能量** |
+| GPU 加速 | `vspt_gpu.py` | PyTorch CUDA 批量张量操作 |
+| 电子壳层 | `electron_shell.py` | 2n²容量, Aufbau填充, 元素分类前20 |
+| 三律验证 | `validator.py` | k≥3, 分支角120°, 密度幂律 |
+| 氢全程仿真 | `simulate_hydrogen.py` | 8步: 壳层→元素→核子→VSPT→电子耦合→同位素→质量差→拓扑 |
+| 径向可视化 | `plot_radial.py` | VSPT节点数径向概率分布柱状图 |
+
 ---
 
 ## 三、实验与诊断脚本
@@ -103,6 +120,9 @@
 | 修改 Phase 1 (关系池/种子期) | `openSPUM/Phase_1/relation_pool.py`, `seed_epoch_engine.py` |
 | 修改 Phase 2 (帧演化/级联) | `openSPUM/Phase_2/frame_update_engine.py` |
 | 修改 Phase 3 (三维几何) | `openSPUM/Phase_3/geometry_solver.py` |
+| 修改 Phase 4 (VSPT 拓扑) | `openSPUM/Phase_4/vspt_growth.py`, `vspt_electron.py`, `vspt_gpu.py` |
+| 运行氢全程仿真 | `openSPUM/Phase_4/simulate_hydrogen.py` |
+| 查看 VSPT 径向分布 | `openSPUM/Phase_4/vspt_radial.png` |
 | 运行/扩展测试 | `openSPUM/tests/test_phase*_all.py` |
 | alpha 测量与诊断 | `openSPUM/tests/diagnose_alpha.py` |
 | sigma_natural 特征值 | `openSPUM/tests/measure_sigma_natural.py` |
