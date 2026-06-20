@@ -30,6 +30,7 @@ from Phase_4.eternal_particle import (
 from Phase_4.nucleus_assembly import (
     NucleusAssembly,
     NucleusType,
+    ProtonConfig,
     build_nucleus,
 )
 from Phase_4.vspt_growth import (
@@ -129,18 +130,21 @@ class TestNucleusAssembly:
         assert nuc.vacant_ratio == 0.0
 
     def test_proton_outward_faces(self):
-        """质子：40 实面（10朝内×4）+ 2 虚面（2朝外×1），虚面占比 2/48=4.17%。"""
+        """质子（单隼）：44 实面（11朝内×4）+ 1 虚面（1朝外×1），虚面占比 1/48。"""
         nuc = build_nucleus(NucleusType.PROTON)
         # 朝外永恒粒子的 4 个实面朝向核内，不对外暴露
-        assert nuc.outward_solid == 40  # 10 朝内 × 4
-        assert nuc.outward_vacant == 2  # 2 朝外 × 1
-        assert nuc.charge == 2  # 拓扑不变量
-        # 文档定义：开口占比 = 缺口数 / (12粒子×4实面)
-        assert abs(nuc.vacant_ratio - 2.0/48.0) < 0.0001
+        assert nuc.outward_solid == 44  # 11 朝内 × 4
+        assert nuc.outward_vacant == 1  # 1 朝外 × 1
+        assert nuc.charge == 1  # 拓扑不变量
+        assert abs(nuc.vacant_ratio - 1.0/48.0) < 0.0001
 
-        # SPUM-VSPT.md §1.4: 质子对外等效开口占比 4.17%
-        expected_ratio = 2.0 / 48.0
-        assert abs(nuc.vacant_ratio - expected_ratio) < 0.0001
+    def test_proton_double_tenon(self):
+        """质子（双隼）：40 实面（10朝内×4）+ 2 虚面（2朝外×1），虚面占比 2/48。"""
+        nuc = build_nucleus(NucleusType.PROTON, proton_config=ProtonConfig.DOUBLE_TENON)
+        assert nuc.outward_solid == 40
+        assert nuc.outward_vacant == 2
+        assert nuc.charge == 2
+        assert abs(nuc.vacant_ratio - 2.0/48.0) < 0.0001
 
     def test_proton_vacant_ratio_under_third(self):
         """质子虚面占比 4.17% << 1/3 硬边界（核稳定条件）。"""
@@ -148,7 +152,7 @@ class TestNucleusAssembly:
         assert nuc.vacant_ratio < 1.0 / 3.0
 
     def test_all_particles_have_orientation(self):
-        """每个永恒粒子有明确的朝向。"""
+        """每个永恒粒子有明确的朝向（单隼：1 朝外 + 11 朝内）。"""
         nuc = build_nucleus(NucleusType.PROTON)
         outward_count = sum(
             1 for ep in nuc.particles.values()
@@ -158,8 +162,8 @@ class TestNucleusAssembly:
             1 for ep in nuc.particles.values()
             if ep.orientation == EternalParticleOrientation.INWARD
         )
-        assert outward_count == 2
-        assert inward_count == 10
+        assert outward_count == 1
+        assert inward_count == 11
 
     def test_neutron_spum_invariant(self):
         """中子核 SPUM 不变量 = 12。"""
@@ -404,25 +408,25 @@ class TestVSPTValidator:
 
 class TestNeutronProtonDifference:
     def test_charge_difference(self):
-        """中子电荷 0，质子电荷 2（拓扑不变量）。"""
+        """中子电荷 0，质子电荷 1（单隼拓扑不变量）。"""
         neutron = build_nucleus(NucleusType.NEUTRON)
         proton = build_nucleus(NucleusType.PROTON)
         assert neutron.charge == 0
-        assert proton.charge == 2  # 2 个朝外虚面
+        assert proton.charge == 1  # 1 个朝外虚面
 
     def test_vacant_count_difference(self):
-        """中子 0 虚面，质子 2 虚面。"""
+        """中子 0 虚面，质子（单隼）1 虚面。"""
         neutron = build_nucleus(NucleusType.NEUTRON)
         proton = build_nucleus(NucleusType.PROTON)
         assert neutron.outward_vacant == 0
-        assert proton.outward_vacant == 2
+        assert proton.outward_vacant == 1
 
     def test_outward_particle_count(self):
-        """中子 0 个朝外粒子，质子 2 个朝外粒子。"""
+        """中子 0 个朝外粒子，质子（单隼）1 个朝外粒子。"""
         neutron = build_nucleus(NucleusType.NEUTRON)
         proton = build_nucleus(NucleusType.PROTON)
 
-        for nuc, expected in [(neutron, 0), (proton, 2)]:
+        for nuc, expected in [(neutron, 0), (proton, 1)]:
             count = sum(
                 1 for ep in nuc.particles.values()
                 if ep.orientation == EternalParticleOrientation.OUTWARD

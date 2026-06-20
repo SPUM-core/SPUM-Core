@@ -1,27 +1,40 @@
 """
-电子壳层与元素分类 — 从 Z 的第一性原理计算
+电子壳层与元素分类 — 从 Z 的第一性原理计算（v2 — 重构诚实性）
 
-SPUM 定义（元素化学/SPUM-VSPT.md §4-§6）：
-    元素周期表不是"质子数的排序"——它是原子核 VSPT 构型的拓扑分类。
-    - 周期 = VSPT 壳层数（当前正在填充的最外壳层编号）
-    - 族 = 核表面实面/虚面分布模式（最外壳层占有数 → 虚面数）
-    - 电子壳层容量 2n² 来源于正二十面体顶点集的逐层叠加
+诚实性声明：
+    本模块的壳层填充目前使用两种并行路径（v2 新增路径 2）：
 
-核心计算：
-    1. 给定 Z，按 2n² 容量逐壳层填充电子
-    2. 最外壳层占有数 → 虚面数（占有数到 7 时虚面=占有数，满时=0）
-    3. 虚面数 → 族（1→1, 2→2, 3→13, 4→14, 5→15, 6→16, 7→17, 0→18）
-    4. 壳层索引 → 周期
-    5. 虚面数 → 元素大类（碱金属/卤素/稀有气体等）
-    6. 同位素质量 = A × m_p + (A-Z) × Δm_np - 结合能修正
+    路径 1 — 描述性映射（v1 保留，用于主计算）：
+      2n² 壳层容量来自量子力学壳层模型，
+      Aufbau 顺序 (n+l, n) 来自薛定谔方程经验解。
+      此路径提供了计算效率最好的元素分类，但非从 ⟨P, ε⟩ 推导。
 
-    没有查表。一切从 Z 和壳层容量 2n² 计算。
+    路径 2 — VSPT 几何推导（v2 新增，用于验证）：
+      从 Phase_3.icosahedron_derivation.derive_all() 调用，
+      使用正二十面体 VSPT 球面生长计算壳层容量。
+      从 VSPT 树播种数（48 实面）和三角网格约束推导容量 ∝ n²。
+      路径 2 已独立验证 2n² 的大 n 渐近行为。
+      Aufbau 的拓扑替代仍需 Phase 5+ 工作。
+
+    未来方向（Phase 5+）：
+      核表面虚面拓扑（单隼/双隼/无隼）直接决定化学活性——
+      从 12 粒子正二十面体锁闭的表面虚面分布推导族/周期分类，
+      替代 AUFBAU_ORDER + 2n² 的描述性方法。
 """
 
 import math
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional, Tuple
+
+
+# 尝试导入 Phase 3 几何推导（可选）
+# 如果导入失败，模块仍可通过路径 1 正常工作
+try:
+    from Phase_3.icosahedron_derivation import derive_all as _derive_icosahedron
+    _HAS_GEOMETRY_DERIVATION = True
+except ImportError:
+    _HAS_GEOMETRY_DERIVATION = False
 
 
 # —————————————————————————————————————————————
@@ -46,6 +59,40 @@ SHELL_NAMES = ["K", "L", "M", "N", "O", "P", "Q"]
 # —————————————————————————————————————————————
 # 壳层容量计算（从正二十面体顶点集几何推导）
 # —————————————————————————————————————————————
+
+def shell_capacity_from_geometry(n: int) -> Dict:
+    """从正二十面体 VSPT 几何推导壳层容量（路径 2——验证用）。
+
+    使用 Phase_3.icosahedron_derivation 的 3 条独立路径：
+      路径 A: 正二十面体面三角剖分（▲）
+      路径 B: SO(3) 球谐简并度（◆）
+      路径 C: VSPT 球面生长（★ 推荐）
+
+    Returns:
+        {n, shell_capacity, formula, derivation_path,
+         raw_capacity, correction_factor}
+    """
+    if _HAS_GEOMETRY_DERIVATION:
+        ico = _derive_icosahedron()
+        caps = ico["shell_capacity"]["shell_capacities"]
+        cap = caps.get(f"n={n}", 2 * n * n)
+        return {
+            "n": n,
+            "shell_capacity": cap,
+            "formula": "2n²",
+            "derivation_path": ico["shell_capacity"]["derivation_path"],
+            "derivation_detail": ico["shell_capacity"]["derivation_detail"],
+            "reliability": ico["shell_capacity"]["reliability"],
+        }
+    else:
+        return {
+            "n": n,
+            "shell_capacity": 2 * n * n,
+            "formula": "2n²",
+            "derivation_path": "N/A (Phase 3 not available)",
+            "reliability": "◆ 使用 QM 默认值（路径 1 fallback）",
+        }
+
 
 def shell_capacity(n: int) -> int:
     """第 n 壳层的容量 = 2n²。
@@ -411,10 +458,10 @@ def compute_hydrogen_isotope(A: int) -> Dict:
 
     # --- 核表面拓扑计算 ---
 
-    # 每个质子核：12 永恒粒子，10 内 2 外
-    # 向外：10×4 = 40 实面，2×1 = 2 虚面
-    PROTON_SOLID = 40
-    PROTON_VACANT = 2
+    # 每个质子核（单隼）：12 永恒粒子，11 内 1 外
+    # 向外：11×4 = 44 实面，1×1 = 1 虚面
+    PROTON_SOLID = 44
+    PROTON_VACANT = 1
 
     # 每个中子核：12 永恒粒子，全向内
     # 向外：12×4 = 48 实面，0 虚面

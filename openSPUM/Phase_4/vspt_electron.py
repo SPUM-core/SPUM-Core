@@ -1,28 +1,27 @@
 """
-VSPT 电子耦合引擎 — 电子波函数与 VSPT 分支密度的自洽计算
+VSPT 电子耦合引擎 — 从纯几何分支结构计算电子密度（v2 — 无拟合参数）
 
-物理模型:
-    SPUM 中电子 = 小开口永恒粒子，在 VSPT 分支结构中运动。
+物理模型（v2 重写 — 诚实性修正）：
+    v1 使用自抑制公式 children(l) = 3/(1+γ·N(l)·l/N_ref) 试图拟合 1s 轨道形状，
+    其中 γ=0.08, N_ref=600 是手动调参，无 ⟨P, ε⟩ 依据。
+    
+    v2 改为纯几何途径：
+    - VSPT 节点以 3 分支/节点纯几何生长（正二十面体三角网格约束）
+    - 不施加任何电子密度反馈调制
+    - 电子径向概率分布 P(l) 作为后验量计算：P(l) = N(l) / total_nodes
+    - 结合能用拓扑量度表达（非 eV），不做量子力学数据拟合
 
-    电子-VSPT 耦合的核心机制:
-    每个 VSPT 节点最多产生 3 个子节点 (正二十面体三角网格约束)。
-    子节点的存活率由电子密度调制:
-      - 电子密度高 → 节点被"占据" → 子节点存活率低
-      - 电子密度低 → 节点"空闲" → 子节点存活率高
+    当前局限（诚实声明）：
+    - 纯几何生长下 N(l) ∝ 3^l 单调增长，不出现 1s 轨道的径向峰
+    - 量子力学径向概率 |R(r)|² ∝ r²e^{-2r/a₀} 需要附加拓扑约束才能涌现
+    - 这些约束（电子-核自旋耦合、占据数排斥、Pauli 拓扑》）是 Phase 5+ 的工作
+    - 当前版本仅计算纯几何 VSPT + 后验拓扑量，不做 eV 能量换算
 
-    这是自洽过程:
-      生长 → 计算密度 → 调制存活 → 下一层生长 → ... → 收敛
-
-    自抑制生长公式:
-      children(l) = 3 / (1 + γ · N(l) · l / N_ref)
-      
-      当 N(l)·l 小 (早期层, 节点少): children ≈ 3 (自由生长)
-      当 N(l)·l 大 (后期层, 节点多): children < 1 (生长停止)
-      中间层: N(l)·l 刚好使 children = 1 → N 达到峰值
-
-    基态能量从径向分布估算:
-      E_bind = -13.6 × (R_nuc / R_eff)²  [eV]
-      其中 R_eff 是电子云的平均半径
+    对比 v1：
+        γ=0.08    → 已移除（手动调参）
+        N_ref=600 → 已移除（手动选择）
+        13.6 eV   → 已移除（来自玻尔模型，非 SPUM）
+        avg_deg/4 → 已移除（经验修正因子）
 """
 
 import math
@@ -34,40 +33,35 @@ from Phase_4.eternal_particle import EternalParticle, Handedness
 from Phase_4.vspt_growth import VSPTNode, VSPTTree, VSPTConfig, VSPTEngine
 from Phase_4.vspt_growth import _normalize, _triangular_mesh_directions
 
+from Phase_1.constants import KAPPA, TAU
+
 
 # ============================================================
-# 电子态配置
+# 电子态配置 (v2 — 精简)
 # ============================================================
 
 @dataclass
 class ElectronConfig:
-    """电子-VSPT 耦合配置。"""
-    # 电子数（= 原子序数 Z）
+    """电子-VSPT 配置（v2 — 无拟合参数）。
+
+    Attributes:
+        electron_count: 电子数 (= 原子序数 Z), 当前仅用于结构计数
+    """
     electron_count: int = 1
-    # 反馈强度 γ (无量纲)
-    # children(l) = 3 / (1 + γ · N(l) · l / N_ref)
-    feedback_gamma: float = 0.08
-    # 参考节点数 N_ref (来自拓扑: 40 棵树 × 树间重叠因子)
-    # 在三角网格上, 40 棵树 × 6 节点/层/树 = 240
-    # 但允许重叠, 所以 N_ref 应大于 240
-    # N_ref = 40 × 6 × overlap_factor, overlap ≈ 3-5
-    n_ref: int = 1000
-    # 核表面抑制: 质子 48 面中 2 个虚面
-    # 层 0 的存活率额外乘以 (1 - vacant_ratio)
-    # vacant_ratio = 0.0417 但虚面影响是整个核表面, 不只是层 0
-    # 实际效果: 核表面 4.17% 的面积不可用于生长
-    vacant_ratio: float = 2.0 / 48.0  # ≈ 0.0417
 
 
 # ============================================================
-# 电子-VSPT 耦合引擎
+# 电子-VSPT 引擎 (v2 — 纯几何 + 后验拓扑量)
 # ============================================================
 
 class ElectronVSPTEngine:
-    """带电子耦合的 VSPT 生长引擎。
+    """VSPT 电子引擎 — 纯几何生长 + 后验拓扑量计算。
 
-    与 VSPTEngine 接口兼容。
-    run_growth() 返回标准 VSPT 结果 + 电子径向分布 + 能量估计。
+    与 v1 的关键区别：
+        - 生长阶段无电子密度反馈（无 γ, 无 N_ref）
+        - children_per_node = 3 始终（三角网格约束）
+        - 电子密度 = 归一化层节点数 P(l) = N(l) / total_nodes
+        - 结合能 = 拓扑量纲（非 eV），报告原始拓扑量
     """
 
     def __init__(self, config: Optional[VSPTConfig] = None,
@@ -77,39 +71,14 @@ class ElectronVSPTEngine:
         self._cpu_engine = VSPTEngine(config=config)
         self._node_counter = 0
         self._rng = random.Random(self.config.seed)
-        # 存储每层的电子概率
+        # 后验拓扑量
         self.electron_density: Dict[int, float] = {}
         self.electron_peak_layer: int = 0
-        self.binding_energy: float = 0.0
-        # 层的节点数历史 (用于自抑制)
-        self._layer_history: Dict[int, int] = {}
+        self.topology_binding_index: float = 0.0
 
     def _next_uid(self, prefix: str = "v") -> str:
         self._node_counter += 1
         return f"{prefix}{self._node_counter:06d}"
-
-    def _children_count(self, layer: int, current_count: int) -> float:
-        """计算层 l 中每个节点的平均子节点数。
-
-        自抑制公式:
-            children(l) = 3 / (1 + γ · N(l) · l / N_ref)
-            
-        其中:
-            N(l) = 层 l 的当前节点数 (current_count)
-            l = 层号 (layer)
-            γ = feedback_gamma
-            N_ref = n_ref
-            
-        物理含义:
-            - 层号 l 小且 N(l) 小: children ≈ 3 (自由生长)
-            - N(l)·l 大: children < 1 (生长受限)
-            - 当 children = 1: N 达到峰值
-        """
-        gamma = self.electron_cfg.feedback_gamma
-        nref = self.electron_cfg.n_ref
-        suppression = gamma * current_count * layer / max(nref, 1)
-        children = 3.0 / (1.0 + suppression)
-        return max(0.01, children)
 
     def seed_tree(
         self,
@@ -130,12 +99,24 @@ class ElectronVSPTEngine:
         nucleus_particles: Dict[str, EternalParticle],
         nucleus_position_map: Dict[str, Tuple[float, float, float]],
     ) -> Dict:
-        """运行带电子耦合的 VSPT 生长。
+        """运行纯几何 VSPT 生长 + 后验拓扑量计算。
+
+        生长规则（全部从 ⟨P, ε⟩ 几何约束推导）：
+            - 每个实面种 1 棵 VSPT 树
+            - 每节点产生 3 个子节点（正二十面体三角网格约束）
+            - 子节点方向 = 120° 分支角（三角网格顶点法向）
+            - 无电子密度反馈，无自抑制
+
+        后验拓扑量：
+            - 层分布 layer_distribution: {l: N(l)}
+            - 电子密度: P(l) = N(l) / total_nodes
+            - 拓扑结合指数: Σ(N(l) × (avg_deg(l) - 3)) / total_nodes
+              反映 VSPT 网络的整体连接紧密程度
 
         Returns:
-            {n_trees, total_nodes, layer_distribution, max_layer, trees,
+            {n_trees, total_nodes, layer_distribution, max_layer,
              electron_density, electron_peak_layer,
-             binding_energy_eV, compactness, avg_degree}
+             topology_binding_index, avg_degree, trees}
         """
         # 核半径
         radii = [math.sqrt(sum(p[i] ** 2 for i in range(3)))
@@ -164,20 +145,13 @@ class ElectronVSPTEngine:
         trees = self._cpu_engine.trees
         tree_count = len(trees)
 
-        # === 逐层生长 with 电子调制 ===
+        # === 纯几何逐层生长 ===
         layer_dist = {0: tree_count}
-        self._layer_history = {0: tree_count}
-
-        # 自由生长参考节点数 (无抑制时的理论值)
-        # 用于自抑制公式: children(l) = 3 / (1 + γ · N_free(l) · l / N_ref)
-        n_free_reference = {l: tree_count * (3 ** l) for l in range(self.config.max_layers + 1)}
+        children_per = float(self.config.children_per_node)  # = 3.0
 
         for layer in range(1, self.config.max_layers + 1):
             layer_new = 0
             layer_radius = nucleus_radius + layer * self.config.layer_spacing
-            # 使用自由生长参考值计算 children_per (对所有树一致)
-            n_ref = n_free_reference[layer]
-            children_per = self._children_count(layer, n_ref)
 
             for tree in trees.values():
                 if tree.node_count >= self.config.max_nodes_per_tree:
@@ -199,12 +173,9 @@ class ElectronVSPTEngine:
                         parent_dir, tree.handedness
                     )
 
-                    # 每个父节点产生 children_per 个子节点 (概率分派)
                     for di in range(self.config.children_per_node):
                         if di >= len(child_dirs):
                             break
-                        if self._rng.random() > children_per / self.config.children_per_node:
-                            continue
 
                         d = child_dirs[di]
                         child_uid = self._next_uid()
@@ -239,7 +210,6 @@ class ElectronVSPTEngine:
 
             if layer_new > 0:
                 layer_dist[layer] = layer_dist.get(layer, 0) + layer_new
-                self._layer_history[layer] = layer_new
             else:
                 break
 
@@ -261,8 +231,10 @@ class ElectronVSPTEngine:
                             ni.degree += 1
                             nj.degree += 1
 
-        # === 电子密度 (归一化各层概率) ===
+        # === 后验拓扑量计算 ===
         total_nodes = sum(layer_dist.values())
+
+        # 电子密度 = 归一化层节点数
         electron_prob = {}
         max_p = 0.0
         peak_l = 0
@@ -276,21 +248,33 @@ class ElectronVSPTEngine:
         self.electron_density = electron_prob
         self.electron_peak_layer = peak_l
 
-        # === 结合能估算 ===
+        # 拓扑结合指数 (无量纲)
+        # = Σ(N(l) × (avg_deg(l) - 3)) / total_nodes
+        # avg_deg(l) - 3 = 横向连接带来的额外束缚
+        # 纯树状结构 avg_deg ≈ 3, 结合指数 = 0
+        # 密堆结构 avg_deg → 6, 结合指数 → 3
+        all_avg_deg = 0.0
+        total_connection = 0.0
+        for layer in sorted(layer_dist.keys()):
+            layer_nodes_list = []
+            for tree in trees.values():
+                uids = tree.layer_nodes.get(layer, [])
+                layer_nodes_list.extend(
+                    tree.nodes[uid] for uid in uids if uid in tree.nodes
+                )
+            if layer_nodes_list:
+                l_avg = sum(n.degree for n in layer_nodes_list) / len(layer_nodes_list)
+                total_connection += layer_dist[layer] * (l_avg - 3.0)
+            all_avg_deg += layer_dist[layer]
+
+        if total_nodes > 0:
+            self.topology_binding_index = total_connection / total_nodes
+
+        # 全局平均度数
         all_nodes = []
         for tree in trees.values():
             all_nodes.extend(tree.nodes.values())
         avg_degree = sum(n.degree for n in all_nodes) / max(len(all_nodes), 1) if all_nodes else 0
-
-        # 基态能量估算:
-        # E_bind = -13.6 × (avg_degree / 4.0)  [eV]
-        # 物理学: 每个节点的平均连接数决定"拓扑结合强度"
-        # 参考: 完美三角网格 avg_degree = 4 → E = -13.6 eV
-        # H 的 VSPT 应有 avg_degree ~ 3.5-4 → E ~ -13.6 eV
-        binding_energy = -13.6 * avg_degree / 4.0
-
-        # 电子数修正: 对 H (Z=1) 无影响
-        binding_energy *= self.electron_cfg.electron_count
 
         return {
             "n_trees": len(trees),
@@ -300,6 +284,6 @@ class ElectronVSPTEngine:
             "trees": trees,
             "electron_density": electron_prob,
             "electron_peak_layer": peak_l,
-            "binding_energy_eV": binding_energy,
+            "topology_binding_index": self.topology_binding_index,
             "avg_degree": avg_degree,
         }

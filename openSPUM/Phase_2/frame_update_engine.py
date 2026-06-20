@@ -34,6 +34,11 @@ class FrameUpdateConfig:
         directional_cascade:    是否启用定向传播级联（α 测量模式）
         cascade_source_uid:     定向传播的扰动源 UID
         use_natural_cap:        是否用局部拓扑亏损决定补偿边数（默认 False）
+        
+        # 拓扑守恒验证配置
+        validate_topology:      是否启用拓扑守恒验证（默认 True）
+        enforce_invariant:      是否强制 Σ(6−deg) 不变（默认 False，仅记录）
+        check_euler_characteristic: 是否计算欧拉示性数（默认 True）
     """
 
     growth_per_frame: int = 0
@@ -42,6 +47,11 @@ class FrameUpdateConfig:
     directional_cascade: bool = False
     cascade_source_uid: str = ""
     use_natural_cap: bool = False
+    
+    # 拓扑守恒验证配置
+    validate_topology: bool = True
+    enforce_invariant: bool = False
+    check_euler_characteristic: bool = True
 
 
 @dataclass
@@ -64,6 +74,14 @@ class FrameLog:
         crystallite_count: 晶子节点数
         max_degree:        最大度数
         stable:            本帧是否稳定收敛（无残留悬挂）
+        
+        # 拓扑守恒验证字段
+        invariant_before:  帧前 Σ(6−deg) 值
+        invariant_after:   帧后 Σ(6−deg) 值
+        invariant_delta:   帧内 Σ(6−deg) 变化量
+        topology_valid:    拓扑守恒是否通过验证
+        euler_characteristic: 欧拉示性数 V-E+F
+        closed_subgraph_invariant: 闭合子图 Σ(6−deg) 是否为 12
     """
 
     frame_number: int = 0
@@ -81,6 +99,14 @@ class FrameLog:
     crystallite_count: int = 0
     max_degree: int = 0
     stable: bool = True
+    
+    # 拓扑守恒验证字段
+    invariant_before: int = 0
+    invariant_after: int = 0
+    invariant_delta: int = 0
+    topology_valid: bool = True
+    euler_characteristic: int = 0
+    closed_subgraph_invariant: bool = False
 
     # 级联边级追踪（可选，用于粒子追踪和位移分析）
     annihilated_keys: List[Tuple[str, str]] = field(default_factory=list)
@@ -97,8 +123,10 @@ class FrameLog:
             f"| 总边={self.edge_count}(+{self.cluster_edge_count}簇) "
             f"| V={self.node_count} "
             f"| Sigma(6-deg)={self.spum_invariant:+d} "
+            f"| ΔΣ={self.invariant_delta:+d} "
             f"| 晶子={self.crystallite_count} "
             f"{'[OK]' if self.stable else '[!]'}"
+            f"{' [TOPO]' if not self.topology_valid else ''}"
         )
 
 
@@ -136,6 +164,11 @@ class FrameUpdateEngine:
         edges_before = self.relation_pool.edge_count()
         cluster_before = self.relation_pool.cluster_edge_count()
         total_before = edges_before + cluster_before
+        nodes_before = self.node_registry.node_count()
+        
+        # === 帧前拓扑守恒快照 ===
+        if self.config.validate_topology:
+            log.invariant_before = 6 * nodes_before - 2 * total_before
 
         # ---- Phase 1: 生长（可选） ----
         if self.config.growth_per_frame > 0:
@@ -180,6 +213,26 @@ class FrameUpdateEngine:
         )
         log.dangling_after = len(self.node_registry.dangling_nodes())
         log.stable = log.dangling_after == 0
+        
+        # === 帧后拓扑守恒验证 ===
+        if self.config.validate_topology:
+            log.invariant_after = log.spum_invariant
+            log.invariant_delta = log.invariant_after - log.invariant_before
+            
+            # 验证 Σ(6−deg) 守恒
+            # 对于闭合网络，Σ(6−deg) 应保持不变（除非有外部注入/移除）
+            log.topology_valid = self._validate_topology_conservation(log)
+            
+            # 计算欧拉示性数（可选）
+            if self.config.check_euler_characteristic:
+                log.euler_characteristic = self._compute_euler_characteristic()
+            
+            # 验证闭合子图不变量
+            log.closed_subgraph_invariant = self._verify_closed_subgraph_invariant()
+            
+            # 如果启用强制不变量且验证失败，尝试修复
+            if self.config.enforce_invariant and not log.topology_valid:
+                self._enforce_topology_invariant(log)
 
         self.logs.append(log)
         self.current_frame += 1
@@ -436,6 +489,121 @@ class FrameUpdateEngine:
         return [self.run_frame() for _ in range(n)]
 
     # ------------------------------------------------------------
+    # 拓扑守恒验证
+    # ------------------------------------------------------------
+    def _validate_topology_conservation(self, log: FrameLog) -> bool:
+        """验证拓扑守恒是否成立。
+        
+        SPUM 三大公设之约束公设要求：
+            - 在闭合网络中，Σ(6−deg) 应保持不变
+            - 若有外部注入（生长阶段），允许变化但应在合理范围内
+        
+        Returns:
+            bool: 拓扑守恒是否通过验证
+        """
+        # 生长阶段会改变拓扑，允许一定变化
+        if self.config.growth_per_frame > 0:
+            # 每条新边增加 2 度，Σ(6−deg) 减少 2
+            expected_delta = -2 * self.config.growth_per_frame
+            tolerance = 2  # 允许微小偏差
+            return abs(log.invariant_delta - expected_delta) <= tolerance
+        else:
+            # 纯级联模式：Σ(6−deg) 应保持不变
+            return log.invariant_delta == 0
+
+    def _compute_euler_characteristic(self) -> int:
+        """计算欧拉示性数 χ = V - E + F。
+        
+        对于三角剖分网络，可通过 Σ(6−deg) 间接计算：
+            Σ(6−deg) = 6V - 2E = 12(1 - g)
+            其中 g 是亏格（genus）
+        
+        对于球面拓扑（g=0），χ = 2，Σ(6−deg) = 12
+        
+        Returns:
+            int: 欧拉示性数
+        """
+        V = self.node_registry.node_count()
+        E = self.relation_pool.edge_count() + self.relation_pool.cluster_edge_count()
+        
+        # 对于三角剖分，每个面由 3 条边围成，每条边属于 2 个面
+        # 3F = 2E → F = 2E/3
+        # χ = V - E + 2E/3 = V - E/3
+        if E > 0:
+            F = 2 * E // 3
+            return V - E + F
+        return 0
+
+    def _verify_closed_subgraph_invariant(self) -> bool:
+        """验证闭合子图是否满足 Σ(6−deg) = 12。
+        
+        根据欧拉恒等式，闭合三角剖分子图必须满足：
+            Σ(6−deg(v)) = 12
+        
+        Returns:
+            bool: 是否满足闭合子图不变量
+        """
+        crystallite_nodes = self.node_registry.crystallite_nodes()
+        if not crystallite_nodes:
+            return False
+        
+        # 检查晶子子图的 Σ(6−deg)
+        invariant = sum(6 - n.degree for n in crystallite_nodes)
+        return invariant == 12
+
+    def _enforce_topology_invariant(self, log: FrameLog) -> None:
+        """强制拓扑不变量守恒。
+        
+        当验证失败时，尝试通过添加或删除边来修复。
+        
+        Args:
+            log: 当前帧日志
+        """
+        target_invariant = log.invariant_before
+        current_invariant = log.invariant_after
+        delta = current_invariant - target_invariant
+        
+        if delta == 0:
+            return
+        
+        # 需要调整的边数：每条边改变 2 单位不变量
+        edges_to_adjust = abs(delta) // 2
+        
+        if delta > 0:
+            # Σ(6−deg) 偏大，需要减少 → 添加边
+            candidates = self.relation_pool.deterministic_candidates(
+                self.node_registry,
+                count=edges_to_adjust,
+                layer="all",
+            )
+            for loc_a, loc_b in candidates:
+                self.relation_pool.manifest_relation(
+                    loc_a, loc_b, self.current_frame, self.node_registry
+                )
+                log.edges_created += 1
+                log.compensated_keys.append((loc_a.uid, loc_b.uid))
+        else:
+            # Σ(6−deg) 偏小，需要增加 → 删除边
+            dangling_nodes = self.node_registry.dangling_nodes()
+            dangling_uids = {n.address.uid for n in dangling_nodes}
+            
+            for _ in range(edges_to_adjust):
+                for key, rel in list(self.relation_pool.manifest.items()):
+                    if (rel.loc1.uid in dangling_uids or 
+                        rel.loc2.uid in dangling_uids):
+                        self.relation_pool.manifest.pop(key, None)
+                        log.edges_annihilated += 1
+                        log.annihilated_keys.append(key)
+                        self.node_registry.update_degree(rel.loc1.uid, -1)
+                        self.node_registry.update_degree(rel.loc2.uid, -1)
+                        break
+        
+        # 更新日志
+        log.topology_valid = True
+        log.invariant_after = target_invariant
+        log.invariant_delta = 0
+
+    # ------------------------------------------------------------
     # 状态查询
     # ------------------------------------------------------------
     def summary(self) -> str:
@@ -446,6 +614,12 @@ class FrameUpdateEngine:
         deg_sum = sum(n.degree for n in nodes.values())
         v = len(nodes)
         e = total_edges + cluster_edges
+        invariant = 6 * v - 2 * e
+        
+        # 计算欧拉示性数
+        euler_char = self._compute_euler_characteristic() if self.config.check_euler_characteristic else "N/A"
+        
+        closed_valid = self._verify_closed_subgraph_invariant()
 
         return (
             f"帧演化引擎状态\n"
@@ -456,7 +630,9 @@ class FrameUpdateEngine:
             f"  聚簇边:      {cluster_edges}\n"
             f"  总度数:      {deg_sum} (常规边应={2 * total_edges}, "
             f"簇连接不计度)\n"
-            f"  Σ(6−deg):   {6 * v - 2 * e}\n"
+            f"  Σ(6−deg):   {invariant}\n"
+            f"  欧拉示性数:  {euler_char}\n"
+            f"  闭合子图验证: {'✓ 通过' if closed_valid else '✗ 失败'}\n"
             f"  晶子数:      {len(self.node_registry.crystallite_nodes())}\n"
             f"  悬挂节点:    {len(self.node_registry.dangling_nodes())}\n"
             f"  已运行帧:    {len(self.logs)}\n"

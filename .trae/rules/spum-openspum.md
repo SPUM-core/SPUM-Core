@@ -88,7 +88,6 @@
 | `verify_closed_subgraph.py` | 闭合子图 Σ(6-deg)=12 专项验证 | ✓ |
 | `verify_crystallite.py` | 晶子涌现专项验证 | ✓ |
 | `verify_eternal_particle.py` | 开口构型与自持位移验证 | ✓ |
-| `diagnose_alpha.py` | α 本质诊断: α = (cap x penetration)/(sigma x cap) = 1/sigma; cap=3 硬编码/涌现分析 | ✓ |
 | `measure_sigma_natural.py` | sigma_natural 测量: 网络自发演化的悬挂对密度特征值 (0.5~2.5) | ✓ |
 | `simulate_particles.py` | 开口拓扑动力学: 开口=静止拓扑缺陷 (TYPE_B), 非运动粒子 | ✓ |
 
@@ -124,6 +123,5 @@
 | 运行氢全程仿真 | `openSPUM/Phase_4/simulate_hydrogen.py` |
 | 查看 VSPT 径向分布 | `openSPUM/Phase_4/vspt_radial.png` |
 | 运行/扩展测试 | `openSPUM/tests/test_phase*_all.py` |
-| alpha 测量与诊断 | `openSPUM/tests/diagnose_alpha.py` |
 | sigma_natural 特征值 | `openSPUM/tests/measure_sigma_natural.py` |
 | 粒子行为模拟 | `openSPUM/tests/simulate_particles.py` |

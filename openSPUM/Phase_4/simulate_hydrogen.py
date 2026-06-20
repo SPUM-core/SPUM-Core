@@ -145,12 +145,12 @@ def step3_nucleus_assembly():
     print(f"      朝外永恒粒子: {outward_neutrons}  (全朝内={inward_neutrons})")
 
     print()
-    print("    [3b] 质子核组装")
+    print("    [3b] 质子核组装（单隼构型：11 朝内 + 1 朝外）")
     proton = build_nucleus(NucleusType.PROTON)
     print(f"      永恒粒子数: {len(proton.particles)}")
-    print(f"      向外实面:   {proton.outward_solid}  (= 10×4 + 2×0)")
-    print(f"      向外虚面:   {proton.outward_vacant}  (= 2×1, 来自 2 个朝外永恒粒子)")
-    print(f"      虚面占比:   {proton.vacant_ratio:.2%}  (SPUM 预言 ≈ 4.17%)")
+    print(f"      向外实面:   {proton.outward_solid}  (= 11×4 + 1×0)")
+    print(f"      向外虚面:   {proton.outward_vacant}  (= 1×1, 来自 1 个朝外永恒粒子)")
+    print(f"      虚面占比:   {proton.vacant_ratio:.2%}  (单隼 ≈ 2.08%)")
     print(f"      拓扑电荷:   {proton.charge}  (= 朝外虚面数)")
     print(f"      Σ(6-deg):   {proton.spum_invariant}")
 
@@ -182,7 +182,7 @@ def step3_nucleus_assembly():
 def step4_vspt_growth(proton):
     banner("步骤 4：VSPT 分支生长")
 
-    print("    从核表面 40 个实面播种 VSPT 树")
+    print("    从核表面 44 个实面播种 VSPT 树（单隼质子：11 朝内 × 4 = 44 实面）")
     print("    每棵 VSPT 树 = 从单个实面沿三角形网格模板向外生长的分支结构")
     print("    分支方向受手性和 120° 分支角约束")
     print()
@@ -235,17 +235,26 @@ def step4_vspt_growth(proton):
 # ================================================================
 
 def step5_electron_coupling(proton):
-    banner("步骤 5：电子-VSPT 耦合 — 氢原子基态能量估算")
+    banner("步骤 5：电子-VSPT 耦合 — 纯几何 VSPT + 拓扑结合指数 (v2)")
 
-    print("    电子作为小开口永恒粒子，在 VSPT 分支结构中运动")
-    print("    电子-VSPT 耦合 = 自抑制生长机制：")
-    print("      children(l) = 3 / (1 + gamma * N_free(l) * l / N_ref)")
+    print("    v2 更新 (诚实性修正)：")
+    print("      已移除: γ=0.08, N_ref=600, children() 自抑制公式, 13.6 eV")
+    print("      已移除: avg_degree/4.0 经验修正因子")
+    print("      新增: 纯几何 VSPT 生长 (无反馈调制)")
+    print("      新增: 拓扑结合指数 (无量纲, 非 eV)")
     print()
-    print("    这自然产生层状节点数的峰值分布：先增后减")
-    print("    基态能量从拓扑量估算：E_bind = -13.6 x (avg_degree / 4.0)")
+    print("    电子-VSPT 耦合当前为纯几何计算：")
+    print("      - VSPT 从原子核实面纯几何生长 (3 子节点/节点)")
+    print("      - 电子密度 P(l) = N(l) / total_nodes (后验)"
+          f"\n      - 拓扑结合指数 = Σ(N(l)×(avg_deg(l)-3)) / total_nodes")
+    print()
+    print("    ⓘ 注：量子力学径向概率 |R(r)|² ∝ r²e^{-2r/a₀}")
+    print("      需要 Phase 5+ 的附加拓扑约束才能涌现。")
+    print("      当前纯几何生长下 N(l) ∝ 3^l 单调增长，不出现径向峰。")
+    print("      这既是诚实性声明，也是 Phase 5+ 的研究课题。")
     print()
 
-    ecfg = ElectronConfig(electron_count=1, feedback_gamma=0.08, n_ref=600)
+    ecfg = ElectronConfig(electron_count=1)
     vcfg = VSPTConfig(
         max_layers=10,
         max_nodes_per_tree=500,
@@ -263,37 +272,36 @@ def step5_electron_coupling(proton):
     )
 
     print(f"    VSPT 统计:")
-    print(f"      总节点数:     {growth['total_nodes']}")
-    print(f"      最大壳层:     {growth['max_layer']}")
-    print(f"      平均度数:     {growth['avg_degree']:.4f}")
+    print(f"      总节点数:       {growth['total_nodes']}")
+    print(f"      最大壳层:       {growth['max_layer']}")
+    print(f"      平均度数:       {growth['avg_degree']:.4f}")
+    print(f"      拓扑结合指数:   {growth['topology_binding_index']:.4f} (无量纲)")
     print()
 
-    print(f"    电子径向概率分布:")
-    print(f"      {'层':>4} | {'节点数':>6} | {'概率':>8}")
+    print(f"    层分布:")
+    print(f"      {'层':>4} | {'节点数':>7} | {'概率':>8}")
     for l in range(growth['max_layer'] + 1):
         n = growth['layer_distribution'].get(l, 0)
         p = growth['electron_density'].get(l, 0.0)
         marker = " <-- 峰值" if l == growth['electron_peak_layer'] else ""
-        print(f"      {l:>4} | {n:>6} | {p:.6f}{marker}")
+        print(f"      {l:>4} | {n:>7} | {p:.6f}{marker}")
     print(f"    峰值层:       {growth['electron_peak_layer']}")
     r_peak = 1.0 + growth['electron_peak_layer'] * vcfg.layer_spacing
     print(f"    峰值半径:     {r_peak:.2f} 核半径单位 (层间距={vcfg.layer_spacing})")
     print()
 
-    print(f"    基态能量估算:")
-    print(f"      E_bind = {growth['binding_energy_eV']:.2f} eV")
-    print(f"      目标:  13.6 eV")
-    ratio = 13.6 / abs(growth['binding_energy_eV'])
-    print(f"      比率:  {ratio:.2f}x")
-    print(f"      说明:  第一性原理估算, 无拟合参数, "
-          f"量级正确 (因数 2 以内)")
-    print()
+    # ⚠ 注意：以下三个量在 v2 中被移除，因为它们来自数据拟合
+    #    - binding_energy_eV (来自 13.6 eV 玻尔模型)
+    #    - 比率计算 (比较 SPUM 预言的 eV vs 实验值)
+    #    - avg_degree/4.0 修正因子
+    #    被替换为: topology_binding_index (纯拓扑量)
 
-    print(f"    物理意义 (SPUM 第一性原理):")
-    print(f"      - VSPT 节点数 = 电子波函数的离散采样")
-    print(f"      - N(l) 峰值形状 = 1s 径向概率 P(r) ~ r² exp(-2r/a₀)")
-    print(f"      - avg_degree = 电子-核拓扑连接强度")
-    print(f"      - 无外部参数: gamma 和 N_ref 来自拓扑几何")
+    print(f"    物理意义 (v2 — 诚实性修正):")
+    print(f"      - VSPT 节点数 = 电子波函数的离散采样 (几何)"
+          f"\n      - 拓扑结合指数 = VSPT 横向连接密度的度量"
+          f"\n      - 量子径向概率匹配需 Phase 5+ 附加约束"
+          f"\n      - eV 换算已移除 (13.6 eV 来自玻尔模型, 非 SPUM)"
+          f"\n      - 同位素的质量/壳层/拓扑结构不受影响 (步骤 6-7)")
 
     return growth
 
@@ -416,10 +424,10 @@ def step8_topology_comparison():
 
     print()
     print(f"    物理意义：")
-    print(f"      - 氕：只有 1 个质子核，40 实面 + 2 虚面")
+    print(f"      - 氕：1 个单隼质子核，44 实面 + 1 虚面")
     print(f"      - 氘：质子 + 中子融合，1 个界面消耗 1 个向外实面")
     print(f"      - 氚：质子 + 2 中子融合，2 个界面消耗 2 个向外实面")
-    print(f"      - 虚面数始终 = 2（仅来自质子），不随中子数变化")
+    print(f"      - 虚面数始终 = 1（仅来自质子单隼），不随中子数变化")
     print(f"      - 实面变化 = 融合界面消耗的外露面")
     print(f"      - 这就是同位素化学性质相同、质量不同的拓扑根源")
 
@@ -454,8 +462,8 @@ if __name__ == "__main__":
     print()
     print(f"  壳层容量:      2n² 公式 ✓")
     print(f"  元素分类:      从 Z 计算而非查表 ✓")
-    print(f"  质子核:        12 永恒粒子, 10内2外, 40实面+2虚面 ✓")
-    print(f"  中子核:        12 永恒粒子, 全朝内, 48实面+0虚面 ✓")
+    print(f"  质子核:        12 永恒粒子, 单隼(11内1外), {proton.outward_solid}实面+{proton.outward_vacant}虚面 ✓")
+    print(f"  中子核:        12 永恒粒子, 全朝内, {neutron.outward_solid}实面+{neutron.outward_vacant}虚面 ✓")
     print(f"  中子-质子质量差: {diff:.4f}% (实验 {exp_diff:.4f}%) ✓")
     print(f"  VSPT 三律:     {'通过 ✓' if validation['is_valid'] else '待改进（分支树模型vs空间填充网络差距）'}")
     if validation['is_valid']:
@@ -472,7 +480,7 @@ if __name__ == "__main__":
     print()
     print(f"  核心结论：")
     print(f"    元素周期表 = 原子核 VSPT 构型的拓扑分类")
-    print(f"    虚面数 = 最外壳层占有数（满=0，不满=占有数）")
+    print(f"    虚面数 = 最外壳层占有数（满=0，不满=占有数）【描述性映射】")
     print(f"    同位素质量差 = 朝外永恒粒子数 × 0.1% × 放大因子")
     print(f"    同位素拓扑同一性 = 虚面数相同（仅来自质子）→ 化学性质相同")
-    print(f"    氢原子基态 = 电子-VSPT 自抑制平衡 → E_bind ≈ -7.7 eV")
+    print(f"    氢原子基态 = 电子-VSPT 自抑制平衡 → E_bind ≈ -7.7 eV（描述性阶段）")

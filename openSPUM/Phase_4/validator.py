@@ -6,10 +6,15 @@ VSPT 几何三律（元素化学/SPUM-VSPT.md §3.3）：
     2. 分支角 ≈ 120°：分支角来自正二十面体二面角
     3. ρ∝r⁻³（密度幂律）：节点数密度沿径向 r⁻³ 衰减
 
-验证方法：
-    - Law 1：统计 VSPT 树中所有节点的度数分布，确认多数满足 k≥3
-    - Law 2：计算所有父子节点之间的分支角，统计均值与标准差
-    - Law 3：对径向密度分布做幂律拟合，检验指数 ≈ -3
+诚实性说明：
+    Law 1 (k≥3)：当前 VSPT 纯三角网格生长默认满足 k≥3。
+                 容差 0.1（90%）较为合理，边缘节点因横向连接不足可能有少量违规。
+    Law 2 (120°)：由三角网格几何精确实现，应 100% 通过。
+    Law 3 (ρ∝r⁻³)：当前 VSPT 为纯 3-分支三角网格生长（无随机存活衰减），
+                    节点数随壳层指数增长，密度幂律自然不成立。
+                    此律是预期不能通过的——它标志 VSPT 需要电子耦合等衰减机制。
+    
+    验证器设计原则：容差反映对 SPUM 几何约束的置信度，而非反向适配模拟输出。
 """
 
 import math
@@ -99,7 +104,8 @@ def validate_k3_law(
 def validate_120_angle(
     trees: Dict[str, VSPTTree],
     target_angle: float = 120.0,
-    angle_tolerance: float = 10.0,
+    angle_tolerance: float = 5.0,
+    min_pass_ratio: float = 0.8,
 ) -> Dict:
     """验证 VSPT 分支角 ≈ 120°。
 
@@ -110,7 +116,8 @@ def validate_120_angle(
     Args:
         trees:           VSPT 树字典
         target_angle:    目标分支角（度，默认 120°）
-        angle_tolerance: 允许偏差（度，默认 ±10°）
+        angle_tolerance: 允许偏差（度，默认 ±5°）
+        min_pass_ratio:  在容差内的最小比例（默认 0.8）
 
     Returns:
         {is_valid, mean_angle, std_angle, angle_distribution, ...}
@@ -176,12 +183,13 @@ def validate_120_angle(
     pass_ratio = within_tolerance / len(angles)
 
     return {
-        "is_valid": pass_ratio >= 0.5,  # 至少 50% 节点在容差内
+        "is_valid": pass_ratio >= min_pass_ratio,
         "n_angles": len(angles),
         "mean_angle": round(mean_angle, 2),
         "std_angle": round(std_angle, 2),
         "target_angle": target_angle,
         "tolerance": angle_tolerance,
+        "min_pass_ratio": min_pass_ratio,
         "within_tolerance": within_tolerance,
         "pass_ratio": round(pass_ratio, 4),
         "min_angle": round(min(angles), 2),
@@ -190,7 +198,7 @@ def validate_120_angle(
         "message": (
             f"通过 ✓ (均值 {mean_angle:.1f}° ± {std_angle:.1f}°, "
             f"{pass_ratio:.0%} 在容差内)"
-            if pass_ratio >= 0.5
+            if pass_ratio >= min_pass_ratio
             else f"未通过 (均值 {mean_angle:.1f}°, 仅 {pass_ratio:.0%} 在容差内)"
         ),
     }
@@ -306,9 +314,9 @@ def validate_density_power_law(
 class VSPTValidator:
     """VSPT 三律完整验证器。"""
 
-    k3_tolerance: float = 0.2
-    angle_tolerance: float = 10.0
-    exponent_tolerance: float = 0.5
+    k3_tolerance: float = 0.1        # k≥3: 允许 ≤10% 节点不达标
+    angle_tolerance: float = 5.0     # 120°: 允许 ±5° 偏差
+    exponent_tolerance: float = 0.5   # ρ∝r⁻³: 允许 ±0.5（此律当前预期不通过）
 
     def validate_all(
         self,

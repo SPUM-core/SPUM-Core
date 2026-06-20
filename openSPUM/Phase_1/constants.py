@@ -58,11 +58,10 @@ MAX_CRYSTALLITE_PLANAR_DEGREE: int = 6
 # 聚簇阶段最大迭代帧数 — 防止无限循环
 MAX_CLUSTER_ITERATIONS: int = 200
 
-# --- 分层扩散增长策略配额 ---
-# 每帧新连接配额分配比例
-# 悬挂节点消解: 悬挂节点配给高度数节点（一次提升到 degree ≥ 2）
+# --- 分层扩散增长策略配额（已弃用，保留仅为引用对比） ---
+# 从 v3 起，seed_epoch_engine 使用 _compute_budgets_from_degree_distribution()
+# 从度数分布动态推导配额，不再使用这些固定值。
+# 当前保留仅为测试和历史引用。
 DANGLING_QUOTA: float = 0.20
-# 晶子候选生长: 为 degree 2+ 节点提供连接，推动向晶子饱和
 MIDRANGE_QUOTA: float = 0.70
-# 新节点分化: 从最高度数节点分化出新节点（提升网络规模）
 NEWNODE_QUOTA: float = 0.10
