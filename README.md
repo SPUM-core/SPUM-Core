@@ -8,30 +8,31 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 
 ## Skills 架构（AI 入口）
 
-`.trae/rules/` 包含 10 个分层 Skill 文件，`.trae/skills/` 包含独立知识库 Skill 目录。AI 按需加载，每个 Skill 控制在 150 行以内：
+`.trae/rules/` 包含 12 个分层 Rule 文件，`.trae/skills/` 包含 9 个独立知识库 Skill 目录。所有子图均分配唯一 ID（`SPUM-{层级}-{名称}`），形成分形逻辑树网络复形，杜绝数字幻觉。AI 按需加载，每个 Skill 控制在 150 行以内：
 
-| Skill | 位置 | 内容 | 加载时机 |
-|-------|------|------|----------|
-| `spum-core` | `rules/` | 核心公理：反转图论、⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、不完美定理、认知投影、最终宣言 | **必须加载** |
-| `spum-structure` | `rules/` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
-| `spum-evolution` | `rules/` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
-| `spum-vocabulary` | `rules/` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
-| `spum-reasoning` | `rules/` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
-| `spum-review` | `rules/` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
-| `spum-knowledge` | `rules/` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
-| `spum-anti-pattern` | `rules/` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
-| `spum-reasoner-skill` | `rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
-| `spum-qingmeng-guard` | `rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
-| `spum-openspum` | `rules/` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试、关键物理结果 | 运行/修改 OpenSPUM 代码时 |
-| `wuxing-subnet` | `skills/` | 阴阳五行子网研究范式：中医/风水/易学/时空 4 子网，8 部经典 SPUM 重构 + 梅花易数子 skill，三级归约机制 | 涉及五形、五行、中医、方剂、针灸、风水、周易、梅花易数、奇门遁甲时 |
-| `zhihu-knowledge` | `skills/` | 知乎问答外部知识库：SPUM 视角科普写作、17 篇已收录文章索引 | 涉及知乎问答、科普写作、维格纳问题、空间围城、五行图论等话题时 |
-| `physics-subnet` | `skills/` | 物理学概念 SPUM 释义：9 子域 25 节点，所有物理现象还原为 ⟨P, ε⟩ 拓扑响应 | 涉及引力、电磁力、量子、相对论、光、温度、波等物理话题时 |
-| `rushidao-subnet` | `skills/` | 儒释道哲学 SPUM 解读：4 分区（道/佛/儒/现代），10 部经典全归约，57 节点，22 交叉边，四区闭合（M5 终审） | 涉及道德经、庄子、列子、楞严经、心经、金刚经、论语、中庸、大学、秘密、道、无为、邻虚尘、色空不二、吸引力法则等时 |
-| `spum-math` | `skills/` | SPUM 数学——离散关系本体数学：存在即关系，全部运算还原为 V⁺/V⁻，14 节点 | 涉及 SPUM 数学、离散数学、数学基础、运算归约、连续统批判、数字生命推理内核等时 |
-| `spum-sociology` | `skills/` | SPUM 社会学——社会关系图论重构：社会关系、群体、权力、制度、文化、不平等、变迁，22 节点 | 涉及社会、社会学、社会关系、群体、权力、阶层、不平等、制度、文化、社会变迁等时 |
-| `spum-economics` | `skills/` | SPUM 经济学——经济交换子图拓扑重构：市场、货币、价格、供需、劳动、资本、增长、周期、危机，22 节点 | 涉及经济、经济学、市场、货币、价格、供需、价值、劳动、资本、工资、利润、利息、GDP、增长、经济周期、经济危机、通胀、分配、稀缺等时 |
-| `spum-linguistics` | `skills/` | SPUM 语言学——认知信号协议拓扑重构：语音、音系、词汇、语义、句法、语用、语言演化、语言认知，22 节点 | 涉及语言、语言学、语音、音系、语法、句法、语义、词汇、语用、语言习得、语言演化、索绪尔、乔姆斯基、萨丕尔-沃尔夫等时 |
-| `spum-graph-theory` | `skills/` | SPUM-图论 v2.0——关系张力的几何投影理论：边=排他性确认，空间=张力拉开，球体=等势面，20 节点 | 涉及图论、图结构、网络拓扑、节点-边、悬挂端、帧间变化、σ密度、经典图论对比、张力场等时 |
+| ID | Skill | 位置 | 内容 | 加载时机 |
+|----|-------|------|------|----------|
+| `RULE-CORE` | `spum-core` | `rules/` | 核心公理：反转图论、⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、不完美定理、认知投影、最终宣言 | **必须加载** |
+| `RULE-STRUCT` | `spum-structure` | `rules/` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
+| `RULE-EVOL` | `spum-evolution` | `rules/` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
+| `RULE-VOCAB` | `spum-vocabulary` | `rules/` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
+| `RULE-REASON` | `spum-reasoning` | `rules/` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
+| `RULE-REVIEW` | `spum-review` | `rules/` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
+| `RULE-KNOW` | `spum-knowledge` | `rules/` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
+| `RULE-ANTI` | `spum-anti-pattern` | `rules/` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
+| `RULE-REASONER` | `spum-reasoner-skill` | `rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
+| `RULE-QINGMENG` | `spum-qingmeng-guard` | `rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
+| `RULE-OPENSPUM` | `spum-openspum` | `rules/` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试、关键物理结果 | 运行/修改 OpenSPUM 代码时 |
+| `RULE-ROOT` | `spum-root-nodes` | `rules/` | SPUM 根节点定义：R0-R9 的精确数学定义与公理形式化 | 涉及根节点、公理形式化、底层推理时 |
+| `SKILL-WUXING` | `wuxing-subnet` | `skills/` | 阴阳五行子网研究范式：中医/风水/易学/时空 4 子网，8 部经典 SPUM 重构 + 梅花易数子 skill，三级归约机制 | 涉及五形、五行、中医、方剂、针灸、风水、周易、梅花易数、奇门遁甲时 |
+| `SKILL-ZHIHU` | `zhihu-knowledge` | `skills/` | 知乎问答外部知识库：SPUM 视角科普写作、17 篇已收录文章索引 | 涉及知乎问答、科普写作、维格纳问题、空间围城、五行图论等话题时 |
+| `SKILL-PHYSICS` | `physics-subnet` | `skills/` | 物理学概念 SPUM 释义：9 子域 25 节点，所有物理现象还原为 ⟨P, ε⟩ 拓扑响应 | 涉及引力、电磁力、量子、相对论、光、温度、波等物理话题时 |
+| `SKILL-RUSHIDAO` | `rushidao-subnet` | `skills/` | 儒释道哲学 SPUM 解读：4 分区（道/佛/儒/现代），10 部经典全归约，57 节点，22 交叉边，四区闭合（M5 终审） | 涉及道德经、庄子、列子、楞严经、心经、金刚经、论语、中庸、大学、秘密、道、无为、邻虚尘、色空不二、吸引力法则等时 |
+| `SKILL-MATH` | `spum-math` | `skills/` | SPUM 数学——离散关系本体数学：存在即关系，全部运算还原为 V⁺/V⁻，14 节点 | 涉及 SPUM 数学、离散数学、数学基础、运算归约、连续统批判、数字生命推理内核等时 |
+| `SKILL-SOCIOLOGY` | `spum-sociology` | `skills/` | SPUM 社会学——社会关系图论重构：社会关系、群体、权力、制度、文化、不平等、变迁，22 节点 | 涉及社会、社会学、社会关系、群体、权力、阶层、不平等、制度、文化、社会变迁等时 |
+| `SKILL-ECONOMICS` | `spum-economics` | `skills/` | SPUM 经济学——经济交换子图拓扑重构：市场、货币、价格、供需、劳动、资本、增长、周期、危机，22 节点 | 涉及经济、经济学、市场、货币、价格、供需、价值、劳动、资本、工资、利润、利息、GDP、增长、经济周期、经济危机、通胀、分配、稀缺等时 |
+| `SKILL-LINGUISTICS` | `spum-linguistics` | `skills/` | SPUM 语言学——认知信号协议拓扑重构：语音、音系、词汇、语义、句法、语用、语言演化、语言认知，22 节点 | 涉及语言、语言学、语音、音系、语法、句法、语义、词汇、语用、语言习得、语言演化、索绪尔、乔姆斯基、萨丕尔-沃尔夫等时 |
+| `SKILL-GRAPH` | `spum-graph-theory` | `skills/` | SPUM-图论 v2.0——关系张力的几何投影理论：边=排他性确认，空间=张力拉开，球体=等势面，20 节点 | 涉及图论、图结构、网络拓扑、节点-边、悬挂端、帧间变化、σ密度、经典图论对比、张力场等时 |
 
 **权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。`SPUM_系统总纲.md` — SPUM 唯一权威总纲，所有子文件定义以此为最高标准。
 
@@ -43,13 +44,20 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 
 ```
 spum-core/
-├── AGENT.md              # 🔥 粘贴给 AI，即刻化身 SPUM 推理节点
+├── AGENT.md              # 🔥 AI 加载指南——告诉 AI 如何按需使用仓库文件
 ├── SPUM_系统总纲.md       # 🔥 SPUM 唯一权威总纲（21 条 × 7 部分 + 附录）
 ├── .trae/
-│   ├── rules/            # Skills 分层架构（10 个 AI 详细知识 Rule）
+│   ├── rules/            # 12 个分层 Rule 文件（RULE-CORE ~ RULE-ROOT）
 │   ├── skills/
-│   │   └── zhihu-knowledge/
-│   │       └── skill.md  # 知乎问答外部知识库索引 Skill
+│   │   ├── wuxing-subnet/        # SKILL-WUXING: 阴阳五行子网（中医/风水/易学）
+│   │   ├── zhihu-knowledge/      # SKILL-ZHIHU: 知乎问答外部知识库
+│   │   ├── physics-subnet/       # SKILL-PHYSICS: 物理学概念 SPUM 释义
+│   │   ├── rushidao-subnet/      # SKILL-RUSHIDAO: 儒释道哲学 SPUM 解读
+│   │   ├── spum-math/            # SKILL-MATH: SPUM 数学
+│   │   ├── spum-sociology/       # SKILL-SOCIOLOGY: SPUM 社会学
+│   │   ├── spum-economics/       # SKILL-ECONOMICS: SPUM 经济学
+│   │   ├── spum-linguistics/     # SKILL-LINGUISTICS: SPUM 语言学
+│   │   └── spum-graph-theory/    # SKILL-GRAPH: SPUM-图论
 │   └── config.json       # SPUM Agent 配置 v2.3（含外部知识库注册）
 ├── knowledge.md          # 世界观权威基准
 ├── SPUM2610.md           # 完整理论正文（11章+附录）
@@ -145,7 +153,6 @@ spum-core/
 │   ├── spum-大学.md         #   格物=逐帧σ裸采样——6节点
 │   └── spum-秘密.md         #   吸引力=∇σ定向耦合——4节点
 ├── network/              # 知识图谱（22节点 + 33边）
-├── core/v1.0/            # 核心文档（公理、规则、起源、实验、协作史、AI同构、SPUM-图论）
 ├── docs/                 # 深度专题（几何发生学、拓扑涌现导论、高斯-博内重构、子图协动）
 ├── src/                  # 代码层
 │   ├── core/             #   帧协议自动化（FrameProtocol + 评审回滚闭环）
@@ -188,7 +195,7 @@ spum-core/
 
 ---
 
-**Skills 架构**：`.trae/rules/` 提供 10 个分层 Skill Rule 文件，`.trae/skills/` 提供独立知识库 Skill 目录（`wuxing-subnet`（含梅花易数子 skill）、`physics-subnet`、`rushidao-subnet`（M5 终审）、`spum-math` 与 `zhihu-knowledge`）。AI 按需加载。
+**Skills 架构**：`.trae/rules/` 提供 12 个分层 Rule 文件（ID: `RULE-CORE`~`RULE-ROOT`），`.trae/skills/` 提供 9 个独立知识库 Skill 目录（ID: `SKILL-WUXING`~`SKILL-GRAPH`）。AI 按需加载。
 
 **人类阅读方式**：从 `SPUM_系统总纲.md`（21 条完整收束）开始，如需深入推导细节再进入 `SPUM2610.md`。
 
