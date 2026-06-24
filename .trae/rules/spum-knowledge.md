@@ -84,6 +84,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 空间几何发生学 |
 | `Topological_Emergence/SPUM_Topological_Emergence.md` | 拓扑涌现导论 |
 | `Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 高斯-博内定理的离散组合重构 |
+| `spum_dark/` | 黑暗系列（4卷）：归藏/拂晓/曙光/破晓 — SPUM 体系的黑暗主题思辨 |
 
 ## 五-2、实证支撑模块（`docs/`）
 

@@ -46,6 +46,54 @@
         "type": "skill",
         "priority": 7,
         "description": "知乎问答外部知识库 — SPUM 视角的问答、科普与批判性写作模板"
+      },
+      {
+        "path": ".trae/skills/wuxing-subnet/skill.md",
+        "type": "skill",
+        "priority": 8,
+        "description": "阴阳五行子网 — 中医/风水/易学/时空 4 子网，11 部经典 SPUM 重构"
+      },
+      {
+        "path": ".trae/skills/physics-subnet/skill.md",
+        "type": "skill",
+        "priority": 9,
+        "description": "物理学概念 SPUM 释义 — 9 子域 25 节点，力/光/热/电磁/量子/相对论"
+      },
+      {
+        "path": ".trae/skills/rushidao-subnet/skill.md",
+        "type": "skill",
+        "priority": 10,
+        "description": "儒释道哲学子网 — 4 分区 14 部经典 57 节点，道=ε（边集）"
+      },
+      {
+        "path": ".trae/skills/spum-math/skill.md",
+        "type": "skill",
+        "priority": 11,
+        "description": "SPUM 数学 — 离散关系本体数学，全部运算归约为 V⁺/V⁻"
+      },
+      {
+        "path": ".trae/skills/spum-sociology/skill.md",
+        "type": "skill",
+        "priority": 12,
+        "description": "SPUM 社会学 — 社会关系图论重构，22 节点"
+      },
+      {
+        "path": ".trae/skills/spum-economics/skill.md",
+        "type": "skill",
+        "priority": 13,
+        "description": "SPUM 经济学 — 经济交换子图拓扑重构，22 节点"
+      },
+      {
+        "path": ".trae/skills/spum-linguistics/skill.md",
+        "type": "skill",
+        "priority": 14,
+        "description": "SPUM 语言学 — 认知信号协议拓扑重构，22 节点"
+      },
+      {
+        "path": ".trae/skills/spum-graph-theory/skill.md",
+        "type": "skill",
+        "priority": 15,
+        "description": "SPUM-图论 v2.0 — 关系张力的几何投影理论，20 节点"
       }
     ],
     "loadStrategy": "sequential",
