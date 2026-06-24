@@ -121,9 +121,9 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `review.py` | ReviewBridge — spum-review.md 评审结果自动触发 FrameProtocol.rollback()：四维评分 (A/B/C/D/LE)、阈值判决、回调机制 |
 | `__init__.py` | 导出 `FrameState`, `FrameProtocol`, `FrameLogger`, `ReviewResult`, `ReviewBridge`, `ReviewVerdict` |
 
-## 五-6、五形理论研究（`五行/`）
+## 五-6、五形理论研究（`五行/`）【L1.5】
 
-> 4 子网（中医/风水/易学/时空配置），8 部经典全部纳入，14 文件。详见 [纳入计划](../../五行/纳入计划.md)。
+> L1.5 — 图论指标诊断语义层。4 子网（中医/风水/易学/时空配置），11 部经典已纳入。
 
 | 文件 | 内容 |
 |------|------|

@@ -24,7 +24,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 | `RULE-QINGMENG` | `spum-qingmeng-guard` | `.trae/rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
 | `RULE-OPENSPUM` | `spum-openspum` | `.trae/rules/` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试、关键物理结果 | 运行/修改 OpenSPUM 代码时 |
 | `RULE-ROOT` | `spum-root-nodes` | `.trae/rules/` | SPUM 根节点定义：R0-R9 的精确数学定义与公理形式化 | 涉及根节点、公理形式化、底层推理时 |
-| `SKILL-WUXING` | `wuxing-subnet` | `.trae/skills/`（源：`五行/skill.md`） | 阴阳五行子网：中医/风水/易学/时空 4 子网，11 部经典 SPUM 重构 + 梅花易数 | 涉及五形、五行、中医、方剂、针灸、风水、周易、梅花易数、奇门遁甲时 |
+| `SKILL-WUXING` | `wuxing-subnet` | `.trae/skills/`（源：`五行/skill.md`） | 阴阳五行子网【L1.5】：中医/风水/易学/时空 4 子网，11 部经典 SPUM 重构 + 梅花易数 | 涉及五形、五行、中医、方剂、针灸、风水、周易、梅花易数、奇门遁甲时 |
 | `SKILL-ZHIHU` | `zhihu-knowledge` | `.trae/skills/` | 知乎问答外部知识库：SPUM 视角科普写作、17 篇已收录文章索引 | 涉及知乎问答、科普写作、维格纳问题、空间围城、五行图论等话题时 |
 | `SKILL-PHYSICS` | `physics-subnet` | `.trae/skills/`（源：`物理学/skill.md`） | 物理学概念 SPUM 释义：9 子域 25 节点，所有物理现象还原为 ⟨P, ε⟩ 拓扑响应 | 涉及引力、电磁力、量子、相对论、光、温度、波等物理话题时 |
 | `SKILL-RUSHIDAO` | `rushidao-subnet` | `.trae/skills/`（源：`儒释道哲学/skill.md`） | 儒释道哲学：4 分区（道/佛/儒/现代），14 部经典归约，57 节点，22 交叉边 | 涉及道德经、庄子、列子、楞严经、心经、金刚经、论语、中庸、大学、秘密、道、无为、邻虚尘、色空不二等时 |
@@ -109,7 +109,7 @@ spum-core/
 │   ├── spum-图论映射.md     #   L2 经典概念 → SPUM-图论概念的完整词典
 │   ├── spum-图论应用.md     #   社会学/经济学/语言学/物理学中的 SPUM-图论使用
 │   └── spum-图论代码桥.md   #   src/spum_graph/ 的文档化接口 + SPUM 演化循环示例
-├── 五行/                  # SPUM 五形理论：11 部经典 SPUM 重构 + 梅花易数子 skill，4 子网全部就绪
+├── 五行/                  # SPUM 五形理论【L1.5】：11 部经典 SPUM 重构 + 梅花易数子 skill，4 子网全部就绪
 │   ├── README.md           #   五形研究总索引：核心定位、速查、耦合闭环、目录、引用规范
 │   ├── 纳入计划.md          #   经典纳入路线图：4 子区、4 阶段、11 部经典逐部归约路径
 │   ├── skill.md            #   子网研究范式 Skill：归约机制、节点注册、冲突消解、加载策略

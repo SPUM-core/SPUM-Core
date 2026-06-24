@@ -102,7 +102,7 @@
   "externalKnowledgeBases": {
     "zhihu-knowledge": {
       "name": "知乎问答知识库",
-      "rootPath": "F:/知乎问答",
+      "rootPath": "../../知乎问答",
       "description": "按月份组织的知乎问答文章、科普写作与批判性论证素材",
       "indexedAt": "2026-06-15",
       "directories": {
