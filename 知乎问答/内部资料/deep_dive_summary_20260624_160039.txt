@@ -1,0 +1,60 @@
+============================================================
+知乎深度探测 — 攻击面汇总
+扫描时间: 2026-06-24T16:00:07.747254
+============================================================
+
+1. jobs.zhihu.com
+   路径探测: 111
+   非404路径: 111
+     [403] /candidate (body=200)
+     [403] /manage (body=200)
+     [403] /recruitment (body=200)
+     [403] /job (body=200)
+     [403] /admin/manage (body=200)
+     [403] /admin/dashboard (body=200)
+     [403] /admin/role (body=200)
+     [403] /dashboard (body=200)
+     [403] /admin/ (body=200)
+     [403] /admin/login (body=200)
+     [403] /manager (body=200)
+     [403] /position (body=200)
+     [403] /admin/user (body=200)
+     [403] /admin/index (body=200)
+     [403] /candidates (body=200)
+     [403] /positions (body=200)
+     [403] /recruit (body=200)
+     [403] /resumes (body=200)
+     [403] /admin/config (body=200)
+     [403] /jobs (body=200)
+
+2. 8080 vs 443 差异化
+   差异数: 74
+     www.zhihu.com/admin — 状态码: 200 vs 302
+     www.zhihu.com/api — 状态码: 200 vs 302
+     www.zhihu.com/api/ — 状态码: 200 vs 302
+     www.zhihu.com/api/v1 — 状态码: 200 vs 302
+     www.zhihu.com/api/v2 — 状态码: 200 vs 302
+     www.zhihu.com/login — 状态码: 200 vs 302
+     www.zhihu.com/signin — 状态码: 200 vs 302
+     www.zhihu.com/register — 状态码: 200 vs 302
+     www.zhihu.com/signup — 状态码: 200 vs 302
+     www.zhihu.com/.env — 状态码: 200 vs 302
+
+3. s.zhihu.com
+   302跳转: 10
+     /admin https://s.zhihu.com/admin->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /api https://s.zhihu.com/api->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /actuator https://s.zhihu.com/actuator->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /debug https://s.zhihu.com/debug->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /config https://s.zhihu.com/config->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /backup https://s.zhihu.com/backup->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /dashboard https://s.zhihu.com/dashboard->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /manage https://s.zhihu.com/manage->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /login https://s.zhihu.com/login->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /signin https://s.zhihu.com/signin->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+   SSRF测试: 3
+
+4. open.zhihu.com
+   422响应体: {"error":{"code":4000,"name":"UnprocessableError","message":"请求不能被处理"}}
+
+   路径绕过: 0

@@ -17,3 +17,6 @@ Thumbs.db
 # 环境/配置
 .env
 *.env.local
+
+# 大型数据集（移至仓库外 f:\data\）
+data/mitdb/

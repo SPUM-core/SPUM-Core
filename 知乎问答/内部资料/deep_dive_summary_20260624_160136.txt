@@ -1,0 +1,23 @@
+============================================================
+知乎深度探测 — 攻击面汇总
+扫描时间: 2026-06-24T16:01:24.616608
+============================================================
+
+3. s.zhihu.com
+   302跳转: 10
+     /admin https://s.zhihu.com/admin->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /api https://s.zhihu.com/api->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /actuator https://s.zhihu.com/actuator->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /debug https://s.zhihu.com/debug->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /config https://s.zhihu.com/config->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /backup https://s.zhihu.com/backup->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /dashboard https://s.zhihu.com/dashboard->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /manage https://s.zhihu.com/manage->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /login https://s.zhihu.com/login->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+     /signin https://s.zhihu.com/signin->https://www.zhihu.com->https://www.zhihu.com/signin?next=%2F
+   SSRF测试: 3
+
+4. open.zhihu.com
+   422响应体: {"error":{"code":4000,"name":"UnprocessableError","message":"请求不能被处理"}}
+
+   路径绕过: 0

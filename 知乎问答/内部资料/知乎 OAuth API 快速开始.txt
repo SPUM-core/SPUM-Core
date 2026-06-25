@@ -1,0 +1,296 @@
+知乎 OAuth API 快速开始
+概述
+Base URL: https://openapi.zhihu.com/
+协议: HTTPS
+数据格式: JSON
+
+知乎 OAuth API 提供了基于 OAuth 2.0 授权码模式的用户授权能力，支持获取用户信息、社交关系、关注动态等功能。
+
+申请应用凭证
+使用 OAuth 接口前，需要先获取 app_id 与 app_key：
+
+渠道	说明
+知乎商务渠道	通过知乎商务团队申请
+知乎黑客松渠道	创建黑客松项目后，系统会自动生成
+授权流程
+采用标准的 OAuth 2.0 授权码模式。
+
+1. 引导用户授权
+引导用户打开授权页：
+
+https://openapi.zhihu.com/authorize?redirect_uri={redirect_uri}&app_id={app_id}&response_type=code
+2. 用户确认授权
+用户在 https://openapi.zhihu.com 完成登录并确认授权后，平台会将请求重定向到：
+
+{redirect_uri}?code={authorization_code}
+3. 换取 access_token
+使用第 2 步获取的 authorization_code，调用 获取 access_token 接口 换取 access_token。
+
+4. 获取用户信息
+使用 access_token 调用 获取用户信息接口 获取当前授权用户的基本信息。
+
+公共说明
+Access Token 使用方式
+所有需要授权的接口，均需在 HTTP Header 中携带 access_token：
+
+Authorization: Bearer {access_token}
+通用分页参数
+以下接口支持分页查询：
+
+获取粉丝列表
+获取关注列表
+获取互相关注列表
+获取关注动态
+参数	类型	必填	说明	默认值
+page	int	否	页码，从 0 开始	0
+per_page	int	否	每页返回数量	10
+用户对象字段说明
+社交关系接口返回的用户列表中，单条用户对象包含以下字段：
+
+字段	类型	说明
+uid	int	知乎用户 ID
+hash_id	string	用户 hash ID，用于 URL 展示
+fullname	string	用户昵称
+gender	string	性别（male、female、Unknown）
+headline	string	用户个人简介
+description	string	用户个人描述
+avatar_path	string	用户头像完整 URL
+url	string	用户主页 URL
+email	string	用户邮箱（根据应用权限决定是否返回，无权限时为空字符串）
+phone_no	string	用户手机号（根据应用权限决定是否返回，无权限时为空字符串）
+公共错误响应
+以下错误响应适用于所有需要 access_token 的接口：
+
+场景	HTTP 状态码	响应体
+缺少 Authorization Header	200	{"code": 401, "data": "Missing Authorization in request headers"}
+Authorization 格式错误	200	{"code": 401, "data": "Token type is error"}
+access_token 无效或已过期	200	{"code": 401, "data": "Access token is not valid"}
+应用权限不足	200	{"code": 403, "data": "API Access Deny"}
+
+
+---
+
+获取 access_token
+接口说明
+使用用户授权后获得的 authorization_code 换取 access_token。
+
+授权流程请参考 快速开始。
+
+接口信息
+说明	值
+HTTP URL	https://openapi.zhihu.com/access_token
+HTTP Method	POST
+请求参数
+参数	类型	必填	说明
+app_id	string	是	第三方 APP_ID（需向知乎申请）
+app_key	string	是	第三方 APP_KEY（需向知乎申请）
+grant_type	string	是	固定值：authorization_code
+redirect_uri	string	是	申请 APP_ID 时所填写的重定向地址
+code	string	是	用户授权后生成的 authorization_code
+响应数据
+成功响应示例
+{
+  "access_token": "xxx",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+响应字段说明
+字段	类型	说明
+access_token	string	访问令牌
+token_type	string	令牌类型，如 Bearer
+expires_in	long	过期时间（秒）
+curl 示例
+curl -s -X POST "https://openapi.zhihu.com/access_token" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "app_id=${APP_ID}" \
+  -d "app_key=${APP_KEY}" \
+  -d "grant_type=authorization_code" \
+  -d "redirect_uri=${REDIRECT_URI}" \
+  -d "code=${CODE}"
+
+---
+
+获取用户信息
+接口说明
+获取当前授权用户的基本信息。
+
+Access Token 使用方式请参考 快速开始。
+
+接口信息
+说明	值
+HTTP URL	https://openapi.zhihu.com/user
+HTTP Method	GET
+请求参数
+将获取的 access_token 放在 HTTP Header Authorization 中：
+
+Authorization: Bearer {access_token}
+响应数据
+成功响应示例
+{
+  "uid": 123456789,
+  "fullname": "知乎用户",
+  "gender": "male",
+  "headline": "个人简介",
+  "description": "个人描述",
+  "avatar_path": "https://picx.zhimg.com/...",
+  "phone_no": "13800138000",
+  "email": "user@example.com"
+}
+响应字段说明
+字段	类型	说明
+uid	int	知乎用户 ID
+fullname	string	用户昵称
+gender	string	性别（male、female、unknown）
+headline	string	用户个人简介
+description	string	用户个人描述
+avatar_path	string	用户头像地址
+phone_no	string	用户手机号（用户未授权时为空字符串）
+email	string	用户邮箱（用户未授权时为空字符串）
+错误响应
+场景	HTTP 状态码	响应体
+用户不存在	200	{"code": 404, "data": "User don't exist"}
+其他公共错误（鉴权失败、权限不足等）请参考 快速开始 中的公共错误响应。
+
+curl 示例
+curl -s "https://openapi.zhihu.com/user" \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}"
+
+---
+
+获取粉丝列表
+接口说明
+获取当前授权用户的关注者（粉丝）列表。
+
+Access Token 使用方式及通用分页参数请参考 快速开始。
+
+接口信息
+说明	值
+HTTP URL	https://openapi.zhihu.com/user/followers
+HTTP Method	GET
+请求参数
+Query Parameters
+参数	类型	必填	说明	默认值
+page	int	否	页码，从 0 开始	0
+per_page	int	否	每页返回数量	10
+响应数据
+成功响应示例
+[
+  {
+    "uid": 123456789,
+    "hash_id": "abc123",
+    "fullname": "知乎用户",
+    "gender": "male",
+    "headline": "个人简介",
+    "description": "个人描述",
+    "avatar_path": "https://picx.zhimg.com/...",
+    "url": "https://www.zhihu.com/people/abc123",
+    "email": "",
+    "phone_no": ""
+  }
+]
+响应字段说明
+返回值为用户对象数组，字段说明请参考 快速开始 中的「用户对象字段说明」。
+
+错误响应
+公共错误（鉴权失败、权限不足等）请参考 快速开始 中的公共错误响应。
+
+curl 示例
+curl -s "https://openapi.zhihu.com/user/followers?page=0&per_page=10" \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}"
+
+---
+
+获取关注列表
+接口说明
+获取当前授权用户已关注的用户列表。
+
+Access Token 使用方式及通用分页参数请参考 快速开始。
+
+接口信息
+说明	值
+HTTP URL	https://openapi.zhihu.com/user/followed
+HTTP Method	GET
+请求参数
+Query Parameters
+参数	类型	必填	说明	默认值
+page	int	否	页码，从 0 开始	0
+per_page	int	否	每页返回数量	10
+响应数据
+成功响应示例
+[
+  {
+    "uid": 123456789,
+    "hash_id": "abc123",
+    "fullname": "知乎用户",
+    "gender": "male",
+    "headline": "个人简介",
+    "description": "个人描述",
+    "avatar_path": "https://picx.zhimg.com/...",
+    "url": "https://www.zhihu.com/people/abc123",
+    "email": "",
+    "phone_no": ""
+  }
+]
+响应字段说明
+返回值为用户对象数组，字段说明请参考 快速开始 中的「用户对象字段说明」。
+
+错误响应
+公共错误（鉴权失败、权限不足等）请参考 快速开始 中的公共错误响应。
+
+curl 示例
+curl -s "https://openapi.zhihu.com/user/followed?page=0&per_page=10" \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}"
+
+---
+
+获取关注动态
+接口说明
+获取当前授权用户的关注动态（Feed）列表。
+
+Access Token 使用方式及通用分页参数请参考 快速开始。
+
+接口信息
+说明	值
+HTTP URL	https://openapi.zhihu.com/user/moments
+HTTP Method	GET
+请求参数
+无。接口返回系统默认条数的关注动态列表。
+
+响应数据
+成功响应示例
+{
+  "data": [
+    {
+      "actor": {
+        "name": "知乎用户"
+      },
+      "action_text": "回答了问题",
+      "action_time": 1767928220,
+      "target": {
+        "title": "问题标题",
+        "excerpt": "回答摘要",
+        "author": {
+          "name": "作者昵称"
+        }
+      }
+    }
+  ]
+}
+响应字段说明
+字段	类型	说明
+data	array	动态列表
+data[].actor	object	动作发起人信息
+data[].actor.name	string	发起人昵称
+data[].action_text	string	动作描述，如"回答了问题"
+data[].action_time	int	动作时间（Unix 时间戳）
+data[].target	object	动态目标内容
+data[].target.title	string	内容标题
+data[].target.excerpt	string	内容摘要
+data[].target.author	object	内容作者信息
+data[].target.author.name	string	作者昵称
+错误响应
+公共错误（鉴权失败、权限不足等）请参考 快速开始 中的公共错误响应。
+
+curl 示例
+curl -s "https://openapi.zhihu.com/user/moments" \
+  -H "Authorization: Bearer ${ACCESS_TOKEN}"

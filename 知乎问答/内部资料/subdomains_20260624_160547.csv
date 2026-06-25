@@ -1,0 +1,17 @@
+subdomain,hostname,ip
+www,www.zhihu.com,183.253.56.58
+m,m.zhihu.com,183.253.56.58
+api,api.zhihu.com,183.253.56.58
+static,static.zhihu.com,183.253.56.58
+video,video.zhihu.com,183.253.56.58
+open,open.zhihu.com,182.61.194.10
+account,account.zhihu.com,183.253.56.58
+pay,pay.zhihu.com,183.253.56.58
+activity,activity.zhihu.com,183.253.56.58
+event,event.zhihu.com,183.253.56.58
+v,v.zhihu.com,183.253.56.58
+s,s.zhihu.com,36.158.213.107
+push,push.zhihu.com,183.253.56.58
+message,message.zhihu.com,183.253.56.58
+jobs,jobs.zhihu.com,123.56.208.239
+zhuanlan,zhuanlan.zhihu.com,183.253.56.58
