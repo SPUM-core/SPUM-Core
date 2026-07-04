@@ -3,6 +3,11 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py~
+*.bak
+*.backup
+*.orig
+*.tmp
 
 # IDE/编辑器
 .vscode/
@@ -18,5 +23,26 @@ Thumbs.db
 .env
 *.env.local
 
+# 测试与缓存
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage*
+htmlcov/
+
+# 病历文件（仅本地，不上传）
+五行/人元/病历/
+
 # 大型数据集（移至仓库外 f:\data\）
 data/mitdb/
+
+# 云构建产物
+.pai/
+qingmeng-weapp/
+
+# Node 依赖
+node_modules/
+
+# 各类日志
+*.log
