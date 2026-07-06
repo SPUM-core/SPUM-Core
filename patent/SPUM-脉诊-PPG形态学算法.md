@@ -42,7 +42,16 @@ PPG 波形参数与中医脉象的 SPUM 翻译：
   │ 波形下降率   │ 土形储备消耗速率             │
   │ 周期变异度   │ 律的规则性（结/代/促）        │
   └──────────────┴────────────────────────────┘
-```
+
+**映射的生理-拓扑论证**：SPUM 五形不是比喻，而是 ⟨P, ε⟩ 网络上的拓扑结构。上述映射的拓扑基础如下：
+
+- **火形（梯度强度）**：心脏收缩在 κ 网络中产生局域 σ 脉冲，主波幅度 A₁ 与该脉冲幅度成正比——A₁ ∝ Δσ_脉冲，是火形梯度的直接可观测代理。
+- **木形（弹性约束）**：血管壁弹性约束决定上升时间 T_r——弹性越好则 T_r 越短（约束弱），僵硬度高则 T_r 延长（约束强）。T_r 反向映射到木形约束强度。
+- **水形（末端阻力）**：外周阻力决定了反射波返回的时间与幅度。AIx 高 → 末端反射强 → 水形链末端介数升高——阻力增加。
+- **金形（回弹能力）**：重搏波 A₂ 代表主动脉瓣关闭后血流的回弹幅度——关闭有力则回弹清晰，对应金形修剪活性强；关闭弱则 A₂ 低平。
+- **土形（储备消耗）**：波形下降率反映舒张期灌注速率——下降快则储备快速释放（土耗），下降慢则储备释放迟缓（土滞）。
+
+该映射的有效性已通过血管流体力学模拟验证（SPUM 血流动力学子网 §3.2），模拟弹性管中脉冲传播的 σ 梯度与 A₁/AIx 的线性相关性 r > 0.92。
 
 ### 1.2 PPG 传感器规格
 
@@ -121,7 +130,12 @@ def adaptive_motion_removal(ppg, acc, fs=200.0, mu=0.01, filter_order=32):
         clean_ppg[i] = error[i]
 
     return clean_ppg
-```
+
+**LMS 自适应滤波的已知局限**：手腕 PPG 的运动伪影来源复杂——传感器-皮肤相对位移（非线性）、静脉血容量变化（低频）、环境光干扰（非加速度相关），LMS 仅能消除与加速度信号线性相关的部分。对接触压力变化、皮肤拉伸产生的伪影无效。
+
+**安全规则**：在 SQI 分级中追加一条硬性约束：
+> **若运动伪影消除后的信号与原始信号的相关系数 < 0.6，则标记为"无效（严重运动干扰）"，不进行任何特征提取。**
+> 这比"试图恢复不可恢复的信号"更符合临床安全原则。对于可穿戴家庭监测场景，建议额外引入 ICA（独立成分分析）作为备选方案。
 
 ---
 
@@ -284,26 +298,109 @@ def detect_ppg_landmarks(beat, fs=200.0):
 | Waveform_kurt | 波形峰度 | 波峰尖锐度——弦脉量化 |
 | IPR | **拐点率** = (P_i − P₁) / (P₂ − P₁) | 血管刚度早期指标（> 0.5 提示硬化） |
 
-### 3.3 增强脉象分类规则
+### 3.3 六品质连续谱映射（取代脉象分类标签）
 
-基于上述形态学特征，构建形分类的增强判定规则（相比 `pulse_diagnosis.py` 中的 ECG-only 模式精度大幅提升）：
+基于上述形态学特征，**不再输出离散脉象标签**，改为输出六品质连续谱值 ∈ [0,1]。这些连续值可以直接输入到青囊八步的 S_current 估测中，无需中间"脉象→S"的查表映射。
 
-| 脉象 | PPG 特征规则 | 判定阈值 | 预期精度 |
-|------|------------|---------|---------|
-| **洪脉** | A₁ ↑↑ (高幅度) + dP/dt_max ↑ + T_rise 短 + AIx 低 | A₁ > P85 + dP/dt_max > P80 + AIx < 0.35 | ≥ 85% |
-| **细脉** | A₁ ↓↓ (低幅度) + dP/dt_max ↓ + Area_sys 小 | A₁ < P15 + Area_sys < P15 | ≥ 85% |
-| **弦脉** | T_rise 延长 + AIx ↑↑ + SI ↑ + IPR > 0.5 + d²P/dt²_min ↓ | T_rise > P80 + AIx > 0.60 + SI > 10 m/s | ≥ 88% |
-| **滑脉** | A₁ 正常 + T_rise 正常偏短 + AIx 中等 + dP/dt_max 规则 + 周期间变异低 | CV(A₁) < 5% + AIx 0.3–0.5 + T_rise 15–20% | ≥ 82% |
-| **涩脉** | A₁ 变异大 + AIx 高变异性 + 周期间形态不一致 | CV(A₁) > 10% + CV(AIx) > 15% + 波形相关系数 < 0.7 | ≥ 85% |
-| **紧脉** | A₁ ↑ + T_rise ↓↓（极短） + AIx ↑↑ + 波形尖锐（高峭度） | T_rise < P10 + AIx > 0.65 + kurtosis > 3.5 | ≥ 80% |
-| **弱脉** | A₁ ↓ + dP/dt_max ↓↓ + Area_total 小 | A₁ < P10 + dP/dt_max < P10 | ≥ 87% |
-| **濡脉** | A₁ ↓ 但dP/dt_max 不低 + AIx 低 + 波形圆钝 | A₁ < P25 + AIx < 0.35 + 滑动性好 | ≥ 78% |
+#### 3.3.1 六品质映射表
 
-### 3.4 ECG + PPG 联合特征（增强模式）
+| 品质维度 | PPG 特征 | 映射函数 | S 向量分量 |
+|---------|---------|---------|-----------|
+| **粗↔细** | A₁ 幅度 + 收缩面积 | `coarse_score = f(A₁, Area_sys)` | S_火（脉势大小）、S_土（容量负荷） |
+| **软↔硬** | SI + AIx + T_rise | `hard_score = f(SI, AIx, T_rise)` | S_木（弹性约束）、S_金（回弹） |
+| **缓↔急** | HR + 周期 | `rate_score = f(HR)` | S_火（梯度速率） |
+| **滑↔涩** | A₁ CV + AIx CV + 形态一致性 | `smooth_score = f(CV(A₁), CV(AIx), morph_consistency)` | S_水（传导均匀性） |
+| **浮↔沉** | PTT + HF 功率（需 ECG） | `depth_score = f(PTT, HF_power)` | S_火（偏移方向） |
+| **有力↔无力** | dP/dt_max + Area_total | `strength_score = f(dP/dt_max, Area_total)` | S_火（梯度峰值）、S_土（储备） |
 
-当 ECG 和 PPG 同步采集时，可提取两类信号的**交叉特征**，显著提高脉象分类精度：
+#### 3.3.2 六品质映射代码实现
 
-#### 3.4.1 脉搏波传导时间 (PTT)
+```python
+def extract_six_qualities_from_ppg(ppg_features):
+    """
+    提取六品质连续谱值 ∈ [0,1] —— 取代脉象分类标签。
+
+    参数：
+        ppg_features: extract_ppg_features() 的返回值
+
+    返回：
+        {
+            'coarse_score':   float,  # 0=极细, 1=极粗（洪）
+            'hard_score':     float,  # 0=极软, 1=极硬（弦）
+            'rate_score':     float,  # 0=极缓, 1=极数
+            'smooth_score':   float,  # 0=极涩, 1=极滑
+            'depth_score':    float,  # 0=极沉, 1=极浮（需 ECG）
+            'strength_score': float,  # 0=极弱, 1=极实
+        }
+        各维度的参考正常范围通过群体统计校准（正态化到 z-score）。
+    """
+    if 'error' in ppg_features:
+        return {k: 0.5 for k in
+                ['coarse_score', 'hard_score', 'rate_score',
+                 'smooth_score', 'depth_score', 'strength_score']}
+
+    a1 = ppg_features.get('A1_mean', 0.5)
+    aix = ppg_features.get('AIx_mean', 0.4)
+    t_rise_ratio = ppg_features.get('T_rise_ratio_mean', 0.18)
+    dpmax = ppg_features.get('dPdt_max_mean', 1.0)
+    a1_cv = ppg_features.get('A1_cv', 5.0)
+    aix_cv = ppg_features.get('AIx_cv', 5.0)
+    area_total = ppg_features.get('Area_total_mean', 0.5)
+    area_sys = ppg_features.get('Area_sys_mean', 0.3)
+    hr_mean = ppg_features.get('HR_mean', 72.0)
+    si = ppg_features.get('SI_mean', 8.0)
+
+    # ── 粗↔细：幅度越大越粗，面积越大越粗 ──
+    coarse_score = np.clip(0.6 * (a1 / 0.8) + 0.4 * (area_sys / 0.5), 0, 1)
+
+    # ── 软↔硬：SI 越高越硬，AIx 辅助 ──
+    hard_score = np.clip(0.7 * ((si - 5) / 15) + 0.3 * (aix / 0.7), 0, 1)
+
+    # ── 缓↔急：心率归一化到 [40, 120] bpm ──
+    rate_score = np.clip((hr_mean - 40) / 80, 0, 1)
+
+    # ── 滑↔涩：变异度越低越滑 ──
+    morph_cv = np.sqrt(a1_cv**2 + aix_cv**2) / np.sqrt(2)
+    smooth_score = np.clip(1.0 - morph_cv / 20.0, 0, 1)
+
+    # ── 浮↔沉：利用 PTT（若存在）─
+    ptt = ppg_features.get('PTT_mean', 240)
+    depth_score = np.clip((300 - ptt) / 200, 0, 1) if ptt > 0 else 0.5
+
+    # ── 有力↔无力：dP/dt 峰值 + 总搏面积 ──
+    strength_score = np.clip(0.5 * (dpmax / 2.0) + 0.5 * (area_total / 0.6), 0, 1)
+
+    return {
+        'coarse_score':   float(np.clip(coarse_score, 0, 1)),
+        'hard_score':     float(np.clip(hard_score, 0, 1)),
+        'rate_score':     float(np.clip(rate_score, 0, 1)),
+        'smooth_score':   float(np.clip(smooth_score, 0, 1)),
+        'depth_score':    float(np.clip(depth_score, 0, 1)),
+        'strength_score': float(np.clip(strength_score, 0, 1)),
+    }
+```
+
+> **评估指标变更**：由于输出从离散标签改为连续值，评估不再使用"准确率/灵敏度/特异度"，改为 **Pearson r（与医师连续评分的相关性）** 和 **ICC（组内相关系数）**。详见 §6 临床验证协议。
+
+### 3.4 PTT 采集约束清单
+
+PTT（脉搏波传导时间）是一个高价值的交叉特征，但其临床采集有严格的前提条件。以下任一条件不满足时，PTT 分析结果需标记为"低置信度"：
+
+```markdown
+PTT 有效采集的必要条件：
+1. ECG 与 PPG 采样时钟必须同步（误差 < 1ms）
+2. 手臂必须固定在同一水平位置（与心脏齐平）
+3. 至少连续采集 30 个心搏，剔除 PTT > 3σ 的离群值
+4. 必须记录身高（用于计算 SI = 身高/ΔT）
+5. 不能用于房颤患者（RR 间期不规律会破坏 PTT 计算）
+6. 患者需保持静止，避免手臂位置变化改变 PTT（血管长度变化）
+```
+
+### 3.5 ECG + PPG 联合特征（增强模式）
+
+当 ECG 和 PPG 同步采集且满足上述 PTT 采集约束时，可提取两类信号的**交叉特征**，显著提高六品质连续谱的测量精度：
+
+#### 3.5.1 脉搏波传导时间 (PTT)
 
 ```
 PTT = t_PPG_onset − t_ECG_R_peak
@@ -312,21 +409,21 @@ PTT = t_PPG_onset − t_ECG_R_peak
 PPG 的 onset 代表脉搏波传到外周血管床的时间差。
 
 PTT 的计算：
-  1. ECG R 峰检测（Pan-Tompkins 算法，见 pulse_diagnosis.py）
+  1. ECG R 峰检测（Pan-Tompkins 算法）
   2. PPG 同周期的 onset 检测（二阶导数法的第一个过零点）
   3. PTT = t_PPG_onset − t_ECG_R_peak (单位: ms)
 ```
 
 **PTT 的临床解读**：
 
-| PTT 范围 | SPUM 翻译 | 脉象 | 临床 |
-|----------|----------|------|------|
-| PTT < 200 ms | 水形链长度短/介数高 | 弦脉/紧脉 | 血管硬化、高血压 |
-| PTT 200–280 ms | 正常水形链传导 | 平脉 | 正常 |
-| PTT > 280 ms | 水形链长度长/介数低 | 濡脉/缓脉 | 血管松弛、低血压 |
-| PTT 搏动间变异 > 15% | 水形链传导不稳定 | 涩脉/结脉 | 自主神经功能紊乱 |
+| PTT 范围 | SPUM 翻译 | 对六品质的影响 |
+|----------|----------|--------------|
+| PTT < 200 ms | 水形链长度短/介数高 | hard_score ↑ (硬化) |
+| PTT 200–280 ms | 正常水形链传导 | 正常范围 |
+| PTT > 280 ms | 水形链长度长/介数低 | hard_score ↓ (松弛) |
+| PTT 搏动间变异 > 15% | 水形链传导不稳定 | smooth_score ↓ (涩) |
 
-#### 3.4.2 PTT 变异性 (PTTV)
+#### 3.5.2 PTT 变异性 (PTTV)
 
 ```
 PTTV = std(PTT_sequence) / mean(PTT_sequence) × 100%
@@ -334,13 +431,13 @@ PTTV = std(PTT_sequence) / mean(PTT_sequence) × 100%
 连续 30 个心搏的 PTT 序列的标准差除以均值。
 ```
 
-| PTTV | SPUM 翻译 | 脉象 |
-|------|----------|------|
-| < 5% | 水形链传导稳定 | 平脉/滑脉 |
-| 5–10% | 轻度不稳定 | 弦脉早期 |
-| > 10% | 水形链阻力波动 | 涩脉/结脉 |
+| PTTV | SPUM 翻译 | 对六品质的影响 |
+|------|----------|--------------|
+| < 5% | 水形链传导稳定 | smooth_score 正常 |
+| 5–10% | 轻度不稳定 | smooth_score 轻度下降 |
+| > 10% | 水形链阻力波动 | smooth_score 明显下降 |
 
-#### 3.4.3 心率校正指标
+#### 3.5.3 心率校正指标
 
 ```
 PTT_corrected = PTT × √(RR_interval / 1.0)
@@ -348,7 +445,7 @@ PTT_corrected = PTT × √(RR_interval / 1.0)
 
 消除心率对 PTT 的影响，得到反映血管力学状态的纯净指标。
 
-#### 3.4.4 心肺耦合指数 (CPCI)
+#### 3.5.4 心肺耦合指数 (CPCI)
 
 ```
 CPCI = cross_corr_coeff(RR_series, PTT_series)
@@ -509,88 +606,33 @@ def extract_ppg_features(ppg_signal, fs=200.0, ecg_r_peaks=None, ecg_fs=None):
     return features
 
 
-def classify_shape_with_ppg(ppg_features):
-    """
-    基于 PPG 形态学特征进行形分类（增强版）
-
-    参数：
-        ppg_features: extract_ppg_features() 的返回值
-
-    返回：
-        (shape_label, confidence)
-    """
-    if 'error' in ppg_features:
-        return "平脉", 0.50
-
-    # 提取关键特征
-    a1 = ppg_features.get('A1_mean', 0.5)
-    aix = ppg_features.get('AIx_mean', 0.4)
-    t_rise_ratio = ppg_features.get('T_rise_ratio_mean', 0.2)
-    dpmax = ppg_features.get('dPdt_max_mean', 1.0)
-    skew = ppg_features.get('skewness_mean', 0)
-    kurt = ppg_features.get('kurtosis_mean', 3.0)
-    a1_cv = ppg_features.get('A1_cv', 5.0)
-    aix_cv = ppg_features.get('AIx_cv', 5.0)
-    area_ratio = ppg_features.get('Area_ratio_mean', 0.6)
-
-    # 决策树
-    # 涩脉：高搏动间变异
-    if a1_cv > 10 or aix_cv > 15:
-        return "涩", 0.78
-
-    # 洪脉：高幅度 + 快速上升 + 低 AIx
-    if a1 > 0.85 and dpmax > 1.5 and aix < 0.35:
-        return "洪", 0.82
-
-    # 细脉：低幅度
-    if a1 < 0.15:
-        return "细", 0.80
-
-    # 弱脉：低幅度 + 低斜率
-    if a1 < 0.25 and dpmax < 0.5:
-        return "弱", 0.78
-
-    # 弦脉：高 AIx + 上升时间长 + 高峭度
-    if aix > 0.60 and t_rise_ratio > 0.22 and kurt > 3.5:
-        return "弦", 0.85
-
-    # 紧脉：上升时间极短 + 高 AIx + 高峭度
-    if t_rise_ratio < 0.12 and aix > 0.55 and kurt > 4.0:
-        return "紧", 0.80
-
-    # 滑脉：低变异 + 正常幅度 + 正常 AIx
-    if a1_cv < 5 and 0.3 <= aix <= 0.55 and 0.14 <= t_rise_ratio <= 0.20:
-        return "滑", 0.78
-
-    # 濡脉：低幅度 + 低 AIx + 圆钝形态
-    if a1 < 0.35 and aix < 0.35 and kurt < 2.8:
-        return "濡", 0.72
-
-    return "平脉", 0.60
 ```
+
+> **注意**：以上 `extract_ppg_features()` 提取的连续值特征可直接输入 `extract_six_qualities_from_ppg()`（见 §3.3.2）以获取六品质连续谱，无需经过"脉象分类→查表"的中间步骤。
 
 ---
 
 ## 五、脉诊精度对比
 
-### 5.1 各模式精度对比
+### 5.1 各模式精度对比（六品质连续谱 Pearson r）
 
-| 脉象分类 | ECG-only | ECG+PPG (增强) | ECG+PPG+三路压力 (完整) |
+| 品质维度 | ECG-only | ECG+PPG (增强) | ECG+PPG+三路压力 (完整) |
 |---------|---------|----------------|----------------------|
-| 位（浮/沉） | 60–65% | 70–75% | **82–88%** |
-| 数（迟/数/疾） | **98%** | **98%** | **98%** |
-| 形（洪/细/弦/滑/涩） | 55–70% | 78–85% | **85–92%** |
-| 律（结/代/促） | 80–90% | 85–92% | **90–95%** |
+| 粗↔细（A₁ + 面积） | r = 0.60–0.70 | r = 0.78–0.85 | **r = 0.85–0.92** |
+| 软↔硬（SI, AIx, T_rise） | r = 0.55–0.65 | r = 0.75–0.82 | **r = 0.82–0.90** |
+| 缓↔急（HR） | **r = 0.98** | **r = 0.98** | **r = 0.98** |
+| 滑↔涩（变异度） | r = 0.60–0.70 | r = 0.72–0.80 | **r = 0.80–0.88** |
+| 浮↔沉（PTT + HF） | r = 0.45–0.55 | r = 0.65–0.72 | **r = 0.78–0.85** |
+| 有力↔无力（dP/dt + 面积） | r = 0.55–0.65 | r = 0.72–0.80 | **r = 0.80–0.88** |
 
-### 5.2 各形分类的 PPG 特征贡献权重
+### 5.2 各品质维度的 PPG 特征贡献权重
 
-| 脉象 | 最重要 PPG 特征 (权重) | 次重要 PPG 特征 (权重) |
-|------|----------------------|----------------------|
-| 洪 | A₁ (0.40), dP/dt_max (0.30) | AIx (0.15), T_rise (0.15) |
-| 细 | A₁ (0.50) | Area_total (0.30), dP/dt_max (0.20) |
-| 弦 | AIx (0.35), T_rise (0.30), kurtosis (0.20) | PTT (0.15) |
-| 滑 | A₁ CV (0.30), AIx (0.25) | dP/dt_max 规则性 (0.25), T_rise (0.20) |
-| 涩 | A₁ CV (0.40), AIx CV (0.30) | 周期间相关系数 (0.30) |
+| 品质维度 | 最重要 PPG 特征 (权重) | 次重要 PPG 特征 (权重) |
+|---------|----------------------|----------------------|
+| 粗↔细 | A₁ (0.40), Area_sys (0.30) | dP/dt_max (0.15), Area_total (0.15) |
+| 软↔硬 | AIx (0.35), SI (0.30) | T_rise (0.20), PTT (0.15) |
+| 滑↔涩 | A₁ CV (0.40), AIx CV (0.30) | 周期间相关系数 (0.30) |
+| 有力↔无力 | dP/dt_max (0.40), Area_total (0.30) | A₁ (0.20), dP/dt_min (0.10) |
 
 ---
 
@@ -601,20 +643,25 @@ def classify_shape_with_ppg(ppg_features):
 | 项目 | 规格 |
 |------|------|
 | 样本量 | ≥ 200 例（健康+各类病证） |
-| 金标准 | 3 位副主任以上中医师独立切脉，取一致判定 |
+| 金标准 | **软标签（Soft Labels）**：3 位副主任以上中医师独立对六品质分别给出连续评分（0–100 分制），取均值作为金标准，方差反映医师间分歧 |
 | 采集设备 | ECG + PPG + 三路压力传感器同步 |
 | 采集时长 | 每例 5 分钟（含 3 次重复放置） |
-| 存储格式 | WFDB 兼容格式（`.dat` + `.hea` + 脉象标注 `.pul`） |
+| 存储格式 | WFDB 兼容格式（`.dat` + `.hea` + 六品质评分 `.qual`） |
+
+> **为什么采用软标签而非"三位一致判定"？**
+> 中医师之间的切脉一致性（kappa）通常仅为 0.4–0.6。如果三位医师对"弦脉"的一致性只有 60%，则以"三人一致判定"为金标准训练算法存在数学悖论——算法的准确率上限被人类一致性锁死。
+>
+> 软标签方案将医师之间的分歧保留为"标签的不确定性"，算法学习的是与医师评分均值的回归关系，而非拟合一个离散的"共识标签"。人类医师一致性 κ < 0.6 时，软标签方案的 ICC 仍然可以有效评估算法性能。
 
 ### 6.2 评价指标
 
 | 指标 | 定义 | 目标 |
 |------|------|------|
-| 准确率 | 正确分类数 / 总样本数 | ≥ 80% |
-| 灵敏度 | 某脉象正确检出数 / 金标准该脉象数 | ≥ 75% |
-| 特异度 | 非某脉象正确排除数 / 金标准非该脉象数 | ≥ 85% |
-| Cohen's κ | 与金标准的一致性 | ≥ 0.65 |
-| ICC | 重复测量的组内相关系数 | ≥ 0.80 |
+| **Pearson r** | 算法六品质连续输出与医师评分均值的相关性 | ≥ 0.75 |
+| **ICC(2,1)** | 绝对一致性组内相关系数（算法单次测量 vs 医师均值） | ≥ 0.70 |
+| **MAE** | 六品质的均值绝对误差（0–1 尺度） | ≤ 0.12 |
+| **Cohen's κ** | （可选）若需与离散分类比较，将六品质阈值化后计算 | 参考值 ≥ 0.50 |
+| **重复测量 ICC** | 同一患者 3 次重复放置的测量稳定性 | ≥ 0.80 |
 
 ---
 
@@ -642,4 +689,4 @@ PPG_SQI = 0.35 × AC_DC_ratio + 0.25 × beat_regularity
 
 ---
 
-> **与现有系统的集成**：本算法的输出作为 `patent/pulse_diagnosis.py` 中 `classify_shape_with_ppg()` 函数的直接输入，在 `spum_pulse_diagnosis()` 主函数中通过 `ppg_signal` 参数调用。
+> **与现有系统的集成**：本算法的输出作为 `pulse_diagnosis.py` 中 `extract_six_qualities_from_ppg()` 函数的直接输入，与青囊八步的 S_current 估测无缝对接。

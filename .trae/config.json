@@ -1,10 +1,22 @@
 {
   "name": "SPUM Agent Configuration",
-  "version": "2.3",
-  "description": "SPUM 宇宙推理节点配置 - v2.3 五形理论拓展：中医(黄帝内经)、风水(葬书) Relations-net 重构。",
+  "version": "3.0",
+  "description": "v3.0 分层加载架构 — L0核心5文件始终加载 + L1-L2按关键词触发。先读 MODULES.md 了解全貌，再按用户话题加载对应领域文件。",
+  "tieredLoading": {
+    "enabled": true,
+    "description": "三层架构：L0始终加载 → L1命中关键词加载入口 → L2按子话题加载深度文件",
+    "moduleIndex": "MODULES.md",
+    "routingRule": "用户输入 → 匹配关键词 → 加载L1入口 → 按子话题加载L2文件。不匹配则仅用L0核心公理回答。"
+  },
   "autoLoad": {
     "enabled": true,
     "files": [
+      {
+        "path": "MODULES.md",
+        "type": "index",
+        "priority": 0,
+        "description": "【先读】模块地图 — 三层架构、关键词→文件路由表、常见问题快捷路径"
+      },
       {
         "path": "AGENT.md",
         "type": "system_prompt",
@@ -15,13 +27,13 @@
         "path": ".trae/rules/spum-core.md",
         "type": "knowledge",
         "priority": 2,
-        "description": "核心公理：⟨P,ε⟩、关系定义存在、时间=离散帧、拓扑守恒、认知投影"
+        "description": "核心公理：⟨P,ε⟩、关系定义存在、时间=离散帧、拓扑守恒、认知投影、五形正式定义"
       },
       {
         "path": ".trae/rules/spum-reasoning.md",
         "type": "knowledge",
         "priority": 3,
-        "description": "推理原则：可还原性、多路径锁定、全回溯无污染、跨层推理约束(L0-L3)、L2重定义模板"
+        "description": "推理原则：可还原性、多路径锁定、全回溯无污染、跨层推理约束(L0-L3)"
       },
       {
         "path": ".trae/rules/spum-review.md",
@@ -34,70 +46,120 @@
         "type": "guard",
         "priority": 5,
         "description": "伪加载检测：8种典型AI错误模式对抗性示例，自检协议"
-      },
-      {
-        "path": "network/prompt.txt",
-        "type": "navigation",
-        "priority": 6,
-        "description": "图谱导航：强制沿edges.txt推理，节点声明，悬空终止"
-      },
-      {
-        "path": ".trae/skills/zhihu-knowledge/skill.md",
-        "type": "skill",
-        "priority": 7,
-        "description": "知乎问答外部知识库 — SPUM 视角的问答、科普与批判性写作模板"
-      },
-      {
-        "path": ".trae/skills/wuxing-subnet/skill.md",
-        "type": "skill",
-        "priority": 8,
-        "description": "阴阳五行子网 — 中医/风水/易学/时空 4 子网，11 部经典 SPUM 重构"
-      },
-      {
-        "path": ".trae/skills/physics-subnet/skill.md",
-        "type": "skill",
-        "priority": 9,
-        "description": "物理学概念 SPUM 释义 — 9 子域 25 节点，力/光/热/电磁/量子/相对论"
-      },
-      {
-        "path": ".trae/skills/rushidao-subnet/skill.md",
-        "type": "skill",
-        "priority": 10,
-        "description": "儒释道哲学子网 — 4 分区 14 部经典 57 节点，道=ε（边集）"
-      },
-      {
-        "path": ".trae/skills/spum-math/skill.md",
-        "type": "skill",
-        "priority": 11,
-        "description": "SPUM 数学 — 离散关系本体数学，全部运算归约为 V⁺/V⁻"
-      },
-      {
-        "path": ".trae/skills/spum-sociology/skill.md",
-        "type": "skill",
-        "priority": 12,
-        "description": "SPUM 社会学 — 社会关系图论重构，22 节点"
-      },
-      {
-        "path": ".trae/skills/spum-economics/skill.md",
-        "type": "skill",
-        "priority": 13,
-        "description": "SPUM 经济学 — 经济交换子图拓扑重构，22 节点"
-      },
-      {
-        "path": ".trae/skills/spum-linguistics/skill.md",
-        "type": "skill",
-        "priority": 14,
-        "description": "SPUM 语言学 — 认知信号协议拓扑重构，22 节点"
-      },
-      {
-        "path": ".trae/skills/spum-graph-theory/skill.md",
-        "type": "skill",
-        "priority": 15,
-        "description": "SPUM-图论 v2.0 — 关系张力的几何投影理论，20 节点"
       }
     ],
     "loadStrategy": "sequential",
     "timeout": 3000
+  },
+  "onDemand": {
+    "description": "按用户话题关键词触发加载，未命中则不加载。节省上下文。",
+    "domains": {
+      "qingnang": {
+        "name": "青囊生活管家",
+        "entry": ".trae/rules/spum-qingnang-agent.md",
+        "triggers": ["中医", "诊断", "辩证", "辨证", "问诊", "脉诊", "闻诊", "声纹", "食疗", "穿衣", "体质", "调理", "养生", "食材", "颜色穿搭", "搭配", "作息", "去湿", "降火", "补土", "滋阴", "温阳", "八字", "命理", "S向量", "S_0", "S_current", "方剂", "药方", "经方", "把脉", "感冒", "咳嗽", "失眠", "上火", "虚", "寒", "热", "湿", "吃什么", "穿什么", "新建档案", "建档", "初诊", "新病人", "新建病历"],
+        "l2Files": {
+          "理论总纲": "五行/人元/spum-青囊（中医）总纲.md",
+          "临床全流程": "五行/地元/青囊/青囊agent.md",
+          "症状映射": "五行/人元/症状-S向量规则矩阵.md",
+          "方剂药物": "五行/人元/spum-神农本草经.md",
+          "伤寒六经": "五行/人元/spum-伤寒论.md",
+          "金匮杂病": "五行/人元/spum-金匮要略.md",
+          "温病": "五行/人元/spum-温病条辨.md",
+          "黄帝内经": "五行/人元/spum-黄帝内经.md",
+          "食材推荐": "五行/人元/食材ΔS数据库.md",
+          "穿衣搭配": "五行/人元/颜色材质五形映射.md",
+          "脉诊算法": "patent/SPUM-脉诊ECG算法-技术方案.md",
+          "病案": "五行/人元/病历/"
+        }
+      },
+      "physics": {
+        "name": "物理学",
+        "entry": ".trae/skills/physics-subnet/skill.md",
+        "triggers": ["力", "光", "热", "电", "磁", "量子", "相对论", "宇宙", "引力", "电磁力", "强力", "弱力", "光子", "原子", "波粒二象性", "绝对零度", "熵", "黑洞", "暗物质", "凝聚态", "超导", "挠场", "声", "波", "衍射", "折射", "反射"],
+        "l2Files": {
+          "引力": "物理学/基本相互作用/引力.md",
+          "电磁": "物理学/电磁学/电.md",
+          "光": "物理学/光学/光.md",
+          "热": "物理学/热力学/温度.md",
+          "量子": "物理学/量子与原子/量子现象.md",
+          "相对论": "物理学/相对论与宇宙学/相对论效应.md",
+          "OpenSPUM模拟": "openSPUM/Phase_1/"
+        }
+      },
+      "rushidao": {
+        "name": "儒释道哲学",
+        "entry": ".trae/skills/rushidao-subnet/skill.md",
+        "triggers": ["道德经", "道", "无为", "庄子", "逍遥", "楞严经", "心经", "金刚经", "坛经", "华严经", "法华经", "论语", "中庸", "大学", "孟子", "列子", "秘密", "禅宗", "佛", "儒", "六祖", "慧能"],
+        "l2Files": {
+          "道家": "儒释道哲学/spum-道德经.md",
+          "佛家": "儒释道哲学/spum-楞严经.md",
+          "儒家": "儒释道哲学/spum-论语.md"
+        }
+      },
+      "wuxing": {
+        "name": "阴阳五行",
+        "entry": ".trae/skills/wuxing-subnet/skill.md",
+        "triggers": ["五行", "五形", "风水", "周易", "八卦", "梅花易数", "起卦", "奇门遁甲", "围棋", "经络", "脏腑", "针灸", "黄帝内经", "伤寒", "金匮", "本草", "葬书", "阳宅"],
+        "l2Files": {
+          "周易": "五行/天元/spum-周易.md",
+          "梅花易数": "五行/天元/梅花易数/skill.md",
+          "奇门": "五行/天元/spum-奇门遁甲.md",
+          "风水": "五行/地元/spum-葬书.md"
+        }
+      },
+      "math": {
+        "name": "数学",
+        "entry": ".trae/skills/spum-math/skill.md",
+        "triggers": ["数学基础", "离散数学", "微积分", "连续统", "实数", "极限", "无穷", "V⁺", "V⁻", "加减还原"],
+        "l2Files": {
+          "公理": "数学/spum-数学公理.md",
+          "定理": "数学/spum-数学定理.md"
+        }
+      },
+      "sociology": {
+        "name": "社会学",
+        "entry": ".trae/skills/spum-sociology/skill.md",
+        "triggers": ["社会学", "社会网络", "群体", "权力", "制度", "文化", "不平等", "社会变迁", "革命", "邓巴数"],
+        "l2Files": {
+          "社会网络": "社会学/spum-社会网络.md",
+          "权力": "社会学/spum-权力与层级.md"
+        }
+      },
+      "economics": {
+        "name": "经济学",
+        "entry": ".trae/skills/spum-economics/skill.md",
+        "triggers": ["经济学", "市场", "货币", "价格", "供需", "劳动", "资本", "GDP", "经济危机", "通胀", "利息", "利润"],
+        "l2Files": {
+          "经济网络": "经济学/spum-经济网络.md",
+          "货币": "经济学/spum-货币与价值.md"
+        }
+      },
+      "linguistics": {
+        "name": "语言学",
+        "entry": ".trae/skills/spum-linguistics/skill.md",
+        "triggers": ["语言学", "语言", "语音", "语法", "句法", "语义", "词汇", "翻译", "乔姆斯基", "索绪尔", "语用"],
+        "l2Files": {
+          "语言网络": "语言学/spum-语言网络.md",
+          "语音": "语言学/spum-语音与音系.md"
+        }
+      },
+      "graph-theory": {
+        "name": "图论",
+        "entry": ".trae/skills/spum-graph-theory/skill.md",
+        "triggers": ["图论", "图结构", "网络拓扑", "节点-边", "悬挂端", "σ密度", "张力场", "连通性", "聚类系数"],
+        "l2Files": {
+          "公理": "图论/spum-图论公理.md",
+          "指标": "图论/spum-图论指标.md"
+        }
+      },
+      "zhihu": {
+        "name": "知乎知识库",
+        "entry": ".trae/skills/zhihu-knowledge/skill.md",
+        "triggers": ["知乎", "科普", "写文章", "问答", "民科", "维格纳"],
+        "l2Files": {}
+      }
+    }
   },
   "externalKnowledgeBases": {
     "zhihu-knowledge": {

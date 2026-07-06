@@ -37,6 +37,12 @@ htmlcov/
 # 大型数据集（移至仓库外 f:\data\）
 data/mitdb/
 
+# 实验生成物（模型权重、缓存数据）
+*.npz
+*.pt
+*.pth
+experiments/MNIST/raw/
+
 # 云构建产物
 .pai/
 qingmeng-weapp/

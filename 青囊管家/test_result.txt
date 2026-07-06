@@ -1,0 +1,30 @@
+﻿=== 第一轮 ===
+AI: 好的，你的八字是 戊辰 戊午 丙子 丙申。
+
+你的S向量核心问题是 **S_水 ↓↓（肾水不足）**，同时 **S_土 ↑↑（壅滞）** 导致运化不畅——水不涵木，土又堵着，所以容易口干、怕热、下午疲倦。
+
+今晚先做一件事：晚餐改喝 **百
+Account: acc_c6ac667b5f
+
+=== 第二轮 ===
+AI: 好的，张莹莹。你的S_水 ↓↓（肾水不足）是睡眠问题的根——水不制火，心火偏亢，所以入睡困难或多梦。
+
+加上S_土 ↑↑（壅滞），晚饭如果吃多了，胃不和则卧不安。
+
+**今晚方案：**
+1. 晚餐只喝一碗 **百合银耳羹**（不加糖），不吃
+
+=== 第三轮 ===
+python : Traceback (most recent call last):
+所在位置 行:1 字符: 19
++ cd f:\spum-core ; python f:\spum-core\青囊管家\test_v3.py 2>&1 | Out-File ...
++                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last) 
+   ::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "f:\spum-core\青囊管家\test_v3.py", line 34, in <module>
+    print('AI:', d3['reply'][:120])
+UnicodeEncodeError: 'gbk' codec can't encode character '\u2194' in position 32:
+ illegal multibyte sequence
+AI: 
