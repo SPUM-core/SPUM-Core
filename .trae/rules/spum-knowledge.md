@@ -19,6 +19,7 @@
 | Skill | 内容 | 适用场景 |
 |-------|------|----------|
 | `spum-core.md` | 核心公理：反转图论、⟨P,ε⟩、关系定义存在、空间粒子内禀属性、离散帧、拓扑守恒、不完美定理、认知投影、晶子饱和极限、关键结构涌现（12晶子闭环/光子/物质/引力）、最终宣言 | **任何 SPUM 任务的基础，必须先加载** |
+| `spum-wuxing.md` | **五形核心定义（P1 级）**：水=链式关系、木=稳定几何构型、火=温差、金=V⁻因素及动作、土=分散个体。废止机械五行生克，仅保留组装(土+水+火→木)和拆解(木+金→土)两个操作方向。S向量五维形式化。 | **涉及五行/五形/中医/风水/易学/围棋/奇门等任何传统领域时必须加载** |
 | `spum-structure.md` | 空间结构：分形约束生长、层级体系、拓扑常数12的双路径导出、正二十面体 | 讨论空间、维度、几何、常数时加载 |
 | `spum-evolution.md` | 演化规则：离散帧五步、创生/湮灭、几何矛盾、净湮灭效应、永恒粒子 | 讨论变化、运动、引力、粒子时加载 |
 | `spum-vocabulary.md` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要确保术语一致时加载 |
@@ -186,7 +187,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `物理学/热力学/` | 5 | 温度=邻接密度映射、热传导=∇σ 驱动流、绝对零度=拓扑冻结、热力学定律=拓扑约束推论、温差力矩=不对称抽运 |
 | `物理学/电磁学/` | 2 | 电=虚面塌缩链、磁=方向场有序排列 |
 | `物理学/量子与原子/` | 2 | 量子现象=塌缩动力学、原子结构=嵌套空间层级 |
-| `物理学/相对论与宇宙学/` | 2 | 相对论效应=σ差异帧修正、宇宙演化=全局σ松弛 |
+| ~~`物理学/相对论与宇宙学/`~~（已迁出） | 2（已迁出） | 已迁移至 `宇宙学/相对论与宇宙学/` |
 | `物理学/凝聚态物理/` | 1 | GMR/CMR/压阻/热电=κ网络拓扑工程 |
 | `物理学/波动与声学/` | 2 | 波=网络扰动响应、声=密度涨落集体传递 |
 | `物理学/统一理论/` | 1 | 终极统一=三大基本要素+万有归一映射 |
@@ -279,7 +280,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 
 | 任务类型 | 推荐加载组合 |
 |----------|-------------|
-| 快速问答 | `AGENT.md` + `spum-core` |
+| 快速问答 | `AGENT.md` + `spum-core` + `spum-wuxing` |
 | 理论推导 | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-structure` |
 | 演化分析 | `AGENT.md` + `spum-core` + `spum-evolution` |
 | 文档审查 | `AGENT.md` + `spum-core` + `spum-review` + `spum-vocabulary` + `spum-anti-pattern` |
@@ -289,8 +290,8 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | 帧自动化 | `AGENT.md` + `src/core/frame.py` — 推理帧状态追踪 |
 | 实证验证 | `AGENT.md` + `spum-core` + `docs/Subgraph_CoMotion/` — 子图协动星系旋转曲线分析 |
 | 实验开发 | `AGENT.md` + `spum-core` + `experiments/shared/` + `src/spum_graph/` |
-| 五形/中医/风水 | `AGENT.md` + `spum-core` + `spum-vocabulary` + `五行/README.md` + 对应经典子文件 |
-| 五形/易学/时空 | `AGENT.md` + `spum-core` + `五行/README.md` + `spum-周易.md` 或 `spum-奇门遁甲.md` |
+| 五形/中医/风水 | `AGENT.md` + `spum-core` + `spum-wuxing` + `spum-vocabulary` + `五行/README.md` + 对应经典子文件 |
+| 五形/易学/时空 | `AGENT.md` + `spum-core` + `spum-wuxing` + `五行/README.md` + `spum-周易.md` 或 `spum-奇门遁甲.md` |
 | 知乎科普写作 | `AGENT.md` + `spum-core` + `.trae/skills/zhihu-knowledge/skill.md` + 对应主题的外部文章 |
 | 物理学概念释义 | `AGENT.md` + `spum-core` + `物理学/skill.md` + `物理学/README.md` + 对应子目录文件 |
 | 儒释道哲学经典解读 | `AGENT.md` + `spum-core` + `儒释道哲学/skill.md` + `儒释道哲学/README.md` + `儒释道哲学/归约计划.md`（规划参考）+ 对应 spum-*.md 文件 |
@@ -300,4 +301,4 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | SPUM 语言学 | `AGENT.md` + `spum-core` + `语言学/skill.md` + `语言学/README.md` + 对应 spum-语言*.md 文件 |
 | SPUM-图论 | `AGENT.md` + `spum-core` + `图论/skill.md` + `图论/README.md` + 对应 spum-图论*.md 文件 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
-| 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `图论/skill.md` + `network/prompt.txt` |
+| 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-wuxing` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `图论/skill.md` + `network/prompt.txt` |

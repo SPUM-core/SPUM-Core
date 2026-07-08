@@ -1,5 +1,7 @@
 # SPUM2610：Space Particle Universe Model
 
+> **WARNING**: This draft paper contains redshift content (Hubble redshift, energy-loss mechanism) that has been **marked as pending rigorous derivation** in the main corpus (see SPUM2610.md Ch.9). The redshift-related claims in this paper should not be cited as SPUM conclusions until the formal reduction is completed.
+
 **Version:** `draft-paper-20260410`  
 **Theme:** A Relational Network Foundation for Physics without Dark Matter or Singularities  
 **Date:** April 2026  
