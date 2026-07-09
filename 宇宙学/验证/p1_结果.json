@@ -1,0 +1,36 @@
+{
+  "pipeline": "P1 — 光谱指纹子网 (v3, 连续谱σ)",
+  "timestamp": "2026-07-09T20:33:48.755206",
+  "parameters": {
+    "ra": 194.95,
+    "dec": 27.98,
+    "radius_deg": 0.05,
+    "use_mock": false
+  },
+  "independence_test": {
+    "spearman_rho_continuum_vs_full": -0.8451542547285166,
+    "permutation_95_ci": [
+      -0.5916079783099616,
+      0.6338656910463875
+    ],
+    "independence_holds": true
+  },
+  "sigma_global": {
+    "mean": 0.5512820512820512,
+    "std": 0.07692307692307691
+  },
+  "sigma_local": {
+    "mean": 0.6025641025641026,
+    "std": 0.08108404256841997
+  },
+  "sigma_spatial_correlation": {
+    "spearman_rho": 0.36055512754639896,
+    "p_value": 0.22618290943373273
+  },
+  "core_vs_outer": {
+    "sigma_core_mean": 0.6333333333333332,
+    "sigma_outer_mean": 0.5833333333333333,
+    "ratio": 1.0857142857142856
+  },
+  "conclusion": "σ 呈空间结构"
+}

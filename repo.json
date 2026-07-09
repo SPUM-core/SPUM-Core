@@ -1,0 +1,61 @@
+{
+  "name": "spum-core",
+  "version": "4.0",
+  "description": "空间粒子宇宙模型 — 以离散关系网络 ⟨P, ε⟩ 为宇宙本体基底的理论与工程仓库",
+  "import": "from spum import SPUM",
+  "api": {
+    "path": "spum/",
+    "class": "SPUM",
+    "files": ["axioms.py", "frame.py", "domain.py", "reason.py", "api.py"]
+  },
+  "axioms": {
+    "file": "spum/axioms.py",
+    "count": 5,
+    "list": [
+      "反转图论：关系从潜态→显态撑出空间粒子",
+      "关系定义存在：孤立节点无法被确认",
+      "拓扑守恒：Σ(6−deg(v))=12, 最小度数≥2, 开口占比≤1/3",
+      "离散帧演化：五步帧（创生→连接→变体积→判悬挂→删悬挂）",
+      "不完美定理：删除悬挂边必生新悬挂边，演化永不静止"
+    ]
+  },
+  "rules": {
+    "path": ".trae/rules/",
+    "core": [
+      "spum-core.md",
+      "spum-reasoning.md",
+      "spum-review.md",
+      "spum-anti-pattern.md"
+    ],
+    "extension": [
+      "spum-evolution.md",
+      "spum-structure.md",
+      "spum-vocabulary.md",
+      "spum-knowledge.md",
+      "spum-root-nodes.md",
+      "spum-wuxing.md"
+    ]
+  },
+  "modules": [
+    { "id": "physics",        "path": "物理学/",   "trigger": ["力","光","热","电","磁","量子","引力","黑洞","暗物质"] },
+    { "id": "wuxing",         "path": "五行/",     "trigger": ["五行","五形","中医","风水","周易","梅花易数","奇门遁甲","围棋"] },
+    { "id": "rushidao",       "path": "儒释道哲学/", "trigger": ["道德经","庄子","楞严经","心经","金刚经","坛经","华严经","论语","中庸","大学","孟子"] },
+    { "id": "math",           "path": "数学/",     "trigger": ["离散数学","微积分","连续统","实数","极限","无穷","加减本原"] },
+    { "id": "sociology",      "path": "社会学/",   "trigger": ["社会学","社会网络","群体","权力","制度","文化","不平等","邓巴数"] },
+    { "id": "economics",      "path": "经济学/",   "trigger": ["经济学","市场","货币","价格","供需","劳动","资本","GDP","经济危机"] },
+    { "id": "linguistics",    "path": "语言学/",   "trigger": ["语言学","语言","语音","语法","句法","语义","乔姆斯基","索绪尔"] },
+    { "id": "graph-theory",   "path": "图论/",     "trigger": ["图论","图结构","悬挂端","σ密度","张力场","连通性"] },
+    { "id": "cosmology",      "path": "宇宙学/",   "trigger": ["红移","宇宙膨胀","星系团","暗能量","哈勃常数","CMB"] },
+    { "id": "zhihu",          "path": "知乎问答/", "trigger": ["知乎","科普","写文章","民科","维格纳"] }
+  ],
+  "docs": {
+    "manifest": "SPUM_系统总纲.md",
+    "full_theory": "SPUM2610.md",
+    "knowledge_graph": {
+      "nodes": "network/nodes.txt",
+      "edges": "network/edges.txt"
+    },
+    "experiments": "experiments/",
+    "faq": "faq/"
+  }
+}

@@ -1,0 +1,4 @@
+numpy>=1.20.0
+scipy>=1.7.0
+astroquery>=0.4.6  # SDSS 光谱获取
+astropy>=5.0.0     # FITS 处理 (不含宇宙学模型)

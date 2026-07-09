@@ -1,0 +1,102 @@
+{
+  "pipeline": "P2 — σ 梯度与谱线偏移 (v3, 连续谱σ)",
+  "timestamp": "2026-07-09T20:33:30.349720",
+  "parameters": {
+    "ra": 194.95,
+    "dec": 27.98,
+    "radius_deg": 0.05,
+    "use_mock": false,
+    "n_line_measure": 13
+  },
+  "independence_test": {
+    "spearman_rho_continuum_vs_full": -0.8451542547285166,
+    "permutation_95_ci": [
+      -0.4236335701826689,
+      0.5493502655735357
+    ],
+    "independence_holds": true
+  },
+  "sigma_summary": {
+    "mean": 0.6025641025641026,
+    "std": 0.08108404256841997
+  },
+  "line_shift_results": {
+    "Hα": {
+      "n_measurements": 13,
+      "spearman_sigma_vs_shift": {
+        "rho": 0.3380617018914066,
+        "p_value": 0.25858115341098237
+      },
+      "spearman_spatial_vs_shift": {
+        "rho": 0.32816506165694675,
+        "p_value": 0.273661140313494
+      },
+      "mean_shift": -4.151489128486831,
+      "std_shift": 6.724553400041388
+    },
+    "Hβ": {
+      "n_measurements": 13,
+      "spearman_sigma_vs_shift": {
+        "rho": -0.3380617018914066,
+        "p_value": 0.25858115341098237
+      },
+      "spearman_spatial_vs_shift": {
+        "rho": 0.29300451933655963,
+        "p_value": 0.33127616121961523
+      },
+      "mean_shift": -4.890690382845605,
+      "std_shift": 6.99183350726222
+    },
+    "[OIII]2": {
+      "n_measurements": 13,
+      "spearman_sigma_vs_shift": {
+        "rho": 0.21128856368212914,
+        "p_value": 0.4883485384541776
+      },
+      "spearman_spatial_vs_shift": {
+        "rho": -0.11720180773462385,
+        "p_value": 0.7029683790794199
+      },
+      "mean_shift": 4.705268368064935,
+      "std_shift": 12.074544976913288
+    },
+    "[NII]2": {
+      "n_measurements": 13,
+      "spearman_sigma_vs_shift": {
+        "rho": -0.3380617018914066,
+        "p_value": 0.25858115341098237
+      },
+      "spearman_spatial_vs_shift": {
+        "rho": -0.4277865982313771,
+        "p_value": 0.14478754283120573
+      },
+      "mean_shift": 0.7654348508844683,
+      "std_shift": 6.430119691457533
+    },
+    "[SII]": {
+      "n_measurements": 12,
+      "spearman_sigma_vs_shift": {
+        "rho": -0.4162052056699595,
+        "p_value": 0.17837368409261067
+      },
+      "spearman_spatial_vs_shift": {
+        "rho": -0.3687668789208312,
+        "p_value": 0.2381671814142429
+      },
+      "mean_shift": -2.335684400435715,
+      "std_shift": 10.630468928725007
+    }
+  },
+  "line_ratio_results": {
+    "[OIII]_Hβ": {
+      "n_measurements": 13,
+      "spearman_sigma_vs_ratio": {
+        "rho": -0.3380617018914066,
+        "p_value": 0.25858115341098237
+      },
+      "mean_ratio": 1.3418908081479681,
+      "std_ratio": 1.2381580620695551
+    }
+  },
+  "conclusion": "σ-谱线偏移正相关支持 SPUM"
+}

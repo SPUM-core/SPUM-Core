@@ -1,6 +1,0 @@
-numpy>=1.20.0
-scipy>=1.7.0
-matplotlib>=3.4.0
-astropy>=5.0.0
-astroquery>=0.4.6  # 可选，用于在线 SDSS 数据
-requests>=2.25.0   # 可选，用于 HTTP API
