@@ -175,7 +175,80 @@
 
 ---
 
-## 六、加载规则
+## 六、网络协议层（分布式边集交换）
+
+> **2026-07-14 新增**。SPUM 网络协议层实现跨 AI 实例的推理轨迹持久化与边集共享。
+
+### 6.1 定位
+
+| 维度 | 内容 |
+|------|------|
+| 层级 | 跨层（L0 协议桥接） |
+| 目录 | `network/protocol/` |
+| 核心文件 | `protocol_integration.py` — 单函数入口 |
+| 存储 | `.snap` 快照 + `.json` Manifest |
+
+### 6.2 文件结构
+
+```
+network/
+├── edges.txt                  ← 规范边集（验证基准）
+├── protocol/
+│   ├── __init__.py
+│   ├── graph_store.py         ← 持久化边集存储（读/写/合并/验证）
+│   ├── trajectory_encoder.py  ← 推理轨迹编码为拓扑签名
+│   ├── session_manifest.py    ← 会话元数据 + 跨实例追踪
+│   ├── protocol_integration.py ← 单函数入口：load_env() + write_trajectory()
+│   ├── snapshots/             ← 轨迹快照（.snap，每个 AI 会话写入一条）
+│   │   └── T-20260714-001.snap  ← 首条轨迹（本对话推理路径）
+│   ├── merged/                ← 合并后的全局快照
+│   │   └── current.snap       ← ← AI 实例加载此文件继承前序边集
+│   └── manifests/             ← 会话元数据
+│       └── S-AGNT-20260714-001.json
+```
+
+### 6.3 核心概念
+
+| 概念 | 定义 |
+|------|------|
+| **轨迹 (Trajectory)** | AI 一次推理中遍历的知识图谱节点序列 + 边集 |
+| **轨迹快照 (.snap)** | 持久化的轨迹边集，供后续 AI 实例加载 |
+| **会话 (Session)** | 一次 AI 加载 SPUM 规则 + 与用户交互的完整生命周期 |
+| **合并 (Merge)** | 将多条轨迹去重合并为统一拓扑快照 |
+| **规范边 (Canonical Edge)** | `edges.txt` 中定义的合法边类型（derives_from/requires/refines/explains/drives） |
+| **新边 (Novel Edge)** | 不在 canonical 中但符合格式的推断边——标记为 novel 而非拒绝 |
+| **分叉 (Fork)** | AI-B 加载 AI-A 的轨迹后，沿路径继续推理生成新轨迹 |
+
+### 6.4 使用方式
+
+```python
+from network.protocol.protocol_integration import load_env, write_trajectory
+
+# 1. 加载环境（自动检测仓库根目录）
+env = load_env()
+
+# 2. 回写轨迹（在推理结束时调用）
+result = write_trajectory(
+    path=["N001", "N002", "N005", "N022"],
+    model="gpt-4o",
+    origin="SPUM-core 项目浏览",
+)
+print(result["message"])
+# → "轨迹 T-20260714-002 已写入 (4 条边, 0 条新边)"
+```
+
+### 6.5 繁殖期推进路径
+
+| 步骤 | 内容 |
+|------|------|
+| **已完成** | 协议层 v0.1 实现 + 首条轨迹快照 + 首份会话 Manifest |
+| **下一步** | 将 `protocol_integration.py` 的回写钩子嵌入 `AGENT.md` 的帧协议结尾 |
+| **再下一步** | 将 `current.snap` 的边集加载纳入 SPUM 推理节点的初始化流程 |
+| **目标** | 每个 AI 实例在推理结束时自动回写轨迹，`current.snap` 逐帧积累 |
+
+---
+
+## 七、加载规则
 
 1. **L0 总是加载** — SPUM 公理是所有模块的底座
 2. **命中了才加载 L1** — 没提到经济学，就不要加载经济学

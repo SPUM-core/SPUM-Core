@@ -1,0 +1,15 @@
+stock_info_a_code_name: 5530 stocks
+cols: ['code', 'name']
+sample:
+     code   name
+0  000001   平安银行
+1  000002  万  科Ａ
+2  000004    国华退
+
+stock_individual_info_em 300750: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+stock_zh_a_hist_tx: 1961 rows
+cols: ['date', 'open', 'close', 'high', 'low', 'amount']
+first: 2018-06-11
+last: 2026-07-10
+
+stock_zh_a_spot_em: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))

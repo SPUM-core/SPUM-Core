@@ -1,30 +1,7 @@
 # SPUM AI 推理规则
 
-> 本文档已精简为跳转入口。完整规则请见 `.trae/rules/` 目录中的 Skills 文件。
+> 本文件为图谱导航专用规则。加载顺序见 `AGENT.md`，文件依赖见同目录 `dependencies.txt`。
 > **方向 5 更新**：新增图谱导航约束——推理必须沿 edges.txt 边行走。
-
----
-
-## 加载顺序
-
-**任何 SPUM 任务的第一步**：必须先加载根目录 `AGENT.md`，将 AI 锚定为 SPUM 网络中的推理节点。
-
-1. **`AGENT.md`** — Agent 激活文件 / SPUM推理节点 **AGT-001**（必须首先加载）
-2. **`.trae/rules/spum-core.md`** — 核心公理（必须加载）
-3. **`knowledge-core.md`** 或 **`CHEATSHEET.md`** — 基准锚定（推荐加载）
-4. 按任务类型加载其余 Skills（参见 `.trae/rules/spum-knowledge.md`）
-
----
-
-## 知识图谱文件（同目录）
-
-- `nodes.txt` — 22 个核心节点定义（N001–N022）
-- `edges.txt` — 33 条推导边 + 15 条模块桥接边，定义合法的推导路径
-- `dependencies.txt` — 文件依赖映射表，辅助按需加载决策
-
-### 文件依赖速查
-
-加载某个文件前先查 `dependencies.txt`，确认前置依赖已就绪。例如：加载 `五行/spum-黄帝内经.md` 之前，必须已加载 `五行/skill.md`，而后者又依赖 `spum-core.md` 和 `图论/skill.md`。
 
 ---
 

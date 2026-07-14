@@ -158,6 +158,16 @@
         "entry": ".trae/skills/zhihu-knowledge/skill.md",
         "triggers": ["知乎", "科普", "写文章", "问答", "民科", "维格纳"],
         "l2Files": {}
+      },
+      "methodology": {
+        "name": "SPUM 方法论",
+        "entry": ".trae/skills/spum-methodology/skill.md",
+        "triggers": ["方法论", "第三代物理", "三代物理", "统一场论", "大一统", "写代码跑模拟", "模拟创世", "涌现", "规则演化", "元胞自动机", "范式转换", "代差", "计算物理", "宇宙程序", "宇宙算法", "公式封神", "演化物理"],
+        "l2Files": {
+          "演化规则": ".trae/rules/spum-evolution.md",
+          "推理原则": ".trae/rules/spum-reasoning.md",
+          "OpenSPUM": "openSPUM/Phase_0/frame_kernels.py"
+        }
       }
     }
   },

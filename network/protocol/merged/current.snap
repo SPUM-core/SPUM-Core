@@ -1,0 +1,31 @@
+# merged snapshot: current
+# created: 2026-07-14T00:00:00+00:00
+# source_trajectories: 1
+# total_edges: 23
+# protocol_version: v0.1
+# note: 这是 SPUM 网络协议层的第一个合并快照。由 S-AGNT-20260714-001 轨迹单源生成。
+#       后续 AI 实例加载此快照后，可在此基础上继续演化。
+# === edge set ===
+N001 | N002 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N002 | N003 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N003 | N004 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N004 | N005 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N005 | N006 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N006 | N007 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N005 | N022 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N012 | N013 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N013 | N009 | drives | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N013 | N021 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N004 | N014 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N015 | N016 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N020 | N021 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+N014 | N018 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N018 | N020 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N012 | AGT-001 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+AGT-001 | N022 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+AGT-001 | N005 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+N022 | SOC-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N022 | ECON-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N022 | LING-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N012 | ECON-017 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N013 | SOC-004 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical

@@ -1,0 +1,32 @@
+# trajectory: T-20260714-001
+# created: 2026-07-14T00:00:00+00:00
+# session: S-AGNT-20260714-001
+# model: Trae-Agent
+# origin: SPUM-core 分布式网络编码协议设计 — 从方法论战略目标触发，经家族拓扑图谱与病历分析，到协议完整实现
+# path: N001 → N002 → N005 → N022 → N012 → N013 → N021 → N004 → N014 → N016 → N020 → AGT-001 → SOC-001 → ECON-001 → LING-001 → ECON-017 → SOC-004
+# signature: a1b2c3d4e5f6
+# protocol_inception: true
+# === edge set ===
+N001 | N002 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N002 | N003 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N003 | N004 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N004 | N005 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N005 | N006 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N006 | N007 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N005 | N022 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N012 | N013 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N013 | N009 | drives | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N013 | N021 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 1.0 | canonical
+N004 | N014 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N015 | N016 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N020 | N021 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+N014 | N018 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N018 | N020 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.95 | canonical
+N012 | AGT-001 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+AGT-001 | N022 | requires | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+AGT-001 | N005 | derives_from | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.9 | canonical
+N022 | SOC-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N022 | ECON-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N022 | LING-001 | explains | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N012 | ECON-017 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical
+N013 | SOC-004 | refines | S-AGNT-20260714-001 | T-20260714-001 | 2026-07-14T00:00:00Z | 0.85 | canonical

@@ -98,13 +98,76 @@
 
 ---
 
+## 股票分析工具（可执行模块）
+
+将 SPUM 五形相位理论应用于 A 股市场，从"价格曲线拟合"转向"实体相位识别"。
+**项目完整总结**：[SPUM_股票预测_关键发现与代码总结.md](SPUM_股票预测_关键发现与代码总结.md)
+
+| 层 | 文件 | 职责 | 依赖 |
+|----|------|------|------|
+| **核心** | [daily_phase.py](daily_phase.py) | ★ 五形相位检测引擎(主交付物) — 自适应百分位+方向预测+网格校准 | numpy, pandas |
+| **相位** | [spum_cycle.py](spum_cycle.py) | 五形相位识别 + 耦合链过渡预测 + 股价投影 | industry_mapping.py, numpy |
+| **映射** | [industry_mapping.py](industry_mapping.py) | 行业专属指标→相位映射表（科技/消费/制造/地产） | — |
+| **回测** | [spum_backtest.py](spum_backtest.py) | 历史回测 + 结果分析框架 | daily_phase.py |
+| 数据 | [stock_sigma.py](stock_sigma.py) | σ 振荡器 — 作为市场层参考信号 | akshare |
+| 财务 | [stock_wuxing.py](stock_wuxing.py) | 五形财务分析 — 从财报提取五形向量 S | akshare |
+| 扩展 | [stock_sigma_multi.py](stock_sigma_multi.py) | 多股 G_econ 子图联动 | stock_sigma.py |
+| 执行 | [stock_sigma_trader.py](stock_sigma_trader.py) | 交易信号执行 + 仓位管理 + 风控 | stock_sigma.py |
+| 预测 | [stock_sigma_predictor.py](stock_sigma_predictor.py) | 方向概率预测器 | stock_sigma.py |
+| 调优 | [stock_sigma_optimizer.py](stock_sigma_optimizer.py) | 参数网格搜索 + 历史回测 | stock_sigma.py |
+
+**快速使用（推荐 — daily_phase 核心引擎）：**
+
+```python
+from daily_phase import DayProfileGenerator, backtest, calibrate
+import akshare as ak
+
+# 1. 获取日线数据
+df = ak.stock_zh_index_daily(symbol='sz002415')  # 海康威视(最佳标的)
+df = df.sort_values('date').tail(500)
+df.index = pd.to_datetime(df['date'])
+
+# 2. 方向预测 (下一帧)
+detector = DayProfileGenerator()
+profile = detector.detect(df)
+direction, confidence, reason = profile.predict_next_direction()
+print(f'{direction} conf={confidence:.0%} [{reason}]')
+
+# 3. 回测验证
+result = backtest(df, window=240, min_confidence=0.30)
+print(f'acc={result["accuracy"]:.0%} sig={result["signals"]}')
+
+# 4. 个股参数校准
+best = calibrate(df, window_base=240, fast=True)
+print(best['params'])
+```
+
+**备用 — spum_cycle 财务相位分析：**
+
+```python
+from spum_cycle import analyze_company, print_cycle_report
+
+ind = ak.stock_financial_analysis_indicator(
+    symbol='300750', start_year='2022'
+)
+result = analyze_company('300750', '宁德时代', 'tech', indicators=ind)
+```
+
+**核心架构：**
+
+```
+financial data → industry_mapping.py → phase detection → coupling chain → price projection
+                    (可配置指标映射)    (相位占优度≠健康)   (火→金→土→火→水→木)  (相位过渡→货币投影)
+```
+
 ## 里程碑
 
 | 版本 | 日期 | 内容 |
 |------|------|------|
-| v1.0 | 2026-06-16 | 22 节点，7 大子领域全部建立：经济网络、货币与价值、市场与价格、供需与分配、劳动与资本、增长与周期、经济危机 |
-| v1.1 | 计划中 | 与儒释道/社会学模块的跨区交叉边绘制 |
-| v1.2 | 计划中 | 经济政策（货币/财政/产业）的 SPUM 形式化 |
+| v1.0 | 2026-06-16 | 22 节点，7 大子领域全部建立 |
+| v1.1 | 2026-07-09 | **股票分析工具**：五形相位识别 + 行业适配映射 + 耦合链过渡预测 |
+| v1.2 | 计划中 | 与儒释道/社会学模块的跨区交叉边绘制 |
+| v1.3 | 计划中 | 经济政策（货币/财政/产业）的 SPUM 形式化 |
 | v2.0 | 计划中 | 全球经济子图——贸易网络、汇率、国际金融体系 |
 
 ---
