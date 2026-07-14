@@ -2,6 +2,7 @@ import { useLoadData } from '../hooks/useLoadData';
 import { useStore } from '../store';
 import { useState, useMemo } from 'react';
 import ChatPanel from '../components/ChatPanel';
+import type { BacktestMetrics } from '../types';
 
 export default function Home() {
   useLoadData();
@@ -116,6 +117,11 @@ export default function Home() {
               ))}
             </div>
           </div>
+        )}
+
+        {/* Backtest Metrics */}
+        {data.backtest && (
+          <BacktestPanel metrics={data.backtest} />
         )}
 
         {/* Dropdown */}
@@ -679,6 +685,137 @@ function PairCard({
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+function BacktestPanel({ metrics }: { metrics: BacktestMetrics }) {
+  const bt = metrics;
+  const crossIC = bt.ic_cross_sectional;
+  const tsIC = bt.ic_time_series;
+  const strategies = bt.strategy_comparison ?? [];
+
+  return (
+    <div className="mb-6">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-xs text-zinc-600 font-medium">📊 回测分析</span>
+        <div className="h-px flex-1 bg-zinc-800" />
+      </div>
+
+      {/* IC 指标卡片 */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+        {crossIC && (
+          <>
+            <MetricCard label="截面 IC" value={crossIC.ic_mean.toFixed(4)}
+              sub={`IR=${crossIC.ic_ir.toFixed(2)} n=${crossIC.n}`}
+              good={crossIC.ic_mean > 0.1}
+            />
+            <MetricCard label="截面 IC 正向率"
+              value={`${(crossIC.n > 0 ? (crossIC.ic_mean > 0 ? 50 : 0) : 0)}%`}
+              sub={'基于 ' + crossIC.n + ' 配对'}
+              good={crossIC.ic_mean > 0}
+            />
+          </>
+        )}
+        {tsIC && (
+          <>
+            <MetricCard label="时序 IC (均值)" value={tsIC.ic_mean.toFixed(4)}
+              sub={`${tsIC.n_stocks}只股票`}
+              good={tsIC.ic_mean > 0}
+            />
+            <MetricCard label="时序 IC 正向率"
+              value={`${tsIC.ic_pos_ratio.toFixed(0)}%`}
+              sub={`中位数 ${tsIC.ic_median.toFixed(4)}`}
+              good={tsIC.ic_pos_ratio > 50}
+            />
+          </>
+        )}
+      </div>
+
+      {/* 策略对比表格 */}
+      {strategies.length > 0 && (
+        <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-4">
+          <h3 className="text-xs text-zinc-500 mb-3">策略回测对比（夏普降序）</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="text-zinc-600 border-b border-zinc-800">
+                  <th className="text-left py-1.5 pr-3">策略</th>
+                  <th className="text-right px-2 py-1.5">年化收益</th>
+                  <th className="text-right px-2 py-1.5">夏普</th>
+                  <th className="text-right px-2 py-1.5">最大回撤</th>
+                  <th className="text-right px-2 py-1.5">卡尔玛</th>
+                  <th className="text-right px-2 py-1.5">命中率</th>
+                </tr>
+              </thead>
+              <tbody>
+                {strategies.map((s, i) => {
+                  const isS0 = s.name.startsWith('S₀');
+                  return (
+                    <tr key={i}
+                      className={`border-b border-zinc-800/50 ${isS0 ? 'text-amber-300' : 'text-zinc-400'} ${i === 0 ? 'bg-zinc-800/30' : ''}`}
+                    >
+                      <td className="py-1.5 pr-3 font-medium">{s.name}</td>
+                      <td className={`text-right px-2 py-1.5 ${s.annual_return > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {s.annual_return > 0 ? '+' : ''}{s.annual_return.toFixed(1)}%
+                      </td>
+                      <td className={`text-right px-2 py-1.5 ${s.sharpe > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {s.sharpe.toFixed(3)}
+                      </td>
+                      <td className="text-right px-2 py-1.5 text-red-400">
+                        {s.max_drawdown.toFixed(1)}%
+                      </td>
+                      <td className={`text-right px-2 py-1.5 ${s.calmar > 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {s.calmar.toFixed(3)}
+                      </td>
+                      <td className="text-right px-2 py-1.5">
+                        {s.hit_rate.toFixed(0)}%
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          {bt.export_time && (
+            <p className="text-[10px] text-zinc-700 mt-2">
+              回测运行: {bt.export_time}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* 按命格分组的 IC */}
+      {crossIC?.by_label && Object.keys(crossIC.by_label).length > 0 && (
+        <div className="mt-3 bg-zinc-900/30 border border-zinc-800/50 rounded-xl p-3">
+          <h3 className="text-[10px] text-zinc-600 mb-2">按命格分组的截面 IC</h3>
+          <div className="flex flex-wrap gap-1.5">
+            {Object.entries(crossIC.by_label).map(([label, ic]) => (
+              <span key={label}
+                className={`px-2 py-0.5 rounded text-[10px] ${
+                  ic > 0 ? 'bg-emerald-900/30 text-emerald-400' : 'bg-red-900/30 text-red-400'
+                }`}
+              >
+                {label}: {typeof ic === 'number' ? ic.toFixed(4) : ic}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MetricCard({ label, value, sub, good }: { label: string; value: string; sub?: string; good?: boolean }) {
+  return (
+    <div className={`bg-zinc-900/50 border rounded-xl p-3 ${
+      good ? 'border-emerald-800/40' : 'border-zinc-800'
+    }`}>
+      <div className={`text-lg font-bold font-mono ${good ? 'text-emerald-400' : 'text-zinc-300'}`}>
+        {value}
+      </div>
+      <div className="text-[10px] text-zinc-500 mt-0.5">{label}</div>
+      {sub && <div className="text-[9px] text-zinc-700 mt-0.5">{sub}</div>}
     </div>
   );
 }

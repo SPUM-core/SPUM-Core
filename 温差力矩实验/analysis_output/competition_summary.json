@@ -1,0 +1,48 @@
+{
+  "analysis_date": "2026-07-14",
+  "method": "damped_harmonic_oscillator_fit",
+  "model": "x(t) = x0 + A * exp(-zeta * omega0 * t) * cos(omega_d * t + phi)",
+  "dimensionless_ratios": [
+    "ratio_drive_type (R_type) = A/|static_shift| - impulse vs sustained drive",
+    "energy_retained_per_cycle - fraction of energy kept after 1 period",
+    "phi_resonance_deg - phase lag at resonance (inertia vs damping vs stiffness)"
+  ],
+  "datasets": {
+    "\u6839\u76ee\u5f55_\u8d28\u91cfA_seg0": {
+      "f0_hz": 0.9965986166139389,
+      "omega0": 6.261813785064202,
+      "zeta": 0.09637121163394087,
+      "A_mm": 9.43425879946235,
+      "v_impact_m_s": 0.05907557180233659,
+      "static_shift": 0.003841827280925307,
+      "ratio_drive_type": 2.4556696877820343,
+      "energy_retained_per_cycle": 0.296206173314909,
+      "phi_resonance_deg": 79.09045494516467,
+      "damping_regime": "underdamped (inertia > damping)"
+    },
+    "4-26_\u8d28\u91cf_seg0": {
+      "f0_hz": 0.23622143636005263,
+      "omega0": 1.4842230581783404,
+      "zeta": 0.49999999999999994,
+      "A_mm": 0.9095585456324657,
+      "v_impact_m_s": 0.0013499877661908618,
+      "static_shift": 0.0004120309018679283,
+      "ratio_drive_type": 2.207500800325928,
+      "energy_retained_per_cycle": 0.0007064928636108861,
+      "phi_resonance_deg": 45.00000000000001,
+      "damping_regime": "overdamped (damping dominated)"
+    },
+    "4-27_\u8d28\u91cf_seg0": {
+      "f0_hz": 0.7613492763837327,
+      "omega0": 4.7836985870060795,
+      "zeta": 0.0010000000000000002,
+      "A_mm": 1.2805033958625776,
+      "v_impact_m_s": 0.006125542285444299,
+      "static_shift": -0.0005343168681094246,
+      "ratio_drive_type": 2.3965243702550283,
+      "energy_retained_per_cycle": 0.9875122503189289,
+      "phi_resonance_deg": 89.88540859376221,
+      "damping_regime": "strongly_underdamped (inertia dominated)"
+    }
+  }
+}

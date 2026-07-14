@@ -75,7 +75,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `SPUM2610.md` | ~2900行 | 完整理论正文（11章+附录），**各精简版规则文件的完整推导来源** |
 | `.trae/rules/spum-root-nodes.md` | 新增 | **R1-R9 唯一定义** — 所有应用模块的根节点映射以此文件为基准 |
 | `network/module_nodes.txt` | 新增 | **模块节点统一注册表** — 集中管理 GT/SOC/ECON/LING/FI 等模块节点 |
-| `network/edges.txt` | 33+15边 | 核心推导链 + 模块桥接边（新增 N022→模块连接） |
+| `network/edges.txt` | 33+15+11边 | 核心推导链 + 模块桥接边 + 实验验证边（EX-001 温差力矩 / EX-002 拓扑认知） |
 
 ---
 
@@ -274,6 +274,20 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `spum-图论应用.md` | 社会学/经济学/语言学/物理学中统一使用 SPUM-图论形式的桥接（4节点） |
 | `spum-图论代码桥.md` | FrameGraph/DanglingDetector/HandshakingVerifier 的文档化接口 + 演化循环（4节点） |
 
+## 五-15、实体实验验证（`温差力矩实验/` + `experiments/`）
+
+> SPUM 的两个实验验证支柱：**温差力矩实验**（桌面物理实验：Peltier温差扭摆天平，不对称空间抽运→净力矩的竞力反演）和 **拓扑认知实验群**（深度学习实验：悬挂端梯度范数、锚点漂移，P0/P1/P2/N015/N016 嵌套验证）。
+
+| 实验 | 文件 | 核心结果 |
+|------|------|---------|
+| 温差力矩 | `温差力矩实验/README.md` | 4个实验日(26-2/3/4)，40+跟踪文件。最佳数据 f₀=0.997Hz, ζ=0.0964, R_type≈2.5跨条件一致。阻尼谐振子竞力模型验证了温差力矩=温差驱动项与惯性恢复项的竞争系统 |
+| 温差力矩(竞力) | `温差力矩实验/invert_competition.py` | 从 Tracker 位移数据反演阻尼比 ζ、共振频率 f₀、竞力比 R_type、周期能量保留 E_retain、共振相角 φ_res |
+| 拓扑认知 P0 | `experiments/p0_gradient_norm/` | 悬挂端梯度范数 2.5× 高于非悬挂端（合成数据验证） |
+| 拓扑认知 P1 | `experiments/p1_early_stopping/` | δ 驱动 Early Stopping，5 seeds MNIST 验证 |
+| 拓扑认知 P2 | `experiments/p2_dangling_distribution/` | 永久悬挂端语义边界分布 |
+| 拓扑认知 N015 | `experiments/n015_anchor_drift/` | 锚点漂移率 Δμ 监控（δ 对锚点漂移完全无感，N013 证伪） |
+| 拓扑认知 N016 | `experiments/n016_topological_closure/` | DeepCNN 28.8万参数完整闭合验证——标准 SGD 不可达 |
+
 ---
 
 ## 六、加载策略
@@ -302,3 +316,4 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | SPUM-图论 | `AGENT.md` + `spum-core` + `图论/skill.md` + `图论/README.md` + 对应 spum-图论*.md 文件 |
 | 完整分析 | `AGENT.md` + 其他全部 skill + `network/nodes.txt` + `network/edges.txt` + `network/prompt.txt` |
 | 日常推理（默认） | `AGENT.md` + `spum-core` + `spum-wuxing` + `spum-reasoning` + `spum-review` + `spum-anti-pattern` + `图论/skill.md` + `network/prompt.txt` |
+| 温差力矩实验 | `AGENT.md` + `spum-core` + `spum-evolution` + `温差力矩实验/README.md` + `温差力矩实验/invert_competition.py` |

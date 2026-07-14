@@ -42,12 +42,43 @@ export interface Stats {
   xgb_min: number;
 }
 
+export interface BacktestMetrics {
+  ic_cross_sectional?: {
+    ic_mean: number;
+    ic_std: number;
+    ic_ir: number;
+    n: number;
+    by_label?: Record<string, number>;
+  };
+  ic_time_series?: {
+    n_stocks: number;
+    ic_mean: number;
+    ic_median: number;
+    ic_pos_ratio: number;
+  };
+  strategy_comparison?: StrategyRow[];
+  export_time?: string;
+  version?: string;
+}
+
+export interface StrategyRow {
+  name: string;
+  sharpe: number;
+  total_return: number;
+  max_drawdown: number;
+  calmar: number;
+  hit_rate: number;
+  annual_return: number;
+  annual_vol: number;
+}
+
 export interface VisData {
   stocks: Stock[];
   groups: Group[];
   pairs: Pair[];
   vol_data: Record<string, VolSeries>;
   stats: Stats;
+  backtest?: BacktestMetrics;
   export_time: string;
 }
 

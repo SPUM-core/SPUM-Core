@@ -5,7 +5,8 @@ export_vis_data.py — 将 .npy + JSON + 预测报告合并为 vis_data.json
 用法: python export_vis_data.py
 输出: 经济学/vis_data.json
 """
-import json, os, re, sys, numpy as np
+import json, os, re, sys
+import numpy as np
 from collections import defaultdict
 from datetime import datetime
 
@@ -189,12 +190,33 @@ def main():
         'xgb_min': round(min(xgb_h1), 2) if xgb_h1 else 0,
     }
 
+    # 尝试加载回测指标
+    backtest_data = {}
+    bt_path = os.path.join(DATA_DIR, 'backtest_report.txt')
+    if os.path.exists(bt_path):
+        try:
+            # 尝试从 run_backtest 导入 IC 分析
+            import importlib.util
+            bt_spec = importlib.util.spec_from_file_location(
+                'backtest_engine_mod',
+                os.path.join(DATA_DIR, 'backtest_engine.py')
+            )
+            if bt_spec and bt_spec.loader:
+                bt_mod = importlib.util.module_from_spec(bt_spec)
+                bt_spec.loader.exec_module(bt_mod)
+                cross_ic = bt_mod.compute_cross_sectional_ic(pairs)
+                if cross_ic and cross_ic.get('n', 0) > 0:
+                    backtest_data['ic_cross_sectional'] = cross_ic
+        except Exception as e:
+            print(f'  ⚠ 回测指标加载跳过: {e}')
+    
     out = {
         'stocks': stocks,
         'groups': groups,
         'pairs': pairs,
         'vol_data': vol_data,
         'stats': stats,
+        'backtest': backtest_data,
         'export_time': datetime.now().strftime('%Y-%m-%d %H:%M'),
     }
 

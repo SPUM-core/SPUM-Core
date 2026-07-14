@@ -25720,5 +25720,106 @@
     "xgb_max": 71.6,
     "xgb_min": 27.4
   },
-  "export_time": "2026-07-12 16:08"
+  "export_time": "2026-07-12 16:08",
+  "backtest": {
+    "ic_cross_sectional": {
+      "ic_mean": 0.3242,
+      "ic_std": 0.0,
+      "ic_ir": 3242252025.9105,
+      "n": 32,
+      "by_label": {
+        "土旺缺火金": 0.3993
+      }
+    },
+    "ic_time_series": {
+      "n_stocks": 6,
+      "ic_mean": -0.0192,
+      "ic_median": -0.0396,
+      "ic_pos_ratio": 33.3
+    },
+    "export_time": "2026-07-14 18:52",
+    "version": "1.0",
+    "strategy_comparison": [
+      {
+        "name": "布林带(20,2σ)",
+        "sharpe": 0.202,
+        "total_return": 3.02,
+        "max_drawdown": -20.29,
+        "calmar": 0.189,
+        "hit_rate": 48.2,
+        "annual_return": 3.84,
+        "annual_vol": 27.6
+      },
+      {
+        "name": "布林带(20,2.5σ)",
+        "sharpe": 0.091,
+        "total_return": 1.12,
+        "max_drawdown": -17.36,
+        "calmar": 0.082,
+        "hit_rate": 48.2,
+        "annual_return": 1.42,
+        "annual_vol": 23.14
+      },
+      {
+        "name": "MA(10,30) 金叉",
+        "sharpe": -0.09,
+        "total_return": -4.45,
+        "max_drawdown": -28.36,
+        "calmar": -0.198,
+        "hit_rate": 44.2,
+        "annual_return": -5.6,
+        "annual_vol": 30.96
+      },
+      {
+        "name": "RSI(7) 超买超卖",
+        "sharpe": -0.159,
+        "total_return": -4.37,
+        "max_drawdown": -20.05,
+        "calmar": -0.274,
+        "hit_rate": 51.8,
+        "annual_return": -5.5,
+        "annual_vol": 26.3
+      },
+      {
+        "name": "MACD(12,26,9",
+        "sharpe": -0.303,
+        "total_return": -7.86,
+        "max_drawdown": -16.9,
+        "calmar": -0.583,
+        "hit_rate": 45.2,
+        "annual_return": -9.85,
+        "annual_vol": 27.98
+      },
+      {
+        "name": "S₀",
+        "sharpe": -0.368,
+        "total_return": -6.29,
+        "max_drawdown": -19.13,
+        "calmar": -0.412,
+        "hit_rate": 39.2,
+        "annual_return": -7.89,
+        "annual_vol": 21.56
+      },
+      {
+        "name": "RSI(14) 超买超卖",
+        "sharpe": -0.409,
+        "total_return": -8.97,
+        "max_drawdown": -19.1,
+        "calmar": -0.588,
+        "hit_rate": 45.2,
+        "annual_return": -11.22,
+        "annual_vol": 25.84
+      },
+      {
+        "name": "MA(5,20) 金叉死",
+        "sharpe": -0.649,
+        "total_return": -18.29,
+        "max_drawdown": -27.02,
+        "calmar": -0.835,
+        "hit_rate": 46.2,
+        "annual_return": -22.57,
+        "annual_vol": 33.56
+      }
+    ]
+  }
 }
