@@ -11,7 +11,7 @@
     对于 12 个等大球体, 最低能态 = 正二十面体。
     这一结论是几何必然 (不存在更密的 12 球堆积)。
 
-参数来源 (参见 元素化学/力学参数推导.md):
+参数来源:
     k_rep: 从 CRYSTALLITE_CAPACITY(≈50.3) / O_MAX(0.1) / d_thresh(50) ≈ 10.0
     k_att: 当前人工选定为 1.0; 未来应改为动态值 1/(v_a+v_b+1)
     damping: 从湮灭概率 p_ann ≈ 0.09 推导 → 0.5 (含尺度因子)
@@ -46,16 +46,13 @@ _O_MAX = GEOMETRIC_TOLERANCE * (2 * _R_MIN)  # 最大允许重叠 = 0.1κ
 
 # 排斥系数 k_rep: 来自晶子容量 / 最大允许重叠 / 度数阈值
 # k_rep = 50.27 / 0.1 / 50 ≈ 10.05 ≈ 10.0
-# 见 元素化学/力学参数推导.md §1
 K_REP_DERIVED = CRYSTALLITE_CAPACITY / _O_MAX / CRYSTALLITE_DEGREE_THRESHOLD
 
 # 时间步长 dt: τ / 子步数 100
-# 见 力学参数推导.md §4
 _DT_DERIVED = TAU / 100.0
 
 # 阻尼系数 damping: 来自平均湮灭概率
 # p_ann = Σ(1/d)/50 ≈ 0.09, damping = p_ann/2 × 尺度因子 ≈ 0.5
-# 见 力学参数推导.md §3
 _P_ANN = sum(1.0 / d for d in range(1, CRYSTALLITE_DEGREE_THRESHOLD + 1)) / CRYSTALLITE_DEGREE_THRESHOLD
 _DAMPING_DERIVED = _P_ANN / 2.0 * 10.0  # 尺度因子 10 保持临界阻尼附近
 

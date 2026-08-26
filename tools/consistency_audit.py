@@ -537,7 +537,6 @@ def generate_report(report: AuditReport, show_all_files: bool = False) -> str:
         r'^社会学\\', r'^经济学\\', r'^语言学\\', # 社科领域
         r'^数学\\', r'^图论\\',                # 数学/图论
         r'^宇宙学\\',                          # 宇宙学
-        r'^元素化学\\',                        # 元素化学
         r'knowledge\.md$', r'SPUM2610\.md$',
         r'SPUM_系统总纲\.md$',
     ]

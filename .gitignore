@@ -80,5 +80,15 @@ node_modules/
 五行/地元/青囊/*调查问卷*.md
 五行/地元/青囊/*加盟意向*.md
 
+# 知乎 API 令牌（含敏感凭据，禁止提交）
+知乎问答/内部资料/
+
 # seed 文件夹（本地开发，不上传）
 seed/
+
+# 第三方公开生理信号数据集（butppg/PTBXL/Sleep-EDF，可重新下载，不上传）
+patent/datasets/
+
+# 脉诊串口驱动与安装包（可重新下载）
+五行/人元/脉诊/硬件/serialplot/**/*.zip
+五行/人元/脉诊/硬件/serialplot/**/*.exe

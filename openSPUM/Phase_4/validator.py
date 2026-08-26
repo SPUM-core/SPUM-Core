@@ -1,7 +1,7 @@
 """
 VSPT 三律验证器 — 确认 VSPT 生长满足 SPUM 几何三律
 
-VSPT 几何三律（元素化学/SPUM-VSPT.md §3.3）：
+VSPT 几何三律（openSPUM/Phase_4/ VSPT 模块 §3.3）：
     1. k≥3（最小连通度）：每个分支节点至少被 3 个邻接关系锚定
     2. 分支角 ≈ 120°：分支角来自正二十面体二面角
     3. ρ∝r⁻³（密度幂律）：节点数密度沿径向 r⁻³ 衰减
@@ -35,7 +35,7 @@ def validate_k3_law(
 ) -> Dict:
     """验证 VSPT 节点度数是否满足 k≥3。
 
-    Law 1（SPUM-VSPT.md §3.3）：
+    Law 1（openSPUM/Phase_4/ VSPT 模块 §3.3）：
         每个分支节点至少被 3 个邻接关系锚定，满足局部拓扑刚性。
 
     Args:
@@ -109,7 +109,7 @@ def validate_120_angle(
 ) -> Dict:
     """验证 VSPT 分支角 ≈ 120°。
 
-    Law 2（SPUM-VSPT.md §3.3）：
+    Law 2（openSPUM/Phase_4/ VSPT 模块 §3.3）：
         分支角锁定为正二十面体二面角 ≈ 120°，
         球面拓扑 ∫κg dA = 4π 的唯一稳定解。
 
@@ -215,7 +215,7 @@ def validate_density_power_law(
 ) -> Dict:
     """验证 VSPT 节点密度沿径向 ρ∝r⁻³ 衰减。
 
-    Law 3（SPUM-VSPT.md §3.3）：
+    Law 3（openSPUM/Phase_4/ VSPT 模块 §3.3）：
         从中心点源向外生长的分形树状网络在球对称约束下的唯一自洽解。
 
     Args:

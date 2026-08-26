@@ -13,8 +13,7 @@
   win = AcquisitionWindow(port='COM3', duration=60, tag='rec_001')
   ok, save_prefix = win.run()
 
-v2.0 / 2026-07-16 — 指检+采集一体化，串口只开一次
-"""
+v2.1 / 2026-07-17 — 线程独立保存 + 常量来自共享模块"""
 
 import tkinter as tk
 from tkinter import font as tkfont
@@ -26,12 +25,10 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-
-# ── 手指检测阈值 ──
-SIGNAL_VARIANCE_THRESHOLD = 50.0
-HR_MIN_THRESHOLD = 30.0
-CONFIRM_SECONDS = 2.0
-FINGER_TIMEOUT = 30.0
+from ppg_acquisition import (
+    SIGNAL_VARIANCE_THRESHOLD, HR_MIN_THRESHOLD,
+    CONFIRM_SECONDS, FINGER_TIMEOUT,
+)
 
 
 class AcquisitionWindow:
@@ -74,6 +71,19 @@ class AcquisitionWindow:
         # 指检确认计数
         self._confirm_count = 0
         self._confirm_needed = int(CONFIRM_SECONDS)
+
+        # 线程安全结束信号
+        self._thread_done = threading.Event()
+        self._thread_success = False
+        self._thread_prefix = ""
+
+    def _save_dir(self) -> str:
+        """数据保存目录（acquisition_window.py 所在目录）。"""
+        return os.path.dirname(os.path.abspath(__file__))
+
+    def _make_save_path(self) -> str:
+        """构造保存路径前缀。"""
+        return os.path.join(self._save_dir(), self.tag)
 
     # ── UI ──────────────────────────────────────────────────
 
@@ -173,9 +183,7 @@ class AcquisitionWindow:
         if success and self._streamer:
             try:
                 self._streamer.stop()
-                prefix = os.path.join(
-                    os.path.dirname(os.path.abspath(__file__)), self.tag
-                )
+                prefix = self._make_save_path()
                 self._streamer.save(prefix)
                 self._save_prefix = prefix
             except Exception as e:
@@ -199,7 +207,7 @@ class AcquisitionWindow:
     # ── 后台线程 ────────────────────────────────────────────
 
     def _acquisition_thread(self):
-        """后台线程：指检 → 采集（串口只开一次）。"""
+        """后台线程：指检 → 采集（串口只开一次）。独立保存数据，不依赖 Tk mainloop。"""
         from ppg_acquisition import CheezPPGStreamer
 
         try:
@@ -212,7 +220,8 @@ class AcquisitionWindow:
                 total_duration += self._finger_timeout
 
             if not streamer.start(duration=total_duration):
-                self.root.after(0, lambda: self._finish(False))
+                self._thread_success = False
+                self._thread_done.set()
                 return
 
             start_ts = time.time()
@@ -281,13 +290,21 @@ class AcquisitionWindow:
 
                 time.sleep(0.1)
 
-            # 采集结束
+            # 采集结束 — 独立保存，不依赖 Tk
+            self._running = False
             streamer.stop()
-            self.root.after(0, lambda: self._finish(True))
+            prefix = self._make_save_path()
+            streamer.save(prefix)
+            self._thread_prefix = prefix
+            self._thread_success = True
+            self._thread_done.set()
+
+            print(f"[AcquisitionWindow] 采集完成: {streamer._total} 样本 → {prefix}")
 
         except Exception as e:
             print(f"[AcquisitionWindow] 采集异常: {e}")
-            self.root.after(0, lambda: self._finish(False))
+            self._thread_success = False
+            self._thread_done.set()
 
     # ── UI 更新 ────────────────────────────────────────────
 
@@ -343,7 +360,7 @@ class AcquisitionWindow:
     # ── 入口 ───────────────────────────────────────────────
 
     def run(self):
-        """启动窗口（阻塞）。返回 (success, save_prefix)。"""
+        """启动窗口（阻塞）。返回 (success, save_prefix)。无论 Tk 是否崩溃都等待线程完成。"""
         # 强制终端模式
         if self.terminal:
             print("[采集] 终端模式（--terminal）。")
@@ -358,20 +375,27 @@ class AcquisitionWindow:
             print("[采集] 无 GUI 环境，回退到终端模式。")
             return self._fallback_terminal()
 
-        self._build_ui()
-
+        # 启动采集线程（先启动，确保串口立即打开）
         acq_thread = threading.Thread(target=self._acquisition_thread,
                                        daemon=True)
         acq_thread.start()
-        self.root.after(200, self._ui_update_loop)
 
+        # 尝试启动 GUI（可能因 Tk 主题问题提前崩溃）
         try:
+            self._build_ui()
+            self.root.after(200, self._ui_update_loop)
             self.root.mainloop()
-        except Exception:
-            pass
+        except Exception as e:
+            print(f"[采集] GUI 异常（不影响后台采集）: {e}")
 
-        if acq_thread.is_alive():
-            acq_thread.join(timeout=2.0)
+        # mainloop 退出后等线程完成为止（最多 +60s 余量）
+        self._thread_done.wait(timeout=self.duration + 60)
+
+        # 取线程结果
+        if self._thread_success:
+            self._success = True
+            self._save_prefix = self._thread_prefix
+            print(f"[AcquisitionWindow] 采集完成（线程模式）: {self._save_prefix}")
 
         return self._success, self._save_prefix
 
@@ -397,9 +421,7 @@ class AcquisitionWindow:
                 print(f"  {pct}% | HR: {hr:.0f} BPM | 样本: {streamer._total}")
 
             streamer.stop()
-            prefix = os.path.join(
-                os.path.dirname(os.path.abspath(__file__)), self.tag
-            )
+            prefix = self._make_save_path()
             streamer.save(prefix)
             print(f"[采集] 完成: {streamer._total} 样本")
             return True, prefix

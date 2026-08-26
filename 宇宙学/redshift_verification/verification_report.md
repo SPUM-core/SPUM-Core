@@ -31,7 +31,7 @@ SPUM 核心命题（SPUM2610.md §9.2）：
 
 $$z = \frac{\sigma_{\text{source}}}{\sigma_{\text{obs}}} - 1$$
 
-其中 $\sigma = |P|/|\varepsilon|$ 是子网的空间密度。高 σ 环境（密集连接）→ 帧周期更长 → 本征频率更低 → 光谱红移更大。
+其中 $\sigma = |P|/|\varepsilon|$ 是子网的空间密度。高 σ 环境（连接稀疏）→ 帧周期更长 → 本征频率更低 → 光谱红移更大。
 
 一阶近似假设原子振荡频率 $f \propto 1/\sigma$。严格 $f(\sigma)$ 映射函数待从帧动力学推导。
 

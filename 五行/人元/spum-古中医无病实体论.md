@@ -1,4 +1,4 @@
-﻿
+﻿﻿
 ---
 
 设想一个东西：一个智能手环，戴在手腕上就能实时分析你的脉象、判断你身体的失衡方向、告诉你当下最该吃什么、睡多久、做什么运动。
@@ -908,3 +908,5 @@ pytest
 [20] 钱军程, 陈育德, 徐玲, 等. 中国老年人口主要慢性病患病率变化与突发增长的分析——基于1993-2008年国家卫生服务调查[J]. 中国卫生信息管理杂志, 2015.
 [21] 国家卫健委. 中国居民营养与慢性病状况报告(2024年)[R]. 2024.
 [22] Xue L, Cai M, Liu Q, et al. Trends and regional variations in chronic diseases and their risk factors in China: an observational study based on National Health Service Surveys (1993-2018)[J]. International Journal for Equity in Health, 2023, 22: 120.
+
+---

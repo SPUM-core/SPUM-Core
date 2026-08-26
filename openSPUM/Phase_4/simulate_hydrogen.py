@@ -370,7 +370,7 @@ def step6_hydrogen_isotopes():
 def step7_mass_difference():
     banner("步骤 7：质子-中子质量差验证")
 
-    print("    SPUM 预言（SPUM-VSPT.md §4.2）：")
+    print("    SPUM 预言（openSPUM/Phase_4/ VSPT 模块 §4.2）：")
     print("      中子比质子重 0.14%")
     print("      来源：质子有 2 个朝外永恒粒子 → 内部湮灭循环被破坏")
     print()

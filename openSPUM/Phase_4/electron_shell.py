@@ -97,7 +97,7 @@ def shell_capacity_from_geometry(n: int) -> Dict:
 def shell_capacity(n: int) -> int:
     """第 n 壳层的容量 = 2n²。
 
-    推导（SPUM-VSPT.md §6.1）：
+    推导（openSPUM/Phase_4/ VSPT 模块 §6.1）：
         正二十面体顶点集逐层叠加：
         n=1: 两极 2 顶点 → 2
         n=2: 赤道环 8 顶点 → 8 = 2×2²
@@ -251,7 +251,7 @@ def _vacant_faces_from_outermost(outer_occupancy: int, outer_capacity: int,
                                  period: int) -> int:
     """从最外壳层占有数和周期数计算核表面虚面数。
 
-    规则（SPUM-VSPT.md §4.3-§4.4）：
+    规则（openSPUM/Phase_4/ VSPT 模块 §4.3-§4.4）：
         - 价壳层满（occ ≥ 周期价容量）→ 0 虚面（闭合型 VSPT，稀有气体）
         - 未满 → 虚面数 = 最外壳层电子数（上限 7）
 
@@ -268,7 +268,7 @@ def _vacant_faces_from_outermost(outer_occupancy: int, outer_capacity: int,
 def _group_from_vacant(vacant: int) -> int:
     """虚面数 → 族号。
 
-    映射规则（SPUM-VSPT.md §4.4 族定义）：
+    映射规则（openSPUM/Phase_4/ VSPT 模块 §4.4 族定义）：
         0 → 18（稀有气体）
         1 → 1（碱金属）
         2 → 2（碱土金属）
@@ -367,7 +367,7 @@ def classify_element(Z: int) -> Dict:
 # 同位素质量计算
 # —————————————————————————————————————————————
 
-# SPUM 常数（SPUM-VSPT.md §4.2）
+# SPUM 常数（openSPUM/Phase_4/ VSPT 模块 §4.2）
 # 质子质量 = 12 个永恒粒子
 # 中子质量 = 质子质量 × (1 + 0.0014)  — 0.14% 来自朝外开口破坏内部湮灭循环
 MP_SPUM = 1.0  # 质子的 SPUM 归一化质量单位

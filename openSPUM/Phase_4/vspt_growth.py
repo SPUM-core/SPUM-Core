@@ -1,11 +1,11 @@
 """
 VSPT 分支生长引擎 — 从原子核实面生长的树状分支结构
 
-SPUM 定义（元素化学/SPUM-VSPT.md §3）：
+SPUM 定义（openSPUM/Phase_4/ VSPT 模块 §3）：
     VSPT（Vacant-Solid Proliferation Topology）是从原子核表面实面
     沿三角形网格模板向外生长的树状分支结构。
 
-VSPT 几何三律（SPUM-VSPT.md §3.3）：
+VSPT 几何三律（openSPUM/Phase_4/ VSPT 模块 §3.3）：
     1. k≥3（最小连通度）：每个分支节点至少被 3 个邻接关系锚定
     2. 分支角 120°：分支角锁定为正二十面体二面角 ≈ 120°
     3. ρ∝r⁻³（密度幂律）：节点数密度沿径向 r⁻³ 衰减

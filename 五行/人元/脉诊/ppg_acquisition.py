@@ -37,6 +37,15 @@ DEFAULT_BUFFER_SECONDS = 60
 CHEEZ_RATE = 125
 CHEEZ_CHANNELS = ['raw', 'smooth', 'filtered', 'peak', 'HR', 'HRV']
 
+# 手指检测阈值
+SIGNAL_VARIANCE_THRESHOLD = 50.0   # PPG 信号方差阈值
+HR_MIN_THRESHOLD = 30.0            # 最低可接受心率 (BPM)
+CONFIRM_SECONDS = 2.0              # 连续确认秒数
+FINGER_TIMEOUT = 30.0              # 手指检测超时 (s)
+
+# 采集最低样本数（125Hz × 60s × 10%）
+MIN_EXPECTED_SAMPLES = 750
+
 
 # ═══════════════════════════════════════════════════════════
 # 串口工具函数
@@ -57,6 +66,23 @@ def detect_arduino_port() -> Optional[str]:
         for kw in keywords:
             if kw in desc:
                 return p.device
+    ports = list_ports()
+    return ports[0] if ports else None
+
+
+def resolve_port(port_arg: Optional[str] = None) -> Optional[str]:
+    """统一串口检测：参数指定 → 自动检测 → 第一个可用。
+
+    三段 fallback（消除各文件间的重复实现）：
+      1. 如果提供了 port_arg，直接使用
+      2. detect_arduino_port() 按关键词检测
+      3. 取第一个可用串口
+    """
+    if port_arg:
+        return port_arg
+    port = detect_arduino_port()
+    if port:
+        return port
     ports = list_ports()
     return ports[0] if ports else None
 
@@ -177,25 +203,48 @@ class _BaseStreamer:
                 pass
 
     def _reset_serial(self) -> bool:
-        """软复位串口连接：关闭 → 等待 → 重开。"""
-        self._safe_print(f"\n[{self.tag}] 看门狗触发：尝试复位串口...")
+        """DTR 脉冲复位 Arduino（不关闭串口，避免 FTDI 驱动锁死）。"""
+        self._safe_print(f"\n[{self.tag}] 看门狗触发：DTR 脉冲复位 Arduino...")
         try:
             if self._serial and self._serial.is_open:
-                self._serial.close()
-            time.sleep(1.0)
-            port = self.port
-            self._serial = serial.Serial(port, self.baud, timeout=0.5)
-            self._serial.setDTR(False)
-            time.sleep(0.5)
-            self._serial.setDTR(True)
-            time.sleep(1.0)
-            self._serial.reset_input_buffer()
-            self._safe_print(f"[{self.tag}] 串口复位成功: {port}")
-            self._watchdog_triggered = False
-            return True
+                # DTR ↓ → Arduino 硬件复位（DTR 经电容连 ATmega RESET）
+                self._serial.setDTR(False)
+                time.sleep(0.3)
+                # DTR ↑ → Arduino 重新启动
+                self._serial.setDTR(True)
+                time.sleep(2.0)  # 等 Arduino 重启完成
+                self._serial.reset_input_buffer()
+                self._safe_print(f"[{self.tag}] DTR 脉冲完成，Arduino 已复位")
+                self._watchdog_triggered = False
+                return True
+            else:
+                # 串口已断开 → fallback: 重新连接
+                port = self.port
+                self._serial = serial.Serial(port, self.baud, timeout=0.5,
+                                             write_timeout=1.0)
+                self._safe_print(f"[{self.tag}] 串口重连成功: {port}")
+                return self._reset_serial()
         except Exception as e:
-            self._safe_print(f"[{self.tag}] 串口复位失败: {e}")
-            return False
+            self._safe_print(f"[{self.tag}] DTR 复位失败: {e}")
+            # 最后手段：完全重连（允许 Windows 驱动枚举）
+            try:
+                if self._serial:
+                    self._serial.close()
+                time.sleep(3.0)
+                port = self.port
+                self._serial = serial.Serial(port, self.baud, timeout=0.5,
+                                             write_timeout=1.0)
+                self._serial.setDTR(False)
+                time.sleep(0.5)
+                self._serial.setDTR(True)
+                time.sleep(2.0)
+                self._serial.reset_input_buffer()
+                self._safe_print(f"[{self.tag}] 完全重连成功: {port}")
+                self._watchdog_triggered = False
+                return True
+            except Exception as e2:
+                self._safe_print(f"[{self.tag}] 完全重连失败: {e2}")
+                return False
 
     def _read_loop(self, duration: Optional[float] = None):
         self.start_time = time.time()

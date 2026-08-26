@@ -26,7 +26,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 
 ## Skills 架构（AI 入口）
 
-`.trae/rules/` 包含 12 个分层 Rule 文件，`.trae/skills/` 包含 9 个独立知识库 Skill 目录。每个技能分配唯一 ID（`SPUM-{层级}-{名称}`），AI 按需加载：
+`.trae/rules/` 包含 15 个分层 Rule 文件，`.trae/skills/` 包含 10 个独立知识库 Skill 目录。每个技能分配唯一 ID（`SPUM-{层级}-{名称}`），AI 按需加载：
 
 | ID | Skill | 位置 | 内容 | 加载时机 |
 |----|-------|------|------|----------|
@@ -60,8 +60,9 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 ```
 spum-core/
 ├── AGENT.md              # 🔥 AI 加载指南
+├── MODULES.md            # 🔥 模块地图（AI 导航索引，先读此文件）
 ├── SPUM_系统总纲.md       # 🔥 SPUM 唯一权威总纲
-├── F-回应民科指控.md       # 🔥 开放挑衅：当你们还在嘲笑时
+├── .trae/                # 规则层（15 Rule）+ Skill 层（10 独立库）
 ├── 宇宙学/                # ⏸️ 局部已验证，投影算子待定义
 │   ├── L0.5_induced_metric.md  # ⟨P, ε⟩ → ℝ³ 内生嵌入
 │   └── redshift_verification/  # 10 簇 2090 星系验证管道
@@ -73,11 +74,18 @@ spum-core/
 ├── 图论/                  # 5 公理，20 节点
 ├── 五行/                  # 11 部经典，4 子网
 ├── 儒释道哲学/            # 14 部经典，57 节点
-├── network/              # 知识图谱（22 节点 + 33 边）
+├── 青囊管家/              # 智能体：中医+生活（服务端 + 知识库）
+├── network/              # 知识图谱（22 节点 + 33 边）+ 协议层
 ├── docs/                 # 深度专题
+├── faq/                  # 常见问题（7 篇）
 ├── src/                  # 帧协议 + SPUM-图论模块
+├── spum/                 # Python 包（axioms/frame/domain/reason/api）
 ├── openSPUM/             # 224 测试全覆盖
-└── experiments/          # 实验验证
+├── experiments/          # 实验验证（P0/P1/P2/N015/N016/五形耦合）
+├── patent/               # 脉诊算法代码（PTBXL 拟合、五形辨证）
+├── 温差力矩实验/          # 桌面实验分析（invert_competition.py + 结果）
+├── tests/                # 单元测试
+└── tools/                # 版本号/评分/一致性审计工具
 ```
 
 ---

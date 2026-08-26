@@ -162,7 +162,6 @@ SPUM 的关键可证伪预言不在于 Planck 尺度修正，而在于**虚关�
 
 > **关联文件**：
 > - 总纲 §2：空间粒子的内禀属性（虚面定义）
-> - 元素化学/SPUM-VSPT.md — VSPT 分支生长三律
 > - `faq/README.md` — 答疑收录索引
 > - `faq/phase-transition-trigger.md` — 相变触发条件
 > - `faq/sphere-origin.md` — 球形几何来源

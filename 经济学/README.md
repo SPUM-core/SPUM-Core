@@ -106,6 +106,7 @@
 | 层 | 文件 | 职责 | 依赖 |
 |----|------|------|------|
 | **核心** | [daily_phase.py](daily_phase.py) | ★ 五形相位检测引擎(主交付物) — 自适应百分位+方向预测+网格校准 | numpy, pandas |
+| **验证** | [verify_daily_phase.py](verify_daily_phase.py) | 验证脚本 — 合成语义 8 项 + 真实回测 + 跨股票规则诊断 | akshare |
 | **相位** | [spum_cycle.py](spum_cycle.py) | 五形相位识别 + 耦合链过渡预测 + 股价投影 | industry_mapping.py, numpy |
 | **映射** | [industry_mapping.py](industry_mapping.py) | 行业专属指标→相位映射表（科技/消费/制造/地产） | — |
 | **回测** | [spum_backtest.py](spum_backtest.py) | 历史回测 + 结果分析框架 | daily_phase.py |
@@ -118,17 +119,22 @@
 
 **快速使用（推荐 — daily_phase 核心引擎）：**
 
-```python
-from daily_phase import DayProfileGenerator, backtest, calibrate
-import akshare as ak
+> 数据源说明：`stock_zh_a_hist`（东方财富）在 2026-08 存在连接失败问题，推荐使用新浪源
+> `stock_zh_a_daily`（含 volume 列，daily_phase 量比计算必需）。腾讯源 `stock_zh_a_hist_tx`
+> 可用但返回列为 amount 而非 volume。
 
-# 1. 获取日线数据
-df = ak.stock_zh_index_daily(symbol='sz002415')  # 海康威视(最佳标的)
-df = df.sort_values('date').tail(500)
-df.index = pd.to_datetime(df['date'])
+```python
+from daily_phase import DailyPhaseDetector, backtest, calibrate
+import akshare as ak
+import pandas as pd
+
+# 1. 获取日线数据 (新浪源, 含 volume)
+df = ak.stock_zh_a_daily(symbol='sz002415')  # 海康威视(最佳标的)
+df['date'] = pd.to_datetime(df['date'])
+df = df.set_index('date').sort_index().tail(500)
 
 # 2. 方向预测 (下一帧)
-detector = DayProfileGenerator()
+detector = DailyPhaseDetector()
 profile = detector.detect(df)
 direction, confidence, reason = profile.predict_next_direction()
 print(f'{direction} conf={confidence:.0%} [{reason}]')
@@ -166,8 +172,9 @@ financial data → industry_mapping.py → phase detection → coupling chain �
 |------|------|------|
 | v1.0 | 2026-06-16 | 22 节点，7 大子领域全部建立 |
 | v1.1 | 2026-07-09 | **股票分析工具**：五形相位识别 + 行业适配映射 + 耦合链过渡预测 |
-| v1.2 | 计划中 | 与儒释道/社会学模块的跨区交叉边绘制 |
-| v1.3 | 计划中 | 经济政策（货币/财政/产业）的 SPUM 形式化 |
+| v1.2 | 2026-08-13 | **引擎验证与校准**：合成语义 8/8 通过；修复 percentile 并列极值 bug、earth 公式缺陷；预测规则 v3 数据校准（火亢=动量延续↗、金亢=突破↗、火+水=过热反转↘）；跨股票回测 acc 50.5%，↘ 信号 53.0% 为最强方向 |
+| v1.3 | 计划中 | 与儒释道/社会学模块的跨区交叉边绘制 |
+| v1.4 | 计划中 | 经济政策（货币/财政/产业）的 SPUM 形式化 |
 | v2.0 | 计划中 | 全球经济子图——贸易网络、汇率、国际金融体系 |
 
 ---

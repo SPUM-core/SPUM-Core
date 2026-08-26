@@ -46,14 +46,9 @@ def main():
     parser.add_argument("--no-finger-check", action="store_true", help="跳过手指检测")
     args = parser.parse_args()
 
-    # ── 只在入口检测一次串口，显式传递 ──
-    from ppg_acquisition import detect_arduino_port, list_ports
-    port = args.port
-    if not port:
-        port = detect_arduino_port()
-    if not port:
-        ports = list_ports()
-        port = ports[0] if ports else None
+    # ── 串口检测 ──
+    from ppg_acquisition import resolve_port
+    port = resolve_port(args.port)
     if not port:
         return _fail("未检测到串口。请使用 --port 指定串口，或确认硬件已连接。")
     print(f"[串口] {port}")
@@ -77,11 +72,9 @@ def main():
         return _fail("波形文件未生成")
 
     # ── 阶段2：归档 ──
-    from pulse_diagnosis_cli import archive_data, run_pipeline, save_report, format_diagnosis
+    from pulse_diagnosis_cli import archive_data, run_pipeline, save_report, format_diagnosis, CASE_ROOT
 
-    patient_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "病历", args.patient
-    )
+    patient_dir = os.path.join(CASE_ROOT, args.patient)
     pulse_dir = archive_data(patient_dir, tag)
 
     # ── 阶段3：分析 ──

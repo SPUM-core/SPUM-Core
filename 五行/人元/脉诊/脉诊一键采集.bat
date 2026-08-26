@@ -23,7 +23,7 @@ echo 患者: %patient%
 echo 正在启动采集...
 echo.
 
-python pulse_diagnosis_cli.py --patient "%patient%"
+python pulse_diagnosis_cli.py --patient "%patient%" --terminal
 
 echo.
 if errorlevel 1 (

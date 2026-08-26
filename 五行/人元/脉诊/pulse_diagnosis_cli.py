@@ -28,7 +28,8 @@ import argparse, time, glob, shutil
 import numpy as np
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-CASE_ROOT = os.path.join(os.path.dirname(PROJECT_ROOT), "病历")
+# 病历保存到用户本地（不入仓库）：~ / 青囊病历
+CASE_ROOT = os.path.join(os.path.expanduser("~"), "青囊病历")
 
 
 def find_patient_dir(name: str) -> str:
@@ -163,15 +164,10 @@ def main():
                         help="跳过手指检测")
     args = parser.parse_args()
 
-    # ── 只在入口检测一次串口，显式传递 ──
-    port = args.port
+    # ── 串口检测 ──
     if not args.simulate:
-        from ppg_acquisition import detect_arduino_port, list_ports
-        if not port:
-            port = detect_arduino_port()
-        if not port:
-            ports = list_ports()
-            port = ports[0] if ports else None
+        from ppg_acquisition import resolve_port
+        port = resolve_port(args.port)
         if not port:
             print("[错误] 未检测到串口。请使用 --port 指定或确认硬件已连接。")
             sys.exit(1)
@@ -182,8 +178,9 @@ def main():
 
     print(f"\n{'='*55}\n  脉诊启动 — {args.patient}\n  病历目录: {patient_dir}\n{'='*55}")
 
-    # ── 阈值：期望最少样本数（125Hz × 60s 的 10% = 750） ──
-    MIN_EXPECTED_SAMPLES = int(args.duration * 125 * 0.10)
+    # ── 阈值：期望最少样本数 ──
+    from ppg_acquisition import MIN_EXPECTED_SAMPLES
+    min_samples = int(MIN_EXPECTED_SAMPLES * (args.duration / 60.0))
 
     # 采集
     if args.simulate:
@@ -214,10 +211,10 @@ def main():
             smooth_path = f"{prefix}_smooth.npy"
             if os.path.exists(smooth_path):
                 actual = len(np.load(smooth_path))
-                if actual >= MIN_EXPECTED_SAMPLES:
+                if actual >= min_samples:
                     break  # 成功
                 else:
-                    print(f"[采集] 第 {attempt} 次样本不足: {actual} < {MIN_EXPECTED_SAMPLES}")
+                    print(f"[采集] 第 {attempt} 次样本不足: {actual} < {min_samples}")
             else:
                 print(f"[采集] 第 {attempt} 次未生成波形文件")
 

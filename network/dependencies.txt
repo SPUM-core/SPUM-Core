@@ -42,7 +42,7 @@ SPUM_系统总纲.md | — | 理论唯一权威总纲
 network/nodes.txt | .trae/rules/spum-core.md | 22 核心节点定义——图谱遍历起点
 network/edges.txt | network/nodes.txt | 33+15 推导边——验证推导链完整性
 network/prompt.txt | network/nodes.txt, network/edges.txt | AI 推理规则——图谱导航约束
-逻辑树.md | network/nodes.txt, network/edges.txt | 仓库概念架构层次化映射
+docs/逻辑树.md | network/nodes.txt, network/edges.txt | 仓库概念架构层次化映射
 
 # ══════════════════════════════════════════════════════════
 # 层级 3：权威基准文档
@@ -50,8 +50,7 @@ network/prompt.txt | network/nodes.txt, network/edges.txt | AI 推理规则—�
 knowledge.md | .trae/rules/spum-core.md | 世界观权威基准——所有 Skill 一致性依据
 knowledge-core.md | .trae/rules/spum-core.md | knowledge.md 精简版（~150 行，必须加载）
 SPUM2610.md | knowledge.md | 完整理论正文——knowledge.md 的推导来源
-逻辑树.md | network/nodes.txt, network/edges.txt | 仓库概念架构层次化映射
-CHEATSHEET.md | .trae/rules/spum-core.md | 速查卡片——核心公式/关键数字/最短路径
+docs/逻辑树.md | network/nodes.txt, network/edges.txt | 仓库概念架构层次化映射
 
 # ══════════════════════════════════════════════════════════
 # 层级 4：L0.5 SPUM-图论层
@@ -106,7 +105,7 @@ CHEATSHEET.md | .trae/rules/spum-core.md | 速查卡片——核心公式/关键
 物理学/热力学/ | 物理学/skill.md
 物理学/电磁学/ | 物理学/skill.md
 物理学/量子与原子/ | 物理学/skill.md
-物理学/相对论与宇宙学/ | 物理学/skill.md
+宇宙学/相对论与宇宙学/ | 宇宙学/skill.md | 已迁移（原 物理学/相对论与宇宙学/）
 物理学/凝聚态物理/ | 物理学/skill.md
 物理学/波动与声学/ | 物理学/skill.md
 物理学/统一理论/ | 物理学/skill.md
