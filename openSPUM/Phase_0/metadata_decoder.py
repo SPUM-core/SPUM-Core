@@ -5,22 +5,29 @@ FrameSnapshot — GPU 帧快照的元数据容器。
     帧快照 (约 200 bytes) 是 GPU → CPU 的唯一传输数据。
     GPU 不输出"物质解读"，只输出拓扑统计量。
     CPU 侧从这些统计量中解读出: 晶子数量、相位、Σ(6-deg) 等。
+
+度数阈值 (SPUM2611 v5.0):
+    CRYSTALLITE_DEGREE_THRESHOLD = 42 (T5 稳定解 deg(O) = 42，
+    中心粒子与 12 顶点 + 30 边中点全部轨道位置相切)。
+    12 仍是 Σ(6-deg) = 12 的计数事实 (T2)，非闭锁输入。
 """
 
 from dataclasses import dataclass, field
 from typing import List, Optional
 import numpy as np
 
+from .constants import CRYSTALLITE_DEGREE_THRESHOLD
+
 
 @dataclass
 class FrameSnapshot:
     """单帧快照 — GPU 输出的元数据 (约 200 bytes)。"""
     frame_number: int
-    degree_histogram: np.ndarray        # [0..50] 度分布
+    degree_histogram: np.ndarray        # [0..42] 度分布 (槽数 = 阈值+1)
     active_count: int                   # 当前活性粒子数
     latent_count: int                   # 当前潜在粒子数
-    crystallite_count: int              # degree >= 50 的粒子数
-    spum_invariant: int                 # Σ(6 - deg) = 6V - 2E
+    crystallite_count: int              # degree >= 42 (T5) 的粒子数
+    spum_invariant: int                 # Σ(6 - deg) = 6V - 2E (T2: 闭合子图 = 12)
     dangling_count: int                 # 本帧新悬挂粒子数
 
     # 可选字段 (用于深度分析)
@@ -43,8 +50,8 @@ class FrameLog:
 
     # 定性标签
     phase_label: str = ""               # 种子/集群/晶子/饱和
-    invariant_stable: bool = False      # Σ(6-deg) 是否接近 12
-    crystallite_forming: bool = False   # 是否有晶子形成
+    invariant_stable: bool = False      # Σ(6-deg) 是否接近 12 (T2 计数事实)
+    crystallite_forming: bool = False   # 是否有晶子形成 (deg >= 42, T5)
 
     def brief(self) -> str:
         """单行摘要。"""
@@ -103,6 +110,8 @@ class CUDAMetadataDecoder:
     @staticmethod
     def _classify_phase(n_active: int, crystallite_count: int,
                         spum_invariant: int) -> str:
+        # 12 是 Σ(6-deg)=12 的计数事实 (T2)，非闭锁输入——
+        # 作为"种子期/活跃网络"的最小规模判据仍成立
         if n_active < 12:
             return "种子期"
         if crystallite_count > 0:

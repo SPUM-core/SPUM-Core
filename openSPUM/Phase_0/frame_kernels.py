@@ -148,6 +148,10 @@ def _icosahedron_vertices() -> np.ndarray:
     """正二十面体的 12 个顶点 (单位球面, 确定性)。
 
     边长为 1.051, 每个顶点 5 个等距邻居。
+
+    SPUM2611 v5.0: 正二十面体是推导的**输出**（主定理：计数 → 空间），
+    不是演化种子输入。本函数仅作为**验证参考**保留——用于事后校验
+    闭合子图是否自然涌现出 n=12, deg=5 的饱和构型 (T2/T3)。
     """
     phi = (1.0 + math.sqrt(5.0)) / 2.0  # 黄金比例
     verts = []
@@ -174,8 +178,12 @@ def _fibonacci_sphere(n: int) -> np.ndarray:
     return positions
 
 
-def _star_surface(n_surface: int = 12) -> Tuple[np.ndarray, float]:
+def _star_surface(n_surface: int = 42) -> Tuple[np.ndarray, float]:
     """中心 + 表面 coda, 表面精确在中心表面切线位置。
+
+    SPUM2611 v5.0 (T5): n_surface 默认 42 = 稳定解 deg(O) = 42——
+    中心粒子与全部轨道位置（12 顶点 + 30 边中点）相切。
+    12 不是闭锁输入，只是计数链 (12, 30, 42) 的一环。
 
     r_center = 1 + n_surface (连接 n_surface 个表面后)
     r_surface = 1 + 1 = 2 (仅连接中心)
@@ -186,7 +194,7 @@ def _star_surface(n_surface: int = 12) -> Tuple[np.ndarray, float]:
         positions: (n_surface+1, 3) 中心+所有表面
         radii: (n_surface+1,)
     """
-    center_r = float((1 + n_surface) * KAPPA)  # r=13 (for n=12)
+    center_r = float((1 + n_surface) * KAPPA)  # r=43 (for n=42)
     surface_r = 2.0  # 1 + 1 (初始仅连接中心)
 
     # 表面均匀分布在单位球面
@@ -206,8 +214,12 @@ def _star_surface(n_surface: int = 12) -> Tuple[np.ndarray, float]:
     return positions, radii
 
 
-def _init_sequential(n_coda: int = 50) -> Tuple[np.ndarray, np.ndarray, list]:
+def _init_sequential(n_coda: int = 42) -> Tuple[np.ndarray, np.ndarray, list]:
     """顺序构建网络: coda 按 ID 逐个接入。
+
+    SPUM2611 v5.0 (T5): 默认 42 个 coda = 稳定解——中心粒子与全部
+    轨道位置（12 顶点 + 30 边中点）相切。50.3 是容量极致 (T8)，
+    42 是稳定解；默认规模取 42。
 
     规则:
         1. 所有 coda 初始体积=1 (r=1), 无连接
@@ -760,11 +772,12 @@ def step2_connect(particles, star_mode: bool = False,
 
     # === 表面几何相切 (star_mode, capped) ===
     # 检测表面球体之间的几何相切: distance ≈ r_i + r_j
-    # 每个粒子每帧最多连接 k_max 个最近邻几何相切粒子,
-    # 且总度不超过 max_deg (防止累积过度连接)。
+    # 每个粒子每帧最多连接 k_max 个最近邻几何相切粒子 (单帧生长率上界,
+    # 由 dv/dt ≤ const 约束), 且总度不超过 CRYSTALLITE_DEGREE_THRESHOLD
+    # (T5 稳定解 deg(O) = 42, 防止累积过度连接)。
     if star_mode and n_surf >= 2 and center_idx is not None:
         k_max = 6
-        max_deg = 8  # 全局上限: 每个表面粒子最多 8 条表面-表面边
+        max_deg = CRYSTALLITE_DEGREE_THRESHOLD  # 全局上限: 稳定解 42
         tol = GEOMETRIC_TOLERANCE
         edges_added = 0
         n = n_surf

@@ -10,11 +10,15 @@ OpenSPUM Phase 1 — 基础常量定义
     - CRYSTALLITE_DIAMETER_MAX: 晶子等效直径临界值 D_max = 4κ
     - CRYSTALLITE_CAPACITY:    晶子几何容量上限 N_max ≈ 16π ≈ 50.3
 
-重要设计原则:
-    - 12 是涌现的，不是设定的。Σ(6−deg(v)) = 12 是闭合子图的欧拉恒等式强制解，
-      由 Phase 3 的不变量校验器验证，不在此处硬编码为度数上限。
-    - virtual_faces 的上限来自晶子几何容量 (50)，不是接吻数 (12)。
-    - degree 上限硬约束为 CRYSTALLITE_DEGREE_THRESHOLD (50)，
+重要设计原则 (SPUM2611 v5.0 新理论):
+    - 12 是计数事实，不是输入。Σ(6−deg(v)) = 12 是闭合子图的欧拉恒等式强制解
+      (T2)，正二十面体是推导的输出而非种子构型（主定理：计数 → 空间）。
+    - 稳定解为 deg(O) = 42 (T5)：中心粒子与全部轨道位置（12 顶点 + 30 边中点）
+      相切，42 < 50.3 容量可容纳。没有"12 闭锁"——12 只作为计数链
+      (12, 30, 42) 的一环存在。
+    - 容量极致为 N_max = 16π ≈ 50.3 (T8)，仅作几何容量上限参考，
+      不作为度数硬阈值。
+    - degree 硬阈值 = CRYSTALLITE_DEGREE_THRESHOLD (42，T5 稳定解)，
       晶子聚簇连接通过 crystallite_connections 单独追踪，不增加 degree。
 """
 
@@ -25,14 +29,15 @@ KAPPA: float = 1.0
 TAU: int = 1
 
 # 晶子度数阈值 — 节点度数达到此值即视为晶子
-# 对应总度数接近 N_max ≈ 50.3 的饱和态
+# = T5 稳定解 deg(O) = 42（中心粒子与 12 顶点 + 30 边中点全部轨道位置相切）
 # 这是 degree 的硬上限：任何节点的 degree 不得超过此值
-CRYSTALLITE_DEGREE_THRESHOLD: int = 50
+# 容量极致 50.3 (T8) 仅作几何参考，不是度数硬阈值
+CRYSTALLITE_DEGREE_THRESHOLD: int = 42
 
 # 晶子最大接触数（三维密堆接吻数）
-# 由 D_max = 4κ 与拓扑常数 12 共同决定
+# 12 是计数事实 (T2 饱和解 n=12, d=5)，非预设输入
 # 注意: 12 是涌现结果，不是预设的度数上限。
-# 节点的度数可以从 0 增长到晶子阈值 (50)，12 会在闭合子图分析中自然显现。
+# 节点的度数可以从 0 增长到晶子阈值 (42)，12 会在闭合子图分析中自然显现。
 MAX_CONTACTS: int = 12
 
 # 晶子等效直径临界值 D_max = 4κ
@@ -47,7 +52,7 @@ GEOMETRIC_TOLERANCE: float = 0.1
 
 # 晶子聚簇最大规模 — 每个晶子在晶子子图中的最多连接数
 # 三维密堆中每个球体最多与 12 个同类球体相切
-# 此连接不增加 degree（保持 degree ≤ 50），单独通过 crystallite_connections 追踪
+# 此连接不增加 degree（保持 degree ≤ 42），单独通过 crystallite_connections 追踪
 MAX_CRYSTALLITE_CLUSTER_SIZE: int = 12
 
 # 晶子子图平面三角剖分度数上限 — 平面图每个顶点度数 ≤ 6

@@ -98,7 +98,7 @@ class Sphere3D:
 
     Attributes:
         uid:       节点 UID
-        degree:    当前度数 (CRYSTALLITE_DEGREE_THRESHOLD=50 为饱和)
+        degree:    当前度数 (CRYSTALLITE_DEGREE_THRESHOLD=42 为稳定解/T5)
         position:  三维坐标 (x, y, z)
         radius:    球体半径 (基于 degree 计算)
         neighbors: 邻接晶子的 UID 列表 (只在子图内, 不含普通边)

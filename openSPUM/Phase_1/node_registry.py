@@ -66,7 +66,7 @@ class NodeState:
     def virtual_faces(self) -> int:
         """剩余可连接虚面数。
 
-        上限来自晶子几何容量 (CRYSTALLITE_DEGREE_THRESHOLD = 50)。
+        上限来自晶子稳定解 (CRYSTALLITE_DEGREE_THRESHOLD = 42, T5)。
         度数增长 → 虚面减少；度数降低（湮灭）→ 虚面恢复。
         下限为 0（饱和态）。
 
@@ -212,5 +212,5 @@ class NodeRegistry:
         return [n for n in self.nodes.values() if n.is_saturated]
 
     def crystallite_nodes(self) -> list[NodeState]:
-        """返回所有晶子节点（degree >= 50）。"""
+        """返回所有晶子节点（degree >= 42, T5 稳定解）。"""
         return [n for n in self.nodes.values() if n.is_crystallite]

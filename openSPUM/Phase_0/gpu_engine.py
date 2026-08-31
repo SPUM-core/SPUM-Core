@@ -4,7 +4,7 @@ SPUMEngine — 第 0 阶段 GPU 空间粒子引擎主类。
 CPU 后端 + 元数据解码。
 
 使用方式:
-    engine = SPUMEngine(seed_geometry="fibonacci", max_particles=50000)
+    engine = SPUMEngine(seed_geometry="sequential", max_particles=50000)
     
     for i in range(200):
         snapshot = engine.run_frame()
@@ -35,9 +35,8 @@ from .metadata_decoder import FrameSnapshot, FrameLog, CUDAMetadataDecoder
 class EngineConfig:
     """引擎配置。"""
     max_particles: int = MAX_PARTICLES
-    seed_geometry: str = "sequential"    # 初态: icosahedron | star | sequential
-    initial_seeds: int = 12               # icosahedron 用; star/sequential 用 n_surface/n_coda
-    n_surface: int = 50                   # star/sequential 模式: coda 数
+    seed_geometry: str = "sequential"    # 初态: star | sequential
+    n_surface: int = 42                   # star/sequential 模式: coda 数 (T5 稳定解 42)
     pre_growth_frames: int = 5            # 前 N 帧无悬挂修剪 (先增长)
     gap_enabled: bool = True              # 是否启用缝隙创生
     verbose: bool = False                 # 每帧打印摘要
@@ -74,42 +73,19 @@ class SPUMEngine:
     def _initialize_seeds(self):
         """确定性初态初始化。
 
-        三种模式:
-            icosahedron: 12 个正二十面体顶点, 边正切半径
-            star: 1 中心 coda (deg=50) + 50 表面 coda (deg=1)
+        两种模式 (SPUM2611 v5.0):
+            star: 1 中心 coda (deg=42, T5 稳定解) + 42 表面 coda (deg=1)
             sequential: 链式接入, 每个 coda 从切线计算坐标
+
+        注: 正二十面体是推导的**输出** (主定理: 计数 → 空间)，
+        不作为输入种子构型。
         """
-        if self.config.seed_geometry == "icosahedron":
-            self._init_icosahedron()
-        elif self.config.seed_geometry == "star":
+        if self.config.seed_geometry == "star":
             self._init_star()
         elif self.config.seed_geometry == "sequential":
             self._init_sequential()
         else:
             raise ValueError(f"Unknown seed_geometry: {self.config.seed_geometry}")
-
-    def _init_icosahedron(self):
-        """正二十面体初态。"""
-        from .frame_kernels import _icosahedron_vertices
-        n = self.config.initial_seeds
-        positions = _icosahedron_vertices()
-
-        min_dist = float('inf')
-        for i in range(n):
-            for j in range(i+1, n):
-                d = np.linalg.norm(positions[i] - positions[j])
-                if d < min_dist:
-                    min_dist = d
-        initial_r = min_dist / 2.0
-
-        for i in range(n):
-            self.particles.add_particle(
-                pos=(float(positions[i][0]), float(positions[i][1]),
-                     float(positions[i][2])),
-                uid=f"seed_{i:04d}",
-                degree=0,
-            )
-        self.particles.radius[:n] = initial_r
 
     def _init_star(self):
         """星形初态: 1 中心 coda (deg=n_surface) + N 表面 coda (deg=1)。
@@ -279,7 +255,7 @@ class SPUMEngine:
         ax2.grid(alpha=0.3)
 
         ax3.plot(frames, crys, 'g-', linewidth=1)
-        ax3.set_title('晶子数 (degree >= 50)')
+        ax3.set_title(f'晶子数 (degree >= {CRYSTALLITE_DEGREE_THRESHOLD})')
         ax3.set_xlabel('帧')
         ax3.grid(alpha=0.3)
 

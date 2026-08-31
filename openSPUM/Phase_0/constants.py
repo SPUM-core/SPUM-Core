@@ -15,7 +15,7 @@ MIN_GAP_RATIO: float = 1.5
 from Phase_1.constants import (
     KAPPA,                    # 1.0 — 最小差异尺度
     TAU,                      # 1   — 离散帧时间单位
-    CRYSTALLITE_DEGREE_THRESHOLD,  # 50 — 晶子度数阈值
+    CRYSTALLITE_DEGREE_THRESHOLD,  # 42 — 晶子度数阈值 (T5 稳定解)
     GEOMETRIC_TOLERANCE,      # 0.1 — 相切判定容差
-    CRYSTALLITE_CAPACITY,     # 16π ≈ 50.3
+    CRYSTALLITE_CAPACITY,     # 16π ≈ 50.3 (T8 容量极致，仅几何参考)
 )
