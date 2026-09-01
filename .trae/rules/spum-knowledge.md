@@ -25,7 +25,8 @@
 | `spum-vocabulary.md` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要确保术语一致时加载 |
 | `spum-reasoning.md` | 推理原则：可还原性、多路径锁定、全回溯无污染、本体与投影区分 | 进行逻辑推导或验证时加载 |
 | `spum-review.md` | 评审规则：自动执行协议、四维评分(A/B/C/D/LE)、阈值回滚、违规检测关键词 | 审查 SPUM 文档或回答一致性时加载（v2.0：每轮推理后自动执行） |
-| `spum-anti-pattern.md` | 伪加载检测：8种通用AI典型错误模式、对抗性示例、自检协议 | 防止旧范式残留，每轮推理后与 review 同步执行 |
+| `spum-output-template.md` | 输出模板：新建/修订/跨域知识条目的统一格式，联动 RULE-COUNT 与四维评审 | 创建或修订 SPUM 知识条目时加载 |
+| `spum-anti-pattern.md` | 伪加载检测：8种通用AI典型错误模式、自检协议 + **概念级反例库**（7 组核心概念 ❌/✅ 对照，原 spum-anti-examples.md 已并入） | 防止旧范式残留，每轮推理后与 review 同步执行 |
 | `spum-reasoner-skill.md` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 用户提及 SPUM 概念时激活，提供文献导航与推理框架 |
 | `spum-qingmeng-guard.md` | 青檬引擎 SPUM 优化护栏：11条不变量速查、3级优化优先级 | 修改 qingmeng_engine 代码前进行合规校验 |
 | `spum-openspum.md` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试全覆盖、关键物理结果（α/sigma/粒子行为）、加载策略 | 运行/修改 OpenSPUM 代码时加载 |
@@ -74,9 +75,10 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `knowledge.md` | ~800行 | **世界观权威基准**，所有一致性判断的最终依据 |
 | `SPUM2610.md` | ~2900行 | 完整理论正文（11章+附录），**各精简版规则文件的完整推导来源** |
 | `SPUM_语言规范.md` | 新增 | **反转几何化图论语言规范**——词法/句法/语义/语用五层定义，所有领域翻译的一致性与正确性判断依据 |
+| `SPUM_认知投影论.md` | 新增 v4.1 | **认知论与元认识论专章**（与 `SPUM_系统总纲.md` 同级）——范式五元组、双重投影定理（π₂普适/π₁条件）、不可通约定理、认知热力学第二定律、关系闭环度 Φ、代表性边集自举、元认知自举。节点注册 COG-001~007；实现见 `src/spum_graph/closure.py` |
 | `.trae/rules/spum-root-nodes.md` | 新增 | **R1-R9 唯一定义** — 所有应用模块的根节点映射以此文件为基准 |
-| `network/module_nodes.txt` | 新增 | **模块节点统一注册表** — 集中管理 GT/SOC/ECON/LING/FI 等模块节点 |
-| `network/edges.txt` | 33+15+11边 | 核心推导链 + 模块桥接边 + 实验验证边（EX-001 温差力矩 / EX-002 拓扑认知） |
+| `network/module_nodes.txt` | 新增 | **模块节点统一注册表** — 集中管理 GT/SOC/ECON/LING/FI/COSM/COG 等模块节点 |
+| `network/edges.txt` | 33+15+11+7边 | 核心推导链 + 模块桥接边 + 实验验证边（EX-001 温差力矩 / EX-002 拓扑认知）+ COG 元认识论桥接边 |
 
 ---
 
@@ -88,6 +90,7 @@ N013 → N022 (不完美 → 公理2 悬挂端不可消除)
 | `Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 空间几何发生学 |
 | `Topological_Emergence/SPUM_Topological_Emergence.md` | 拓扑涌现导论 |
 | `Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 高斯-博内定理的离散组合重构 |
+| `SPUM_理论引用与可复现实验.md` | 理论主张三类划分（恒等式/有先例/原创预言）+ peer-reviewed 引用清单 + 可复现实验命令 |
 
 ## 五-2、实证支撑模块（`docs/`）
 

@@ -32,7 +32,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Dict, Set, List, Optional, Tuple, Any
 from enum import Enum, auto
-from .axioms import Axioms, Axiom3
+from .axioms import Axioms
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -412,16 +412,20 @@ class FrameEngine:
             f"悬挂={f.dangling_count}",
             f"  闭合: {'是' if f.is_closed else '否'}",
         ]
-        steps = []
-        for i, name in enumerate(Axiom3.STEP_NAMES, 1):
-            done = getattr(f, f"step_{i}_creation" if i == 1 else
-                          getattr(f, f"step_{i}_connection" if i == 2 else
-                          getattr(f, f"step_{i}_volume" if i == 3 else
-                          getattr(f, f"step_{i}_judge" if i == 4 else
-                          getattr(f, f"step_{i}_deletion", False)))), False)
-            # Simplify: just list step names
-            _ = done  # unused, just for clarity
-        # Actually just show V⁺/V⁻ counts
+        # 五步状态标记
+        step_attrs = [
+            ("step_1_creation", "创生(V⁺)"),
+            ("step_2_connection", "连接"),
+            ("step_3_volume", "变化体积"),
+            ("step_4_judge", "判断悬挂"),
+            ("step_5_deletion", "删除(V⁻)"),
+        ]
+        step_flags = [getattr(f, attr, False) for attr, _ in step_attrs]
+        step_line = "  ".join(
+            f"{name}:{'✓' if done else '—'}"
+            for (_, name), done in zip(step_attrs, step_flags)
+        )
+        lines.append(f"  步骤: {step_line}")
         lines.append(f"  V⁺={len(f.v_plus_events)}  V⁻={len(f.v_minus_events)}")
         if f.notes:
             lines.append(f"  备注: {'; '.join(f.notes[:3])}")

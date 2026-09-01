@@ -71,6 +71,16 @@ N012 | AGT-001 | derives_from | AGENT.md的帧协议直接复制N012的五步帧
 AGT-001 | N005 | derives_from | 内部认知模型"实体由关系定义"从N005边/连接概念推导而来
 AGT-001 | N022 | requires | AGENT.md强制加载SPUM-图论(L0.5层)作为推理基底
 AGT-001 | N013 | refines | 帧状态协议将N013不完美定理细化为悬挂端计数→连续3帧未闭合→回退的实操规则
+
+# ── 认知投影论模块 (COG) — 元认识论桥接边 ─────────────────
+# 唯一定义源：SPUM_认知投影论.md（v4.1）。注册：network/module_nodes.txt COG-001~007
+N021 | COG-001 | derives_from | 范式五元组=认知子网上的全局投影坐标系，从拓扑认知N021涌现
+N019 | COG-002 | derives_from | 双重投影定理的π₁（三维空间表象）从几何发生学N019导出；π₂（一维时序）从N012导出
+N002 | COG-003 | derives_from | 不可通约定理=切分商图不同构，根植于N002差异第一性
+N012 | COG-004 | derives_from | 认知热力学第二定律=E_maint/E_recon的边操作计数，帧结构N012为计数基底
+N022 | COG-005 | derives_from | 关系闭环度Φ=(C·S)/R，三参量均为N022图论层可审计量
+COG-005 | COG-006 | derives_from | 代表性边集自举ε*=argmax Φ(ε)，由Φ本身定义选取标准
+COG-001 | COG-007 | derives_from | 元认知自举=SPUM只提供范式变换语法，故不落入自身五元组的被裁切范围
 AGT-001 | N021 | refines | 将N021拓扑认知实验结论编码为推理约束（悬挂端双层判据、锚点漂移检测）
 AGT-001 | N007 | requires | 最小度数≥2是帧协议中悬挂端修剪判定的拓扑标准
 AGT-001 | N011 | requires | 五步帧序列的"判断→删除"阶段执行N011悬挂边删除逻辑

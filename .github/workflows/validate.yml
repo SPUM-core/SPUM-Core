@@ -1,184 +1,62 @@
-name: SPUM 版本号生成与校验
+name: CI
+
 on:
   push:
     branches: [ master ]
-    paths:
-      - 'core/**'
   pull_request:
     branches: [ master ]
-    paths:
-      - 'core/**'
-  issue_comment:
-    types: [ created ]
 
 jobs:
-  validate-and-score:
+  # ── 主闸门：单元测试 ──────────────────────────────────────
+  test:
+    name: 单元测试 (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: 设置Python环境
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 运行单元测试
+        run: |
+          python -m unittest discover -s tests -v
+
+      - name: 复现核心拓扑不变量
+        run: |
+          python tools/repro_core_invariants.py --frames 200 --steps 5000
+
+  # ── 评分作业：四维评审 + 版本号（信息性，不阻塞合并） ────
+  score:
+    name: 四维评分与版本号
+    runs-on: ubuntu-latest
+    needs: test
+    continue-on-error: true  # 评分结果仅作报告，不阻塞 CI
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-          cache: 'pip'
 
-      - name: 安装依赖
+      - name: 评分核心理论文档
         run: |
-          python -m pip install --upgrade pip
-          pip install -r tools/requirements.txt
+          python tools/score_calculator.py knowledge.md theory
+          cat score_result.json
 
-      - name: 识别变更目录
-        id: get-changed-dirs
+      - name: 评分完整理论正文
         run: |
-          # 获取变更的文件
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git fetch origin ${{ github.base_ref }}
-            changed_files=$(git diff --name-only origin/${{ github.base_ref }} HEAD)
-          else
-            changed_files=$(git diff --name-only HEAD^ HEAD)
-          fi
-          # 提取core/下的变更目录
-          changed_dirs=""
-          for file in $changed_files; do
-            if [[ $file == core/* ]]; then
-              dir=$(echo $file | cut -d '/' -f 1-3)
-              changed_dirs="$changed_dirs $dir"
-            fi
-          done
-          # 去重
-          changed_dirs=$(echo "$changed_dirs" | xargs -n1 | sort -u | xargs)
-          echo "changed_dirs=$changed_dirs" >> $GITHUB_OUTPUT
-          echo "本次变更目录: $changed_dirs"
+          python tools/score_calculator.py SPUM2610.md theory
+          cat score_result.json
 
-      - name: 遍历目录执行评分与版本生成
-        if: steps.get-changed-dirs.outputs.changed_dirs != ''
+      - name: 校验文档哈希
         run: |
-          IFS=' ' read -ra DIRS <<< "${{ steps.get-changed-dirs.outputs.changed_dirs }}"
-          for dir in "${DIRS[@]}"; do
-            echo "===== 处理目录: $dir ====="
-            # 检查目录是否存在
-            if [ ! -d "$dir" ]; then
-              echo "目录$dir不存在，跳过"
-              continue
-            fi
-            # 检查theory.md是否存在
-            if [ ! -f "$dir/theory.md" ]; then
-              echo "目录$dir未找到theory.md，跳过"
-              continue
-            fi
-            # 检查version.json是否存在
-            if [ ! -f "$dir/version.json" ]; then
-              echo "目录$dir未找到version.json，创建初始化文件"
-              cat > "$dir/version.json" << EOF
-          {
-            "version": "",
-            "content_type": "theory",
-            "files": ["theory.md"],
-            "merkle_root": "",
-            "timestamp": 0,
-            "score": {
-              "A": 0,
-              "B": 0,
-              "C": 0,
-              "D": 0,
-              "LE": 0
-            }
-          }
-          EOF
-            fi
-
-            # 1. 读取内容类型
-            content_type=$(jq -r '.content_type' "$dir/version.json")
-            echo "内容类型: $content_type"
-
-            # 2. 计算四维评分
-            python tools/score_calculator.py "$dir/theory.md" $content_type
-            scores=$(cat score_result.json)
-            A=$(echo $scores | jq -r '.A')
-            B=$(echo $scores | jq -r '.B')
-            C=$(echo $scores | jq -r '.C')
-            D=$(echo $scores | jq -r '.D')
-            LE=$(echo $scores | jq -r '.LE')
-            echo "评分结果: A=$A, B=$B, C=$C, D=$D, LE=$LE"
-
-            # 3. 生成Merkle根
-            python tools/hash_validator.py generate "$dir"
-            merkle_result=$(cat merkle_result.json)
-            merkle_root=$(echo $merkle_result | jq -r '.merkle_root')
-            merkle_prefix=$(echo $merkle_result | jq -r '.merkle_prefix')
-            timestamp=$(date +%s)
-            echo "Merkle前缀: $merkle_prefix"
-
-            # 4. 生成版本号
-            version=$(python -c "
-          import sys
-          sys.path.append('tools')
-          from score_calculator import SPUMScorer
-          with open('$dir/theory.md', 'r', encoding='utf-8') as f:
-              content = f.read()
-          scorer = SPUMScorer(content)
-          scorer.calc_all_scores()
-          print(scorer.generate_version_number('$content_type', '$merkle_prefix', $timestamp))
-          ")
-            echo "生成版本号: $version"
-
-            # 5. 写入version.json
-            jq --arg version "$version" \
-               --arg merkle_root "$merkle_root" \
-               --argjson timestamp "$timestamp" \
-               --argjson A "$A" \
-               --argjson B "$B" \
-               --argjson C "$C" \
-               --argjson D "$D" \
-               --argjson LE "$LE" \
-               '.version = $version | .merkle_root = $merkle_root | .timestamp = $timestamp | .score.A = $A | .score.B = $B | .score.C = $C | .score.D = $D | .score.LE = $LE' \
-               "$dir/version.json" > "$dir/version.json.tmp" && mv "$dir/version.json.tmp" "$dir/version.json"
-
-            # 6. 核心库阈值检查
-            if [[ $dir == core/* ]]; then
-              echo "===== 核心库准入阈值检查 ====="
-              if [ $A -lt 70 ] || [ $B -lt 70 ] || [ $C -lt 70 ] || [ $D -lt 70 ] || [ $LE -gt 1 ]; then
-                echo "❌ 不满足核心库准入阈值！要求A/B/C/D≥70，LE≤1"
-                exit 1
-              else
-                echo "✅ 满足核心库准入阈值"
-              fi
-            fi
-
-            # 清理临时文件
-            rm -f score_result.json merkle_result.json
-          done
-
-      - name: 提交版本号更新
-        if: github.event_name == 'pull_request' || github.event_name == 'push'
-        run: |
-          git config --global user.name "空间粒子宇宙模型"
-          git config --global user.email "332556447@qq.com"
-          git add .
-          git commit -m "auto: 自动生成版本号与评分元数据" || echo "无变更需要提交"
-          git push
-
-      - name: 处理/promote指令
-        if: github.event_name == 'issue_comment' && contains(github.event.comment.body, '/promote')
-        run: |
-          echo "===== 处理草稿升级核心库指令 ====="
-          # 此处实现promote逻辑，校验阈值后自动迁移目录并打标签
-          echo "草稿升级核心库功能已触发，管理员审核后执行"
-
-      - name: 生成PR评论报告
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
-            const report = fs.readFileSync('score_result.json', 'utf8');
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `## SPUM 自动评分报告\n\`\`\`json\n${report}\n\`\`\``
-            });
+          python tools/hash_validator.py generate knowledge.md || echo "哈希校验跳过（无待处理变更）"

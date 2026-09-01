@@ -15,10 +15,10 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 | 宇宙学 | z-σ 正相关 + 形态-红移统一 | **10/10 星系团** ✅ |
 | 旋转曲线 | 子图协动替代暗物质 | **SPARC 175** ✅ |
 | 形式化 | ⟨P, ε⟩ → ℝ³ 内生嵌入 | **L0.5_induced_metric.md** 🔶 |
-| 代码 | 帧演化 + 验证管道 + 测试 | **224 测试全覆盖** ✅ |
+| 代码 | 帧演化 + 验证管道 + 测试 | **tests/ 207 测试通过** ✅ |
 | 跨域 | 社会/经济/语言/数学/五行/哲学 | **7 领域规约完成** ✅ |
 
-10 个星系团、2090 个星系、175 条旋转曲线、224 个单元测试、200 行形式化定义。
+10 个星系团、2090 个星系、175 条旋转曲线、207 个单元测试、200 行形式化定义。
 
 **你们继续嘲笑，SPUM 继续演化。**
 
@@ -80,7 +80,7 @@ spum-core/
 ├── faq/                  # 常见问题（7 篇）
 ├── src/                  # 帧协议 + SPUM-图论模块
 ├── spum/                 # Python 包（axioms/frame/domain/reason/api）
-├── openSPUM/             # 224 测试全覆盖
+├── openSPUM/             # 开源宇宙实验室（物理模拟 + 自带测试）
 ├── experiments/          # 实验验证（P0/P1/P2/N015/N016/五形耦合）
 ├── patent/               # 脉诊算法代码（PTBXL 拟合、五形辨证）
 ├── 温差力矩实验/          # 桌面实验分析（invert_competition.py + 结果）
@@ -117,8 +117,19 @@ python run.py --clusters Coma Abell1367 Abell2199 Virgo Abell1656 Abell2147 Abel
 # 旋转曲线 — SPARC 175
 python docs/Subgraph_CoMotion/fit_galaxy.py --nfw
 
-# 单元测试 — 224 全覆盖
-cd openSPUM && pytest
+# 单元测试 — tests/ 207 项全覆盖（纯标准库，无需第三方依赖）
+cd spum-core
+python -m unittest discover -s tests -v
+
+# 核心拓扑不变量复现（零依赖，确定性）
+python tools/repro_core_invariants.py
+
+# 理论引用与可复现实验清单
+# 见 docs/SPUM_理论引用与可复现实验.md
+
+# openSPUM 物理模拟测试（需 numpy，GPU 内核测试需 torch）
+cd openSPUM
+python -m unittest discover -s tests -v
 ```
 
 **不需要 GPU。不需要博士。只需要 numpy。**

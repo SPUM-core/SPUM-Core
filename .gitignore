@@ -57,6 +57,9 @@ node_modules/
 # 各类日志
 *.log
 
+# SPUM 评分工具输出（tools/score_calculator.py 运行产物，可再生成）
+score_result.json
+
 # 温差力矩实验 - 仅上传关键论文和数据（不上传视频/跟踪文件/设备驱动）
 温差力矩实验/**/*.mp4
 温差力矩实验/**/*.jpg

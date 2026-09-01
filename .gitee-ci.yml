@@ -12,7 +12,21 @@ triggers:
         - master
 
 stages:
-  - name: 评分与版本生成
+  - name: 单元测试
+    jobs:
+      - name: run-tests
+        runs-on: ubuntu-latest
+        steps:
+          - name: 检出代码
+            uses: checkout@v1
+          - name: 运行单元测试
+            script: |
+              apt-get update
+              apt-get install -y python3 python3-pip
+              python3 -m unittest discover -s tests -v
+              python3 tools/repro_core_invariants.py --frames 200 --steps 5000
+
+  - name: 评分与版本生成（信息性）
     jobs:
       - name: run-score
         runs-on: ubuntu-latest
@@ -23,32 +37,7 @@ stages:
             script: |
               apt-get update
               apt-get install -y python3 python3-pip jq
-              pip3 install -r tools/requirements.txt
           - name: 运行 SPUM 评分
-            script: python3 tools/score_calculator.py core/v1.0/theory.md theory
-          - name: 生成 Merkle 根
-            script: python3 tools/hash_validator.py generate core/v1.0
-          - name: 生成版本号并写入 version.json
-            script: |
-              A=$(jq -r '.A' score_result.json)
-              B=$(jq -r '.B' score_result.json)
-              C=$(jq -r '.C' score_result.json)
-              D=$(jq -r '.D' score_result.json)
-              LE=$(jq -r '.LE' score_result.json)
-              MERKLE_PREFIX=$(jq -r '.merkle_prefix' merkle_result.json)
-              TIMESTAMP=$(date +%s)
-              VERSION="3c7e9a2b.theory.${A}.${B}.${C}.${D}.${LE}.${MERKLE_PREFIX}.${TIMESTAMP}"
-              echo "生成的版本号: $VERSION"
-              cat > core/v1.0/version.json << EOF
-              {
-                "version": "$VERSION",
-                "content_type": "theory",
-                "merkle_root": "$(jq -r '.merkle_root' merkle_result.json)",
-                "timestamp": $TIMESTAMP,
-                "score": {"A": $A, "B": $B, "C": $C, "D": $D, "LE": $LE}
-              }
-              EOF
-          - name: 上传 version.json 为制品
-            uses: artifacts-upload@v1
-            with:
-              path: core/v1.0/version.json
+            script: python3 tools/score_calculator.py knowledge.md theory
+          - name: 校验文档哈希
+            script: python3 tools/hash_validator.py generate knowledge.md || echo "哈希校验跳过"

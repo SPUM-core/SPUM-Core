@@ -17,13 +17,41 @@ L0 本体论的图论表达工具。与经典 L2 图论隔离——
 """
 
 from .graph import FrameGraph
-from .dangling import DanglingDetector, compute_dangling
 from .handshaking import HandshakingVerifier, euler_characteristic
+from .closure import (
+    ClosureScore,
+    PhiReport,
+    PhiConfig,
+    greedy_mfas,
+    self_consistency,
+    steadiness,
+    redundancy,
+    cyclic_edges,
+    find_directed_cycle,
+    run_demo,
+)
+
+# dangling 模块依赖 torch——惰性导入，未安装 torch 时包仍可加载
+try:
+    from .dangling import DanglingDetector, compute_dangling
+    _TORCH_AVAILABLE = True
+except ImportError:  # pragma: no cover - torch 未安装时触发
+    DanglingDetector = None
+    compute_dangling = None
+    _TORCH_AVAILABLE = False
 
 __all__ = [
     "FrameGraph",
-    "DanglingDetector",
-    "compute_dangling",
     "HandshakingVerifier",
     "euler_characteristic",
+    "ClosureScore",
+    "PhiReport",
+    "PhiConfig",
+    "greedy_mfas",
+    "self_consistency",
+    "steadiness",
+    "redundancy",
+    "cyclic_edges",
+    "find_directed_cycle",
+    "run_demo",
 ]
