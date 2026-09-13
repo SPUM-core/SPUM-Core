@@ -23,22 +23,28 @@ from .constants import (
 )
 from .particle_array import ParticleArray
 from .frame_kernels import (
-    run_full_frame, step1_create, step2_connect,
+    run_full_frame, step1_create, step1b_gap_fill, step2_connect,
     step3_volume, step3b_enforce_impenetrability,
-    step4_dangling, step5_purge,
+    step4_dangling, step5_purge, enforce_tangency,
     _init_sequential,
 )
 from .metadata_decoder import FrameSnapshot, FrameLog, CUDAMetadataDecoder
+from .gpu_backend import cuda_available, device_name, active_backend, resolve
 
 
 @dataclass
 class EngineConfig:
     """引擎配置。"""
     max_particles: int = MAX_PARTICLES
-    seed_geometry: str = "sequential"    # 初态: star | sequential
+    seed_geometry: str = "sequential"    # 初态: star | sequential | multi_center
     n_surface: int = 42                   # star/sequential 模式: coda 数 (T5 稳定解 42)
+    n_centers: int = 8                    # multi_center 模式: 中心簇数
+    surface_per_center: int = 12          # multi_center 模式: 每簇表面 coda 数
+    cluster_radius: float = 60.0          # multi_center 模式: 簇壳半径
     pre_growth_frames: int = 5            # 前 N 帧无悬挂修剪 (先增长)
     gap_enabled: bool = True              # 是否启用缝隙创生
+    gap_max_checks: int = 100000          # step1_create 最大三体检查数 (多中心可用更高值)
+    backend: str = "auto"                 # auto|cuda|cpu — 后端选择 (显卡部署)
     verbose: bool = False                 # 每帧打印摘要
 
 
@@ -57,6 +63,8 @@ class SPUMEngine:
 
     def __init__(self, config: Optional[EngineConfig] = None):
         self.config = config or EngineConfig()
+        # 后端解析: 'cuda' 强制 GPU, 'cpu' 强制 CPU, 'auto' 探测降级
+        self.backend = resolve(self.config.backend)
         self.particles = ParticleArray(max_n=self.config.max_particles)
         self.frame_number = 0
         self.history: List[FrameSnapshot] = []
@@ -76,6 +84,7 @@ class SPUMEngine:
         两种模式 (SPUM2611 v5.0):
             star: 1 中心 coda (deg=42, T5 稳定解) + 42 表面 coda (deg=1)
             sequential: 链式接入, 每个 coda 从切线计算坐标
+            multi_center: C 个独立星簇分布球面, 每簇中心+表面 coda
 
         注: 正二十面体是推导的**输出** (主定理: 计数 → 空间)，
         不作为输入种子构型。
@@ -84,6 +93,8 @@ class SPUMEngine:
             self._init_star()
         elif self.config.seed_geometry == "sequential":
             self._init_sequential()
+        elif self.config.seed_geometry == "multi_center":
+            self._init_multi_center()
         else:
             raise ValueError(f"Unknown seed_geometry: {self.config.seed_geometry}")
 
@@ -148,6 +159,67 @@ class SPUMEngine:
         for i, j in edges:
             self.particles.add_connection(i, j)
 
+    def _init_multi_center(self):
+        """多中心分布式初态: C 个独立星簇均匀分布于球面。
+
+        每个簇 = 1 中心 + M 表面 coda (局部 star 缩放), 簇间由
+        cluster_radius 隔离, 保证跨簇不相切、不被全局创生染指。
+        目的是让晶子 (deg≥42) 分散成独立簇, 而不是聚成单中心
+        过饱和团簇, 为帧内涌现 12 晶子闭环创造时机窗口。
+
+        诚实边界 (防伪加载):
+            正二十面体是推导**输出**, 不作为初态输入。中心数 C≠12,
+            中心布点用 `_fibonacci_sphere` (非正二十面体顶点), 避免作弊。
+            多中心仍是"无差别缝隙创生"在每个簇局部的重演, 命中
+            "恰好 12"是时机窗口而非保证 (参见 plan §5)。
+        """
+        from .frame_kernels import _fibonacci_sphere
+
+        n_centers = self.config.n_centers
+        M = self.config.surface_per_center
+        R = self.config.cluster_radius
+
+        # C 个中心方向: 斐波那契球面均匀分布 (非正二十面体)
+        center_dirs = _fibonacci_sphere(n_centers)
+
+        idx = 0  # 粒子索引计数器
+        for I in range(n_centers):
+            center_dir = center_dirs[I]
+            center_pos = tuple(float(x) * R for x in center_dir)
+
+            # 簇内表面 coda 方向: 围绕中心局部的斐波那契球面 (尺度远
+            # 小于簇间距, 保证跨簇隔离)。surface_r 由中心度决定。
+            surf_dirs = _fibonacci_sphere(M)
+            center_r = float((1 + M) * KAPPA)  # 中心连 M 个表面后
+            surface_r = 2.0                    # 1 + 1 (仅连中心)
+
+            # 中心
+            self.particles.add_particle(
+                pos=center_pos,
+                uid=f"cent_{I:04d}",
+                degree=0,
+            )
+            center_i = idx
+            self.particles.radius[center_i] = center_r
+            idx += 1
+
+            # 簇内表面 coda (在中心表面切线位置, 相对偏移)
+            for j in range(M):
+                surface_dist = center_r + surface_r
+                surf_pos = (
+                    center_pos[0] + surf_dirs[j][0] * surface_dist,
+                    center_pos[1] + surf_dirs[j][1] * surface_dist,
+                    center_pos[2] + surf_dirs[j][2] * surface_dist,
+                )
+                self.particles.add_particle(
+                    pos=(float(surf_pos[0]), float(surf_pos[1]), float(surf_pos[2])),
+                    uid=f"surf_{I:04d}_{j:04d}",
+                    degree=0,
+                )
+                self.particles.radius[idx] = surface_r
+                self.particles.add_connection(center_i, idx)
+                idx += 1
+
     def run_frame(self) -> FrameSnapshot:
         """执行一帧完整演化。
 
@@ -164,20 +236,32 @@ class SPUMEngine:
         self.frame_number += 1
 
         star_mode = (self.config.seed_geometry == "star")
+        multi_center = (self.config.seed_geometry == "multi_center")
+        # pre-growth 行为 (no_purge): star 与 multi_center 都先增长挂载
+        seed_like = star_mode or multi_center
 
         # sequential 模式: 不跳过悬挂, 无 star_mode 连接
-        # star 模式: pre-growth 阶段跳过悬挂+断连, 第一帧做 KNN
-        no_purge = self._in_pregrowth and star_mode
-        allow_disconnect = not self._in_pregrowth or not star_mode
+        # star/multi_center 模式: pre-growth 阶段跳过悬挂+断连, 先增长
+        no_purge = self._in_pregrowth and seed_like
+        allow_disconnect = not self._in_pregrowth or not seed_like
         pregrowth_knn = 0
 
-        stats = run_full_frame(
-            self.particles,
-            star_mode=star_mode,
-            no_purge=no_purge,
-            pregrowth_knn=pregrowth_knn,
-            allow_disconnect=allow_disconnect,
-        )
+        if self.backend == "cuda":
+            stats = self._run_frame_cuda(
+                star_mode=star_mode, multi_center=multi_center,
+                no_purge=no_purge, allow_disconnect=allow_disconnect,
+                pregrowth_knn=pregrowth_knn,
+            )
+        else:
+            stats = run_full_frame(
+                self.particles,
+                star_mode=star_mode,
+                multi_center=multi_center,
+                no_purge=no_purge,
+                pregrowth_knn=pregrowth_knn,
+                allow_disconnect=allow_disconnect,
+                gap_max_checks=self.config.gap_max_checks,
+            )
 
         # 记录快照
         snapshot = self.particles.snapshot(self.frame_number)
@@ -192,6 +276,71 @@ class SPUMEngine:
     def run_frames(self, n: int) -> List[FrameSnapshot]:
         """连续运行多帧。"""
         return [self.run_frame() for _ in range(n)]
+
+    # ── GPU 加速帧路径 ─────────────────────────────────
+    # CUDA 只加速 O(N²) 几何候选计算 (cdist), 度数装配仍在 CPU。
+    # 与 CPU 帧语义一致 → 结果逐帧可对照。
+    def _run_frame_cuda(self, star_mode, multi_center, no_purge,
+                        allow_disconnect, pregrowth_knn) -> Dict:
+        from . import gpu_accel
+        from .constants import GEOMETRIC_TOLERANCE
+
+        p = self.particles
+        active_before = p.active_count()
+
+        # Step 3: 变化体积 — 与 CPU 完全一致 (step3_volume 已向量化, 无需 GPU)
+        step3_volume(p)
+
+        # Step 3c: 相邻相切强制 (BFS 重构坐标) — 与 CPU 一致
+        enforce_tangency(p)
+
+        # Step 1: 创生 — 在空隙中填入新球体 (逻辑密集, CPU)
+        created = step1_create(p, max_checks=self.config.gap_max_checks)
+        if created == 0:
+            # 与 CPU run_full_frame 一致: 三体无缝隙时尝试球面空隙填充
+            created = step1b_gap_fill(p, max_per_frame=20)
+
+        # Step 2: 连接。
+        #   GPU: 用 CUDA cdist 预计算几何相切候选对集合 (O(N²) 热区)。
+        #   CPU: 调用与 CPU 路径完全相同的 step2_connect —— 度数装配、
+        #        角距排序、封顶、多簇逻辑全部保留 → 严格语义等价。
+        tangent_set = set()
+        if star_mode or multi_center:
+            tangent_set = {
+                (a, b) for a, b in gpu_accel.tangent_pairs_gpu(
+                    p.pos, p.radius, p.active, tol=GEOMETRIC_TOLERANCE)
+            }
+        connected = step2_connect(
+            p, star_mode=star_mode, multi_center=multi_center,
+            pregrowth_knn=pregrowth_knn, skip_center=False,
+            tangent_pairs=tangent_set if tangent_set else None)
+
+        # Step 3b: 不可入性 — 与 CPU 完全一致 (球面角度滑动消解, 非 overlap 断连)
+        overlaps_resolved = step3b_enforce_impenetrability(
+            p, allow_disconnect=allow_disconnect)
+
+        if no_purge:
+            purged = 0
+            dangling_count = 0
+        else:
+            dangling = step4_dangling(p, seed_only=False)
+            dangling_count = int(np.sum(dangling))
+            purged = step5_purge(p, dangling)
+
+        reincarnated = 0
+        active_after = p.active_count()
+
+        return {
+            "created": created,
+            "connected": connected,
+            "overlaps_resolved": overlaps_resolved,
+            "dangling_marked": dangling_count,
+            "purged": purged,
+            "reincarnated": reincarnated,
+            "active_before": active_before,
+            "active_after": active_after,
+            "degree_histogram": p.degree_histogram(),
+        }
 
     def decode(self, snapshot: FrameSnapshot) -> FrameLog:
         """将帧快照解码为人类可读日志。"""

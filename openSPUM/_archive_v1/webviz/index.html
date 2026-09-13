@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>SPUM — 空间粒子宇宙实时演化</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #07080f; color: #dfe3ee;
+    font: 13px/1.5 "Segoe UI", "Microsoft YaHei", sans-serif; }
+  #panel { position: absolute; top: 14px; left: 14px; width: 230px; z-index: 10;
+    background: rgba(12,15,28,.82); border: 1px solid #2a3150; border-radius: 10px;
+    padding: 14px 16px; backdrop-filter: blur(6px); }
+  #panel h1 { font-size: 15px; margin: 0 0 8px; letter-spacing: .5px; color: #9fd0ff; }
+  #panel .row { display: flex; justify-content: space-between; margin: 3px 0; }
+  #panel .row b { color: #ffd479; font-weight: 600; }
+  #controls { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  button { background: #1b2240; color: #dfe3ee; border: 1px solid #3a4470; border-radius: 6px;
+    padding: 5px 10px; cursor: pointer; }
+  button:hover { background: #27305a; }
+  button.active { background: #3d66b5; border-color: #6f96e0; }
+  #fps { width: 64px; background: #10142a; color: #dfe3ee; border: 1px solid #3a4470;
+    border-radius: 6px; padding: 4px 6px; }
+  #badge { position: absolute; bottom: 12px; left: 14px; z-index: 10; font-size: 12px;
+    color: #7b86a8; }
+  #legend { position: absolute; top: 14px; right: 14px; z-index: 10; font-size: 11px;
+    background: rgba(12,15,28,.72); border: 1px solid #2a3150; border-radius: 8px; padding: 8px 12px; }
+  #legend span { display:inline-block; width:10px; height:10px; border-radius:50%;
+    margin-right:6px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div id="panel">
+  <h1>SPUM · 空间粒子宇宙</h1>
+  <div class="row"><span>帧 frame</span><b id="m-frame">-</b></div>
+  <div class="row"><span>活性粒子 V</span><b id="m-V">-</b></div>
+  <div class="row"><span>总边 E</span><b id="m-E">-</b></div>
+  <div class="row"><span>Σ(6−deg)</span><b id="m-inv">-</b></div>
+  <div class="row"><span>晶子 (deg≥42)</span><b id="m-crys">-</b></div>
+  <div class="row"><span>悬挂</span><b id="m-dang">-</b></div>
+  <div class="row"><span>后端</span><b id="m-backend">-</b></div>
+  <div id="controls">
+    <button id="btn-play" class="active">暂停</button>
+    <button id="btn-step">单步</button>
+    <button id="btn-reset">重置</button>
+    <select id="seed">
+      <option value="star" selected>star</option>
+      <option value="sequential">sequential</option>
+      <option value="multi_center">multi_center</option>
+    </select>
+    <input id="fps" type="number" value="15" min="1" max="60" title="帧率">
+  </div>
+</div>
+<div id="legend">
+  <div><span style="background:#3d8bff"></span>低度 (deg ≤ 6)</div>
+  <div><span style="background:#ffd479"></span>中度</div>
+  <div><span style="background:#ff5c5c"></span>晶子饱和 (deg ≥ 42)</div>
+</div>
+<div id="badge">鼠标拖拽旋转 · 滚轮缩放 · 右键平移</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js">
+</script>
+<script>
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x07080f);
+const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 3000);
+camera.position.set(90, 70, 130);
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+document.body.appendChild(renderer.domElement);
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+
+// 星光背景
+const stars = new THREE.Points(
+  new THREE.BufferGeometry().setAttribute('position',
+    new THREE.Float32BufferAttribute(Array.from({length:2000},()=>(Math.random()-0.5)*600),3)),
+  new THREE.PointsMaterial({color:0x7d86a5, size:0.5}));
+scene.add(stars);
+
+// 粒子 (InstancedMesh) 与 边 (LineSegments)
+const NODE_CAP = 4000;
+const sphereGeo = new THREE.SphereGeometry(1, 10, 10);
+const mat = new THREE.MeshPhongMaterial({color:0x3d8bff});
+const nodes = new THREE.InstancedMesh(sphereGeo, mat, NODE_CAP);
+nodes.frustumCulled = false;
+scene.add(nodes);
+
+const edgeGeo = new THREE.BufferGeometry();
+const edgeMat = new THREE.LineBasicMaterial({color:0x2d3f6b, transparent:true, opacity:0.7});
+const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+scene.add(edges);
+
+const light = new THREE.DirectionalLight(0xffffff, 1); light.position.set(1,1,1);
+scene.add(light);
+scene.add(new THREE.AmbientLight(0x445577));
+
+const tmp = new THREE.Object3D();
+let nodeCount = 0, edgeCount = 0;
+const LOW = 0x3d8bff, MID = 0xffd479, HIGH = 0xff5c5c;
+const cLow = new THREE.Color(LOW), cMid = new THREE.Color(MID), cHigh = new THREE.Color(HIGH);
+
+function renderFrame(data) {
+  const P = data.particles, EG = data.edges;
+  nodeCount = Math.min(P.length, NODE_CAP);
+
+  for (let i=0;i<nodeCount;i++){
+    const pt = P[i];
+    const d = pt.d;
+    const color = d >= 42 ? cHigh : (d >= 8 ? cMid : cLow);
+    tmp.position.set(pt.p[0], pt.p[1], pt.p[2]);
+    const s = 0.6 + Math.min(pt.r, 8) * 0.22;
+    tmp.scale.set(s, s, s);
+    tmp.updateMatrix();
+    nodes.setMatrixAt(i, tmp.matrix);
+    nodes.setColorAt(i, color);
+  }
+  nodes.count = nodeCount;
+  nodes.instanceColor.needsUpdate = true;
+
+  edgeCount = EG.length;
+  if (edgeCount > 120000) edgeCount = 120000;
+  const pos = new Float32Array(edgeCount*6);
+  for (let i=0;i<edgeCount;i++){
+    const e = EG[i], a = P[e[0]], b = P[e[1]];
+    if(!a||!b) continue;
+    pos[i*6]=a.p[0]; pos[i*6+1]=a.p[1]; pos[i*6+2]=a.p[2];
+    pos[i*6+3]=b.p[0]; pos[i*6+4]=b.p[1]; pos[i*6+5]=b.p[2];
+  }
+  edgeGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  edgeGeo.setDrawRange(0, edgeCount*2);
+
+  const m = data.metrics;
+  const $=id=>document.getElementById(id);
+  $('m-frame').textContent=m.frame; $('m-V').textContent=m.V;
+  $('m-E').textContent=m.E; $('m-inv').textContent=m.invariant;
+  $('m-crys').textContent=m.crystallites; $('m-dang').textContent=m.dangling;
+  $('m-backend').textContent=(data.backend||'?').toUpperCase();
+}
+
+// SSE 实时流
+const ev = new EventSource('/events');
+ev.onmessage = e => {
+  const data = JSON.parse(e.data);
+  if (data.type==='frame') renderFrame(data);
+};
+
+// 控制
+let playing = true;                       // 与服务端初始 running=true 一致
+async function control(action, extra={}){
+  await fetch('/api/control', {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({action, seed: document.getElementById('seed').value, ...extra})});
+}
+const btnPlay = document.getElementById('btn-play');
+btnPlay.onclick = async ()=>{
+  playing = !playing;
+  await control(playing?'play':'pause');
+  btnPlay.textContent = playing?'暂停':'播放';
+  btnPlay.classList.toggle('active', playing);
+};
+document.getElementById('btn-step').onclick = async ()=>{ await control('step'); };
+document.getElementById('btn-reset').onclick = async ()=>await control('reset', {seed: document.getElementById('seed').value});
+document.getElementById('fps').onchange = e=>control('fps',{value:Number(e.target.value)});
+
+addEventListener('resize', ()=>{
+  camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+(function animate(){
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+})();
+</script>
+</body>
+</html>

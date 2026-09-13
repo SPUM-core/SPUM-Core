@@ -14,7 +14,7 @@ SPUM 帧内核 — 5 步帧逻辑的 numpy 实现（镜像 GPU per-thread 操作
 
 import math
 import numpy as np
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 from .constants import KAPPA, GEOMETRIC_TOLERANCE, CRYSTALLITE_DEGREE_THRESHOLD, MIN_GAP_RATIO
 
 
@@ -697,8 +697,10 @@ def step1b_gap_fill(particles, max_per_frame: int = 20) -> int:
     return added
 
 def step2_connect(particles, star_mode: bool = False,
+                  multi_center: bool = False,
                   pregrowth_knn: int = 0,
-                  skip_center: bool = False) -> int:
+                  skip_center: bool = False,
+                  tangent_pairs: Optional[set] = None) -> int:
     """检测相切关系，更新度数 (degree)。
 
     连接模式:
@@ -711,6 +713,10 @@ def step2_connect(particles, star_mode: bool = False,
         star_mode: 启用表面角邻接
         pregrowth_knn: pre-growth 阶段, 每个表面 coda 连接 k 个最近表面邻居
         skip_center: 跳过中心粒子的几何相切检测 (用于避免中心成为超枢纽)
+        tangent_pairs: 可选。预先算好的几何相切候选对集合 {(i, j)} (i<j)。
+            由调用方 (GPU 后端) 用 CUDA cdist 预计算。传入时跳过 O(N²) 几何
+            扫描, 但仍在 CPU 侧做与默认路径完全相同的度数装配/角距排序/封顶
+            —— 保证帧语义与 CPU 一致。None = 默认路径 (内部 O(N²) 扫描)。
 
     Returns:
         本帧新建的边数
@@ -723,13 +729,15 @@ def step2_connect(particles, star_mode: bool = False,
     total_edges = 0
     tol = GEOMETRIC_TOLERANCE
 
-    # 识别表面和中心粒子 (star_mode 或 pregrowth_knn 时需要)
-    if star_mode or pregrowth_knn > 0:
-        center_idx = None
-        for i in range(particles.N):
-            if particles.active[i] and str(particles.uid[i]).startswith('cent_'):
-                center_idx = i
-                break
+    # 识别表面和中心粒子 (star_mode/pregrowth_knn/multi_center 时需要)
+    # 多中心: 收集全部 cent_ 中心, 为每个活跃粒子赋最近簇
+    centers_idx = []
+    for i in range(particles.N):
+        if particles.active[i] and str(particles.uid[i]).startswith('cent_'):
+            centers_idx.append(i)
+    center_idx = centers_idx[0] if centers_idx else None
+
+    if (star_mode or pregrowth_knn > 0) and not multi_center:
         surf_mask = np.array([
             particles.active[i] and i != center_idx
             for i in range(particles.N)
@@ -739,7 +747,6 @@ def step2_connect(particles, star_mode: bool = False,
     else:
         surf_act_idx = np.array([], dtype=int)
         n_surf = 0
-        center_idx = None
 
     # === 最近邻连接 (pre-growth) ===
     # 给表面 coda 建立 k 个最近邻连接 → 度数增长
@@ -782,8 +789,11 @@ def step2_connect(particles, star_mode: bool = False,
         edges_added = 0
         n = n_surf
         # 建立角距+几何相切列表: 每个粒子 i, 收集相切粒子 j 的角距
+        # (GPU 后端可注入 tangent_pairs 集合, 跳过 O(N²) 几何扫描;
+        #  但度数装配/角距排序/封顶仍在 CPU 完成 → 帧语义与默认路径一致)
         surf_pos = particles.pos[surf_act_idx]
         Rs = np.linalg.norm(surf_pos, axis=1)
+        _use_injected = tangent_pairs is not None
         for i in range(n):
             idx_i = surf_act_idx[i]
             if not particles.active[idx_i]:
@@ -805,22 +815,113 @@ def step2_connect(particles, star_mode: bool = False,
                     continue
                 if int(particles.degree[idx_j]) >= max_deg:
                     continue
-                d = float(np.linalg.norm(pi - particles.pos[idx_j]))
-                rsum = ri + float(particles.radius[idx_j])
-                if abs(d - rsum) <= tol * rsum:
-                    Rj = float(Rs[j])
-                    if Rj < 1e-12:
+                if _use_injected:
+                    # GPU 提供的是"宽松超集" (粗剪枝, CO(N²) 在 CUDA 上算)。
+                    # 这里仍用 CPU 精确谓词复核 → 与默认路径逐对一致。
+                    if ((idx_i, idx_j) not in tangent_pairs and
+                            (idx_j, idx_i) not in tangent_pairs):
                         continue
-                    dot = float(np.dot(pi, particles.pos[idx_j])) / (Ri * Rj)
-                    dot = max(-1.0, min(1.0, dot))
-                    ang = math.acos(dot)
-                    candidates_i.append((ang, j))
+                    d = float(np.linalg.norm(pi - particles.pos[idx_j]))
+                    rsum = ri + float(particles.radius[idx_j])
+                    if abs(d - rsum) > tol * rsum:
+                        continue
+                else:
+                    d = float(np.linalg.norm(pi - particles.pos[idx_j]))
+                    rsum = ri + float(particles.radius[idx_j])
+                    if abs(d - rsum) > tol * rsum:
+                        continue
+                Rj = float(Rs[j])
+                if Rj < 1e-12:
+                    continue
+                dot = float(np.dot(pi, particles.pos[idx_j])) / (Ri * Rj)
+                dot = max(-1.0, min(1.0, dot))
+                ang = math.acos(dot)
+                candidates_i.append((ang, j))
             # 按角距升序, 取前 k_max
             candidates_i.sort(key=lambda x: x[0])
             for ang, j in candidates_i[:k_max]:
                 idx_j = surf_act_idx[j]
                 if particles.add_connection(idx_i, idx_j):
                     edges_added += 1
+        total_edges += edges_added
+
+    # === 按簇连接 (multi_center, capped) ===
+    # 多中心分布式: 每个簇是一局部星簇 (中心 + 表面 coda)。
+    # 簇内表面 coda 用"角邻接"连接 (同 star 逻辑: 球面角距 top k_max),
+    # 使 coda 度数增长越过悬挂阈值, 持续演化可累积到晶子 (deg≥42)。
+    # 簇间由几何分隔退化为无连接 (cross 不相切), 保证簇独立性。
+    if multi_center and len(centers_idx) >= 2:
+        k_max = 6
+        max_deg = CRYSTALLITE_DEGREE_THRESHOLD  # 稳定解 42
+        tol = GEOMETRIC_TOLERANCE
+        active_idx = np.where(particles.active)[0]
+        edges_added = 0
+
+        # 每簇: 中心 + 属簇表面 coda
+        for center_i in centers_idx:
+            cpos = particles.pos[center_i]
+            # 簇成员 = 离该中心最近 (全局分配, 簇内质心判定)
+            # 简化: 每簇包含中心自身 + 那些"距本中心比其他中心更近"的粒子
+            members = []
+            for idx_j in active_idx:
+                if idx_j == center_i:
+                    continue
+                dself = float(np.sum((particles.pos[idx_j] - cpos) ** 2))
+                others = [float(np.sum(
+                    (particles.pos[idx_j] - particles.pos[c2]) ** 2))
+                    for c2 in centers_idx if c2 != center_i]
+                if dself <= min(others) if others else True:
+                    members.append(idx_j)
+
+            if len(members) < 2:
+                continue
+
+            # 簇内表面角邻接 (球面上角距)
+            R = float(np.linalg.norm(cpos))
+            # 相对中心的方向向量 + 角距
+            dirs = []
+            for j in members:
+                v = particles.pos[j] - cpos
+                norm_v = float(np.linalg.norm(v))
+                if norm_v < 1e-12:
+                    dirs.append((0.0, j))
+                else:
+                    dirs.append((v / norm_v, j))
+            # 角距矩阵
+            n = len(dirs)
+            cos_sim = np.zeros((n, n))
+            for a in range(n):
+                va, ja = dirs[a]
+                for b in range(a + 1, n):
+                    vb, jb = dirs[b]
+                    dot = max(-1.0, min(1.0, float(np.dot(va, vb))))
+                    cos_sim[a, b] = cos_sim[b, a] = dot
+            for a in range(n):
+                ja = members[a]
+                if int(particles.degree[ja]) >= max_deg:
+                    continue
+                # 角距升序 = cos 降序
+                order = np.argsort(-cos_sim[a])
+                for b in order:
+                    if b == a:
+                        continue
+                    jb = members[b]
+                    if int(particles.degree[jb]) >= max_deg:
+                        continue
+                    # 连接异向粒子 (cos < 1 - tol) 即非自同向
+                    if cos_sim[a, b] < 1.0 - tol:
+                        if particles.add_connection(ja, jb):
+                            edges_added += 1
+                            if edges_added >= k_max * n:
+                                break
+            # 中心连簇表面 (中心度增长)
+            if int(particles.degree[center_i]) < max_deg:
+                for j in members:
+                    if int(particles.degree[center_i]) >= max_deg:
+                        break
+                    if int(particles.degree[j]) < max_deg:
+                        if particles.add_connection(center_i, j):
+                            edges_added += 1
         total_edges += edges_added
 
     return total_edges
@@ -1248,11 +1349,13 @@ def reincarnate_to_minimum(particles, min_active: int = 100, batch_mode: bool = 
 # ============================================================
 
 def run_full_frame(particles, star_mode: bool = False,
+                   multi_center: bool = False,
                    no_purge: bool = False,
                    pregrowth_knn: int = 0,
                    allow_disconnect: bool = True,
                    skip_center: bool = False,
                    gap_fill_per_frame: int = 20,
+                   gap_max_checks: int = 100000,
                    seed_purge_only: bool = False,
                    min_active: int = 0) -> Dict:
     """一帧 = 5 步 + 不可入性强制。
@@ -1287,7 +1390,7 @@ def run_full_frame(particles, star_mode: bool = False,
     enforce_tangency(particles)
 
     # Step 1: 创生 — 在空隙中填入新球体
-    created = step1_create(particles)
+    created = step1_create(particles, max_checks=gap_max_checks)
 
     # Step 1b: 如果无 3 体缝隙, 尝试球面空隙填充
     if created == 0:
@@ -1295,6 +1398,7 @@ def run_full_frame(particles, star_mode: bool = False,
 
     # Step 2: 连接 (表面角邻接 + 最近邻)
     connected = step2_connect(particles, star_mode=star_mode,
+                              multi_center=multi_center,
                               pregrowth_knn=pregrowth_knn,
                               skip_center=skip_center)
 

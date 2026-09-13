@@ -160,3 +160,19 @@ GET https://www.zhihu.com/ai_ingress/ai_chat/get_guide_card
 - 每条评论必须有逻辑拆解，不空谈立场
 - 引用 SPUM 公理时给出简短推导，不断言
 - 对方若拒绝逻辑讨论，不纠缠
+
+---
+
+## 十、文章格式规范
+
+知乎问答文章（科普/论述类）须在 header 中标注：
+
+```markdown
+> 日期：YYYY-MM-DD ｜ 知乎问题 ｜ SPUM（空间粒子宇宙模型，Space-Particle Universe Model）vX.X
+> 读者：[目标读者定位] ｜ 推理框架：SPUM2611 §X–§Y
+```
+
+**规范要点**：
+- **SPUM 全称**：首次出现必须完整标注「空间粒子宇宙模型，Space-Particle Universe Model」
+- **推理框架版本**：注明所依据的核心理论文档及章节（如 SPUM2611 §九–§十）
+- 评论/简短回复可省略 header，但首次引用 SPUM 时仍需展开全称
