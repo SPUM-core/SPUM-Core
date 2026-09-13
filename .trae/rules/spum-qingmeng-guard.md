@@ -5,11 +5,12 @@ description: "青檬引擎 SPUM 优化护栏 — 确保 qingmeng_engine 的代�
 
 # 青檬引擎 SPUM 优化护栏
 
-> **关联外部仓库**：`qingmeng_engine` 是独立于本仓库的外部项目（暂无内部副本）。
-> 本护栏文件定义了 SPUM 侧对 qingmeng_engine 的最低接口契约和合规校验规则。
-> 本仓库自身不含 qingmeng_engine 代码。
+> **关联外部仓库**：青檬引擎（qingmeng）是独立于本仓库的外部项目，落地于
+> `C:/Users/macotai/Desktop/工作/qingmeng`（Python 引擎 + `weapp/` 小程序），2026-09-14 从本仓分离。
+> 本护栏文件定义了 SPUM 侧对青檬引擎的最低接口契约和合规校验规则。
+> 本仓库自身不含青檬代码；跨仓成果交换走 `BRIDGE.md` + `bridge/manifest.json`，禁止跨仓 import。
 >
-> **最低接口契约**（预期 qingmeng_engine 应满足的 SPUM 约束）：
+> **最低接口契约**（预期青檬引擎应满足的 SPUM 约束）：
 > - 核心网络基数 CORE_SIZE = 12（对应拓扑常数12）
 > - 边处理存在创生-湮灭对偶校验
 > - 悬空节点（度数<2）的级联消解
@@ -19,7 +20,7 @@ description: "青檬引擎 SPUM 优化护栏 — 确保 qingmeng_engine 的代�
 
 ## 核心使命
 
-确保 qingmeng_engine 的每一次代码变更都收敛于 SPUM 范式而非偏离它。
+确保青檬引擎的每一次代码变更都收敛于 SPUM 范式而非偏离它。
 
 ## 11 条 SPUM 不变量速查
 

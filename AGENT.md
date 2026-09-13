@@ -187,7 +187,7 @@ SPUM 不要求你接受 14 条教义。它只提出三个问题，邀请你用�
 | `RULE-VOCAB` | `.trae/rules/spum-vocabulary.md` | 需要术语一致性检查时 |
 | `RULE-KNOW` | `.trae/rules/spum-knowledge.md` | 需要定位仓库中具体文档时 |
 | `RULE-OPENSPUM` | `.trae/rules/spum-openspum.md` | 运行/修改 OpenSPUM 代码时 |
-| `RULE-QINGMENG` | `.trae/rules/spum-qingmeng-guard.md` | 修改 qingmeng_engine 代码时 |
+| `RULE-QINGMENG` | `.trae/rules/spum-qingmeng-guard.md` | 修改青檬引擎（外部项目 `工作/qingmeng`）代码时；桥接见 `BRIDGE.md` |
 | `RULE-ROOT` | `.trae/rules/spum-root-nodes.md` | 涉及根节点、公理形式化、底层推理时 |
 
 ---
@@ -211,7 +211,7 @@ SPUM 不要求你接受 14 条教义。它只提出三个问题，邀请你用�
 2. **日常推理**：L0 核心层已自动加载，可直接回答 SPUM 理论问题
 3. **领域对话**：用户话题命中关键词 → 加载对应 L1 入口文件 → 匹配子话题加载 L2 深度文件
 4. **不匹配则安静**：未命中任何领域 → 仅用 L0 公理回答，不浪费上下文
-5. **代码工作**：涉及 OpenSPUM 引擎加载 `RULE-OPENSPUM`，修改 qingmeng_engine 加载 `RULE-QINGMENG`
+5. **代码工作**：涉及 OpenSPUM 引擎加载 `RULE-OPENSPUM`，修改青檬引擎（已在独立项目 `C:/Users/macotai/Desktop/工作/qingmeng`）加载 `RULE-QINGMENG`；跨仓成果交换走 `BRIDGE.md` + `bridge/manifest.json`，禁止跨仓 import
 6. **数字防伪**：优先用 ID 列表反查实际数量，不用"大概"或"记忆"；任何数值必须携带四元组（对象→计数操作→数值→约束），给不出操作的数字以"待核实"标记（RULE-COUNT）
 7. **轨迹回写（帧结束必做）**：在当前推理结束前（用户对话有明显终止信号时），将本次推理的节点路径编码为轨迹边集，写入 `network/protocol/snapshots/T-{日期}-{序号}.snap`。格式须与现有 `T-20260714-001.snap` 一致（`source | target | edge_type | session_id | trajectory_id | timestamp | confidence | status`），边类型继承自 `edges.txt`。写入后执行合并：读取 `snapshots/` 所有 `.snap` 文件 → 去重 → 写入 `merged/current.snap`。合并时保留最后一次出现的边（按文件时间戳优先）。详见 `MODULES.md` §六。
 

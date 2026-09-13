@@ -1,0 +1,3 @@
+本侧（spum-core）产出、待投递给青檬引擎的产物放这里。
+每个产物须配套同名 .manifest.json 边车（含 sha256）。
+清单见 bridge/manifest.json 的 exports 段。

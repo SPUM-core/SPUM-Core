@@ -51,10 +51,15 @@ finetune/out/**/checkpoint-*/
 
 # 云构建产物
 .pai/
-qingmeng-weapp/
 
 # Node 依赖
 node_modules/
+
+# 青檬引擎桥接交换区：产物不入库，只保留目录结构
+bridge/exchange/inbox/*
+!bridge/exchange/inbox/.gitkeep
+bridge/exchange/outbox/*
+!bridge/exchange/outbox/.gitkeep
 
 # 经济学缓存数据（可重新生成）
 经济学/_cache_csv/

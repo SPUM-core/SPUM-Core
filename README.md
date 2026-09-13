@@ -39,7 +39,7 @@ SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第�
 | `RULE-VOCAB` | `spum-vocabulary` | `.trae/rules/` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
 | `RULE-KNOW` | `spum-knowledge` | `.trae/rules/` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
 | `RULE-REASONER` | `spum-reasoner-skill` | `.trae/rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
-| `RULE-QINGMENG` | `spum-qingmeng-guard` | `.trae/rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改 qingmeng_engine 代码时 |
+| `RULE-QINGMENG` | `spum-qingmeng-guard` | `.trae/rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改青檬引擎（外部项目 `工作/qingmeng`）代码时；桥接见 `BRIDGE.md` |
 | `RULE-OPENSPUM` | `spum-openspum` | `.trae/rules/` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试、关键物理结果 | 运行/修改 OpenSPUM 代码时 |
 | `RULE-ROOT` | `spum-root-nodes` | `.trae/rules/` | SPUM 根节点定义：R0-R9 的精确数学定义与公理形式化 | 涉及根节点、公理形式化、底层推理时 |
 | `SKILL-WUXING` | `wuxing-subnet` | `.trae/skills/` | 阴阳五行子网【L1.5】：中医/风水/易学/时空 4 子网，11 部经典 | 涉及五形/五行时 |

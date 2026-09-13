@@ -1,0 +1,124 @@
+{
+  "schema": "spum-bridge/1.0",
+  "self": {
+    "project": "spum-core",
+    "root": "C:/Users/macotai/Desktop/工作/spum-core",
+    "version": "source-of-truth",
+    "role": "source-of-truth",
+    "entrypoint": "spum:SPUM"
+  },
+  "peer": {
+    "project": "qingmeng",
+    "root": "C:/Users/macotai/Desktop/工作/qingmeng",
+    "role": "executor",
+    "entrypoint": "qingmeng:QingmengEngine"
+  },
+  "contract": {
+    "self_doc": "BRIDGE.md",
+    "peer_doc": "../qingmeng/BRIDGE.md",
+    "interface_rule": ".trae/rules/spum-qingmeng-guard.md"
+  },
+  "exchange": {
+    "base": "bridge/exchange",
+    "inbox": "bridge/exchange/inbox",
+    "outbox": "bridge/exchange/outbox",
+    "checksum": "sha256",
+    "payload_pattern": "<artifact-id>.<ext>",
+    "sidecar_pattern": "<artifact-id>.<ext>.manifest.json",
+    "sidecar_fields": [
+      "artifact",
+      "producer",
+      "generated_at",
+      "sha256",
+      "source_frames"
+    ]
+  },
+  "exports": [
+    {
+      "id": "spum-core-rules",
+      "path": ".trae/rules/spum-core.md",
+      "kind": "doc",
+      "purpose": "公理与本体论基准"
+    },
+    {
+      "id": "spum-evolution-rules",
+      "path": ".trae/rules/spum-evolution.md",
+      "kind": "doc",
+      "purpose": "五步帧 / 创生湮灭 / 不完美定理"
+    },
+    {
+      "id": "spum-wuxing-rules",
+      "path": ".trae/rules/spum-wuxing.md",
+      "kind": "doc",
+      "purpose": "五形到 S 向量的定义"
+    },
+    {
+      "id": "spum-knowledge-core",
+      "path": "knowledge-core.md",
+      "kind": "doc",
+      "purpose": "精简权威基准"
+    },
+    {
+      "id": "graph-nodes",
+      "path": "network/nodes.txt",
+      "kind": "data",
+      "purpose": "22 个核心节点定义"
+    },
+    {
+      "id": "graph-edges",
+      "path": "network/edges.txt",
+      "kind": "data",
+      "purpose": "推导边集"
+    },
+    {
+      "id": "qingmeng-guard",
+      "path": ".trae/rules/spum-qingmeng-guard.md",
+      "kind": "contract",
+      "purpose": "接口契约与 11 条不变量"
+    }
+  ],
+  "imports": [
+    {
+      "id": "frame-snapshot",
+      "producer": "QingmengEngine.summarize()",
+      "ext": "json",
+      "purpose": "帧结构摘要"
+    },
+    {
+      "id": "s-vector",
+      "producer": "QingmengEngine.emergence()",
+      "ext": "json",
+      "purpose": "五形相位向量 S"
+    },
+    {
+      "id": "consensus-report",
+      "producer": "QingmengEngine.check()",
+      "ext": "json",
+      "purpose": "11 条不变量校验结果"
+    },
+    {
+      "id": "reasoning-trace",
+      "producer": "QingmengEngine.reason()",
+      "ext": "json",
+      "purpose": "L2 帧推理循环推导链"
+    },
+    {
+      "id": "domain-interpretation",
+      "producer": "QingmengEngine.interpret()",
+      "ext": "json",
+      "purpose": "拓扑信号到领域语义"
+    }
+  ],
+  "invariants": {
+    "source": ".trae/rules/spum-qingmeng-guard.md",
+    "count": 11,
+    "ids": ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI"],
+    "peer_enforced_by": "qingmeng/core/consensus.py"
+  },
+  "constraints": [
+    "禁止 import 对侧代码包（spum / qingmeng），跨仓只经交换目录",
+    "公理层改动只能发生在本仓，对侧只回传共识报告",
+    "投递产物必须携带同名 .manifest.json 边车与 sha256",
+    "产物不得内嵌凭证"
+  ]
+}
