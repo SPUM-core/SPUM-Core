@@ -1,0 +1,1636 @@
+{
+  "tag": "hf-lora-v2",
+  "backend": "hf",
+  "model": "C:\\Users\\macotai\\models\\Qwen2.5-Coder-7B-Instruct",
+  "adapter": "out/lora-spum-v2",
+  "shots": 0,
+  "temperature": 0.0,
+  "num_predict": 1024,
+  "embed_model": "BAAI/bge-small-zh-v1.5",
+  "semantic": 42,
+  "samples": 77,
+  "elapsed_sec": 866.2,
+  "summary": {
+    "code_skeleton": {
+      "n": 17,
+      "char_f1": 0.6329,
+      "ref_cov": 0.6227,
+      "term_hit": 0.9167,
+      "banned_per_ans": 0.0,
+      "len_ratio": 0.9647,
+      "ast_ok_rate": 1.0,
+      "def_ok_rate": 1.0
+    },
+    "concept_def": {
+      "n": 42,
+      "char_f1": 0.0572,
+      "ref_cov": 0.0647,
+      "term_hit": 0.3482,
+      "banned_per_ans": 0.0,
+      "len_ratio": 1.414,
+      "emb_sim": 0.5595,
+      "emb_sim_max": 0.5814,
+      "n_refs_mean": 1.7619
+    },
+    "detect": {
+      "n": 8,
+      "char_f1": 0.5266,
+      "ref_cov": 0.524,
+      "term_hit": 0.6429,
+      "banned_per_ans": 0.0,
+      "len_ratio": 0.9788,
+      "accuracy": 1.0
+    },
+    "reduction": {
+      "n": 6,
+      "char_f1": 0.1592,
+      "ref_cov": 0.1455,
+      "term_hit": 0.675,
+      "banned_per_ans": 0.0,
+      "len_ratio": 1.02
+    },
+    "rewrite": {
+      "n": 4,
+      "char_f1": 0.1885,
+      "ref_cov": 0.2399,
+      "term_hit": 1.0,
+      "banned_per_ans": 0.75,
+      "len_ratio": 1.585
+    },
+    "_overall": {
+      "n": 77,
+      "char_f1": 0.2478,
+      "ref_cov": 0.251,
+      "emb_sim": 0.5595,
+      "emb_sim_max": 0.5814,
+      "term_hit": 0.5458,
+      "banned_per_ans": 0.039,
+      "len_ratio": 1.2478,
+      "errors": 0
+    }
+  },
+  "records": [
+    {
+      "id": "code_skeleton-0067125b0c00",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l2/l2_projection.py#L119-158",
+      "label": null,
+      "func": "aligned_tree",
+      "latency": 56.1,
+      "error": null,
+      "answer": "def aligned_tree(net, root=0):\n    \"\"\"沿 BFS 生成树做**平行移动积分**，得到全局坐标（确定性、`O(E)`、无迭代）。\n\n    规则（纯 id + 环序）：BFS 从 root 出发；处理边 i→w 时\n      g = M_i · dir_i(w)                              （i 的全局标架下的 i→w 方向）\n      p_w = p_i + (r_i + r_w)·g                       （树边精确满足相切目标长）\n      M_w = R(u→−g)，其中 u = dir_w(i)                （把 w 标架的「指向 i」转到 −g）\n\n    返回 {\"pos\", \"frames\", \"tree_edges\", \"holonomy\"}：\n      holonomy[(i,w)] = 用 i 的标架预测 w 的位置与树位置之差（非树边）。\n      该量**非零是几何事实**（离散曲率无法在平面容纳），不是误差 —— 见模块 docstring。\n    \"\"\"\n    ids = net.ids()\n    tree = bfs_tree(net, root)\n    pos = {v: [0.0] * 3 for v in ids}\n    frames = {}\n    for t in range(len(tree[\"order\"])):\n        v = tree[\"order\"][t]\n        if v is None:\n            continue\n        pos[v] = list(frames.get(v, [0.0] * 3))\n        for w in sorted(tree[\"out\"][v]):\n            if w not in tree[\"order\"]:\n                continue\n            d = tree[\"dir\"][v][w]\n            g = rot(d).dot(pos[w] - pos[v])\n            pos[w] = list(pos[v])[:]\n            pos[w][d] += (net.rad[v] + net.rad[w]) * g[d]\n            frames[w] = list(pos[w])\n    return {\"pos\": pos, \"frames\": frames,\n            \"tree_edges\": [(tree[\"order\"][t], w)\n                            for t in range(len(tree[\"order\"]))\n                            for w in sorted(tree[\"out\"][tree[\"order\"][t]])],\n            \"holonomy\": {(tree[\"order\"][t], w): tuple(pos[w])[:3]\n                         for t in range(len(tree[\"order\"]))\n                         for w in sorted(tree[\"out\"][tree[\"order\"][t]])\n                         if w not in tree[\"order\"]}}",
+      "metrics": {
+        "char_f1": 0.6411,
+        "ref_cov": 0.6186,
+        "len_ratio": 0.93,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-2a81418d22e3",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l3/l3_projection.py#L201-204",
+      "label": null,
+      "func": "sigma_global",
+      "latency": 5.9,
+      "error": null,
+      "answer": "def sigma_global(net):\n    \"\"\"GT-008 全局 σ = |V| / |E| = 2 / ⟨deg⟩。\"\"\"\n    return 2.0 / net.avg_deg() if net.V() else float(\"inf\")",
+      "metrics": {
+        "char_f1": 0.8449,
+        "ref_cov": 0.8587,
+        "len_ratio": 1.03,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-3b8fe4a285eb",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l1/l1_projection.py#L131-172",
+      "label": null,
+      "func": "angle_defect",
+      "latency": 73.3,
+      "error": null,
+      "answer": "def angle_defect(net):\n    \"\"\"几何角亏 `δ_v = 2π − A_v`（**内禀曲率读数**，分岔 N7 修订）。\n\n    A_v = 所有含 v 的**三角面**在 v 处的内角之和。三角面 (i,j,k) 的三边长取\n    r_i+r_j、r_j+r_k、r_k+r_i，内角由余弦定理给出 —— 只依赖三点 deg，纯局部。\n    `A_v` 亦等价于 v 的环序邻居方向构成的**闭球面多边形总长**。\n\n    ⚠️ `δ_v > 0` = 凹折、`δ_v < 0` = 凸折，**两者都可嵌入 R³**（分岔 N7 实测证伪\n    「`A_v > 2π` ⇒ 不可嵌入」：t=1 的 12 个越界点同时拥有精确相切嵌入）。故\n    `viol` 只是「平面角总和 > 2π」的曲率读数，**不是可行性判据**。\n\n    返回 {\"ang\", \"defect\", \"viol\", \"ntri\", \"nf\", \"nh\", \"def_sum\"}：\n      viol = [v : A_v > 2π]（曲率读数，**非**可行性判据）\n      ntri[v] = 含 v 的三角面数；nh = 非三角面（洞）数\n    \"\"\"\n    ids = net.ids()\n    ang = {v: 0.0 for v in ids}\n    nh = 0\n    for v in ids:\n        tris, ngbs = [], []\n        for w in net.rot[v]:\n            if w in net.rot and len(net.rot[w]) == 3:\n                tris.append(w)\n            else:\n                ngbs.append(w)\n        for t in tris:\n            u, w = net.rot[v][net.rot[v].index(t) - 1], \\\n                   net.rot[v][(net.rot[v].index(t) + 1) % len(net.rot[v])]\n            a = math.acos((net.rad[u] + net.rad[w] -\n                           (net.rad[v] + net.rad[t])) /\n                          (2.0 * (net.rad[u] * net.rad[w])))\n            ang[v] += a\n        nh += len(ngbs)\n    def defect(v): return 2.0 * math.pi - ang.get(v, 0.0)\n    return {\"ang\": ang, \"defect\": {v: defect(v) for v in ids},\n            \"viol\": sorted([v for v in ids if defect(v) > 0.0],\n                           key=lambda x: -defect(x)),\n            \"ntri\": {v: sum(1 for w in net.rot[v]\n                            if w in net.rot and len(net.rot[w]) == 3)\n                      for v in ids},\n            \"nf\": sum(1 for v in ids if len(net.rot[v]) != 3),\n            \"nh\": nh, \"def_sum\": sum(defect(v) for v in ids)}",
+      "metrics": {
+        "char_f1": 0.664,
+        "ref_cov": 0.6821,
+        "len_ratio": 1.05,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-403a51bd49fd",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L164-182",
+      "label": null,
+      "func": "enumerate_faces",
+      "latency": 54.1,
+      "error": null,
+      "answer": "def enumerate_faces(dart_ptr, dart_nxt):\n    \"\"\"枚举全部 dart 环（面）。返回 (face_id, n_faces, face_rep)。\n\n    需要每个 dart 所属环的**最小 dart 索引** rep[d]，用指针跳跃 O(log) 轮：\n        rep ← min(rep, rep[nxt]);  nxt ← nxt[nxt]\n    第 k 轮后 rep[d] = d 起沿环 2^k 步内的最小 dart；取 k = bit_length(2E) 即覆盖整环。\n    \"\"\"\n    E = int(len(dart_ptr) // 2)\n    if not E:\n        z = cp.zeros(0, dtype=cp.int32)\n        return cp.zeros(0, dtype=cp.int32), cp.zeros(0, dtype=cp.int32), z\n\n    # --- 第一轮：初始化 rep ---\n    rep = cp.asarray(dart_ptr, dtype=cp.int32)\n\n    # --- 主循环：每轮对所有 dart 取最小（两步指针跳转）---\n    k = int(cp.ceil(cp.log2(2 * E)).astype(int))\n    for _ in range(k):\n        nxt = dart_nxt[rep].astype(cp.int32)\n        rep = cp.minimum(rep, nxt)\n\n    # --- 计算环 id 和环大小（闭合者记 +1，否则 -1）---\n    closed = (dart_nxt[rep] == dart_ptr).astype(cp.int32)\n    face_id = (closed.astype(cp.int32) + 1) // 2\n    size = (cp.where(closed, 1, -1) + 1).astype(cp.int32)\n\n    # --- 累加和为环内 dart 的总和（非负则闭合）---\n    cumsum = cp.cumsum(size, dtype=cp.int32)\n    is_closed = (cumsum[-1] == 0) & (cumsum >= 0).all()\n    if not is_closed:\n        raise ValueError(\"不是合法的旋转系统：存在未闭合环\")\n\n    # --- 返回 face_id, 大小, 最小 dart 索引（面代表）---\n    return face_id, cp.abs(cumsum).astype(cp.int32), rep",
+      "metrics": {
+        "char_f1": 0.5472,
+        "ref_cov": 0.7254,
+        "len_ratio": 1.65,
+        "term_hit": null,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-4667864ad010",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L997-1025",
+      "label": null,
+      "func": "verify_frame_path",
+      "latency": 91.5,
+      "error": null,
+      "answer": "def verify_frame_path(core, cap=64, dmin=3, drive=\"any\", nframes=5):\n    \"\"\"GPU 驱动帧 vs 纯 CPU 帧：逐帧 state_hash 必须相同。\n\n    两个独立内核从同一种子出发，一个走 L0Core.frame()（纯 CPU），\n    一个走 frame_gpu()（GPU 判定 + GPU 重建），逐帧比对状态键与事件计数。\n    \"\"\"\n    import l0_core as m\n    g = m.L1Core(m.RotNet(), cap=cap, dmin=dmin)\n    g.seeds(drive, 8)\n    c = m.L0Core(g.net, cap=cap, dmin=dmin)\n    c.frame()\n    a = _frame_gpu(g.net, cap, dmin) if drive == \"gpu\" else None\n\n    for t in range(nframes):\n        s0 = c.state()\n        e0 = c.events()\n        c.frame()\n        s1 = c.state()\n        e1 = c.events()\n\n        assert s0[\"t\"] == s1[\"t\"], f\"t={s0['t']} → {s1['t']}\"\n        assert s0[\"V\"] == s1[\"V\"], f\"V={s0['V']} → {s1['V']}\"\n        assert s0[\"E\"] == s1[\"E\"], f\"E={s0['E']} → {s1['E']}\"\n        assert s0[\"dead\"] == s1[\"dead\"], f\"dead={s0['dead']} → {s1['dead']}\"\n        assert s0[\"dust\"] == s1[\"dust\"], f\"dust={s0['dust']} → {s1['dust']}\"\n        assert s0[\"debt\"] == s1[\"debt\"], f\"debt={s0['debt']} → {s1['debt']}\"\n        assert s0[\"n_spokes\"] == s1[\"n_spokes\"], (\n            f\"n_spokes={s0['n_spokes']} → {s1['n_spokes']}\")\n        assert s0[\"n_holes\"] == s1[\"n_holes\"], (\n            f\"n_holes={s0['n_holes']} → {s1['n_holes']}\")\n        assert s0[\"n_crystallized\"] == s1[\"n_crystallized\"], (\n            f\"n_crystallized={s0['n_crystallized']} → {s1['n_crystallized']}\")\n        assert s0[\"n_unstabilized\"] == s1[\"n_unstabilized\"], (\n            f\"n_unstabilized={s0['n_unstabilized']} → {s1['n_unstabilized']}\")\n        assert s0[\"n_events\"] == s1[\"n_events\"], (\n            f\"n_events={s0['n_events']} → {s1['n_events']}\")\n        assert s0[\"events\"] == s1[\"events\"], (\n            f\"event list differs at t={s0['t']}: \"\n            f\"{s0['events'][:3]}...{s0['events'][-3:]} ≠ \"\n            f\"{s1['events'][:3]}...{s1['events'][-3:]}\")\n\n        if a is not None:\n            b = _frame_gpu(g.net, cap, dmin)\n            ha, hb = hash(tuple(a)), hash(tuple(b))\n            assert ha == hb, (f\"frame_gpu() 在第 {t} 帧返回不同哈希 \"\n                             f\"(got {ha} 和 {hb})\")\n            assert all(x == y for x, y in zip(a, b)), (\n                f\"frame_gpu() 返回不同序列在第 {t} 帧 (前 3 条 {a[:3]}...{a[-3:]} \"\n                f\"≠ {b[:3]}...{b[-3:]})\")",
+      "metrics": {
+        "char_f1": 0.3776,
+        "ref_cov": 0.5339,
+        "len_ratio": 1.83,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-59fa2a0d2265",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_core.py#L1128-1146",
+      "label": null,
+      "func": "_union_nets",
+      "latency": 20.6,
+      "error": null,
+      "answer": "def _union_nets(*nets):\n    \"\"\"把若干旋转系统并成一个**不连通**的旋转系统（各分量 id 依次平移，互不干涉）。\n\n    用于构造多分量种子（如 icosa ⊔ tetra = 12 壳 + 四面体两个独立分量）。\n    这是「独立 12 壳作为分量」的唯一可达构造入口 —— 单连通种子下分量数不可增\n    （L0-A11），故独立壳只可能是初始条件，不能自发涌现。\n    \"\"\"\n    ids = set()\n    for net in nets:\n        ids.update(int(v) for v in net.ids())\n    return RotNet({v: tuple(int(w) for w in net.rot[v])\n                    for net in nets for v in net.ids()},\n                   sorted(ids))",
+      "metrics": {
+        "char_f1": 0.681,
+        "ref_cov": 0.6398,
+        "len_ratio": 0.88,
+        "term_hit": null,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-5d736e49ca17",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L745-765",
+      "label": null,
+      "func": "gpu_decision",
+      "latency": 18.9,
+      "error": null,
+      "answer": "def gpu_decision(rot, cap=64, dmin=3, drive=\"any\", vplus=\"any\",\n                 kappa=L1.KAPPA, mode=\"normal\"):\n    \"\"\"决策段总入口：旋转系统 → (候选, 键, 计数)。\n\n    纯函数，只读输入；返回 dict 便于与 CPU 版比对。\n    \"\"\"\n    g = _rot_graph(rot)\n    cands = decision_candidates(g, cap=cap, dmin=dmin,\n                                 drive=drive, vplus=vplus,\n                                 kappa=kappa, mode=mode)\n    keys = decision_keys(cands, kappa=kappa)\n    return {\"candidates\": cands, \"keys\": keys, \"n_cand\": len(cands),\n            \"n_key\": len(keys), \"dE\": decision_dE(g, keys)}",
+      "metrics": {
+        "char_f1": 0.4201,
+        "ref_cov": 0.2943,
+        "len_ratio": 0.4,
+        "term_hit": 0.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-77f160aa0926",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l4/l4_evolution.py#L224-253",
+      "label": null,
+      "func": "concentration_series",
+      "latency": 31.1,
+      "error": null,
+      "answer": "def concentration_series(net, cap=None, nframes=10):\n    \"\"\"逐帧集中度读数。每帧一行：\n\n      `t` `V` `E` `max_deg` `mean_deg`(=2E/V，V=0.0)\n      `n_over` `n_flat` `n_under`（三分区节点数）\n      `n_sat`（`deg ≥ cap` 的节点数；`cap=None` → None）\n      `gini`（度数基尼）`sigma_var`（σ_v = 2/deg 的**总体**方差）\n\n    空图行：`max_deg=0`、`mean_deg=gini=sigma_var=0.0`、三分区计数 0、`n_sat` 随 cap。\n    \"\"\"\n    rows = []\n    for t in range(nframes + 1):\n        V, E, max_deg, mean_deg, n_over, n_flat, n_under, \\\n            n_sat, gini, sigma_var = _concentration_row(net, cap)\n        rows.append(f\"{t} {V} {E} {max_deg} {mean_deg:.6f}\"\n                    f\" {n_over} {n_flat} {n_under} {n_sat} {gini:.6f} {sigma_var}\")\n    return \"\\n\".join(rows)",
+      "metrics": {
+        "char_f1": 0.6176,
+        "ref_cov": 0.5064,
+        "len_ratio": 0.64,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-79c989dbbad6",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l4/l4_evolution.py#L96-99",
+      "label": null,
+      "func": "edge_set",
+      "latency": 5.9,
+      "error": null,
+      "answer": "def edge_set(net):\n    \"\"\"无向边集合（id 对，规范化 (min,max)）。\"\"\"\n    return {(v, w) if v < w else (w, v)\n            for v in net.ids() for w in net.rot[v]}",
+      "metrics": {
+        "char_f1": 1.0,
+        "ref_cov": 1.0,
+        "len_ratio": 1.0,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-7e610bcff880",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l3/l3_projection.py#L63-67",
+      "label": null,
+      "func": "snap",
+      "latency": 7.9,
+      "error": null,
+      "answer": "def snap(net):\n    \"\"\"帧快照（深拷贝旋转系统，保留 id 计数器）——L3 以 id 对齐，故必须冻结每帧。\"\"\"\n    c = RotNet({v: list(r) for v, r in net.rot.items()})\n    c.nid = net.nid\n    return c",
+      "metrics": {
+        "char_f1": 1.0,
+        "ref_cov": 1.0,
+        "len_ratio": 1.0,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-7ffdc0bd2852",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_core.py#L138-141",
+      "label": null,
+      "func": "_edge_set",
+      "latency": 6.8,
+      "error": null,
+      "answer": "def _edge_set(rows):\n    \"\"\"无向边集合（规范化 (min,max)，确定性排序）。\"\"\"\n    s = {(r[\"v\"], r[\"w\"]) for r in rows}\n    return sorted((min(a, b), max(a, b)) for a, b in s)",
+      "metrics": {
+        "char_f1": 0.5678,
+        "ref_cov": 0.5826,
+        "len_ratio": 1.05,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-bee31f7454a2",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l3/l3_projection.py#L76-87",
+      "label": null,
+      "func": "trace_frames",
+      "latency": 15.7,
+      "error": null,
+      "answer": "def trace_frames(core, nframes=4, dmin=3):\n    \"\"\"跑 L0 取帧序列：返回 (nets, events)。\n\n    nets[0] = 帧初；nets[τ] = 第 τ 帧末快照。events[τ] = 第 τ 次 frame() 的事件计数\n    （即把 nets[τ] 变成 nets[τ+1] 的那一帧）。L3 只读，不改 L0。\n    \"\"\"\n    nets = [core.net()]\n    events = []\n    for _ in range(nframes):\n        events.append(core.frame())\n        nets.append(core.net())\n    return nets, events",
+      "metrics": {
+        "char_f1": 0.9382,
+        "ref_cov": 0.9214,
+        "len_ratio": 0.96,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-c7263b4cb400",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L659-673",
+      "label": null,
+      "func": "_to_rotnet",
+      "latency": 16.8,
+      "error": null,
+      "answer": "def _to_rotnet(rows, cols):\n    \"\"\"重建后的 CSR → RotNet（宿主侧物化，CPU 内核的既有接口）。\n\n    这是唯一不可免的 O(V) 宿主开销：把列式 CSR 摊回 dict[int, list[int]]，\n    供 l0_core 的只读查询 / 审计使用（帧调度本身不依赖它）。\n    \"\"\"\n    n = int(cols.size)\n    ids = cp.asnumpy(cp.arange(n, dtype=cp.int32)) if n else []\n    return RotNet({\"nodes\": ids.tolist(), \"rot_ptr\": cp.asnumpy(rows).tolist(),\n                    \"rot_idx\": cp.asnumpy(cols).tolist()})",
+      "metrics": {
+        "char_f1": 0.6371,
+        "ref_cov": 0.5637,
+        "len_ratio": 0.77,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-d34d7e7a74a1",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L887-896",
+      "label": null,
+      "func": "_cpu_commit_expect",
+      "latency": 16.5,
+      "error": null,
+      "answer": "def _cpu_commit_expect():\n    \"\"\"CPU 版的「通过 §3.5 交集」候选有序角点表（按 key 升序 = 提交顺序）。\"\"\"\n    return [\n        (0, [1, 2, 4], \"A 的 3 个角点\"),\n        (1, [0, 2, 3], \"B 的 3 个角点\"),\n        (2, [0, 1, 3], \"C 的 3 三个角点\"),\n        (3, [], \"D 没有角点\"),\n        (4, [0, 1, 2], \"E 的 3 个角点\"),\n    ]",
+      "metrics": {
+        "char_f1": 0.3181,
+        "ref_cov": 0.2552,
+        "len_ratio": 0.6,
+        "term_hit": null,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-e2e6ddcdd5b8",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_core.py#L1006-1017",
+      "label": null,
+      "func": "seed_at_V",
+      "latency": 14.3,
+      "error": null,
+      "answer": "def seed_at_V(V0=12):\n    \"\"\"构造 V ≥ 12 的三角剖分起点：由 icosa 逐次锥化首个真面，每次 +1 元胞。\"\"\"\n    net = icosahedron()\n    if net.V() >= V0:\n        return net\n    for _ in range(V0 - net.V()):\n        f = next((f for f in net.faces() if not net.face_hole(f)), None)\n        if f is None:\n            raise ValueError(\"无法生成 V ≥ 12 的结构\")\n        net = cone(net, f)\n    return net",
+      "metrics": {
+        "char_f1": 0.5514,
+        "ref_cov": 0.5469,
+        "len_ratio": 0.98,
+        "term_hit": null,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-f145ad2ed104",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L424-434",
+      "label": null,
+      "func": "intersection",
+      "latency": 16.7,
+      "error": null,
+      "answer": "def intersection(conf, dmin=3):\n    \"\"\"§3.5 交集提交判据：候选存活 ⟺ 它的每个角点都接受它。\n\n    按候选汇总被接受的入射数，与角点数相等即存活。\n    \"\"\"\n    c = Counter()\n    for v in conf[\"rot_ptr\"]:\n        c[v] += 1\n    outs = {v: c[v] for v in conf[\"rot_ptr\"] if c[v] == conf[\"rot_len\"][v]}\n    return {\"ids\": sorted(outs), \"npts\": len(outs),\n            \"live\": bool(outs) and all(6 <= outs[v] <= 12 for v in outs)}",
+      "metrics": {
+        "char_f1": 0.3862,
+        "ref_cov": 0.3696,
+        "len_ratio": 0.91,
+        "term_hit": null,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "code_skeleton-f272b480940f",
+      "task": "code_skeleton",
+      "split": "val",
+      "source": "openSPUM/src/l0/l0_gpu.py#L464-478",
+      "label": null,
+      "func": "degree_next",
+      "latency": 20.4,
+      "error": null,
+      "answer": "def degree_next(net, corner_nodes=None, break_u=None, break_v=None):\n    \"\"\"§4.3 修剪标记：先算下一帧度数，再标出 deg < dmin 的位置。\n\n    deg_{t+1}(v) = deg_t(v) + (以 v 为角点的锥化次数) − (v 的入射断边数)。\n    corner_nodes / break_u / break_v 均为**位置下标**。\n    \"\"\"\n    ids = net.ids()\n    out = {}\n    for v in ids:\n        out[v] = int(net.deg(v))\n    if corner_nodes is not None:\n        for c in corner_nodes:\n            out[c] += 1\n    if break_u is not None and break_v is not None:\n        out[break_u] -= 1\n        out[break_v] -= 1\n    return out",
+      "metrics": {
+        "char_f1": 0.5674,
+        "ref_cov": 0.487,
+        "len_ratio": 0.72,
+        "term_hit": 1.0,
+        "banned": 0,
+        "ast_ok": 1,
+        "def_ok": 1
+      }
+    },
+    {
+      "id": "concept_def-04c468039d2a",
+      "task": "concept_def",
+      "split": "val",
+      "source": "社会学/spum-制度.md#L227",
+      "label": null,
+      "func": null,
+      "latency": 1.4,
+      "error": null,
+      "answer": "稳定结构化约束——规则集的拓扑表达",
+      "metrics": {
+        "char_f1": 0.0588,
+        "ref_cov": 0.0556,
+        "len_ratio": 0.89,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5194,
+        "emb_sim_max": 0.5194
+      }
+    },
+    {
+      "id": "concept_def-06d984ff42f4",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-庄子.md#L26",
+      "label": null,
+      "func": null,
+      "latency": 2.2,
+      "error": null,
+      "answer": "水形链从地表延伸至深海——物质节点沿水形方向的分布",
+      "metrics": {
+        "char_f1": 0.0615,
+        "ref_cov": 0.0488,
+        "len_ratio": 0.59,
+        "term_hit": 0.2,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5306,
+        "emb_sim_max": 0.5306
+      }
+    },
+    {
+      "id": "concept_def-09fe64ae9c1c",
+      "task": "concept_def",
+      "split": "val",
+      "source": "数学/spum-数学分界.md#L136",
+      "label": null,
+      "func": null,
+      "latency": 2.0,
+      "error": null,
+      "answer": "推导链无循环、无断裂、无未定义——形式上可验证",
+      "metrics": {
+        "char_f1": 0.0465,
+        "ref_cov": 0.0476,
+        "len_ratio": 1.05,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.4433,
+        "emb_sim_max": 0.4433
+      }
+    },
+    {
+      "id": "concept_def-0e8fe21ee797",
+      "task": "concept_def",
+      "split": "val",
+      "source": "network/nodes.txt#L3",
+      "label": null,
+      "func": null,
+      "latency": 3.5,
+      "error": null,
+      "answer": "子图中度量场 σ 的等值面。不是\"限制\"或\"隔绝\"——是拓扑强制露出外部的标准尺度。",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 1.05,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5413,
+        "emb_sim_max": 0.5442
+      }
+    },
+    {
+      "id": "concept_def-12d590013dba",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/skills/spum-graph-theory/skill.md#L28",
+      "label": null,
+      "func": null,
+      "latency": 2.3,
+      "error": null,
+      "answer": "∀ 节点 deg(v) ≥ 2 → S 向量无悬挂端",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 0.51,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5023,
+        "emb_sim_max": 0.5023
+      }
+    },
+    {
+      "id": "concept_def-154ba1f0fc5b",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/skills/spum-graph-theory/skill.md#L25",
+      "label": null,
+      "func": null,
+      "latency": 6.6,
+      "error": null,
+      "answer": "闭合子图内部的悬挂端是存在的，它们不是\"误配对\"或\"未解决的问题\"——它们是关系网络演化的内在逻辑。当局部删除悬挂端时，新生成的分支会形成新的悬挂端。这是一个持续演化的状态，不是缺陷。",
+      "metrics": {
+        "char_f1": 0.0492,
+        "ref_cov": 0.0968,
+        "len_ratio": 2.94,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.6192,
+        "emb_sim_max": 0.6192
+      }
+    },
+    {
+      "id": "concept_def-1abbca6dfedc",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L410",
+      "label": null,
+      "func": null,
+      "latency": 1.5,
+      "error": null,
+      "answer": "节点的 σ 体积——其当前存在的\"大小\"",
+      "metrics": {
+        "char_f1": 0.0408,
+        "ref_cov": 0.0312,
+        "len_ratio": 0.53,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5367,
+        "emb_sim_max": 0.5717
+      }
+    },
+    {
+      "id": "concept_def-1d45be016350",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-庄子.md#L28",
+      "label": null,
+      "func": null,
+      "latency": 2.5,
+      "error": null,
+      "answer": "δ 涌现 → 应激 → 创生事件大量 V⁺ 火爆",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 0.47,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.448,
+        "emb_sim_max": 0.448
+      }
+    },
+    {
+      "id": "concept_def-2201f57ff762",
+      "task": "concept_def",
+      "split": "val",
+      "source": "数学/spum-数学应用.md#L165",
+      "label": null,
+      "func": null,
+      "latency": 7.0,
+      "error": null,
+      "answer": "\"概率不是'描述不确定性'的工具——它是'确定性缺失'本身。当一条边被创生时，它从候选池中被'抽取'，其概率不是'权重大'或'连接多'，而是'存在'。概率不是属性，是拓扑事实。\"",
+      "metrics": {
+        "char_f1": 0.0189,
+        "ref_cov": 0.0556,
+        "len_ratio": 4.89,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.4273,
+        "emb_sim_max": 0.4273
+      }
+    },
+    {
+      "id": "concept_def-22f967ab1975",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-秘密.md#L72",
+      "label": null,
+      "func": null,
+      "latency": 4.1,
+      "error": null,
+      "answer": "引力不是\"力\"——是节点的净湮灭倾向。当两个子图的 σ 分布重叠，它们之间的边密度自然上升，无需额外作用。",
+      "metrics": {
+        "char_f1": 0.0661,
+        "ref_cov": 0.0563,
+        "len_ratio": 0.7,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.6126,
+        "emb_sim_max": 0.6126
+      }
+    },
+    {
+      "id": "concept_def-36cba267748c",
+      "task": "concept_def",
+      "split": "val",
+      "source": "network/nodes.txt#L10",
+      "label": null,
+      "func": null,
+      "latency": 1.5,
+      "error": null,
+      "answer": "节点的 σ 体积——其当前存在的\"大小\"",
+      "metrics": {
+        "char_f1": 0.0899,
+        "ref_cov": 0.0556,
+        "len_ratio": 0.24,
+        "term_hit": 0.3333333333333333,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5717,
+        "emb_sim_max": 0.5717
+      }
+    },
+    {
+      "id": "concept_def-373ec058ed9f",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-秘密.md#L70",
+      "label": null,
+      "func": null,
+      "latency": 2.1,
+      "error": null,
+      "answer": "同构子图之间的拓扑重叠驱动——高 σ 共享边密度",
+      "metrics": {
+        "char_f1": 0.24,
+        "ref_cov": 0.2069,
+        "len_ratio": 0.72,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.7265,
+        "emb_sim_max": 0.7265
+      }
+    },
+    {
+      "id": "concept_def-38bf44ccf21f",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/rules/spum-vocabulary.md#L78",
+      "label": null,
+      "func": null,
+      "latency": 4.3,
+      "error": null,
+      "answer": "空间粒子通过 V⁺/V⁻ 操作生成初始连接，连接密度分布驱动更复杂的几何结构涌现。不需要外部输入——内生几何动力由节点自身状态决定。",
+      "metrics": {
+        "char_f1": 0.0247,
+        "ref_cov": 0.0556,
+        "len_ratio": 3.5,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.4835,
+        "emb_sim_max": 0.5792
+      }
+    },
+    {
+      "id": "concept_def-3c0495ab1bb0",
+      "task": "concept_def",
+      "split": "val",
+      "source": "语言学/spum-句法与结构.md#L138",
+      "label": null,
+      "func": null,
+      "latency": 1.9,
+      "error": null,
+      "answer": "信号模式 → σ 分布 → 拓扑约束三者的组合投影",
+      "metrics": {
+        "char_f1": 0.0976,
+        "ref_cov": 0.0909,
+        "len_ratio": 0.86,
+        "term_hit": 0.5,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.6013,
+        "emb_sim_max": 0.6013
+      }
+    },
+    {
+      "id": "concept_def-3d268a96817b",
+      "task": "concept_def",
+      "split": "val",
+      "source": "network/nodes.txt#L11",
+      "label": null,
+      "func": null,
+      "latency": 4.0,
+      "error": null,
+      "answer": "删除端点度数降至 1 的边。度量：ΔE = 删除边数。作用：消除悬挂状态，避免卡死节点出现在演化中。",
+      "metrics": {
+        "char_f1": 0.1061,
+        "ref_cov": 0.0805,
+        "len_ratio": 0.52,
+        "term_hit": 0.6666666666666666,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.7523,
+        "emb_sim_max": 0.7523
+      }
+    },
+    {
+      "id": "concept_def-42dbac78af44",
+      "task": "concept_def",
+      "split": "val",
+      "source": "五行/人元/spum-神农本草经.md#L30",
+      "label": null,
+      "func": null,
+      "latency": 4.1,
+      "error": null,
+      "answer": "四种拓扑相位——水形链密度(冷)/火形环面积(热)/木形桥边数(湿)/金形角亏缺(燥)",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 3.23,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.4667,
+        "emb_sim_max": 0.4667
+      }
+    },
+    {
+      "id": "concept_def-500a3374acf7",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-金刚经.md#L27",
+      "label": null,
+      "func": null,
+      "latency": 1.9,
+      "error": null,
+      "answer": "对 σ 模式的局部拟合解——不是全局拓扑事实",
+      "metrics": {
+        "char_f1": 0.0851,
+        "ref_cov": 0.0714,
+        "len_ratio": 0.68,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5196,
+        "emb_sim_max": 0.5196
+      }
+    },
+    {
+      "id": "concept_def-50e0e52d0f3c",
+      "task": "concept_def",
+      "split": "val",
+      "source": "社会学/spum-文化.md#L213",
+      "label": null,
+      "func": null,
+      "latency": 1.5,
+      "error": null,
+      "answer": "信号序列 → 概念子图的逐帧重建",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 0.59,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.4582,
+        "emb_sim_max": 0.4582
+      }
+    },
+    {
+      "id": "concept_def-523da5aa8d08",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-金刚经.md#L28",
+      "label": null,
+      "func": null,
+      "latency": 3.5,
+      "error": null,
+      "answer": "[L1] 直接观察 σ 分布 → S 向量 → 拓扑指标 → 不是\"看到\"了东西",
+      "metrics": {
+        "char_f1": 0.0833,
+        "ref_cov": 0.0698,
+        "len_ratio": 0.67,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5893,
+        "emb_sim_max": 0.5893
+      }
+    },
+    {
+      "id": "concept_def-5d209b5a42de",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/skills/spum-sociology/skill.md#L44",
+      "label": null,
+      "func": null,
+      "latency": 2.8,
+      "error": null,
+      "answer": "不使用\"像\"\"仿佛\"\"好像\"\"就像\"等比喻词——直接陈述概念间的拓扑同构关系",
+      "metrics": {
+        "char_f1": 0.1695,
+        "ref_cov": 0.2273,
+        "len_ratio": 1.68,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5606,
+        "emb_sim_max": 0.5606
+      }
+    },
+    {
+      "id": "concept_def-5e2010c28b5c",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/skills/spum-economics/skill.md#L44",
+      "label": null,
+      "func": null,
+      "latency": 2.9,
+      "error": null,
+      "answer": "不使用\"像\"\"仿佛\"\"好像\"\"就像\"等比喻词——直接陈述概念间的拓扑同构关系",
+      "metrics": {
+        "char_f1": 0.209,
+        "ref_cov": 0.2333,
+        "len_ratio": 1.23,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5358,
+        "emb_sim_max": 0.5606
+      }
+    },
+    {
+      "id": "concept_def-64c3ad67779b",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/rules/spum-vocabulary.md#L36",
+      "label": null,
+      "func": null,
+      "latency": 3.3,
+      "error": null,
+      "answer": "多个晶子通过拓扑锁定形成的空间骨架单元。0 层级节点连接骨架，1 层级节点填充孔隙。",
+      "metrics": {
+        "char_f1": 0.0584,
+        "ref_cov": 0.0408,
+        "len_ratio": 0.4,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.6528,
+        "emb_sim_max": 0.6528
+      }
+    },
+    {
+      "id": "concept_def-6c1ac550c0fb",
+      "task": "concept_def",
+      "split": "val",
+      "source": "network/nodes.txt#L20",
+      "label": null,
+      "func": null,
+      "latency": 10.3,
+      "error": null,
+      "answer": "归约路径：引力 = ∇σ 梯度场 → 运动 = V⁺/V⁻ 粒子在各向同性网络中的受迫扩散\n\n**引力不是\"力\"——是 σ 分布的空间拉普拉斯梯度场。** 物体的引力场不是\"施加作用力\"，而是它内部粒子的净 V⁺ 排列模式对周围 σ 分布产生的自然后果。",
+      "metrics": {
+        "char_f1": 0.127,
+        "ref_cov": 0.1429,
+        "len_ratio": 1.25,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.7222,
+        "emb_sim_max": 0.7222
+      }
+    },
+    {
+      "id": "concept_def-703152e67a5f",
+      "task": "concept_def",
+      "split": "val",
+      "source": "数学/spum-数学应用.md#L166",
+      "label": null,
+      "func": null,
+      "latency": 2.2,
+      "error": null,
+      "answer": "观察者将 σ 梯度误认为\"距离\"或\"空间本身\"",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 1.18,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5363,
+        "emb_sim_max": 0.5363
+      }
+    },
+    {
+      "id": "concept_def-8587b50fcc1f",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-列子.md#L26",
+      "label": null,
+      "func": null,
+      "latency": 5.4,
+      "error": null,
+      "answer": "直径 D = 700, 高度 H = 10000 → σ = 4000000 / (π × 350²) ≈ 38.29",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 0.87,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5048,
+        "emb_sim_max": 0.5048
+      }
+    },
+    {
+      "id": "concept_def-874c886f6170",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/rules/spum-vocabulary.md#L46",
+      "label": null,
+      "func": null,
+      "latency": 4.0,
+      "error": null,
+      "answer": "删除端点度数降至 1 的边。度量：ΔE = 删除边数。作用：消除悬挂状态，避免卡死节点出现在演化中。",
+      "metrics": {
+        "char_f1": 0.0333,
+        "ref_cov": 0.0667,
+        "len_ratio": 3.0,
+        "term_hit": 0.3333333333333333,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.5702,
+        "emb_sim_max": 0.7523
+      }
+    },
+    {
+      "id": "concept_def-8b0562f4ae36",
+      "task": "concept_def",
+      "split": "val",
+      "source": "经济学/spum-增长与周期.md#L129",
+      "label": null,
+      "func": null,
+      "latency": 1.8,
+      "error": null,
+      "answer": "Σ(V⁺_econ) ——经济活动总交易量",
+      "metrics": {
+        "char_f1": 0.0571,
+        "ref_cov": 0.0625,
+        "len_ratio": 1.19,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5797,
+        "emb_sim_max": 0.5797
+      }
+    },
+    {
+      "id": "concept_def-8e1f8466e7cb",
+      "task": "concept_def",
+      "split": "val",
+      "source": "五行/天元/围棋/SPUM-围棋.md#L320",
+      "label": null,
+      "func": null,
+      "latency": 2.1,
+      "error": null,
+      "answer": "向网络中添加一个新边——必须遵循该位置的 deg 约束",
+      "metrics": {
+        "char_f1": 0.05,
+        "ref_cov": 0.0625,
+        "len_ratio": 1.5,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5537,
+        "emb_sim_max": 0.5537
+      }
+    },
+    {
+      "id": "concept_def-9053c29f949e",
+      "task": "concept_def",
+      "split": "val",
+      "source": "数学/spum-数学公理.md#L188",
+      "label": null,
+      "func": null,
+      "latency": 2.6,
+      "error": null,
+      "answer": "\"两个独立信号的叠加深度。不是'更强烈'，是'同时存在且相互作用'\"",
+      "metrics": {
+        "char_f1": 0.04,
+        "ref_cov": 0.0588,
+        "len_ratio": 1.94,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5931,
+        "emb_sim_max": 0.5931
+      }
+    },
+    {
+      "id": "concept_def-927950f8c5da",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L333",
+      "label": null,
+      "func": null,
+      "latency": 4.0,
+      "error": null,
+      "answer": "删除端点度数降至 1 的边。度量：ΔE = 删除边数。作用：消除悬挂状态，避免卡死节点出现在演化中。",
+      "metrics": {
+        "char_f1": 0.0488,
+        "ref_cov": 0.0541,
+        "len_ratio": 1.22,
+        "term_hit": 0.6666666666666666,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.6112,
+        "emb_sim_max": 0.7523
+      }
+    },
+    {
+      "id": "concept_def-b5edbad47bd2",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L137",
+      "label": null,
+      "func": null,
+      "latency": 2.1,
+      "error": null,
+      "answer": "五种拓扑操作——删除、插入、剪切、粘贴、旋转",
+      "metrics": {
+        "char_f1": 0.0377,
+        "ref_cov": 0.0205,
+        "len_ratio": 0.09,
+        "term_hit": 0.125,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5539,
+        "emb_sim_max": 0.5539
+      }
+    },
+    {
+      "id": "concept_def-b979762b513f",
+      "task": "concept_def",
+      "split": "val",
+      "source": "经济学/spum-劳动与资本.md#L147",
+      "label": null,
+      "func": null,
+      "latency": 4.1,
+      "error": null,
+      "answer": "σ 分布不均匀 → 某些区域 deg 高于其他区域 → 该区域节点被过度采样 → 认知投影为\"存在更多\"",
+      "metrics": {
+        "char_f1": 0.0984,
+        "ref_cov": 0.1579,
+        "len_ratio": 2.21,
+        "term_hit": 0.6666666666666666,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5504,
+        "emb_sim_max": 0.5504
+      }
+    },
+    {
+      "id": "concept_def-c966cc0711ba",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L403",
+      "label": null,
+      "func": null,
+      "latency": 3.6,
+      "error": null,
+      "answer": "子图中度量场 σ 的等值面。不是\"限制\"或\"隔绝\"——是拓扑强制露出外部的标准尺度。",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 1.39,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.5442,
+        "emb_sim_max": 0.5442
+      }
+    },
+    {
+      "id": "concept_def-ca9e3c1f6325",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L420",
+      "label": null,
+      "func": null,
+      "latency": 10.3,
+      "error": null,
+      "answer": "归约路径：引力 = ∇σ 梯度场 → 运动 = V⁺/V⁻ 粒子在各向同性网络中的受迫扩散\n\n**引力不是\"力\"——是 σ 分布的空间拉普拉斯梯度场。** 物体的引力场不是\"施加作用力\"，而是它内部粒子的净 V⁺ 排列模式对周围 σ 分布产生的自然后果。",
+      "metrics": {
+        "char_f1": 0.0758,
+        "ref_cov": 0.1852,
+        "len_ratio": 3.89,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 2,
+        "emb_sim": 0.6743,
+        "emb_sim_max": 0.7222
+      }
+    },
+    {
+      "id": "concept_def-d135f006fd57",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-中庸.md#L53",
+      "label": null,
+      "func": null,
+      "latency": 3.3,
+      "error": null,
+      "answer": "[L0] 本体论位置声明——\"道生一, 一生二, 二生三, 三生万物\"",
+      "metrics": {
+        "char_f1": 0.0385,
+        "ref_cov": 0.0455,
+        "len_ratio": 1.36,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.4479,
+        "emb_sim_max": 0.4479
+      }
+    },
+    {
+      "id": "concept_def-d83a9c23aa65",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L353",
+      "label": null,
+      "func": null,
+      "latency": 4.4,
+      "error": null,
+      "answer": "空间粒子通过 V⁺/V⁻ 操作生成初始连接，连接密度分布驱动更复杂的几何结构涌现。不需要外部输入——内生几何动力由节点自身状态决定。",
+      "metrics": {
+        "char_f1": 0.0684,
+        "ref_cov": 0.0741,
+        "len_ratio": 1.17,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.5738,
+        "emb_sim_max": 0.5792
+      }
+    },
+    {
+      "id": "concept_def-d8cd7f775b7e",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-大学.md#L193",
+      "label": null,
+      "func": null,
+      "latency": 2.2,
+      "error": null,
+      "answer": "逐帧 σ 自洽校验——锚点向量收敛到 H 内心",
+      "metrics": {
+        "char_f1": 0.0625,
+        "ref_cov": 0.0714,
+        "len_ratio": 1.29,
+        "term_hit": 1.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.6275,
+        "emb_sim_max": 0.6275
+      }
+    },
+    {
+      "id": "concept_def-ddb679c6a18f",
+      "task": "concept_def",
+      "split": "val",
+      "source": "network/nodes.txt#L19",
+      "label": null,
+      "func": null,
+      "latency": 4.2,
+      "error": null,
+      "answer": "空间粒子通过 V⁺/V⁻ 操作生成初始连接，连接密度分布驱动更复杂的几何结构涌现。不需要外部输入——内生几何动力由节点自身状态决定。",
+      "metrics": {
+        "char_f1": 0.0625,
+        "ref_cov": 0.0615,
+        "len_ratio": 0.97,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.5792,
+        "emb_sim_max": 0.5792
+      }
+    },
+    {
+      "id": "concept_def-dfbd166cf9e5",
+      "task": "concept_def",
+      "split": "val",
+      "source": "儒释道哲学/spum-大学.md#L190",
+      "label": null,
+      "func": null,
+      "latency": 2.8,
+      "error": null,
+      "answer": "∀ 节点 deg(v) ∈ H → S 同构于 ⟨P, ε⟩_L1",
+      "metrics": {
+        "char_f1": 0.0526,
+        "ref_cov": 0.0667,
+        "len_ratio": 1.53,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.651,
+        "emb_sim_max": 0.651
+      }
+    },
+    {
+      "id": "concept_def-e36dce440e54",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L411",
+      "label": null,
+      "func": null,
+      "latency": 4.0,
+      "error": null,
+      "answer": "删除端点度数降至 1 的边。度量：ΔE = 删除边数。作用：消除悬挂状态，避免卡死节点出现在演化中。",
+      "metrics": {
+        "char_f1": 0.0,
+        "ref_cov": 0.0,
+        "len_ratio": 1.88,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.4435,
+        "emb_sim_max": 0.7523
+      }
+    },
+    {
+      "id": "concept_def-e3db050763eb",
+      "task": "concept_def",
+      "split": "val",
+      "source": "knowledge.md#L419",
+      "label": null,
+      "func": null,
+      "latency": 4.3,
+      "error": null,
+      "answer": "空间粒子通过 V⁺/V⁻ 操作生成初始连接，连接密度分布驱动更复杂的几何结构涌现。不需要外部输入——内生几何动力由节点自身状态决定。",
+      "metrics": {
+        "char_f1": 0.0244,
+        "ref_cov": 0.0526,
+        "len_ratio": 3.32,
+        "term_hit": null,
+        "banned": 0,
+        "n_refs": 4,
+        "emb_sim": 0.5038,
+        "emb_sim_max": 0.5792
+      }
+    },
+    {
+      "id": "concept_def-e7c5173c1b7c",
+      "task": "concept_def",
+      "split": "val",
+      "source": ".trae/skills/spum-math/skill.md#L45",
+      "label": null,
+      "func": null,
+      "latency": 2.0,
+      "error": null,
+      "answer": "符号 → 概念 → 记号三者之间的稳定映射关系",
+      "metrics": {
+        "char_f1": 0.0182,
+        "ref_cov": 0.0109,
+        "len_ratio": 0.2,
+        "term_hit": 0.0,
+        "banned": 0,
+        "n_refs": 1,
+        "emb_sim": 0.5801,
+        "emb_sim_max": 0.5801
+      }
+    },
+    {
+      "id": "detect-13de73743a55",
+      "task": "detect",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L39",
+      "label": "neg",
+      "func": null,
+      "latency": 6.1,
+      "error": null,
+      "answer": "判定：**不符合** SPUM 范式。\n违反：概念5「时间」。\n理由：三个连续统陷阱——\"时间推移\"暗示连续流；\"逐渐\"暗示连续变化；\"趋近平衡态\"暗示终态可达。",
+      "metrics": {
+        "char_f1": 0.8725,
+        "ref_cov": 0.8442,
+        "len_ratio": 0.94,
+        "term_hit": null,
+        "banned": 0,
+        "pred": "neg",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-6d347913df9f",
+      "task": "detect",
+      "split": "val",
+      "source": "语言学/spum-语言演化.md",
+      "label": "pos",
+      "func": null,
+      "latency": 6.9,
+      "error": null,
+      "answer": "判定：**符合** SPUM 范式。\n理由：该表述把对象还原为 ⟨P, ε⟩ 的拓扑表达——语言 = σ_ling分布 → 变化 = 连续漂移 → 标准词典无法捕捉 → 四重循环驱动。",
+      "metrics": {
+        "char_f1": 0.5106,
+        "ref_cov": 0.4103,
+        "len_ratio": 0.61,
+        "term_hit": 0.5714285714285714,
+        "banned": 0,
+        "pred": "pos",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-87eb819803ab",
+      "task": "detect",
+      "split": "val",
+      "source": "儒释道哲学/spum-法华经.md",
+      "label": "pos",
+      "func": null,
+      "latency": 8.7,
+      "error": null,
+      "answer": "判定：**符合** SPUM 范式。\n理由：该表述把对象还原为 ⟨P, ε⟩ 的拓扑表达——五部 = 五种 [L1] 语言 → 法华经揭示其 [L0] 同源 → 方便门 = 多语言共指同一 [L0] 拓扑事实。",
+      "metrics": {
+        "char_f1": 0.487,
+        "ref_cov": 0.4159,
+        "len_ratio": 0.71,
+        "term_hit": 1.0,
+        "banned": 0,
+        "pred": "pos",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-8b1030a36964",
+      "task": "detect",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L19",
+      "label": "neg",
+      "func": null,
+      "latency": 4.8,
+      "error": null,
+      "answer": "判定：**不符合** SPUM 范式。\n违反：概念4「空间粒子」。\n理由：引入\"存在\"和\"在其中\"的二元关系，违背关系第一性。",
+      "metrics": {
+        "char_f1": 0.486,
+        "ref_cov": 0.4906,
+        "len_ratio": 1.02,
+        "term_hit": null,
+        "banned": 0,
+        "pred": "neg",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-a4db64ac1ac1",
+      "task": "detect",
+      "split": "val",
+      "source": "儒释道哲学/spum-楞严经.md",
+      "label": "pos",
+      "func": null,
+      "latency": 10.8,
+      "error": null,
+      "answer": "判定：**符合** SPUM 范式。\n理由：该表述把对象还原为 ⟨P, ε⟩ 的拓扑表达——四大 = 四种拓扑操作 → 邻虚尘 = 粒子间未满连接 → 无明 = 混合投影 → 六根六尘 = 六种信息通道 → 本体 = ∇σ 完全自洽的纯拓扑结构。",
+      "metrics": {
+        "char_f1": 0.5342,
+        "ref_cov": 0.6324,
+        "len_ratio": 1.37,
+        "term_hit": 1.0,
+        "banned": 0,
+        "pred": "pos",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-d9769c8fba49",
+      "task": "detect",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L101",
+      "label": "neg",
+      "func": null,
+      "latency": 6.4,
+      "error": null,
+      "answer": "判定：**不符合** SPUM 范式。\n违反：概念5「实体化思维」。\n理由：引入\"实体\"和\"填充\"将SPUM推回第0层。实体是第1层认知投影，不是第0层本体。",
+      "metrics": {
+        "char_f1": 0.3239,
+        "ref_cov": 0.3194,
+        "len_ratio": 0.97,
+        "term_hit": 0.0,
+        "banned": 0,
+        "pred": "neg",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-debabc0d22c7",
+      "task": "detect",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L89",
+      "label": "neg",
+      "func": null,
+      "latency": 4.5,
+      "error": null,
+      "answer": "判定：**不符合** SPUM 范式。\n违反：概念5「几何常数」。\n理由：将具体数值提升为\"自然出现\"的\"真理\"。",
+      "metrics": {
+        "char_f1": 0.4274,
+        "ref_cov": 0.3623,
+        "len_ratio": 0.7,
+        "term_hit": null,
+        "banned": 0,
+        "pred": "neg",
+        "correct": 1
+      }
+    },
+    {
+      "id": "detect-fa42a9fe4f73",
+      "task": "detect",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L176",
+      "label": "neg",
+      "func": null,
+      "latency": 6.8,
+      "error": null,
+      "answer": "判定：**不符合** SPUM 范式。\n违反：概念2「推动力」。\n理由：引入外部\"推动力\"作为驱动因。SPUM 不接受任何外部推动力——驱动力是内生的 V⁺ 和 V⁻ 的不可消解矛盾本身。",
+      "metrics": {
+        "char_f1": 0.5714,
+        "ref_cov": 0.717,
+        "len_ratio": 1.51,
+        "term_hit": null,
+        "banned": 0,
+        "pred": "neg",
+        "correct": 1
+      }
+    },
+    {
+      "id": "reduction-02eeaeb8d3a2",
+      "task": "reduction",
+      "split": "val",
+      "source": "儒释道哲学/spum-心经.md",
+      "label": null,
+      "func": null,
+      "latency": 16.6,
+      "error": null,
+      "answer": "归约路径：色 = S ∈ C → 色受想定 = S 概念化 → 彼时无我 = 当前 ⟨P, ε⟩ 无\"自我\"标签 → 四句 = 四层投影边界 → 六根六尘 = 六种感官通道 → 八正道 = 八步 V⁺/V⁻ 操作\n\n**心经 = 认知子网从局部 S 映射到全局 ⟨P, ε⟩ 的压缩编码协议。** 与《金刚经》的关系是：金刚经 = 心经在认知子图上的拓扑应用——如何让 [C]_L2 在 [C]_L0 上建立锚点。",
+      "metrics": {
+        "char_f1": 0.1661,
+        "ref_cov": 0.1656,
+        "len_ratio": 0.99,
+        "term_hit": 0.8,
+        "banned": 0
+      }
+    },
+    {
+      "id": "reduction-4c7416df3e6d",
+      "task": "reduction",
+      "split": "val",
+      "source": "语言学/spum-句法与结构.md",
+      "label": null,
+      "func": null,
+      "latency": 15.5,
+      "error": null,
+      "answer": "归约路径：语言 = 社会认知子网在共享认知投影层上的稳定编码 → 句法 = 语法约束对认知子图拓扑操作的编码 → 生成 = 认知子图从状态节点到操作边的逐帧推演 → 句法错误 = 拓扑操作违反组合逻辑 → 语义 = 共享认知投影层上的概念子图\n\n**语言是社会认知子网在共享认知投影层上的稳定编码。** 句法不是\"附加在语法树上的规则\"——它是语法约束对**认知子图拓扑操作**的编码。没有认知子图，就没有句法操作的对象。",
+      "metrics": {
+        "char_f1": 0.1381,
+        "ref_cov": 0.1286,
+        "len_ratio": 0.86,
+        "term_hit": 0.75,
+        "banned": 0
+      }
+    },
+    {
+      "id": "reduction-5873299a79bf",
+      "task": "reduction",
+      "split": "val",
+      "source": "社会学/spum-制度.md",
+      "label": null,
+      "func": null,
+      "latency": 9.7,
+      "error": null,
+      "answer": "归约路径：制度 = 稳态拓扑结构 → 制度变迁 = σ 拓扑重构 → 法治 = S 向量的约束\n\n**制度是社会子图中稳定存在的、可自洽的 S 向量模式。** 它们不是\"规则的集合\"——是那些规则在足够多帧演化后形成的、被节点自发锁定的 S 分布形态。",
+      "metrics": {
+        "char_f1": 0.1581,
+        "ref_cov": 0.1325,
+        "len_ratio": 0.68,
+        "term_hit": 0.5,
+        "banned": 0
+      }
+    },
+    {
+      "id": "reduction-8318f04850c1",
+      "task": "reduction",
+      "split": "val",
+      "source": "语言学/spum-语言网络.md",
+      "label": null,
+      "func": null,
+      "latency": 10.3,
+      "error": null,
+      "answer": "归约路径：语言 = 社会子图中稳定边集 → 语法 = 概念子图的拓扑编码 → 词 = (概念, σ) 键值对 → 句子 = 虚拟边序列\n\n**语言是社会子图中稳定边集的符号化——一组概念子图之间稳定的映射关系。** 孩子通过观察成人的连接模式来习得这些映射。",
+      "metrics": {
+        "char_f1": 0.2089,
+        "ref_cov": 0.1564,
+        "len_ratio": 0.5,
+        "term_hit": 0.6666666666666666,
+        "banned": 0
+      }
+    },
+    {
+      "id": "reduction-b2414cc6ba98",
+      "task": "reduction",
+      "split": "val",
+      "source": "儒释道哲学/spum-列子.md",
+      "label": null,
+      "func": null,
+      "latency": 37.7,
+      "error": null,
+      "answer": "归约路径：\"道 = ∇σ 无分支的方向 → 循环 = 拓扑锁定 → 道家 = σ 本体论\"（见《卜居》\"夫道者，出于无，成于虚\"的 SPUM 翻译）\n\n**道 = ∇σ 无分支的方向。** 列子将此映射为\"道无形\"\"道不可见\"\"道不可闻\"——因为它是纯拓扑的，不依赖任何感官通道。\n\n**德 = S 向量在 ∇σ 方向上的分量。** 列子说\"德者得道之行也\"——不是\"有德者多助\"，是\"得方向正确，便自动获得所有资源的持续供给\"。\n\n**穷神知化 = 路径识别 + 本体论两个步骤同时进行。** 列子说\"神者，道之门也\"——不是\"神灵干预\"，是\"你通过足够密集的采样，可以直接感知 ∇σ 本身\"。\n\n**至人 = S ∈ H 中心节点。** 列子说\"至人无己，神人无功，圣人无名\"——不是\"退化\"，是\"无需维护任何 V⁺/V⁻ 指标，自然悬浮于 H 中心\"。\n\n**天 = ⟨P, ε⟩ 本体。** 列子说\"天道无亲，常与善人\"——不是\"天有好生之德\"，是\"S_H 中心的节点天然倾向于与自身同构的子图建立拓扑连接\"。",
+      "metrics": {
+        "char_f1": 0.0437,
+        "ref_cov": 0.0714,
+        "len_ratio": 2.27,
+        "term_hit": 0.6666666666666666,
+        "banned": 0
+      }
+    },
+    {
+      "id": "reduction-c81cecccebd4",
+      "task": "reduction",
+      "split": "val",
+      "source": "儒释道哲学/spum-华严经.md",
+      "label": null,
+      "func": null,
+      "latency": 17.8,
+      "error": null,
+      "answer": "归约路径：法界 = ⟨P, ε⟩ 全局拓扑结构 → 事相 = S ∈ P → 一即一切 = ∀S∈P, ∃L∈L(S) ∀t, L(t) ⊆ P → 四法界 = 四种拓扑认知层级 → 十玄门 = 十个认知操作 → 重重无尽 = 拓扑无穷递归 → 一真如 = ⟨P, ε⟩ 本体\n\n**华严不是宗教——它是对 [L0] 认知操作的数学描述。** 它将 [L1] 语言学区分为\"事相\"\"理相\"\"理事二别\"三个层级，并给出了从事到理再到理事圆融的完整路径。",
+      "metrics": {
+        "char_f1": 0.2404,
+        "ref_cov": 0.2186,
+        "len_ratio": 0.82,
+        "term_hit": 0.6666666666666666,
+        "banned": 0
+      }
+    },
+    {
+      "id": "rewrite-83e0af31004c",
+      "task": "rewrite",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L59",
+      "label": null,
+      "func": null,
+      "latency": 10.3,
+      "error": null,
+      "answer": "**为什么错**：将 π 喷射为\"宇宙的固有常数\"或\"公理\"。π 不是第一性常数，它是欧拉恒等式的强制解。\n\n**正确表述**：π 不是宇宙的固有常数——它是认知投影的拓扑硬编码。在离散-连续不可约框架下，π 必然出现，因为它描述的是欧拉恒等式的几何表达。",
+      "metrics": {
+        "char_f1": 0.25,
+        "ref_cov": 0.2809,
+        "len_ratio": 1.25,
+        "term_hit": 1.0,
+        "banned": 0
+      }
+    },
+    {
+      "id": "rewrite-8bcfee5aba94",
+      "task": "rewrite",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L49",
+      "label": null,
+      "func": null,
+      "latency": 9.1,
+      "error": null,
+      "answer": "**为什么错**：引入外部观察者和\"坍塌\"。观察者成为公理的一部分。\n\n**正确表述**：不需要观察者。波函数不是\"未决定状态\"——它是完整的、确定的、无分支的。当节点连接关系足够明确，它\"知道自己在哪里\"。波函数的\"干涉项\"不是概率叠加——是多个稳定分量的并存。",
+      "metrics": {
+        "char_f1": 0.1563,
+        "ref_cov": 0.2113,
+        "len_ratio": 1.7,
+        "term_hit": null,
+        "banned": 2
+      }
+    },
+    {
+      "id": "rewrite-a3510f154e63",
+      "task": "rewrite",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L59",
+      "label": null,
+      "func": null,
+      "latency": 14.6,
+      "error": null,
+      "answer": "**为什么错**：将 π 映射为\"比率\"或\"周长与直径的恒定比\"。π 不是比率，它是欧拉恒等式的解。\n\n**正确表述**：π 不是一个常数，是一个运算——3.14159 是近似值，精确值是 √(8/π)。在纯组合路径中，π 出现在三段推导的交集处：从几何体积公式推导 → 从组合容量推导 → 从纯拓扑定义推导。π 不是任意的，它是欧拉恒等式的强制解。",
+      "metrics": {
+        "char_f1": 0.1162,
+        "ref_cov": 0.1573,
+        "len_ratio": 1.71,
+        "term_hit": 1.0,
+        "banned": 0
+      }
+    },
+    {
+      "id": "rewrite-f424213d555b",
+      "task": "rewrite",
+      "split": "val",
+      "source": ".trae/rules/spum-anti-pattern.md#L49",
+      "label": null,
+      "func": null,
+      "latency": 8.6,
+      "error": null,
+      "answer": "**为什么错**：\"概率\"是经典投影层的概念，不是本体。概率本体化 = 先投影再观察。\n\n**正确表述**：不存在\"叠加态\"或\"多重世界\"。一个物理系统在任何一个时刻只能处于其状态图上的唯一一个节点中——只不过我们无法同时感知所有维度，所以感觉上它在\"多个地方\"。",
+      "metrics": {
+        "char_f1": 0.2316,
+        "ref_cov": 0.3099,
+        "len_ratio": 1.68,
+        "term_hit": null,
+        "banned": 1
+      }
+    }
+  ]
+}

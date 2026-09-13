@@ -1,0 +1,81 @@
+{
+  "total": 518,
+  "train": 441,
+  "val": 77,
+  "val_ratio": 0.15,
+  "system_prompt": true,
+  "system_text": "你是 SPUM（关系网络本体论）的推理助手。回答须守住四条底线：① 关系先于实体——不把任何对象当作先于关系的独立实体；② 离散先于连续——不用连续流、无限小、终态可达一类隐喻；③ 用 SPUM 术语（空间粒子、边、度数 deg、σ、V⁺/V⁻、离散帧、晶子、五形）替代旧范式词汇（力、时空、概率云、点粒子、宇宙常数）；④ 不暗示无限增长，也不暗示宇宙有最终静止态。",
+  "dropped_dup_total": 0,
+  "leaks": 0,
+  "prompt_leaks": 0,
+  "tasks": {
+    "concept_def": {
+      "raw": 272,
+      "kept": 272,
+      "dropped_dup": 0,
+      "groups": 219,
+      "val": 42,
+      "train": 230,
+      "answer_len_avg": 45,
+      "origins": [
+        "anti_pattern_ok",
+        "faq",
+        "knowledge_nodes",
+        "knowledge_vocab",
+        "module_table",
+        "nodes",
+        "skill_axiom",
+        "vocabulary"
+      ]
+    },
+    "rewrite": {
+      "raw": 30,
+      "kept": 30,
+      "dropped_dup": 0,
+      "groups": 15,
+      "val": 4,
+      "train": 26,
+      "answer_len_avg": 166,
+      "origins": [
+        "anti_pattern"
+      ]
+    },
+    "detect": {
+      "raw": 55,
+      "kept": 55,
+      "dropped_dup": 0,
+      "groups": 55,
+      "val": 8,
+      "train": 47,
+      "answer_len_avg": 107,
+      "origins": [
+        "anti_pattern",
+        "corpus"
+      ]
+    },
+    "reduction": {
+      "raw": 45,
+      "kept": 45,
+      "dropped_dup": 0,
+      "groups": 45,
+      "val": 6,
+      "train": 39,
+      "answer_len_avg": 258,
+      "origins": [
+        "module"
+      ]
+    },
+    "code_skeleton": {
+      "raw": 116,
+      "kept": 116,
+      "dropped_dup": 0,
+      "groups": 116,
+      "val": 17,
+      "train": 99,
+      "answer_len_avg": 792,
+      "origins": [
+        "openspum_src"
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "base": "C:\\Users\\macotai\\models\\Qwen2.5-Coder-7B-Instruct",
+  "adapter": "out/lora-spum-v2",
+  "out": "out\\merged-spum-v2",
+  "params": 7615616512,
+  "shards": [
+    "model-00001-of-00004.safetensors",
+    "model-00002-of-00004.safetensors",
+    "model-00003-of-00004.safetensors",
+    "model-00004-of-00004.safetensors"
+  ],
+  "weights_gb": 14.19,
+  "elapsed_sec": 213.8
+}

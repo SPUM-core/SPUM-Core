@@ -43,6 +43,12 @@ data/mitdb/
 *.pth
 experiments/MNIST/raw/
 
+# 微调产物（仅上传脚本/数据/评测报告；模型权重与中间 checkpoint 不入库）
+finetune/out/**/*.safetensors
+finetune/out/**/*.bin
+finetune/out/**/*.gguf
+finetune/out/**/checkpoint-*/
+
 # 云构建产物
 .pai/
 qingmeng-weapp/

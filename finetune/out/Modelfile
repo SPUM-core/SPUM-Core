@@ -1,0 +1,20 @@
+# ollama 0.34 的 safetensors 导入路径（--experimental，需 MLX）在 Windows 上不可用，
+# 故改为：merge_lora.py 合并 → llama-quantize 转 Q4_K_M → 这里直接导入 GGUF。
+FROM E:/spum/spum-v2-q4_k_m.gguf
+
+# v2 转换器（llama.cpp b6500）已把官方 chat_template 写进 GGUF；此处仍显式覆盖为
+# 精简 ChatML，与训练/评测的 apply_chat_template（非 tools 分支）严格对齐。
+# 注意：v2 GGUF 的 qwen2.rope.freq_base 已由修补后的转换器写出 = 1000000.0。
+TEMPLATE """{{- if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{- range .Messages }}<|im_start|>{{ .Role }}
+{{ .Content }}<|im_end|>
+{{ end }}<|im_start|>assistant
+"""
+
+# 与 finetune/train_qlora.py 训练所用 system 提示保持一致
+SYSTEM """你是 SPUM（关系网络本体论）的推理助手。回答须守住四条底线：① 关系先于实体——不把任何对象当作先于关系的独立实体；② 离散先于连续——不用连续流、无限小、终态可达一类隐喻；③ 用 SPUM 术语（空间粒子、边、度数 deg、σ、V⁺/V⁻、离散帧、晶子、五形）替代旧范式词汇（力、时空、概率云、点粒子、宇宙常数）；④ 不暗示无限增长，也不暗示宇宙有最终静止态。"""
+
+PARAMETER temperature 0.2
+PARAMETER num_ctx 8192
+PARAMETER stop "<|im_end|>"
