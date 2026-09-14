@@ -77,7 +77,7 @@ SPUM 与 Game of Life 等元胞自动机的**关键区别**：
 
 > **代码不是理论的应用演示——它就是理论本身。**
 
-五步帧规则写在 `openSPUM/Phase_0/frame_kernels.py` 里，粒子在 GPU 上逐帧演化，悬挂边被删除，新边被创建，12 个晶子自动闭合为正二十面体。
+五步帧规则写在 `openSPUM/src/l0/l0_core.py` 里（v1 的 GPU 帧内核见 `openSPUM/_archive_v1/Phase_0/frame_kernels.py`），粒子逐帧演化，悬挂边被删除，新边被创建。
 
 这不是"用代码模拟一个已经用公式描述清楚了的理论"——在 SPUM 中，**可执行性是理论的必要条件**。一个拉氏量你不能让它"运行起来看接下来会发生什么"；一串帧规则你可以。
 
@@ -200,9 +200,9 @@ SPUM-core 的逻辑——⟨P, ε⟩ 离散关系网络、帧演化、悬挂边�
 
 | 文件 | 内容 |
 |------|------|
-| `openSPUM/Phase_0/frame_kernels.py` | 五步帧规则的 GPU 实现——理论的可执行版本 |
-| `openSPUM/Phase_3/icosahedron_derivation.py` | 正二十面体几何 → 壳层容量 2n² 的推导——规则涌现的结果 |
-| `openSPUM/Phase_4/simulate_hydrogen.py` | 氢原子模拟——从规则集到具体物理现象的路径 |
+| `openSPUM/src/l0/l0_core.py` | 五步帧规则的**现行**实现——理论的可执行版本（v1 GPU 版 `_archive_v1/Phase_0/frame_kernels.py`） |
+| `openSPUM/_archive_v1/Phase_3/icosahedron_derivation.py` | 正二十面体几何 → 壳层容量 2n² 的推导（v1 归档） |
+| `openSPUM/_archive_v1/Phase_4/simulate_hydrogen.py` | 氢原子模拟——从规则集到具体物理现象的路径（v1 归档） |
 | `experiments/SPUM拓扑认知框架 P0_P2 完整实验验证报告.md` | 实验验证：神经网络隐藏层中的拓扑结构——方法论的认知投影检验 |
 | `宇宙学/模型/谱线偏移作为σ效应.md` | σ 红移——从规则到可观测预言的完整链路 |
 | `.trae/rules/spum-evolution.md` | 五步帧演化规则的完整定义 |

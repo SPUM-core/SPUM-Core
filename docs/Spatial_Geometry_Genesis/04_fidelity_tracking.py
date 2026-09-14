@@ -4,7 +4,7 @@ SPUM 拓扑保真度追踪器 v0.4
 帧演化中追踪 F = k-NN 邻接恢复率，检验网络是否更"3D 可理解"。
 """
 import sys, os, time
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'openSPUM'))
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', 'openSPUM', '_archive_v1'))
 
 import matplotlib
 matplotlib.use('Agg')

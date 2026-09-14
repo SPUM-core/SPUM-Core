@@ -44,7 +44,7 @@ EXCLUDE_DIRS = {
     '.git', '__pycache__', 'node_modules', '.trae',
     '_vol_cache', 'venv', '.venv', 'env', '.env',
     'dashboard/node_modules', 'dashboard/dist',
-    'openSPUM/tests',  # 测试文件通常不引用核心概念
+    'openSPUM/_archive_v1',  # v1 归档实现，不参与现行一致性审计
 }
 
 EXCLUDE_FILES = {

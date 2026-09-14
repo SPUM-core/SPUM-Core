@@ -630,9 +630,17 @@ def selftest():
           f"洞={a['n_holes']}(max{a['max_hole']}) 开口={a['open_ratio']:.3f} "
           f"link(path边界={a['path']})  [{'OK' if p_ok else 'FAIL'}]")
     # 重连（边翻转）：对合性 + 保 V/E/F/chi + ΔΨ 公式自洽
+    #   注：rot[v] 是**循环**邻居表，起点元素任意 ⇒ 比较须取循环规范形（旋转到最小元素打头），
+    #   否则会把「同一环序换个起点」误判为不一致。
+    def _cyc(r):
+        if not r:
+            return ()
+        m = min(range(len(r)), key=lambda t: r[t])
+        return tuple(r[m:]) + tuple(r[:m])
+
     net = RotNet(seed_icosa())
     a0 = audit(net)
-    s0 = {v: tuple(r) for v, r in sorted(net.rot.items())}
+    s0 = {v: _cyc(r) for v, r in net.rot.items()}
     edges = sorted({(v, w) if v < w else (w, v)
                     for v in net.ids() for w in net.rot[v]})
     fl = [(i, j) for (i, j) in edges if net.flip_delta(i, j) is not None]
@@ -646,12 +654,12 @@ def selftest():
         a1 = audit(net)
         p1 = sum((6 - net.deg(v)) ** 2 for v in net.ids())
         net.flip_edge(k, l)
-        s2 = {v: tuple(r) for v, r in sorted(net.rot.items())}
+        s2 = {v: _cyc(r) for v, r in net.rot.items()}
         f_ok = ((a1["V"], a1["E"], a1["F"], a1["chi"])
                 == (a0["V"], a0["E"], a0["F"], a0["chi"])
                 and p1 - p0 == dpsi and s2 == s0 and a1["S"] == 12)
         detail = (f"icosa 可翻边 {len(fl)}/{len(edges)}；首条 ({i},{j})->({k},{l}) "
-                  f"ΔΨ={dpsi}（实测 {p1 - p0}）；翻两次复原={s2 == s0}")
+                  f"ΔΨ={dpsi}（实测 {p1 - p0}）；翻两次复原（环序等价）={s2 == s0}")
     if not f_ok:
         ok = False
     print(f"  [{'OK' if f_ok else 'FAIL'}] 重连 flip_edge：{detail}")

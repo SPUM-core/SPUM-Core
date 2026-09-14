@@ -529,4 +529,4 @@ VSPT 密度分布的原始偏差不是失败，而是准确指出了当前模型
 
 ---
 
-*本报告由 OpenSPUM Phase 4 仿真引擎自动生成。引擎和报告代码位于 `f:\spum-core\openSPUM\Phase_4\`。径向概率分布图见 `Phase_4/vspt_radial.png`。*
+*本报告由 OpenSPUM Phase 4 仿真引擎自动生成。引擎和报告代码位于 `f:\spum-core\openSPUM\_archive_v1\Phase_4\`（v1 归档）。径向概率分布图见 `_archive_v1/Phase_4/vspt_radial.png`。*

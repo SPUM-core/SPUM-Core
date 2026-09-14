@@ -30,17 +30,18 @@ Transformer 的自注意力层在做的事情——计算所有 token 对之间�
 ## 先别读规则文件。跑这个。
 
 ```bash
-cd openSPUM
-python tests/measure_sigma_natural.py
+cd openSPUM/src/l0
+python l0_core.py selftest=1
 ```
 
-等它跑完，你会看到悬挂边密度自动收敛到 ≈ 1/137——精细结构常数的拓扑起源。
+等它跑完，你会看到 L0 的帧演化自检全绿——五个保 χ 的组合操作、悬挂边删除、分量数不增，逐项实测。核心不变量 `Σ(6−deg) = 12` 在每一帧成立，纯整数，不经过 π。
 
 然后跑这个：
 
 ```bash
-python tests/test_phase3_all.py   # 12 个晶子自动闭合为正二十面体
-python tests/test_phase4_all.py   # 永恒粒子、原子核、电子壳层
+python l0_locality.py selftest=1                # L0-A10：所有内核访问跳度 ≤ 二阶邻居（逐工件自动断言）
+cd ../l1 && python l1_projection.py selftest=1  # 角亏 Σ=4π：离散高斯-博内定理
+cd ../l2 && python l2_projection.py selftest=1  # 全局坐标工件 + 曲率读数（holonomy）
 ```
 
 不需要 GPU。不需要博士。只需要 numpy。
@@ -79,7 +80,7 @@ SPUM 不要求你接受 14 条教义。它只提出三个问题，邀请你用�
 | 五形 | 五种拓扑相位，不是五种元素 | `五行/` 11 部经典 + 13 个可执行文件 |
 | 儒释道 | 道 = ε（边集），字面即定义 | `儒释道哲学/` 10 部经典 + 57 节点 |
 
-**一套公理。七个领域。零类比。`tests/` 207 项单元测试全绿。**
+**一套公理。七个领域。零类比。L0–L4 各层 `python <layer>.py selftest=1` 全绿。**
 
 22 个核心节点，33 条推导边，跨模块闭合。不是"看起来像"——是同一个形式系统在不同域上的展开。
 

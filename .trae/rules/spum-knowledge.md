@@ -29,7 +29,7 @@
 | `spum-anti-pattern.md` | 伪加载检测：8种通用AI典型错误模式、自检协议 + **概念级反例库**（7 组核心概念 ❌/✅ 对照，原 spum-anti-examples.md 已并入） | 防止旧范式残留，每轮推理后与 review 同步执行 |
 | `spum-reasoner-skill.md` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 用户提及 SPUM 概念时激活，提供文献导航与推理框架 |
 | `spum-qingmeng-guard.md` | 青檬引擎 SPUM 优化护栏：11条不变量速查、3级优化优先级 | 修改 qingmeng_engine 代码前进行合规校验 |
-| `spum-openspum.md` | OpenSPUM 开源宇宙实验室：3 层 Phase 架构、135 测试全覆盖、关键物理结果（α/sigma/粒子行为）、加载策略 | 运行/修改 OpenSPUM 代码时加载 |
+| `spum-openspum.md` | OpenSPUM 开源宇宙实验室：L0–L4 分层投影架构（`src/l0`~`src/l4`）、各层 `python <layer>.py selftest=1` 统一入口、v1 `_archive_v1/` 归档说明 | 运行/修改 OpenSPUM 代码时加载 |
 
 ---
 

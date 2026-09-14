@@ -179,7 +179,7 @@
 | "时间是什么" | `spum-core.md` §2.1 |
 | "引力怎么来的" | `SPUM_系统总纲.md` §14 + `物理学/基本相互作用/引力.md` |
 | "光速为什么是c" | `spum-core.md` §七 + `物理学/光学/光.md` |
-| "α≈1/137哪来的" | `openSPUM/tests/verify_alpha_measurement.py` |
+| "α≈1/137哪来的" | `openSPUM/_archive_v1/tests/verify_alpha_measurement.py` |
 | "新建档案" / "建档" / "初诊" | **【最小加载】** 青囊agent §一-A → 收集出生信息 → 八字排盘 → S_0^0（档案由用户本地保存，不入仓库） |
 | "算八字" / "看看我的八字" | 青囊agent §一-A 步骤1-2（八字排盘 → S_0^0，不写病历） |
 | "我上火了吃什么" | 青囊agent + `五行/人元/食材ΔS数据库.md` |

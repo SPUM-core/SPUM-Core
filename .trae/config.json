@@ -83,7 +83,7 @@
           "热": "物理学/热力学/温度.md",
           "量子": "物理学/量子与原子/量子现象.md",
           "相对论": "宇宙学/相对论与宇宙学/相对论效应.md",
-          "OpenSPUM模拟": "openSPUM/Phase_1/"
+          "OpenSPUM模拟": "openSPUM/src/l0/l0_core.py"
         }
       },
       "rushidao": {
@@ -165,7 +165,7 @@
         "l2Files": {
           "演化规则": ".trae/rules/spum-evolution.md",
           "推理原则": ".trae/rules/spum-reasoning.md",
-          "OpenSPUM": "openSPUM/Phase_0/frame_kernels.py"
+          "OpenSPUM": "openSPUM/src/l0/l0_core.py"
         }
       }
     }

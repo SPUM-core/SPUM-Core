@@ -4,7 +4,7 @@
 
 > 日期：2026-08-29
 > 关联文件：`致阿基米德实验合作组.md`（本报告为其技术附录）
-> 模拟代码：`openSPUM/tests/archimedes_vacuum_weight.py`（确定性，无随机，可复现）
+> 模拟代码：`openSPUM/_archive_v1/tests/archimedes_vacuum_weight.py`（确定性，无随机，可复现）
 
 ---
 
@@ -156,4 +156,4 @@ SPUM 把这条链条的每一环翻译为 ⟨P,ε⟩ 网络操作，使整个机
 
 ## 七、模拟的可复现性
 
-全部结果来自确定性引擎（无随机数）：`python openSPUM/tests/archimedes_vacuum_weight.py` 与 `python openSPUM/tests/stepA_saturation.py`（步骤 A 拐点定位）逐位复现。机制只使用 SPUM 既有公理（创生-湮灭对偶、闭合子图创生抑制、对偶转移、不完美定理），未引入任何新假设。
+全部结果来自确定性引擎（无随机数）：`python openSPUM/_archive_v1/tests/archimedes_vacuum_weight.py` 与 `python openSPUM/_archive_v1/tests/stepA_saturation.py`（步骤 A 拐点定位）逐位复现。机制只使用 SPUM 既有公理（创生-湮灭对偶、闭合子图创生抑制、对偶转移、不完美定理），未引入任何新假设。

@@ -112,7 +112,7 @@ radius = κ / (κ + degree)
 | 晶子 = 饱和球体 | N014 (refines N004) | 空间粒子的饱和形态 |
 | σ = 2/⟨deg⟩ | GT-008 | 球体被压缩程度的全局均值 |
 | 接吻数 12 | N016 | 拓扑常数 12 → 正二十面体 |
-| degree→radius | Phase_0/step3_volume | 代码实现 |
+| degree→radius | `_archive_v1/Phase_0/frame_kernels.py::step3_volume` | 代码实现（v1 归档） |
 
 ---
 

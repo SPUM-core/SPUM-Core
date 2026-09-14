@@ -29,7 +29,7 @@
 | **22** | nodes.txt | L0 核心节点数（N001–N022） |
 | **33** | edges.txt | 核心推导边数 |
 | **15+** | edges.txt | 模块桥接边数 |
-| **224** | tests/ | OpenSPUM 总测试数（51+98+12+25+38） |
+| **207** | tests/ | 单元测试数（根 `tests/`，`python -m unittest discover -s tests`；OpenSPUM v1 的 224 项已随实现归档至 `_archive_v1/`） |
 | **1/3** | 开口占比 | 带边界高斯-博内导出的开口占比上限 |
 | **D_max = 4κ** | 演化约束 | 单帧单节点最大关系变化容量 |
 

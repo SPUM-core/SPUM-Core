@@ -1,4 +1,4 @@
-﻿
+
 ---
 
 设想一个东西：一个智能手环，戴在手腕上就能实时分析你的脉象、判断你身体的失衡方向、告诉你当下最该吃什么、睡多久、做什么运动。
@@ -1046,24 +1046,21 @@ $$\text{防御烈度} \leq \sum_j e(p_{金,j}) / \text{协调成本}$$
 
 ```
 openSPUM/
-├── Phase_1/    # 宇宙内核：关系池、节点注册、种子期、晶子涌现、Σ(6−deg)=12
-├── Phase_2/    # 帧演化引擎：级联消解、创生-湮灭对偶、FrameLog
-├── Phase_3/    # 三维几何聚簇：力导向松弛、正二十面体检测、拓扑验证
-├── Phase_4/    # VSPT球面生长：永恒粒子、原子核组装、电子-VSPT耦合、氢全程仿真
-└── tests/      # 135+ 测试全覆盖
+├── src/l0 ~ l4/   # 现行 L0–L4 分层投影实现（各层 python <layer>.py selftest=1）
+└── _archive_v1/   # v1 归档：Phase_0~4（宇宙内核/帧演化/三维几何/VSPT）+ tests
 ```
 
-135 个测试全部通过。每一次提交都经过 CI 验证。每一个关键物理结果都是可复现的确定性输出：
+v1 的 135+ 测试已随实现一并归档；现行 L0–L4 各层自检全绿。每一个关键物理结果都是可复现的确定性输出：
 
 | 测量值 | 物理对应 | 验证方式 |
 |--------|---------|---------|
-| Σ(6−deg) = 12 | 拓扑常数 | `verify_closed_subgraph.py` |
-| α_SPUM = 1/137 | 精细结构常数 | `measure_sigma_natural.py` |
-| 正二十面体涌现 | 物质粒子骨架 | `Phase_3/icosahedron_assembly.py` |
-| 氢原子基态能量 | 量子力学对应 | `Phase_4/simulate_hydrogen.py` |
-| 悬挂端密度 δ | 不完美定理实证 | `tests/measure_sigma_natural.py` |
+| Σ(6−deg) = 12 | 拓扑常数 | `_archive_v1/tests/verify_closed_subgraph.py` |
+| α_SPUM = 1/137 | 精细结构常数 | `_archive_v1/tests/measure_sigma_natural.py` |
+| 正二十面体涌现 | 物质粒子骨架 | `_archive_v1/Phase_3/icosahedron_assembly.py` |
+| 氢原子基态能量 | 量子力学对应 | `_archive_v1/Phase_4/simulate_hydrogen.py` |
+| 悬挂端密度 δ | 不完美定理实证 | `_archive_v1/tests/measure_sigma_natural.py` |
 
-你不需要是物理学家，不需要是中医，甚至不需要懂 SPUM 公理。你只需要一台能运行 Python 的电脑——`git clone`，`pytest`，看结果。
+你不需要是物理学家，不需要是中医，甚至不需要懂 SPUM 公理。你只需要一台能运行 Python 的电脑——`git clone`，跑一遍各层 selftest，看结果。
 
 ### 13.2 对比：制药工业的封闭与SPUM的开放
 
