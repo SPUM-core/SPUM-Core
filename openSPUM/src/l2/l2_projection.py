@@ -32,6 +32,11 @@
                   （**阶段六第③项**：把 ②③ 的代理读数升级为可证伪的四路幂次读数
                   σ、ΔN=∫σdr、∇σ、∇ΔN；目标 `a=c²∇ΔN ∝ r⁻²`；零假设对照
                   `null_control`；可分辨性由 `synthetic_calibration` 标定）
+  ⑥ 有限窗口   ：`window_ball`（跳数球窗）/ `window_prefix`（`V ≤ V_window` 规模窗）
+                  / `radial_window`（按箱内样本数自动选拟合窗口）/ `window_readouts`
+                  / `window_stability`（**阶段六第④项**：兑现 N1-C「有限窗口由投影层
+                  选取」；判词只看 `σ_window` 末级相对残差，`slope_σ` 与锚点密度
+                  只作旁证——实测二者在窗口上分别「多级为 None」与「被边界效应主导」）
 
 用法
 ----
@@ -40,6 +45,8 @@
       （逐帧打印 L2 摘要；帧演化委托 l0_core，本模块自身不参与 L0 规则）
   python l2_projection.py spectrum=1 seed=icosa nframes=4 cap=12 dmin=3 nbins=8
       （逐帧打印四路径向幂次斜率与判决）
+  python l2_projection.py window=1 seed=icosa nframes=2 sizes=8,16,32
+      （逐帧打印有限窗口的稳定性扫描：窗口读数对窗口大小是否稳定）
 """
 
 import json
@@ -438,6 +445,8 @@ def selftest():
 
     # ---- §6.4 ⑤ 径向幂次谱：夹具 A–F ----
     verify_fixtures()
+    # ---- §6.4 ⑥ 有限窗口算子：夹具 A–G ----
+    verify_window_fixtures()
 
     print("l2_projection selftest: 全部通过")
     print(f"  icosa t=0 对齐传播：11 条树边全部精确 = 2r(5)={2*r5:.6f}；"
@@ -674,6 +683,250 @@ def synthetic_calibration(rs=None, fit_slice=(2, 6)):
     return {"r": list(rs), "fit_slice": [a, b], "cases": cases}
 
 
+# ============================================================
+# §6.4 ⑥ 有限窗口算子（阶段六第④项：兑现 N1-C）
+# ============================================================
+# N1-C（§7 分岔 N1）：V 无界是纯组合 L0 的结构性质；「观测到的有限宇宙」由
+# 投影层选取窗口。本小节把该判词兑现为**显式窗口算子**，并交付「窗口读数对
+# 窗口大小稳定」的可证伪判据。
+#   · 窗口构造：`window_ball`（跳数球窗）/ `window_prefix`（V ≤ V_window 规模窗）
+#   · 拟合窗口：`radial_window`（按箱内样本数自动选取 —— 裁决第③项遗留 (i)：
+#               `fit_slice` 只留给 `synthetic_calibration` 的合成标定口径，
+#               采纳轨迹上的拟合窗口改用「`r>0` 且箱内样本数 ≥ `min_bin_pts`」自动口径）
+#   · 窗口读数：`window_readouts`（σ_window / ⟨deg⟩ / 边界占比 / 分量数 / 锚点密度 / 四路幂次谱）
+#   · 稳定性  ：`window_stability`（逐级 gap + 判词）
+# ⚠️ 窗口是**只读读数工具**：只按节点集合构造新 `RotNet`，不 `prune`、不写回 `net`、
+#    不参与 L0 规则（L2 永不回写 L0）。
+# ⚠️ **边界效应是窗口读数的固有成分**：子图边界节点的度数必然低于母图（邻居被截），
+#    故 `σ_window = V/E` 系统性偏高、`r_v` 与方向场在边界退化。这不是 bug，是读数本身；
+#    判据只看「随窗口增大是否收敛」。
+
+def _subnet(net, nodes):
+    """按节点集合取子图：`rot` **保序截断**（不重排、不 prune）→ 新 `RotNet`。
+
+    保序是关键：L1/L2 的方向场与平行移动完全由 `rot` 的**环序**决定，
+    截断保持相对顺序 ⇒ 子图仍是合法旋转系统（只是边界节点度数下降）。
+    """
+    S = set(nodes)
+    return RotNet({v: [w for w in net.rot[v] if w in S] for v in nodes})
+
+
+def _segments(g):
+    """含 None 的序列 → 相邻差的绝对值列表（任一为 None 则该项为 None）。"""
+    out = []
+    for i in range(len(g) - 1):
+        a, b = g[i], g[i + 1]
+        out.append(None if (a is None or b is None) else abs(b - a))
+    return out
+
+
+def window_ball(net, center=None, radius=2):
+    """**跳数球窗**：以 `center` 为心、在 net 中拓扑距离 ≤ `radius` 的节点集 → 子图。
+
+    `center=None` → 取 `min(net.ids())`（确定性）。球窗天然连通（BFS 只走连通部分），
+    故子图每个节点 `deg ≥ 1`（`radius=0` 时为单点窗）。
+    """
+    # --- S1 空图 ---
+    ids = net.ids()
+    if not ids:
+        return RotNet({})
+    # --- S2 原点（确定性：缺省取最小 id）---
+    c = min(ids) if center is None else center
+    if c not in net.rot:
+        raise ValueError("window_ball: center 不在图中")
+    # --- S3 BFS 至 radius（按 rot 的给定顺序扩展 ⇒ 确定性）---
+    dist = {c: 0}
+    q = deque([c])
+    while q:
+        u = q.popleft()
+        if dist[u] >= int(radius):
+            continue
+        for w in net.rot[u]:
+            if w not in dist:
+                dist[w] = dist[u] + 1
+                q.append(w)
+    # --- S4 子图（升序 id，保序截断）---
+    return _subnet(net, sorted(dist))
+
+
+def window_prefix(net, v_window, center=None):
+    """**规模窗**（`V ≤ V_window` 子图）：按 BFS 序取前 `v_window` 个节点。
+
+    BFS 序由 `rot` 的给定顺序决定 ⇒ 同输入同窗口（确定性）。`v_window ≤ 0` → 空图。
+    """
+    # --- S1 边界：空图 / 非正规模 ---
+    ids = net.ids()
+    if not ids or int(v_window) <= 0:
+        return RotNet({})
+    # --- S2 原点 ---
+    c = min(ids) if center is None else center
+    if c not in net.rot:
+        raise ValueError("window_prefix: center 不在图中")
+    # --- S3 完整 BFS 序（出队即定序；入队即标记，不重复入队）---
+    order, seen, q = [], {c}, deque([c])
+    while q:
+        u = q.popleft()
+        order.append(u)
+        for w in net.rot[u]:
+            if w not in seen:
+                seen.add(w)
+                q.append(w)
+    # --- S4 前缀截取 + 子图 ---
+    return _subnet(net, sorted(order[:int(v_window)]))
+
+
+def radial_window(bins, min_bin_pts=3):
+    """**径向拟合窗口**：`radial_bins` 的箱序列 → 可拟合子序列（按箱内样本数自动选）。
+
+    保留条件：`r_k > 0` **且** `n_k ≥ min_bin_pts`。返回 `{"r","sigma","deg","kept","npts"}`，
+    其中 `kept` 是被保留箱的**位置下标**。`m == 0` → 全空（`npts=0`）。
+    """
+    # --- S1 空箱序列 ---
+    m = len(bins["r"])
+    if m == 0:
+        return {"r": [], "sigma": [], "deg": [], "kept": [], "npts": 0}
+    # --- S2 保留判据（r>0 ∧ 样本数达标）---
+    kept = [k for k in range(m)
+            if bins["r"][k] > 0 and bins["n"][k] >= int(min_bin_pts)]
+    # --- S3 同步抽取三列 ---
+    return {"r": [bins["r"][k] for k in kept],
+            "sigma": [bins["sigma"][k] for k in kept],
+            "deg": [bins["deg"][k] for k in kept],
+            "kept": kept, "npts": len(kept)}
+
+
+def _n_components(sub):
+    """子图连通分量数（纯 BFS，确定性）。"""
+    seen, n = set(), 0
+    for v in sub.ids():
+        if v in seen:
+            continue
+        n += 1
+        q = deque([v])
+        seen.add(v)
+        while q:
+            u = q.popleft()
+            for w in sub.rot[u]:
+                if w not in seen:
+                    seen.add(w)
+                    q.append(w)
+    return n
+
+
+def window_readouts(net, sub, nbins=8, iters=60, kappa=L1.KAPPA):
+    """**窗口读数**：对子图 `sub`（母图 `net`）求一组边界敏感的内禀读数。
+
+    返回固定键：`v_window` / `e_window` / `sigma_window`(=V/E) / `deg_mean`(=2E/V) /
+    `n_boundary`（子图度数 < 母图度数的节点数）/ `frac_boundary` / `n_comp` /
+    `anchor_density` / `spectrum`（四路幂次谱，可为 None）。
+    空窗 → 除计数外全部 None（不抛异常）。
+    """
+    # --- S1 空窗 ---
+    Vw = sub.V()
+    if Vw == 0:
+        return {"v_window": 0, "e_window": 0, "sigma_window": None, "deg_mean": None,
+                "n_boundary": 0, "frac_boundary": None, "n_comp": 0,
+                "anchor_density": None, "spectrum": None}
+    # --- S2 规模读数 ---
+    Ew = sub.E()
+    sigma_window = (Vw / Ew) if Ew else None
+    deg_mean = 2.0 * Ew / Vw
+    # --- S3 边界占比（边界效应 = 窗口偏离母图的直接度量）---
+    n_boundary = sum(1 for v in sub.ids() if net.deg(v) > sub.deg(v))
+    # --- S4 分量数 ---
+    n_comp = _n_components(sub)
+    # --- S5 锚点密度（引力代理；等度图恒 0）---
+    anc = anchors(sub)                      # ⚠️ 返回 dict
+    anchor_density = (len(anc["sinks"]) + len(anc["sources"])) / Vw
+    # --- S6 四路幂次谱（内部自算工件坐标）---
+    spectrum = gravity_spectrum(sub, nbins=nbins, iters=iters, kappa=kappa)
+    return {"v_window": Vw, "e_window": Ew, "sigma_window": sigma_window,
+            "deg_mean": deg_mean, "n_boundary": n_boundary,
+            "frac_boundary": n_boundary / Vw, "n_comp": n_comp,
+            "anchor_density": anchor_density, "spectrum": spectrum}
+
+
+def window_stability(net, sizes=(8, 16, 32), nbins=8, iters=60, kappa=L1.KAPPA,
+                     min_bin_pts=3, tol_rel=0.05):
+    """**窗口稳定性扫描**：逐级读数 + 逐级残差 + 判词（阶段六第④项验证判据）。
+
+    对 `sizes` 中每个规模取 `window_prefix` → `window_readouts`，给出逐级残差。
+    **判词只看 `σ_window = V/E` 的末级*相对*残差**（尺度无关，不靠绝对值拍容差）：
+      `rel_last = |σ_last − σ_prev| / σ_last`
+      · `rel_last ≤ tol_rel` → `stable`；否则 `unstable`；序列含 None/0 → `undefined`。
+    **旁证（如实报，不参与判词；实测依据见各条）**：
+      · `slope_σ` —— 窗口上分箱样本稀少 ⇒ **多级为 None**（实测 t=0 全窗、t=1 的 V=8/32 皆 None），
+        只在可算时作旁证，**不可作判据**；
+      · `anchor_density` —— 被**窗口边界效应主导**：边界节点度数下降 ⇒ `σ_v = 2/deg` 出现梯度 ⇒
+        等度子图也长出锚点（实测球窗 6 节点 `anchor_density = 1.0`，而全窗 = 0），**不可作判据**；
+      · `frac_boundary` —— 边界占比，解释 `σ_window` 偏离母图的来源（实测随窗口单调下降）。
+    ⚠️ 本函数只**如实报读数与判词**，不主张窗口一定稳定。
+    **实测边界（seed=icosa `dense/any`，sizes=8,16,24,32）**：
+      · t=0（V=12）：`V_window ≥ 12` 截断到全图 ⇒ 去重后剩 2 级，`rel_last = 0.3333` ⇒ `unstable`；
+      · t=1（V=32）`rel_last = 0.0547`、t=2（V=36）`rel_last = 0.1346`（σ 序列非单调）⇒ `unstable`；
+      · t=3（V=66）`rel_last = 0.0042` ⇒ `stable`（窗口 24/32 的 σ 已收敛到 0.405）
+      ⇒ **稳定性是有条件的**：`V_window ≪ V` 时成立；V 与窗口同量级时边界效应主导。
+    """
+    # --- S1 输入边界 ---
+    sizes = sorted({int(s) for s in sizes})
+    if not sizes or net.V() == 0:
+        return {"rows": [], "gaps": {k: [] for k in
+                                     ("sigma", "frac_boundary", "anchor_density", "slope_sigma")},
+                "gap_last": {}, "rel_last": None, "trend": "undefined",
+                "n_truncated": 0,
+                "verdict": "undefined", "reason": "sizes 为空或图为空"}
+    # --- S2 逐级读数（谱路用自动拟合窗口 radial_window；**按实际窗口规模去重**）---
+    # ⚠️ `V_window ≥ V` 时 `window_prefix` 截断到全图 ⇒ 多级读数完全相同，会造出
+    #    伪 0 残差（实测 seed=icosa t=0、sizes=(8,16,24,32) 曾因此误判 stable）。
+    #    故按**实际** `v_window` 去重，重复级不计入。
+    rows = []
+    for s in sizes:
+        sub = window_prefix(net, s)
+        if rows and sub.V() == rows[-1]["v_window"]:
+            continue
+        r = window_readouts(net, sub, nbins=nbins, iters=iters, kappa=kappa)
+        spec = r["spectrum"]
+        rw = radial_window(spec["bins"], min_bin_pts) if spec else {"r": [], "sigma": [], "npts": 0}
+        ft = power_fit(rw["r"], rw["sigma"]) if rw["npts"] > 0 else {"slope": None}
+        rows.append({"size": s, "v_window": r["v_window"], "e_window": r["e_window"],
+                     "sigma_window": r["sigma_window"], "frac_boundary": r["frac_boundary"],
+                     "n_comp": r["n_comp"], "anchor_density": r["anchor_density"],
+                     "slope_sigma": ft["slope"],
+                     "truncated": r["v_window"] >= net.V(),
+                     "label": spec["verdict"]["label"] if spec else None})
+    # --- S3 逐级残差（含 None 安全）---
+    gaps = {"sigma": _segments([r["sigma_window"] for r in rows]),
+            "frac_boundary": _segments([r["frac_boundary"] for r in rows]),
+            "anchor_density": _segments([r["anchor_density"] for r in rows]),
+            "slope_sigma": _segments([r["slope_sigma"] for r in rows])}
+    gap_last = {k: (v[-1] if v else None) for k, v in gaps.items()}
+    # --- S4 判词（σ_window 的相对末级残差；趋势作旁证）---
+    sig = [r["sigma_window"] for r in rows]
+    if len(rows) < 2 or any((x is None or x == 0.0) for x in sig):
+        verdict, rel_last, trend = "undefined", None, "undefined"
+        reason = "σ_window 序列含 None/0、或窗口数不足 2 ⇒ 无法判稳定"
+    else:
+        rel = [g / sig[i + 1] for i, g in enumerate(gaps["sigma"]) if g is not None]
+        rel_last = rel[-1] if rel else None
+        trend = ("converging" if all(rel[i] >= rel[i + 1] for i in range(len(rel) - 1))
+                 else "non-monotone") if rel_last is not None else "undefined"
+        if rel_last is None:
+            verdict, reason = "undefined", "σ_window 的逐级残差全为 None"
+        elif rel_last <= tol_rel:
+            verdict = "stable"
+            reason = ("σ_window 末级相对残差 %.4f ≤ tol_rel=%.2f（相对残差趋势 %s）"
+                      "⇒ 窗口读数已稳定" % (rel_last, tol_rel, trend))
+        else:
+            verdict = "unstable"
+            reason = ("σ_window 末级相对残差 %.4f > tol_rel=%.2f（相对残差趋势 %s）"
+                      "⇒ 边界效应未消，窗口未稳定" % (rel_last, tol_rel, trend))
+    # --- S5 汇总 ---
+    return {"rows": rows, "gaps": gaps, "gap_last": gap_last,
+            "rel_last": rel_last, "trend": trend,
+            "n_truncated": sum(1 for r in rows if r["truncated"]),
+            "verdict": verdict, "reason": reason}
+
+
 def _spectrum_demo(seed="icosa", nframes=4, cap=12, dmin=3, nbins=8, iters=60,
                    kappa=L1.KAPPA):
     """CLI：逐帧打印四路幂次斜率与判决（附可分辨性标定 + 零假设对照）。"""
@@ -753,6 +1006,92 @@ def verify_fixtures():
 
 
 # ============================================================
+# §6.4 ⑥ 夹具与 CLI（有限窗口算子）
+# ============================================================
+def verify_window_fixtures():
+    """§6.4 ⑥ 夹具 A–G（窗口算子）：全过返回 True，否则 AssertionError。
+
+    期望值**手工可算或已实测标定**：icosa t=0 = 12 节点 5-正则（V=12 / E=30 / σ=0.4）；
+    球窗 r=1 = 中心 + 5 个一阶邻居，邻居在子图内度数降为 3（连中心 1 + 5-环上 2）
+    ⇒ 5 个边界节点、E = 5（中心边）+ 5（5-环）= 10 ⇒ σ_window = 0.6。
+    """
+    ic = RotNet(SEEDS["icosa"]())
+    # --- 夹具 A：跳数球窗规模（r=0/1/2）---
+    assert window_ball(ic, 0, 0).V() == 1 and window_ball(ic, 0, 0).E() == 0
+    b1 = window_ball(ic, 0, 1)
+    assert b1.V() == 6 and b1.E() == 10
+    b2 = window_ball(ic, 0, 2)
+    assert b2.V() == 11 and b2.E() == 25
+    # --- 夹具 B：规模窗 = BFS 前缀；V=6 时与球窗 r=1 **同集合** ---
+    p6 = window_prefix(ic, 6)
+    assert p6.V() == 6 and p6.ids() == b1.ids()
+    assert window_prefix(ic, 0).V() == 0 and window_prefix(ic, -3).V() == 0
+    assert window_prefix(ic, 999).V() == 12          # 截断到全图
+    # --- 夹具 C：全窗读数 = 母图本身（边界占比 0；等度 ⇒ 无锚点）---
+    rf = window_readouts(ic, window_prefix(ic, 12))
+    assert (rf["v_window"], rf["e_window"]) == (12, 30)
+    assert abs(rf["sigma_window"] - 0.4) < 1e-12 and abs(rf["deg_mean"] - 5.0) < 1e-12
+    assert rf["n_boundary"] == 0 and rf["frac_boundary"] == 0.0
+    assert rf["n_comp"] == 1 and rf["anchor_density"] == 0.0
+    # --- 夹具 D：球窗 r=1（5 个边界节点；等度子图亦因边界长出锚点 —— 如实读数）---
+    rd = window_readouts(ic, b1)
+    assert abs(rd["sigma_window"] - 0.6) < 1e-12 and rd["n_boundary"] == 5
+    assert abs(rd["frac_boundary"] - 5.0 / 6.0) < 1e-12 and rd["n_comp"] == 1
+    assert rd["anchor_density"] == 1.0
+    # --- 夹具 E：radial_window 按「r>0 ∧ 箱内样本数」筛箱 ---
+    rw = radial_window({"r": [0.0, 1.0, 2.0], "n": [4, 1, 5],
+                        "sigma": [0.4, 0.4, 0.4], "deg": [5, 5, 5]}, min_bin_pts=3)
+    assert rw["kept"] == [2] and rw["npts"] == 1 and rw["r"] == [2.0]
+    assert radial_window({"r": [], "n": [], "sigma": [], "deg": []})["npts"] == 0
+    # --- 夹具 F：**判据能拒绝**（反向控制）——t=0 窗口扫描必判 unstable ---
+    st0 = window_stability(ic, sizes=(6, 12))
+    assert st0["verdict"] == "unstable" and abs(st0["rel_last"] - 0.5) < 1e-12
+    # --- 夹具 H：`V_window ≥ V` 的**截断去重**（防伪 0 残差）---
+    #     全图仅 12 节点 ⇒ sizes 中 16/24/32 全部截断到 12，只计一次 ⇒ rows 长度 2
+    sth = window_stability(ic, sizes=(8, 16, 24, 32))
+    assert len(sth["rows"]) == 2 and sth["n_truncated"] == 1
+    assert sth["verdict"] == "unstable" and abs(sth["rel_last"] - 1.0 / 3.0) < 1e-12
+    # --- 夹具 G：t=1 扫描 —— 相对残差递减（trend=converging）但末级仍超容差 ---
+    import l0_core as m
+    c = m.L0Core(m.RotNet(SEEDS["icosa"]()), cap=12, dmin=3,
+                 vminus="dense", vplus="any")
+    c.frame()
+    st1 = window_stability(c.net, sizes=(8, 16, 32))
+    assert st1["verdict"] == "unstable" and st1["trend"] == "converging"
+    assert st1["gaps"]["sigma"][0] > st1["gaps"]["sigma"][1]
+    return True
+
+
+def _window_demo(seed="icosa", nframes=2, cap=12, dmin=3, sizes=(8, 16, 32),
+                 nbins=8, iters=60, kappa=L1.KAPPA):
+    """CLI：逐帧打印窗口稳定性扫描（窗口读数对窗口大小是否稳定？）。"""
+    import l0_core as m
+    c = m.L0Core(m.RotNet(SEEDS[seed]()), cap=cap, dmin=dmin,
+                 vminus="dense", vplus="any", kappa=kappa)
+    print(f"== L2 有限窗口算子（§6.4 ⑥；seed={seed} cap={cap} dmin={dmin} dense/any "
+          f"窗口 {list(sizes)} nbins={nbins} 松弛 {iters} 轮）==")
+    print("窗口 = BFS 前缀子图（V ≤ V_window，只读；不改 L0、不 prune）；"
+          "判词只看 σ_window 末级**相对**残差")
+    for t in range(nframes + 1):
+        st = window_stability(c.net, sizes=sizes, nbins=nbins, iters=iters, kappa=kappa)
+        print(f"-- t={t}  V={c.net.V()} E={c.net.E()}  判词={st['verdict']}  "
+              f"rel_last={st['rel_last']}  趋势={st['trend']}")
+        print(f"   {'V_win':>6} {'E_win':>6} {'σ_win':>8} {'边界占比':>9} "
+              f"{'锚点密度':>9} {'slope_σ':>9} {'谱判词':>10}")
+        for row in st["rows"]:
+            sg = (f"{row['slope_sigma']:>9.3f}" if row["slope_sigma"] is not None
+                  else f"{'--':>9}")
+            print(f"   {row['v_window']:>6} {row['e_window']:>6} "
+                  f"{row['sigma_window']:>8.4f} {row['frac_boundary']:>9.4f} "
+                  f"{row['anchor_density']:>9.3f} {sg} {str(row['label']):>10}")
+        print(f"   依据：{st['reason']}")
+        if t < nframes:
+            c.frame()
+    print("（旁证不参与判词：slope_σ 在窗口上常因箱内样本稀少而为 `--`；"
+          "锚点密度被边界效应主导 —— 等度子图也会长出锚点）")
+
+
+# ============================================================
 # CLI
 # ============================================================
 def _demo(seed="icosa", nframes=4, cap=12, dmin=3, iters=60, kappa=L1.KAPPA):
@@ -801,6 +1140,14 @@ def main(argv):
                        cap=int(kv.get("cap", 12)), dmin=int(kv.get("dmin", 3)),
                        nbins=int(kv.get("nbins", 8)), iters=int(kv.get("iters", 60)),
                        kappa=int(kv.get("kappa", L1.KAPPA)))
+        return
+    if "window" in kv:
+        raw = kv.get("sizes", "8,16,32")
+        _window_demo(seed=kv.get("seed", "icosa"), nframes=int(kv.get("nframes", 2)),
+                     cap=int(kv.get("cap", 12)), dmin=int(kv.get("dmin", 3)),
+                     sizes=tuple(int(x) for x in raw.split(",") if x.strip()),
+                     nbins=int(kv.get("nbins", 8)), iters=int(kv.get("iters", 60)),
+                     kappa=int(kv.get("kappa", L1.KAPPA)))
         return
     if "seed" in kv or "nframes" in kv:
         _demo(seed=kv.get("seed", "icosa"), nframes=int(kv.get("nframes", 4)),
