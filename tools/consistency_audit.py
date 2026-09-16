@@ -340,7 +340,7 @@ def audit_unregistered_modules(scans: list[FileScanResult],
                                g: DependencyGraph) -> list[tuple[str, str]]:
     """检测未注册模块：文件使用了模块前缀但未在 module_nodes.txt 注册"""
     # 已知的模块前缀
-    known_prefixes = {'GT', 'SOC', 'ECON', 'LING', 'FI', 'VSPT', 'AGT', 'COSM'}
+    known_prefixes = {'GT', 'SOC', 'ECON', 'LING', 'FI', 'VSPT', 'AGT', 'COSM', 'GEO'}
     unreg = []
     for s in scans:
         for ref in s.refs_modules:

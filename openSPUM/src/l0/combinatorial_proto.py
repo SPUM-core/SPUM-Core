@@ -32,7 +32,8 @@
   python combinatorial_proto.py selftest=1
   python combinatorial_proto.py seed=icosa puncture=1          （单点穿刺 → 单开口）
 
-  seed      : tetra | icosa | patch（R=2 → 19 元胞的开放三角晶格贴片）
+  seed      : tetra | icosa | patch（默认 R=2 → 19 元胞贴片；R=1 → 7 点六瓣花环；
+              半径由 R= 传入，仅 patch 使用）
   mode      : all（每个合法三角面都创生）| one（每帧只创生一次）
               | hole（洞锥化，闭合开口）| edge（洞边锥化，边界生长）
   dmin      : 删除阈值（公理 deg<2；三维三角剖分工程下限 3）
@@ -343,6 +344,26 @@ def seed_icosa():
     return rotation_from_faces(faces)
 
 
+def seed_bipyramid(n=5):
+    """双锥 n（n 边形赤道）：V=n+2 E=3n F=2n chi=2 —— **两极各 deg=n**，赤道各 deg=4。
+
+    对任意 n ≥ 3 都合法（闭合球面三角剖分），且 **E = 3V−6**（极大平面图：
+    平面性已推到饱和极限，度数仍无上界）。用途见 `l0_count.no_intrinsic_capacity`
+    ——「纯组合 L0 不存在度数上界」的见证族。
+
+    注：n ≥ 4 时 link 全 cycle（干净见证，n=4 即八面体）；**n=3 退化**——
+    三角双锥的赤道三角形是**分离三角**（3-团非面）⇒ `audit` 报 `chord=3`，
+    故见证族从 n=4 起。
+    """
+    T, B = 0, 1
+    A = [2 + i for i in range(n)]
+    faces = []
+    for i in range(n):
+        faces.append((T, A[i], A[(i + 1) % n]))
+        faces.append((B, A[(i + 1) % n], A[i]))
+    return rotation_from_faces(faces)
+
+
 def seed_patch(R=2):
     """三角晶格六边形贴片（R=2 → 19 元胞）的开放种子。
 
@@ -364,7 +385,8 @@ def seed_patch(R=2):
     return rot
 
 
-SEEDS = {"tetra": seed_tetra, "icosa": seed_icosa, "patch": seed_patch}
+SEEDS = {"tetra": seed_tetra, "icosa": seed_icosa, "bipyramid": seed_bipyramid,
+         "patch": seed_patch}
 
 
 # ============================================================
@@ -686,12 +708,15 @@ def main():
     nframes = int(kv.get("nframes", rest[0] if rest else 4))
     unguarded = kv.get("unguarded", "0") == "1"
     puncture = kv.get("puncture", "0") == "1"
+    R = int(kv.get("R", 2))
     if seed not in SEEDS:
         raise SystemExit(f"未知种子 {seed}，可选 {sorted(SEEDS)}")
 
-    net = RotNet(SEEDS[seed]())
+    rot0 = seed_patch(R) if seed == "patch" else SEEDS[seed]()
+    net = RotNet(rot0)
     print("=" * 78)
-    print(f"[纯组合原型] seed={seed} mode={mode} dmin={dmin} "
+    r_tag = f" R={R}" if seed == "patch" else ""
+    print(f"[纯组合原型] seed={seed}{r_tag} mode={mode} dmin={dmin} "
           f"nframes={nframes} unguarded={int(unguarded)} puncture={int(puncture)}")
     print("  一帧 = 创生(全部合法位置) → 判断悬挂 → 删除(只删一层)")
     print("=" * 78)

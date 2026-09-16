@@ -64,6 +64,36 @@
       "gap"            ：只保留**正角亏**候选（δ = Σ_{v∈corners}(κ − deg(v)) > 0）。
                          δ <= 0 ⇒ 该处已饱和/过密 ⇒ 创生被抑制 =「闭合壳内创生抑制」。
   kappa = 6                       # 平坦阈值：角亏 δ(v) = κ − deg(v)；三角剖分 κ=6
+  wallk = None | K（K ≥ 3）       # 容量参数化的**对照/反证**装置（见下「墙尺度守恒」）
+
+墙尺度守恒（wallk）—— **容量参数化的对照（反证装置）**
+--------------------------------------------------
+  用户裁定（2026-09-14）：「**没有边长，只有关系**」。容量若写成「墙的边长 k」，
+  就已经把几何（长度）偷偷塞回内核 —— k 成了**输入参数**。故本条**不是**
+  「从纯关系推导晶子」的机制，而是一台**反证装置**：把容量当参数喂进内核，
+  看晶子能否自己涌现，而不被喂进来。
+  实测（`wall=1`，见 §7.5）：**不能** —— 机制只把喂进来的 k **原样守恒**：
+    · 种子已全 deg=5（icosa）⇒ V 在 12↔11 间 2-循环，无洞相恰为 icosa
+      （**继承种子**，不是涌现）
+    · 种子既无 deg-5 元胞也无 5-墙（patch / tetra）⇒ **一帧零动作，完全冻结**
+    · 种子部分 deg-5（bipyramid n=5）⇒ 2-循环，原有的不均匀被原样保住
+  ⇒ 判决：**守恒律，不是选择律**。
+  「锥化 k-墙 ⇒ 新点 deg = k」是恒等式（`cone_tri_face` 即 k=3 支）——这部分成立；
+  **不成立的是「谁来定 k」**。
+
+  纯关系侧的正确表述（同一次裁定）：
+    · 链式关系 A…F 闭合 ⇒ **环**。A2「存在即被确认」强制这一点：不闭合的链
+      端点 deg=1，被删 ⇒ 链无法以「链」的身份存活，只能闭合成环。
+    · 存在 O 与环上全部节点有关系 ⇒ **圆环**（轮）。在引擎里这就是 `cone_hole`：
+      洞就是那个环，锥化 = O 与环上全部节点建立关系。
+    ⇒ 两条都不用「边长」：O 的度数只是「环上有几个节点」这个**关系的读数**，
+      不是输入参数。故 wallk 留作对照，不代表正确路线。
+
+  对照规则：
+    有边长 == K 的墙 ⇒ 锥化一面（V⁺；新点 deg = K）
+    无墙            ⇒ 删一个 deg == K 的元胞（V⁻；其 K 面并成一面 K-墙 = 制造燃料）
+  注：wallk 非 None 时接管 §4 帧执行；vminus / pairing / drive 在该模式下不生效。
+  口径：CLI `wall=1 wallk=K`；读数与判据见 `wall_probe` / `_print_wall`。
 
 采纳的内核动力学（2026-09-13，§7.4 四组对照裁定）
 --------------------------------------------------
@@ -107,6 +137,10 @@
   python l0_core.py recon=1 mode=phi1 V=13 nframes=40 perturb=0
       （重连动力学：固定 V，动作集 = 边翻转（对合）；mode = none | phi1 | phi2；
         perturb = 起步前先走的 Φ₂ 步数；V=0 时用 seed）
+  python l0_core.py seed=icosa wallk=5 wall=1 nframes=40
+      （墙尺度守恒·**对照装置**：V⁺ 锚 k-墙 / V⁻ 锚 deg-k 元胞。实测为**守恒律
+        而非选择律** —— icosa 得 V=12↔11 的 2-循环（晶子继承种子）；patch/tetra
+        无 k 结构则一帧零动作、完全冻结。k 是输入 ⇒ 不是涌现）
   python l0_core.py seed=icosa extra=tetra cap=5 nframes=21 product=1
       （稳定结构读数：连通分量 / 分量级 12 壳（V=12 且全 deg==5）/ 缺口清单。
         extra 与 seed **不连通**地并成多分量种子 ⇒ 0..11 恒为独立 12 壳；
@@ -117,7 +151,7 @@ import math
 import sys
 from collections import Counter
 
-from combinatorial_proto import RotNet, SEEDS
+from combinatorial_proto import RotNet, SEEDS, seed_bipyramid
 
 CREATION = "V+"
 ANNIHILATION = "V-"
@@ -156,7 +190,7 @@ class L0Core:
     """L0 内核。net 为旋转系统状态，cap 为容量上界（安全预算，非涌现极限）。"""
 
     def __init__(self, net, cap=64, dmin=3, drive="slack", pairing="none",
-                 vminus="dangling", vplus="any", kappa=6):
+                 vminus="dangling", vplus="any", kappa=6, wallk=None):
         self.net = net
         self.cap = int(cap)      # §2.2 容量约束 deg ≤ cap（内存/安全上界）
         self.dmin = int(dmin)    # §4.3 删除阈值（公理下限 2；三角剖分下限 3）
@@ -165,6 +199,17 @@ class L0Core:
         self.vminus = str(vminus)    # "dangling"（现状）| "dense"（过密边湮灭）
         self.vplus = str(vplus)      # "any"（现状）| "gap"（只在正角亏处创生）
         self.kappa = int(kappa)      # 平坦阈值 κ：角亏 δ(v) = κ − deg(v)
+        # 墙尺度守恒/链-环动力学（见模块头「链/环自己定」）：非 None 时接管 §4 帧执行
+        #   "auto"       = **不给 k**：链/环自己定（V⁺ 锥洞 / V⁻ 断边）
+        #   整数 K ≥ 3   = 容量**参数化对照**（反证装置，见下）
+        if wallk is None or wallk in ("", 0, "0"):
+            self.wallk = None
+        elif wallk == "auto":
+            self.wallk = "auto"
+        else:
+            self.wallk = int(wallk)
+            if self.wallk < 3:
+                raise ValueError(f"未知 wallk={wallk}，须为 ≥ 3 的整数或 'auto'")
         if self.vminus not in ("dangling", "dense"):
             raise ValueError(f"未知 vminus={vminus}，可选 dangling | dense")
         if self.vplus not in ("any", "gap"):
@@ -215,14 +260,27 @@ class L0Core:
             # 故新点度数必须在此独立校验——否则锥化大洞会造出 deg=k 的超容点。
             if len(vs) > self.cap:
                 continue
+            # 墙尺度守恒（wallk）：V⁺ 只锚定在**边长恰为 wallk 的墙**上。
+            # 锥化一面 k-墙 ⇒ 新点度数恰为 k（容量 = 墙的边长；cone_tri_face 即 k=3 支）。
+            if self.wallk is not None and len(vs) != self.wallk:
+                continue
             # vplus="gap"：只在**正角亏**（缺口/正曲率）处创生 —— 闭合壳内创生抑制
             if self.vplus == "gap" and self.gap(vs) <= 0:
                 continue
             cands.append(self._mk(CREATION, kind, tuple(vs)))
-        # 湮灭候选：悬挂/孤立节点
-        for v in self.net.ids():
-            if self.net.deg(v) < self.dmin:
-                cands.append(self._mk(ANNIHILATION, "node", (v,)))
+        # 湮灭候选
+        if self.wallk is not None:
+            # 墙尺度守恒：V⁻ 锚定 deg == wallk 的元胞，且**只在无墙可锥时点火**——
+            # 删一个 deg-k 元胞 ⇒ 其 k 个面并成一面 k-墙 ⇒ **制造** V⁺ 的燃料（对偶）。
+            # 一帧恰一个动作：有墙则锥墙（V⁺），无墙则造墙（V⁻）⇒ 墙尺度被守恒。
+            if not cands:
+                kw = [v for v in self.net.ids() if self.net.deg(v) == self.wallk]
+                if kw:
+                    cands.append(self._mk(ANNIHILATION, "node", (min(kw),)))
+        else:
+            for v in self.net.ids():
+                if self.net.deg(v) < self.dmin:
+                    cands.append(self._mk(ANNIHILATION, "node", (v,)))
         return cands
 
     def _mk(self, ctype, kind, corners):
@@ -350,9 +408,52 @@ class L0Core:
     # ========================================================
     # §4 帧执行（双缓冲：读 S_t → 写 S_{t+1}）
     # ========================================================
+    def _wall_faces(self, net):
+        """边长恰为 wallk 的墙（面/洞）清单，corners 字典序（确定性）。"""
+        out = []
+        for cyc in net.faces():
+            vs = net.face_vertices(cyc)
+            if len(vs) == self.wallk and len(set(vs)) == len(vs):
+                out.append(tuple(vs))
+        return sorted(out)
+
+    def _wall_step(self, cands):
+        """墙尺度守恒模式的一帧（wallk 非 None 时替代 `_step`）。
+
+        消费 `propose()`（故与候选顺序无关）：一帧恰一个动作 ——
+          · 有 k-墙（V⁺ 候选非空）⇒ 锥化其中**一面**（corners 字典序最小者）。
+            锥化 k-墙 ⇒ 新点度数 = k。
+          · 无 k-墙 ⇒ 删除**一个** deg == wallk 的元胞（id 最小者）；其 k 个面
+            并成一面 k-墙 ⇒ **V⁻ 制造 V⁺ 的燃料**（对偶）。
+        末尾照常 §4.3 判断 + 删除（只删一层，不级联）。
+        返回 (S_{t+1}, born, dead, broken, spent)，契约与 `_step` 一致。
+        """
+        nx = _clone(self.net)
+        born, dead, spent = [], [], 0
+        vp = [c for c in cands if c["type"] == CREATION]
+        vm = [c for c in cands if c["type"] == ANNIHILATION]
+        if vp:
+            c = min(vp, key=lambda c: c["corners"])
+            vs = c["corners"]
+            w = (nx.cone_tri_face(*vs) if c["kind"] == "face"
+                 else nx.cone_hole(list(vs)))
+            if w is not None:
+                born.append(w)
+                spent = len(vs)
+        elif vm:
+            v = min(c["corners"][0] for c in vm)
+            nx.remove_vertex(v)
+            dead.append(v)
+        for v in [x for x in nx.ids() if nx.deg(x) < self.dmin]:
+            nx.remove_vertex(v)
+            dead.append(v)
+        return nx, sorted(born), sorted(dead), [], spent
+
     def _step(self, cands):
         """纯函数：给定候选序列产出下一状态（不改 self）。
         返回 (S_{t+1}, born, dead, broken, spent)。"""
+        if self.wallk is not None:                   # 墙尺度守恒接管帧执行
+            return self._wall_step(cands)
         accept = self.resolve(cands)                 # 读 S_t
         nx = _clone(self.net)                        # 写缓冲 S_{t+1}
         e0 = self.net.E()
@@ -823,6 +924,97 @@ def _print_dyn(rows):
     print(f"  同帧「既有断边又有删点」的帧数 = {noninverse} / "
           f"{sum(1 for r in rows if r['born'] is not None)}"
           f"  （> 0 ⇒ 非互逆的湮灭已生效 = L0-A9 悬挂端再生激活）")
+
+
+# ============================================================
+# §7.5 墙尺度守恒（wallk）读数：V 轨迹 / 墙数 / 度直方 / 结构 2-循环
+#   **对照装置，非正确路线**（「没有边长，只有关系」—— k 作为输入 = 残余几何）。
+#   规则（一帧恰一个动作，纯组合）：
+#     有边长 == k 的墙（面/洞）⇒ 锥化一面 —— V⁺，新点 deg == k（容量 = 墙的边长）
+#     无墙                    ⇒ 删一个 deg == k 的元胞 —— V⁻，其 k 面并成一面 k-墙
+#   判决（实测）：**守恒律，不是选择律** —— 种子全 deg=k ⇒ 2-循环在 V=12/(6−k)；
+#     种子无 k 结构（patch/tetra）⇒ 一帧零动作、完全冻结；晶子恒为种子所给。
+#   参考读数：k=3 墙=三角面（恒存在）⇒ 燃料不枯竭 ⇒ 不自限。
+# ============================================================
+def _struct_key(core):
+    """结构键（不含 id/nid）：(V, 度直方图)。用于识别「同构 2-循环」。"""
+    return (core.net.V(), tuple(sorted(Counter(core.degrees()).items())))
+
+
+def _wall_row(core, rec=None):
+    net = core.net
+    degs = core.degrees()
+    cyc = net.faces()
+    holes = n_wall = 0
+    for c in cyc:
+        vs = net.face_vertices(c)
+        if len(set(vs)) != len(vs):
+            continue
+        if len(vs) >= 4:
+            holes += 1
+        if len(vs) == core.wallk:
+            n_wall += 1
+    V, E = net.V(), net.E()
+    F = len(cyc) + sum(1 for d in degs if d == 0)
+    sh = core.shell_probe()
+    return {"t": core.t, "V": V, "E": E, "F": F, "chi": V - E + F,
+            "maxdeg": max(degs, default=0), "mindeg": min(degs, default=0),
+            "hist": dict(sorted(Counter(degs).items())),
+            "S": sh["S"], "shell12": sh["n_icosa12"], "holes": holes,
+            "n_wall": n_wall, "wall_unif": set(degs) == {core.wallk},
+            "act": None if rec is None else ("V+锥墙" if rec["born"] else
+                                             ("V-造墙" if rec["dead"] else "-")),
+            "born": None if rec is None else rec["born"],
+            "dead": None if rec is None else rec["dead"]}
+
+
+def wall_probe(core, nframes=24, guard=20000):
+    """跑 wallk 长程，返回 (逐帧记录, 结构周期, 预周期)。
+
+    周期性用**结构键**（V + 度直方图）判定，因为 `nid` 单调递增 ⇒ 带 id 的
+    state_key 永不重复，严格循环不存在；有意义的读数是「同构 2-循环」。
+    """
+    seen, rows = {}, []
+    seen[_struct_key(core)] = core.t
+    rows.append(_wall_row(core))
+    period = pre = None
+    for _ in range(nframes):
+        if core.net.V() == 0 or core.net.V() > guard:
+            break
+        rec = core.frame()
+        key = _struct_key(core)
+        row = _wall_row(core, rec)
+        if key in seen and period is None:
+            pre, period = seen[key], core.t - seen[key]
+        seen.setdefault(key, core.t)
+        rows.append(row)
+    return rows, period, pre
+
+
+def _print_wall(rows, period, pre, wallk):
+    print(f"  t     V     E     F   χ  maxd mind  Σ(6−deg)  k-墙   洞  全deg{wallk}  动作"
+          f"      度直方")
+    for r in rows:
+        hist = " ".join(f"{d}:{n}" for d, n in r["hist"].items())
+        print(f"  {r['t']:<4d} {r['V']:5d} {r['E']:5d} {r['F']:5d} {r['chi']:4d} "
+              f"{r['maxdeg']:4d} {r['mindeg']:4d} {r['S']:8d} {r['n_wall']:5d} "
+              f"{r['holes']:4d} {'Y' if r['wall_unif'] else '.':^8} "
+              f"{r['act'] or '-':<7} {hist}")
+    if period is None:
+        print(f"  结构周期：{len(rows) - 1} 帧内 (V, 度直方) 无重复（未进入同构循环）")
+    else:
+        tail = "周期=1 即冻结" if period == 1 else f"同构 {period}-循环 ⇒ 自限"
+        print(f"  结构周期：t={pre} 与 t={pre + period} 的 (V, 度直方) 重复 "
+              f"→ 周期={period}，预周期={pre}（{tail}）")
+    unif = [r for r in rows if r["wall_unif"]]
+    tgt = f"{12 / (6 - wallk):g}" if wallk < 6 else "—（无解）"
+    print(f"  全 deg={wallk} 的帧数 = {len(unif)} / {len(rows)}；"
+          f"此时 V 取值 = {sorted({r['V'] for r in unif}) or '—'}"
+          f"（理论 12/(6−{wallk}) = {tgt}）")
+    print(f"  结构晶子壳（V=12 全 deg=5 独立分量）出现帧数 = "
+          f"{sum(1 for r in rows if r['shell12'] > 0)} / {len(rows)}")
+    if wallk >= 6:
+        print(f"  ⚠ k={wallk} ≥ 6：全 deg=k ⇒ Σ(6−deg) = V(6−k) ≤ 0 ≠ 12 ⇒ 无解")
 
 
 # ============================================================
@@ -1419,6 +1611,32 @@ def selftest():
           f"{cons['frames']} 帧 n_comp {cons['n0']}→{cons['n_end']}"
           f"（min/max={cons['n_min']}/{cons['n_max']}，逐帧不增={cons['never_up']}）")
 
+    # 12. 墙尺度守恒（wallk）：一帧恰一个动作 —— 有 k-墙则锥化一面（V⁺，新点 deg=k）；
+    #     无墙则删一个 deg-k 元胞（V⁻，制造一面 k-墙）。判据：
+    #       ① k=5（icosa）：偶数帧 V=12 全 deg=5（= 正二十面体，n_icosa12=1）、
+    #          奇数帧 V=11 ⇒ V 在 12↔11 间 2-循环（结构周期=2）⇒ 自限；
+    #       ② k=4（双锥4 = 八面体，V=6 全 deg=4）：V 在 6↔5 间 2-循环，偶数帧全 deg=4；
+    #       ③ k=3（tetra）：墙=三角面恒存在 ⇒ 燃料不枯竭 ⇒ **不自限**，V 逐帧 +1。
+    w5 = L0Core(RotNet(SEEDS["icosa"]()), wallk=5)
+    r5, p5, _ = wall_probe(w5, 8)
+    w5_ok = (all(r["V"] == 12 and r["wall_unif"] for r in r5 if r["t"] % 2 == 0)
+             and all(r["V"] == 11 for r in r5 if r["t"] % 2 == 1)
+             and r5[0]["shell12"] == 1 and p5 == 2)
+    w4 = L0Core(RotNet(seed_bipyramid(4)), wallk=4)
+    r4, p4, _ = wall_probe(w4, 8)
+    w4_ok = (all(r["V"] == 6 and r["wall_unif"] for r in r4 if r["t"] % 2 == 0)
+             and all(r["V"] == 5 for r in r4 if r["t"] % 2 == 1) and p4 == 2)
+    w3 = L0Core(RotNet(SEEDS["tetra"]()), wallk=3)
+    r3, _, _ = wall_probe(w3, 6)
+    w3_ok = [r["V"] for r in r3] == [4, 5, 6, 7, 8, 9, 10]
+    ok &= w5_ok and w4_ok and w3_ok
+    print(f"  [{'OK' if w5_ok else 'FAIL'}] 墙守恒 k=5：V={[r['V'] for r in r5]}"
+          f"（偶数帧全 deg=5 且 V=12 = 晶子；结构周期={p5}）")
+    print(f"  [{'OK' if w4_ok else 'FAIL'}] 墙守恒 k=4：V={[r['V'] for r in r4]}"
+          f"（偶数帧全 deg=4 且 V=6；结构周期={p4}）")
+    print(f"  [{'OK' if w3_ok else 'FAIL'}] 墙守恒 k=3：V={[r['V'] for r in r3]}"
+          f"（墙=三角面恒存在 ⇒ 不自限，逐帧 +1）")
+
     print("-" * 78)
     print(f"自检总体: {'全部通过' if ok else '存在失败项'}")
     return ok
@@ -1444,11 +1662,13 @@ def main():
     probe = kv.get("probe", "0") == "1"
     bare = kv.get("bare", "0") == "1"
     dyn = kv.get("dyn", "0") == "1"
+    wall = kv.get("wall", "0") == "1"
     product = kv.get("product", "0") == "1"
     extra = kv.get("extra", "")          # 逗号分隔：与 seed **不连通**地并成多分量种子
     vminus = kv.get("vminus", "dense" if dyn else "dangling")
     vplus = kv.get("vplus", "any")
     kappa = int(kv.get("kappa", 6))
+    wallk = int(kv.get("wallk", 0))
     names = [seed] + ([s for s in extra.split(",") if s] if extra else [])
     for nm in names:
         if nm not in SEEDS:
@@ -1503,7 +1723,24 @@ def main():
 
     core = L0Core(_seed_net(), cap=cap, dmin=dmin,
                   drive=drive, pairing=pairing,
-                  vminus=vminus, vplus=vplus, kappa=kappa)
+                  vminus=vminus, vplus=vplus, kappa=kappa,
+                  wallk=wallk or None)
+    if wall:
+        if core.wallk is None:
+            raise SystemExit("wall=1 需要 wallk=K（K ≥ 3）")
+        print("=" * 78)
+        print(f"[L0 墙尺度守恒] seed={seed} wallk={core.wallk} cap={cap} dmin={dmin} "
+              f"nframes={nframes}")
+        print(f"  规则：有边长 == {core.wallk} 的墙（面/洞）⇒ 锥化一面"
+              f"（V⁺，新点 deg == {core.wallk}）；"
+              f"无墙 ⇒ 删一个 deg == {core.wallk} 的元胞（V⁻，制造一面 k-墙）")
+        print("=" * 78)
+        if puncture:
+            v, d0 = core.puncture()
+            print(f"  [穿刺] V- 删元胞 {v}(deg={d0}) → 洞 {d0} 边形")
+        rows, period, pre = wall_probe(core, nframes)
+        _print_wall(rows, period, pre, core.wallk)
+        return
     if dyn:
         adopted = (vminus == "dense" and vplus == "any")
         tag = "采纳配置" if adopted else "对照"

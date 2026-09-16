@@ -32,12 +32,24 @@
 ⇒ `N∈{4,6,12}`（见 `forced_N`）。**决定正则三角剖分解的是 12 的约数表，不是 12 本身**；
 全程不碰 π / 角度 / 半径。
 
+容量内生性判定（§4b，2026-09-14）
+--------------------------------
+上表把「均匀饱和 C」当**预设**用。但 §7.2 实测结论是「**cap 是承重结构，不是内存
+参数**」——容量是承重的。那它从哪来？`no_intrinsic_capacity` 给判定：
+
+  纯组合 L0 **不可能**内生容量。见证族 = 双锥 n（`seed_bipyramid`）：对任意 n ≥ 4
+  都合法（χ=2、无洞、link 全 cycle）且 **E = 3V−6**（极大平面图 —— 平面性推到饱和
+  极限），却含 deg = n 的顶点 ⇒ **组合层没有「太满」这个状态**。
+  ⇒ 容量不是组合量；要它必须外接**排他性**（角半径 / 球影，附录 A §A.3），或声明为
+  来自投影层的外部输入。这正是「cap 承重」的根源 —— 承重，因为它**不在**组合层里。
+
 用法
 ----
   python l0_count.py selftest=1
   python l0_count.py seed=icosa obj=V closed=1 tri=1 uniform=5
   python l0_count.py seed=patch obj=sum6deg closed=1 tri=1
   python l0_count.py table=1
+  python l0_count.py capacity=1 [D=64]      # 容量内生性判定（双锥见证族压力测试）
 """
 
 import os
@@ -47,7 +59,9 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
-from combinatorial_proto import RotNet, SEEDS, audit  # noqa: E402
+from combinatorial_proto import (  # noqa: E402
+    RotNet, SEEDS, audit, seed_bipyramid,
+)
 
 # 可计数的对象类（读数侧）
 OBJ_CLASSES = ("V", "E", "F", "deg_hist", "sum6deg", "holes", "n_shells")
@@ -58,6 +72,14 @@ BOUNDARY = (
     ("接吻数 12", "三维等大球几何容量", "L0 内无算子：组合 12 → 几何 12 的投影层未落地"),
     ("60°", "K₃ 内角（180°/3）", "角度投影：L0 只记「三边两两相邻」"),
     ("16π", "中心球面可辨区域数", "π 是认知压缩因子，非 L0 常数"),
+    ("关系容量（deg 上界）", "排他性占据（球面容量 / 角半径 r(deg)）",
+     "L0 内**不可能**有算子：组合层对任意 deg 都有合法见证（双锥族，"
+     "见 no_intrinsic_capacity）—— 故 cap 只能外接，不能内生。"
+     "**L0-B14 加固**（2026-09-15，`probe_r1.py`）：不仅见证族存在，"
+     "且 r-邻域可检查的局部不变量（κ=6−deg、球内三角数、link 类型、"
+     "|N₂|）系统性地无法区分 deg≤5 与 deg≥6——双锥极点与正二十面体"
+     "顶点的 1-邻域结构同构。唯一路径：A3（均匀性，全局假设）+ "
+     "Euler 恒等式 ⇒ (6−d)|12 ⇒ d∈{3,4,5}；无 A3 则只约束均值。"),
 )
 
 
@@ -195,6 +217,68 @@ def forced_table(lo=0, hi=8):
 
 
 # ============================================================
+# §4b 容量内生性判定：纯组合 L0 **不可能**内生「关系容量」上界
+# ============================================================
+def no_intrinsic_capacity(D=64):
+    """**判定**：纯组合 L0 里不存在「关系容量」（度数上界）的内生判据。
+
+    四段，每段可复算：
+
+      (a) **见证族**：双锥 n（`seed_bipyramid`）对任意 n ≥ 4 合法 ——
+          χ=2、无洞、link 全 cycle（无 path/chord/disc）、握手成立，且
+          **d = 3V−6−E = 0**（极大平面图：平面性已推到饱和极限）；同时含
+          deg = n 的顶点（两极），Σ(6−deg) ≡ 12。
+          ⇒ **任意度数都能出现在合法构型里**：组合层没有「太满」这个状态。
+          （n=3 是退化特例——三角双锥=两个四面体叠合，赤道三角形是**分离三角**
+           ⇒ `chord=3`；故见证族从 n=4 起。n=4 即八面体，全 deg=4。）
+      (b) **压力测试**：n = 4..D 逐一过 `audit`，无一被任何**组合判据**拦下。
+      (c) **对照**：守恒量 Σ(6−deg)=6χ 是**全局恒等式**，不含单个 deg 的上界；
+          §7.4 N1 判决独立记录「cap 只钉局部度数，钉不住 V」。
+      (d) **L0-B14 加固**（2026-09-15，`probe_r1.py`）：局部规则类方法
+          **系统性地**无法区分 deg≤5 与 deg≥6——四个 r-邻域可检查的不变量
+          （κ=6−deg、球内三角数、link 类型、|N₂|）中，κ 与三角数只是 deg
+          的定义运算，link 类型恒为 cycle（两组重叠），|N₂| 在两组重叠。
+          **双锥极点（deg=6）与正二十面体顶点（deg=5）的 1-邻域结构同构**
+          （均为 cycle link），局部不可区分。此外 R1（禁止 K₆）在球面
+          三角剖分中恒真（K₅/K₆ 已被 Kuratowski 平面性排除），不增加约束。
+
+    ⇒ 「容量」不是组合量：要它必须外接**排他性**（v1.x 的角半径 r(deg) /
+    球影排他，附录 A §A.3），或把它声明为来自投影层的外部输入。
+    这正是 §7.2 实测结论「**cap 是承重结构，不是内存参数**」的根源 ——
+    承重，恰恰因为它**不在** L0 的组合层里。
+
+    唯一组合路径（非局部规则）：A3（均匀性，**全局**假设）+ Euler 恒等式
+    `d·V=6V−12` ⇒ `(6−d)|12` ⇒ `d∈{3,4,5}`；无 A3 则 Euler 只约束均值
+    `⟨deg⟩<6`，不约束个体。
+
+    返回 `{"rows", "D", "over", "ok"}`；`over` = 越过三个已知容量候选
+    （12 / 42 / 16π≈50.27）后仍合法的见证。
+    """
+    rows = []
+    ok = True
+    for n in range(4, D + 1):
+        G = RotNet(seed_bipyramid(n))
+        a = audit(G)
+        degs = [G.deg(v) for v in G.ids()]
+        row = {"n": n, "V": a["V"], "E": a["E"], "F": a["F"], "chi": a["chi"],
+               "S": a["S"], "d3v6": a["d3v6"], "maxdeg": max(degs),
+               "min": min(degs), "holes": a["n_holes"], "cycle": a["cyc"],
+               "path": a["path"], "chord": a["chord"], "disc": a["disc"]}
+        row["ok"] = (a["chi"] == 2 and a["n_holes"] == 0 and a["path"] == 0
+                     and a["chord"] == 0 and a["disc"] == 0
+                     and a["d3v6"] == 0 and a["S"] == 12
+                     and a["V"] == n + 2 and a["E"] == 3 * n and a["F"] == 2 * n
+                     and max(degs) == n and min(degs) == 4)
+        ok &= row["ok"]
+        rows.append(row)
+    # 对照：越过 12（接吻数）/ 42（团簇）/ 16π≈50.27（球面容量）后仍有合法构型
+    over = [(name, th, next(r for r in rows if r["n"] > th))
+            for name, th in (("接吻数 12", 12), ("42 团簇", 42), ("16π≈50.27", 51))
+            if th < D]
+    return {"rows": rows, "D": D, "over": over, "ok": ok}
+
+
+# ============================================================
 # §5 控制实验 + 自检
 # ============================================================
 def verify():
@@ -232,6 +316,18 @@ def verify():
     # ⑥ 数论入口：整除强制解
     assert [forced_N(c) for c in (3, 4, 5)] == [4, 6, 12]
     assert all(forced_N(c) is None for c in (-1, 0, 1, 2, 6, 7, 12)), forced_table()
+
+    # ⑦ **容量内生性判定**：纯组合 L0 无度数上界（见证族 = 双锥）
+    nc = no_intrinsic_capacity(D=64)
+    assert nc["ok"], [r for r in nc["rows"] if not r["ok"]][:3]
+    last = nc["rows"][-1]
+    assert last["n"] == 64 and last["maxdeg"] == 64 and last["d3v6"] == 0, last
+    # 守恒量 Σ(6−deg) 全程 ≡ 12 ⇒ 它不含任何 deg 上界
+    assert {r["S"] for r in nc["rows"]} == {12}, sorted({r["S"] for r in nc["rows"]})
+    # 反向控制：越过 12 / 42 / 16π≈50.27 三个候选容量后**仍有**合法构型
+    assert len(nc["over"]) == 3, nc["over"]
+    for name, th, row in nc["over"]:
+        assert row["ok"] and row["maxdeg"] > th, (name, th, row)
     return True
 
 
@@ -246,6 +342,8 @@ def selftest():
     print("  ⑤ 数论入口 forced_N：C=3,4,5 → 4,6,12；(6−C)∤12 或 C<3 一律 None")
     print("  ⑥ 越界（投影）项——L0 内无算子：" + "；".join(
         f"{n}（{why}）" for n, _, why in BOUNDARY))
+    print("  ⑦ 容量内生性判定：双锥见证族 n=4..64 全部合法（χ=2、无洞、E=3V−6 极大平面）"
+          "⇒ 组合层无 deg 上界；越过 12/42/16π≈50.27 后仍合法")
     return True
 
 
@@ -265,6 +363,34 @@ def main(argv):
     kv = _kv(argv)
     if "selftest" in kv:
         selftest()
+        return
+    if "capacity" in kv:
+        D = int(kv.get("D", 64))
+        nc = no_intrinsic_capacity(D)
+        print("=" * 78)
+        print(f"[容量内生性判定] 纯组合 L0 有度数上界吗？见证族 = 双锥 n（n = 4..{D}）")
+        print("=" * 78)
+        show = [n for n in (4, 5, 12, 13, 42, 43, 51, D) if 4 <= n <= D]
+        for n in show:
+            r = nc["rows"][n - 4]
+            print(f"  双锥 n={r['n']:<3} V={r['V']:3d} E={r['E']:4d} F={r['F']:3d} "
+                  f"χ={r['chi']} Σ(6−deg)={r['S']:2d} 3V−6−E={r['d3v6']} "
+                  f"*maxdeg={r['maxdeg']:3d} 洞={r['holes']} "
+                  f"link[c{r['cycle']}/p{r['path']}/h{r['chord']}/d{r['disc']}] "
+                  f"[{'OK' if r['ok'] else 'FAIL'}]")
+        print("-" * 78)
+        print("  全部合法：χ=2、无洞、link 全 cycle、**E = 3V−6（极大平面图）** ——")
+        print("  平面性已推到饱和极限，度数仍无上界。")
+        for name, th, row in nc["over"]:
+            print(f"  越过 {name}（={th}）：双锥 n={row['n']} 仍合法 "
+                  f"（maxdeg={row['maxdeg']}）⇒ 该数不是组合上界")
+        print(f"  守恒量 Σ(6−deg) 全程 ≡ 12 ⇒ 含上界的是它吗：不是（全局恒等式）。")
+        print("-" * 78)
+        print("  ▶ 判定：组合层没有「太满」这个状态 ⇒ **容量不是组合量**。")
+        print("     要它必须外接**排他性**（角半径 / 球影，附录 A §A.3），"
+              "或声明为来自投影层的外部输入。")
+        print("     这就是 §7.2「cap 是承重结构，不是内存参数」的根源。")
+        print(f"  [{('OK' if nc['ok'] else 'FAIL')}]")
         return
     if "seed" in kv or "obj" in kv or "table" in kv:
         if "table" in kv:

@@ -1,23 +1,30 @@
 ==========================================================================================
 SPUM 跨领域一致性审计报告
-生成时间: 2026-07-14 19:07
-仓库根目录: F:\spum-core
+生成时间: 2026-09-16 14:10
+仓库根目录: C:\Users\macotai\Desktop\工作\spum-core
 ==========================================================================================
 
 【0】统计概览
 ────────────────────────────────────────────────────────────
   核心节点 (N001-N022):   22/22
-  模块节点:                99
+  模块节点:                171
   根节点 (R1-R9):          9
-  推导边:                  62
-  扫描文件:                411
+  推导边:                  102
+  扫描文件:                480
 
 【1】变更影响图
 ────────────────────────────────────────────────────────────
   说明: 修改左侧节点 → 需同步右侧所有依赖节点
 
-  N001 宇宙存在         → 41 个依赖:
+  N001 宇宙存在         → 69 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-003      不可通约定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -26,6 +33,27 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-004      π 降级定理
+      GEO-005      维度发生学
+      GEO-006      球体逻辑必然性
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-036      化学→几何桥
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -58,8 +86,15 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N002 差异           → 40 个依赖:
+  N002 差异           → 68 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-003      不可通约定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -68,6 +103,27 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-004      π 降级定理
+      GEO-005      维度发生学
+      GEO-006      球体逻辑必然性
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-036      化学→几何桥
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -99,8 +155,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N003 边界           → 39 个依赖:
+  N003 边界           → 66 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -109,6 +171,27 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-004      π 降级定理
+      GEO-005      维度发生学
+      GEO-006      球体逻辑必然性
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-036      化学→几何桥
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -139,8 +222,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N004 节点/空间粒子      → 38 个依赖:
+  N004 节点/空间粒子      → 65 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -149,6 +238,27 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-004      π 降级定理
+      GEO-005      维度发生学
+      GEO-006      球体逻辑必然性
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-036      化学→几何桥
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -178,8 +288,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N005 边/连接         → 33 个依赖:
+  N005 边/连接         → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -188,6 +304,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -212,8 +344,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N006 闭合网络         → 33 个依赖:
+  N006 闭合网络         → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -222,6 +360,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -246,8 +400,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N007 最小度数≥2       → 33 个依赖:
+  N007 最小度数≥2       → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -256,6 +416,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -280,8 +456,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N008 总边数守恒        → 33 个依赖:
+  N008 总边数守恒        → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -290,6 +472,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -314,8 +512,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N009 创生事件 V⁺      → 33 个依赖:
+  N009 创生事件 V⁺      → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -324,6 +528,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -348,8 +568,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N010 体积/存在权重      → 33 个依赖:
+  N010 体积/存在权重      → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -358,6 +584,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -382,8 +624,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N011 悬挂边删除        → 33 个依赖:
+  N011 悬挂边删除        → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -392,6 +640,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -416,8 +680,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N012 离散帧          → 33 个依赖:
+  N012 离散帧          → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -426,6 +696,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -450,8 +736,14 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N013 不完美          → 33 个依赖:
+  N013 不完美          → 55 个依赖:
       AGT-001      SPUM推理节点
+      COG-001      范式五元组
+      COG-002      双重投影定理
+      COG-004      认知热力学第二定律
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
+      COG-007      元认知自举
       ECON-001     G_econ
       ECON-002     交易V⁺/V⁻
       ECON-003     σ_econ
@@ -460,6 +752,22 @@ SPUM 跨领域一致性审计报告
       FI-001       强力
       FI-003       弱力
       FI-004       引力
+      GEO-001      几何投影公理
+      GEO-002      关系先于几何
+      GEO-003      离散优先
+      GEO-005      维度发生学
+      GEO-007      投影不变式三分
+      GEO-008      五层几何角色
+      GEO-013      面涌现
+      GEO-014      体涌现
+      GEO-021      F1 方向依赖
+      GEO-022      F2 不可逆度量
+      GEO-023      F3 σ 场各向异性
+      GEO-024      F4 V⁺V⁻ 对偶
+      GEO-026      F6 Randers 形式
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+      GEO-037      图论→几何桥
       LING-001     G_ling
       LING-002     语言V⁺/V⁻
       LING-003     σ_ling
@@ -484,9 +792,18 @@ SPUM 跨领域一致性审计报告
       SOC-004      社会不完美定理
       SOC-020      慢变迁
       VSPT-001     VSPT生长拓扑
-  N014 晶子           → 11 个依赖:
+  N014 晶子           → 20 个依赖:
+      COG-001      范式五元组
+      COG-007      元认知自举
       ECON-003     σ_econ
       FI-003       弱力
+      GEO-004      π 降级定理
+      GEO-007      投影不变式三分
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-023      F3 σ 场各向异性
+      GEO-026      F6 Randers 形式
       LING-003     σ_ling
       N015         分形约束生长
       N016         拓扑常数 12
@@ -496,9 +813,18 @@ SPUM 跨领域一致性审计报告
       N021         拓扑认知
       SOC-003      σ_social
       VSPT-001     VSPT生长拓扑
-  N015 分形约束生长       → 9 个依赖:
+  N015 分形约束生长       → 18 个依赖:
+      COG-001      范式五元组
+      COG-007      元认知自举
       ECON-003     σ_econ
       FI-003       弱力
+      GEO-004      π 降级定理
+      GEO-007      投影不变式三分
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
+      GEO-021      F1 方向依赖
+      GEO-023      F3 σ 场各向异性
+      GEO-026      F6 Randers 形式
       LING-003     σ_ling
       N016         拓扑常数 12
       N017         π 的降级
@@ -506,2729 +832,710 @@ SPUM 跨领域一致性审计报告
       N021         拓扑认知
       SOC-003      σ_social
       VSPT-001     VSPT生长拓扑
-  N018 永恒粒子         → 7 个依赖:
+  N018 永恒粒子         → 13 个依赖:
+      COG-001      范式五元组
+      COG-007      元认知自举
       ECON-003     σ_econ
       FI-003       弱力
+      GEO-007      投影不变式三分
+      GEO-021      F1 方向依赖
+      GEO-023      F3 σ 场各向异性
+      GEO-026      F6 Randers 形式
       LING-003     σ_ling
       N020         运动与引力
       N021         拓扑认知
       SOC-003      σ_social
       VSPT-001     VSPT生长拓扑
-  N020 运动与引力        → 6 个依赖:
+  N020 运动与引力        → 12 个依赖:
+      COG-001      范式五元组
+      COG-007      元认知自举
       ECON-003     σ_econ
       FI-003       弱力
+      GEO-007      投影不变式三分
+      GEO-021      F1 方向依赖
+      GEO-023      F3 σ 场各向异性
+      GEO-026      F6 Randers 形式
       LING-003     σ_ling
       N021         拓扑认知
       SOC-003      σ_social
       VSPT-001     VSPT生长拓扑
-  N022 SPUM-图论      → 5 个依赖:
+  N022 SPUM-图论      → 8 个依赖:
+      COG-005      关系闭环度 Φ
+      COG-006      代表性边集自举
       ECON-001     G_econ
       FI-001       强力
       FI-004       引力
+      GEO-037      图论→几何桥
       LING-001     G_ling
       SOC-001      G_social
-  N016 拓扑常数 12      → 3 个依赖:
+  N016 拓扑常数 12      → 6 个依赖:
       FI-003       弱力
+      GEO-004      π 降级定理
+      GEO-019      角度亏损恒等式
+      GEO-020      高斯-博内投影
       N017         π 的降级
       VSPT-001     VSPT生长拓扑
+  N019 几何发生学        → 6 个依赖:
+      COG-002      双重投影定理
+      GEO-001      几何投影公理
+      GEO-005      维度发生学
+      GEO-008      五层几何角色
+      GEO-031      嵌入度量定义
+      GEO-033      矛盾二结案
+  N021 拓扑认知         → 3 个依赖:
+      COG-001      范式五元组
+      COG-007      元认知自举
+      GEO-007      投影不变式三分
+  N017 π 的降级        → 2 个依赖:
+      GEO-004      π 降级定理
+      GEO-020      高斯-博内投影
 
 【2】变更影响 → 文件级映射
 ────────────────────────────────────────────────────────────
   说明: 核心节点变更时，需同步的实际文件清单
 
-  [N001] 宇宙存在 — 13 个文件直接引用
-    AGENT.md
-    MODULES.md
-    docs\CHEATSHEET.md
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
-    五行\天元\spum-周易.md
-    儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
-    图论\skill.md
-    图论\spum-图论代码桥.md
-    图论\spum-图论公理.md
+  [N001] 宇宙存在 — 14 个文件直接引用
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N002 影响 6 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论公理.md
     → N003 影响 4 文件:
-      docs\逻辑树.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论公理.md
     → N004 影响 10 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N014 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-    → N015 影响 5 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N015 影响 11 文件:
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N018 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N002] 差异 — 6 个文件直接引用
-    MODULES.md
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
-    图论\README.md
-    图论\spum-图论公理.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N003 影响 4 文件:
-      docs\逻辑树.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论公理.md
     → N004 影响 10 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N014 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-    → N015 影响 5 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N015 影响 11 文件:
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N018 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N003] 边界 — 4 个文件直接引用
-    docs\逻辑树.md
-    knowledge.md
-    图论\README.md
-    图论\spum-图论公理.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N004 影响 10 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      knowledge.md
-      图论\README.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N014 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-    → N015 影响 5 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N015 影响 11 文件:
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N018 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N004] 节点/空间粒子 — 10 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    faq\continuum-emergence.md
-    faq\phase-transition-trigger.md
-    faq\self-loop-quasi-isolate.md
-    faq\sphere-origin.md
-    knowledge.md
-    图论\README.md
-    图论\spum-图论代码桥.md
-    图论\spum-图论公理.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N014 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-    → N015 影响 5 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N015 影响 11 文件:
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N018 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N005] 边/连接 — 9 个文件直接引用
-    MODULES.md
-    docs\逻辑树.md
-    faq\continuum-emergence.md
-    faq\self-loop-quasi-isolate.md
-    faq\sphere-origin.md
-    faq\why-no-granularity.md
-    knowledge.md
-    图论\spum-图论代码桥.md
-    图论\spum-图论公理.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N006] 闭合网络 — 4 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N007] 最小度数≥2 — 4 个文件直接引用
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
-    物理学\热力学\绝对零度.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N008] 总边数守恒 — 7 个文件直接引用
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\phase-transition-trigger.md
-    knowledge.md
-    图论\spum-图论公理.md
-    物理学\热力学\热力学定律.md
-    经济学\spum-经济网络.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N009] 创生事件 V⁺ — 3 个文件直接引用
-    docs\逻辑树.md
-    faq\phase-transition-trigger.md
-    knowledge.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N010] 体积/存在权重 — 3 个文件直接引用
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N011] 悬挂边删除 — 3 个文件直接引用
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    knowledge.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N012] 离散帧 — 5 个文件直接引用
-    docs\逻辑树.md
-    faq\self-loop-quasi-isolate.md
-    faq\why-no-granularity.md
-    knowledge.md
-    图论\spum-图论公理.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-  [N013] 不完美 — 13 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\continuum-emergence.md
-    faq\phase-transition-trigger.md
-    faq\self-loop-quasi-isolate.md
-    faq\why-no-granularity.md
-    knowledge.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
-    图论\skill.md
-    图论\spum-图论代码桥.md
-    图论\spum-图论公理.md
-    图论\spum-图论映射.md
+  [N013] 不完美 — 20 个文件直接引用
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-002 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
-    → ECON-004 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
+    → ECON-004 影响 4 文件:
     → ECON-017 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-增长与周期.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-002 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-004 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → LING-017 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言演化.md
     → N005 影响 9 文件:
-      MODULES.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\self-loop-quasi-isolate.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论代码桥.md
-      图论\spum-图论公理.md
     → N006 影响 4 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N007 影响 4 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
-      物理学\热力学\绝对零度.md
     → N008 影响 7 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\phase-transition-trigger.md
-      knowledge.md
-      图论\spum-图论公理.md
-      物理学\热力学\热力学定律.md
-      经济学\spum-经济网络.md
     → N009 影响 3 文件:
-      docs\逻辑树.md
-      faq\phase-transition-trigger.md
-      knowledge.md
     → N010 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N011 影响 3 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      knowledge.md
     → N012 影响 5 文件:
-      docs\逻辑树.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      图论\spum-图论公理.md
-    → N013 影响 13 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      图论\skill.md
-      ... 还有 3 个
+    → N013 影响 20 文件:
     → N019 影响 5 文件:
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\sphere-origin.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N022 影响 6 文件:
-      AGENT.md
-      MODULES.md
-      docs\CHEATSHEET.md
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
     → SOC-002 影响 4 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-004 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → SOC-020 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-不平等.md
-      社会学\spum-淮南子.md
-      经济学\README.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N014] 晶子 — 7 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\continuum-emergence.md
-    faq\phase-transition-trigger.md
-    faq\sphere-origin.md
-    knowledge.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
-    → N015 影响 5 文件:
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N015 影响 11 文件:
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N018 影响 7 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
-  [N015] 分形约束生长 — 5 个文件直接引用
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\continuum-emergence.md
-    knowledge.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
+  [N015] 分形约束生长 — 11 个文件直接引用
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
-    → N016 影响 14 文件:
-      SPUM_系统总纲.md
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\spum_dark\黑暗的归藏.md
-      docs\逻辑树.md
-      experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\sphere-origin.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
-      ... 还有 4 个
+    → N016 影响 25 文件:
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N018] 永恒粒子 — 7 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    faq\continuum-emergence.md
-    faq\phase-transition-trigger.md
-    faq\self-loop-quasi-isolate.md
-    faq\why-no-granularity.md
-    knowledge.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → N020 影响 5 文件:
-      docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      knowledge.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N020] 运动与引力 — 5 个文件直接引用
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\逻辑树.md
-    faq\why-no-granularity.md
-    knowledge.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
     → ECON-003 影响 3 文件:
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → LING-003 影响 3 文件:
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → N021 影响 2 文件:
-      docs\逻辑树.md
-      tools\SPUM 版本号生成与审核规范 v5.0.md
     → SOC-003 影响 3 文件:
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
   [N022] SPUM-图论 — 6 个文件直接引用
-    AGENT.md
-    MODULES.md
-    docs\CHEATSHEET.md
-    docs\逻辑树.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
-    儒释道哲学\道德经\03-工程规范\spum-翻译规范.md
     → ECON-001 影响 4 文件:
-      docs\逻辑树.md
-      经济学\README.md
-      经济学\skill.md
-      经济学\spum-经济网络.md
     → FI-001 影响 2 文件:
-      docs\逻辑树.md
-      物理学\skill.md
     → FI-004 影响 3 文件:
-      docs\逻辑树.md
-      faq\why-no-granularity.md
-      物理学\skill.md
     → LING-001 影响 4 文件:
-      docs\逻辑树.md
-      语言学\README.md
-      语言学\skill.md
-      语言学\spum-语言网络.md
     → SOC-001 影响 6 文件:
-      docs\逻辑树.md
-      社会学\README.md
-      社会学\skill.md
-      社会学\spum-淮南子.md
-      经济学\README.md
-      语言学\README.md
-  [N016] 拓扑常数 12 — 14 个文件直接引用
-    SPUM_系统总纲.md
-    docs\Subgraph_CoMotion\SPUM_Subgraph_CoMotion.md
-    docs\spum_dark\黑暗的归藏.md
-    docs\逻辑树.md
-    experiments\SPUM拓扑认知框架 P0_P2 完整实验验证报告.md
-    faq\continuum-emergence.md
-    faq\phase-transition-trigger.md
-    faq\sphere-origin.md
-    knowledge.md
-    tools\SPUM 版本号生成与审核规范 v5.0.md
-    儒释道哲学\道德经\01-本体公理\spum-关键概念.md
-    儒释道哲学\道德经\01-本体公理\spum-永恒粒子.md
-    儒释道哲学\道德经\skill.md
-    图论\spum-图论指标.md
+  [N016] 拓扑常数 12 — 25 个文件直接引用
     → FI-003 影响 1 文件:
-      物理学\skill.md
     → N017 影响 2 文件:
-      docs\逻辑树.md
-      knowledge.md
     → VSPT-001 影响 4 文件:
-      faq\continuum-emergence.md
-      faq\phase-transition-trigger.md
-      faq\self-loop-quasi-isolate.md
-      faq\why-no-granularity.md
+  [N019] 几何发生学 — 5 个文件直接引用
+  [N021] 拓扑认知 — 2 个文件直接引用
+  [N017] π 的降级 — 2 个文件直接引用
 
 【3】悬挂引用检测
 ────────────────────────────────────────────────────────────
   说明: 文件引用了未在 network/ 中注册的节点
 
-  ✅ 无悬挂引用
+  发现 59 处悬挂引用:
+    AGENT.md                                           引用了未注册的 模块节点: GT-027
+    MODULES.md                                         引用了未注册的 模块节点: GT-027
+    experiments\imperfection_vacuum\实验报告.md            引用了未注册的 模块节点: GT-027
+    experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-022
+    experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-023
+    experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-024
+    experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-025
+    experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-026
+    openSPUM\docs\L0L1L2_架构设计.md                       引用了未注册的 模块节点: GT-032
+    元素化学\README.md                                     引用了未注册的 模块节点: GT-027
+    几何学\Finsler几何\spum-Finsler公设.md                    引用了未注册的 模块节点: GT-027
+    几何学\Finsler几何\spum-Finsler公设.md                    引用了未注册的 模块节点: GT-028
+    几何学\README.md                                      引用了未注册的 模块节点: GT-027
+    几何学\skill.md                                       引用了未注册的 模块节点: GT-027
+    几何学\spum-几何公理.md                                   引用了未注册的 模块节点: GT-027
+    几何学\spum-几何应用桥.md                                  引用了未注册的 模块节点: GT-027
+    几何学\spum-几何应用桥.md                                  引用了未注册的 模块节点: GT-028
+    几何学\spum-几何应用桥.md                                  引用了未注册的 模块节点: GT-029
+    几何学\spum-几何应用桥.md                                  引用了未注册的 模块节点: GT-030
+    图论\README.md                                       引用了未注册的 模块节点: GT-021
+    图论\README.md                                       引用了未注册的 模块节点: GT-022
+    图论\README.md                                       引用了未注册的 模块节点: GT-023
+    图论\README.md                                       引用了未注册的 模块节点: GT-024
+    图论\README.md                                       引用了未注册的 模块节点: GT-025
+    图论\README.md                                       引用了未注册的 模块节点: GT-026
+    图论\README.md                                       引用了未注册的 模块节点: GT-027
+    图论\README.md                                       引用了未注册的 模块节点: GT-028
+    图论\README.md                                       引用了未注册的 模块节点: GT-029
+    图论\README.md                                       引用了未注册的 模块节点: GT-030
+    图论\README.md                                       引用了未注册的 模块节点: GT-031
+    图论\README.md                                       引用了未注册的 模块节点: GT-032
+    图论\skill.md                                        引用了未注册的 模块节点: GT-021
+    图论\skill.md                                        引用了未注册的 模块节点: GT-022
+    图论\skill.md                                        引用了未注册的 模块节点: GT-023
+    图论\skill.md                                        引用了未注册的 模块节点: GT-024
+    图论\skill.md                                        引用了未注册的 模块节点: GT-025
+    图论\skill.md                                        引用了未注册的 模块节点: GT-026
+    图论\skill.md                                        引用了未注册的 模块节点: GT-027
+    图论\skill.md                                        引用了未注册的 模块节点: GT-028
+    图论\skill.md                                        引用了未注册的 模块节点: GT-029
+    图论\skill.md                                        引用了未注册的 模块节点: GT-030
+    图论\skill.md                                        引用了未注册的 模块节点: GT-031
+    图论\skill.md                                        引用了未注册的 模块节点: GT-032
+    图论\spum-几何图论.md                                    引用了未注册的 模块节点: GT-027
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-021
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-022
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-023
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-024
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-025
+    图论\spum-图论五形桥.md                                   引用了未注册的 模块节点: GT-026
+    图论\spum-图论应用.md                                    引用了未注册的 模块节点: GT-021
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-027
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-028
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-029
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-030
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-031
+    图论\spum-图论节点.md                                    引用了未注册的 模块节点: GT-032
+    物理学\量子与原子\vacuum_fluctuation.md                    引用了未注册的 模块节点: GT-027
+    逻辑树.md                                             引用了未注册的 模块节点: GT-027
 
 【4】未注册模块节点检测
 ────────────────────────────────────────────────────────────
   说明: 文件使用了模块节点 ID 但未在 module_nodes.txt 注册
 
-  ✅ 所有模块节点均已注册
+  发现 59 处未注册引用:
+    AGENT.md                                           未注册: GT-027
+    MODULES.md                                         未注册: GT-027
+    experiments\imperfection_vacuum\实验报告.md            未注册: GT-027
+    experiments\wuxing_coupling\README.md              未注册: GT-022
+    experiments\wuxing_coupling\README.md              未注册: GT-023
+    experiments\wuxing_coupling\README.md              未注册: GT-024
+    experiments\wuxing_coupling\README.md              未注册: GT-025
+    experiments\wuxing_coupling\README.md              未注册: GT-026
+    openSPUM\docs\L0L1L2_架构设计.md                       未注册: GT-032
+    元素化学\README.md                                     未注册: GT-027
+    几何学\Finsler几何\spum-Finsler公设.md                    未注册: GT-027
+    几何学\Finsler几何\spum-Finsler公设.md                    未注册: GT-028
+    几何学\README.md                                      未注册: GT-027
+    几何学\skill.md                                       未注册: GT-027
+    几何学\spum-几何公理.md                                   未注册: GT-027
+    几何学\spum-几何应用桥.md                                  未注册: GT-027
+    几何学\spum-几何应用桥.md                                  未注册: GT-028
+    几何学\spum-几何应用桥.md                                  未注册: GT-029
+    几何学\spum-几何应用桥.md                                  未注册: GT-030
+    图论\README.md                                       未注册: GT-021
+    图论\README.md                                       未注册: GT-022
+    图论\README.md                                       未注册: GT-023
+    图论\README.md                                       未注册: GT-024
+    图论\README.md                                       未注册: GT-025
+    图论\README.md                                       未注册: GT-026
+    图论\README.md                                       未注册: GT-027
+    图论\README.md                                       未注册: GT-028
+    图论\README.md                                       未注册: GT-029
+    图论\README.md                                       未注册: GT-030
+    图论\README.md                                       未注册: GT-031
+    图论\README.md                                       未注册: GT-032
+    图论\skill.md                                        未注册: GT-021
+    图论\skill.md                                        未注册: GT-022
+    图论\skill.md                                        未注册: GT-023
+    图论\skill.md                                        未注册: GT-024
+    图论\skill.md                                        未注册: GT-025
+    图论\skill.md                                        未注册: GT-026
+    图论\skill.md                                        未注册: GT-027
+    图论\skill.md                                        未注册: GT-028
+    图论\skill.md                                        未注册: GT-029
+    图论\skill.md                                        未注册: GT-030
+    图论\skill.md                                        未注册: GT-031
+    图论\skill.md                                        未注册: GT-032
+    图论\spum-几何图论.md                                    未注册: GT-027
+    图论\spum-图论五形桥.md                                   未注册: GT-021
+    图论\spum-图论五形桥.md                                   未注册: GT-022
+    图论\spum-图论五形桥.md                                   未注册: GT-023
+    图论\spum-图论五形桥.md                                   未注册: GT-024
+    图论\spum-图论五形桥.md                                   未注册: GT-025
+    图论\spum-图论五形桥.md                                   未注册: GT-026
+    图论\spum-图论应用.md                                    未注册: GT-021
+    图论\spum-图论节点.md                                    未注册: GT-027
+    图论\spum-图论节点.md                                    未注册: GT-028
+    图论\spum-图论节点.md                                    未注册: GT-029
+    图论\spum-图论节点.md                                    未注册: GT-030
+    图论\spum-图论节点.md                                    未注册: GT-031
+    图论\spum-图论节点.md                                    未注册: GT-032
+    物理学\量子与原子\vacuum_fluctuation.md                    未注册: GT-027
+    逻辑树.md                                             未注册: GT-027
 
 【5】内容-引用不一致检测
 ────────────────────────────────────────────────────────────
   说明: 文件提到了核心概念的关键词但未引用对应 N 节点
 
-  发现 3046 处不一致 (去重后 370 文件)
-  其中优先级文件 332 个，其余 38 个
+  发现 3789 处不一致 (去重后 441 文件)
+  其中优先级文件 336 个，其余 105 个
 
   ⚠ 优先级文件需要关注:
     [21处] SPUM2610.md
@@ -3237,13 +1544,25 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 17 处
-    [20处] SPUM_系统总纲.md
+    [19处] SPUM_系统总纲.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 16 处
+      ... 还有 15 处
+    [18处] 五行\spum-五形完备性.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 14 处
     [18处] 五行\人元\spum-黄帝内经.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 14 处
+    [18处] 宇宙学\宇宙学大纲.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
@@ -3255,12 +1574,12 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 14 处
-    [18处] 青囊管家\knowledge\spum-黄帝内经.md
+    [17处] 五行\人元\spum-青囊（中医）总纲.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 14 处
+      ... 还有 13 处
     [17处] 五行\天元\梅花易数\SPUM-梅花易数.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3303,11 +1622,11 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 12 处
-    [16处] 元素化学\SPUM-VSPT.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+    [16处] 图论\spum-图论五形桥.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N008: 提到了关键词 守恒 但未引用 N008
       ... 还有 12 处
     [16处] 社会学\skill.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3315,12 +1634,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 12 处
-    [15处] 五行\人元\spum-青囊（中医）总纲.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 11 处
     [15处] 五行\地元\spum-葬书.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3357,6 +1670,24 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 11 处
+    [15处] 几何学\spum-几何公理.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      ... 还有 11 处
+    [15处] 图论\spum-图论节点.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      ... 还有 11 处
+    [15处] 物理学\量子与原子\vacuum_fluctuation.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      ... 还有 11 处
     [15处] 社会学\spum-淮南子.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3386,6 +1717,12 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 10 处
+    [14处] 儒释道哲学\spum-道德经.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 10 处
     [14处] 儒释道哲学\孟子\01-本体公理\spum-核心概念.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3417,14 +1754,26 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 10 处
-    [14处] 社会学\README.md
-      → 建议引用 N001: 提到了关键词 根节点 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+    [14处] 图论\README.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N008: 提到了关键词 守恒 但未引用 N008
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 10 处
+    [14处] 图论\spum-几何图论.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 10 处
-    [14处] 青囊管家\knowledge\spum-青囊总纲.md
+    [14处] 数学\skill.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
+      ... 还有 10 处
+    [14处] 社会学\README.md
+      → 建议引用 N001: 提到了关键词 根节点 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
@@ -3435,7 +1784,7 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 9 处
-    [13处] 五行\人元\spum-古中医无病实体论.md
+    [13处] 五行\人元\spum-伤寒论.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
@@ -3465,12 +1814,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 9 处
-    [13处] 儒释道哲学\spum-道德经.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 9 处
     [13处] 儒释道哲学\归约计划.md
       → 建议引用 N001: 提到了关键词 根节点 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3495,17 +1838,17 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
       ... 还有 9 处
+    [13处] 几何学\欧氏几何\spum-发生学.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N003: 提到了关键词 界定 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 9 处
     [13处] 图论\spum-图论映射.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 9 处
-    [13处] 宇宙学\旧\宇宙学大纲.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 9 处
     [13处] 数学\spum-数学定理.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3525,12 +1868,12 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 9 处
-    [13处] 青囊管家\knowledge\spum-金匮要略.md
+    [12处] 五行\人元\spum-古中医无病实体论.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 9 处
+      ... 还有 8 处
     [12处] 五行\人元\spum-难经.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
@@ -3633,41 +1976,41 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 8 处
-    [12处] 元素化学\证明.md
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 内外 但未引用 N006
-      ... 还有 8 处
     [12处] 图论\spum-图论指标.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 8 处
-    [12处] 图论\spum-图论节点.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 8 处
-    [12处] 宇宙学\旧\归约计划.md
+    [12处] 宇宙学\归约计划.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 关联 但未引用 N005
       → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
-      ... 还有 8 处
-    [12处] 宇宙学\旧\相对论与宇宙学\宇宙演化.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 8 处
     [12处] 宇宙学\模型\折射率第一原理推导.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N008: 提到了关键词 总边数守恒 但未引用 N008
+      ... 还有 8 处
+    [12处] 宇宙学\相对论与宇宙学\宇宙演化.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 8 处
+    [12处] 数学\spum-数学范畴论.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 不可区分 但未引用 N002
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      ... 还有 8 处
+    [12处] 数学\spum-数论.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 8 处
     [12处] 数学\知乎_数学究竟是逻辑优先还是事实优先.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3681,18 +2024,18 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 8 处
+    [12处] 物理学\基本相互作用\惯性.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      ... 还有 8 处
     [12处] 经济学\README.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
       ... 还有 8 处
-    [11处] 五行\人元\spum-古中医无病实体论-下篇.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 7 处
     [11处] 五行\人元\spum-神农本草经.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3759,7 +2102,19 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 7 处
-    [11处] 元素化学\openspum_vspt运行报告_v1.md
+    [11处] 几何学\spum-几何应用桥.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 连接 但未引用 N005
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 7 处
+    [11处] 几何学\Finsler几何\spum-Finsler公设.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 7 处
+    [11处] 宇宙学\L0.5_induced_metric.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
@@ -3770,18 +2125,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 7 处
-    [11处] 宇宙学\旧\L0.5_induced_metric.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 7 处
-    [11处] 数学\skill.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
       ... 还有 7 处
     [11处] 数学\spum-数学公理.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3830,18 +2173,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 7 处
-    [11处] 青囊管家\knowledge\spum-神农本草经.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      ... 还有 7 处
-    [11处] 青囊管家\knowledge\spum-难经.md
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
       ... 还有 7 处
     [10处] 五行\人元\spum-本草纲目.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -3927,11 +2258,11 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 6 处
-    [10处] 元素化学\帧迭代-自抑制几何基础.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+    [10处] 图论\skill.md
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N011: 提到了关键词 悬挂边 但未引用 N011
       ... 还有 6 处
     [10处] 图论\spum-图论代码桥.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -3944,6 +2275,12 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 6 处
+    [10处] 图论\spum-计数关系.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 6 处
     [10处] 数学\spum-数学分界.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4017,12 +2354,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 6 处
-    [9处] 五行\人元\spum-伤寒论.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 5 处
     [9处] 五行\地元\spum-阳宅三要.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
@@ -4137,11 +2468,11 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 5 处
-    [9处] 图论\README.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
-      → 建议引用 N012: 提到了关键词 帧 但未引用 N012
+    [9处] 几何学\Finsler几何\spum-Randers度量.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 关联 但未引用 N005
+      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
       ... 还有 5 处
     [9处] 图论\spum-图论公理.md
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
@@ -4155,11 +2486,23 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       ... 还有 5 处
+    [9处] 数学\README.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
+      ... 还有 5 处
     [9处] 物理学\热力学\热力学定律.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N007: 提到了关键词 最小度数 但未引用 N007
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 5 处
+    [9处] 物理学\相对论与宇宙学\引力场温度与Tolman关系.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 空间粒子 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 5 处
     [9处] 社会学\spum-制度.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4179,14 +2522,14 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       ... 还有 5 处
+    [9处] 经济学\SPUM_股票预测_关键发现与代码总结.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 连接 但未引用 N005
+      ... 还有 5 处
     [9处] 语言学\spum-语言网络.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 5 处
-    [9处] 青囊管家\knowledge\spum-伤寒论.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
@@ -4311,23 +2654,17 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
       → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
       ... 还有 4 处
-    [8处] 元素化学\力学参数推导.md
+    [8处] 几何学\Finsler几何\spum-矛盾二解答.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      ... 还有 4 处
+    [8处] 宇宙学\相对论与宇宙学\相对论效应.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 4 处
-    [8处] 图论\skill.md
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N011: 提到了关键词 悬挂边 但未引用 N011
-      ... 还有 4 处
-    [8处] 数学\README.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
       ... 还有 4 处
     [8处] 物理学\基本相互作用\强力.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
@@ -4341,23 +2678,29 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N010: 提到了关键词 体积 但未引用 N010
       ... 还有 4 处
+    [8处] 物理学\相对论与宇宙学\宇宙演化.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
+      ... 还有 4 处
     [8处] 物理学\统一理论\终极统一.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
       → 建议引用 N009: 提到了关键词 创生 但未引用 N009
       ... 还有 4 处
+    [8处] 物理学\量子与原子\量子现象.md
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
+      → 建议引用 N011: 提到了关键词 悬挂边 但未引用 N011
+      ... 还有 4 处
     [8处] 经济学\spum-市场与价格.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      ... 还有 4 处
-    [8处] 经济学\SPUM_股票预测_关键发现与代码总结.md
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       ... 还有 4 处
     [8处] 语言学\spum-语音与音系.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4376,12 +2719,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       → 建议引用 N014: 提到了关键词 饱和 但未引用 N014
-      ... 还有 3 处
-    [7处] 五行\人元\病历\曾银鸾\病历日志.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 3 处
     [7处] 五行\人元\病历\胡瑞廷\胡瑞廷.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4509,18 +2846,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N006: 提到了关键词 闭环 但未引用 N006
       ... 还有 3 处
-    [7处] 元素化学\帧迭代-VSPT第三律修订.md
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
-      ... 还有 3 处
-    [7处] 宇宙学\旧\相对论与宇宙学\相对论效应.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N012: 提到了关键词 离散帧 但未引用 N012
-      ... 还有 3 处
     [7处] 数学\spum-数学_草稿.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
@@ -4533,17 +2858,17 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 3 处
-    [7处] 语言学\spum-语用与交际.md
+    [7处] 物理学\量子与原子\波粒二象性.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       ... 还有 3 处
-    [7处] 青囊管家\knowledge\spum-温病条辨.md
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+    [7处] 语言学\spum-语用与交际.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
       ... 还有 3 处
     [6处] 五行\人元\spum-针灸甲乙经.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
@@ -4599,6 +2924,18 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       ... 还有 2 处
+    [6处] 几何学\欧氏几何\spum-组合恒等式.md
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
+      ... 还有 2 处
+    [6处] 宇宙学\redshift_verification\verification_report.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N005: 提到了关键词 连接 但未引用 N005
+      → 建议引用 N012: 提到了关键词 帧 但未引用 N012
+      → 建议引用 N013: 提到了关键词 悬挂端 但未引用 N013
+      ... 还有 2 处
     [6处] 宇宙学\模型\sigma_光谱网.md
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
@@ -4610,6 +2947,12 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N008: 提到了关键词 守恒 但未引用 N008
+      ... 还有 2 处
+    [6处] 物理学\热力学\温差力矩.md
+      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N004: 提到了关键词 空间粒子 但未引用 N004
+      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
       ... 还有 2 处
     [6处] 物理学\热力学\热传导.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4623,23 +2966,17 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       → 建议引用 N015: 提到了关键词 层级 但未引用 N015
       ... 还有 2 处
-    [6处] 青囊管家\knowledge\spum-针灸甲乙经.md
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
-      ... 还有 2 处
-    [5处] 五行\人元\spum-古中医无病实体论-中篇.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
-      → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
-      ... 还有 1 处
     [5处] 五行\人元\颜色材质五形映射.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
+      ... 还有 1 处
+    [5处] 五行\人元\病历\2026-07-05-曾银鸾合并病历-69岁女性.md
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
       ... 还有 1 处
     [5处] 五行\人元\病历\黄佳慧.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
@@ -4749,12 +3086,17 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       ... 还有 1 处
-    [5处] 物理学\量子与原子\量子现象.md
+    [5处] 物理学\相对论与宇宙学\相对论效应.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
-      → 建议引用 N017: 提到了关键词 认知压缩 但未引用 N017
       ... 还有 1 处
+    [4处] 五行\人元\病历\2026-07-05-陈贤铧初始档案-38岁男性.md
+      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
+      → 建议引用 N005: 提到了关键词 关联 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
+      → 建议引用 N020: 提到了关键词 运动 但未引用 N020
     [4处] 五行\人元\病历\郑亚香.md
       → 建议引用 N003: 提到了关键词 边界 但未引用 N003
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
@@ -4765,6 +3107,11 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 关联 但未引用 N005
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
       → 建议引用 N020: 提到了关键词 运动 但未引用 N020
+    [4处] 五行\人元\病历\曾银鸾\病历日志.md
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [4处] 五行\人元\病历\胡瑞廷\王利中.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N005: 提到了关键词 连接 但未引用 N005
@@ -4800,25 +3147,19 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
       → 建议引用 N020: 提到了关键词 运动 但未引用 N020
-    [4处] 物理学\热力学\温差力矩.md
-      → 建议引用 N002: 提到了关键词 差异 但未引用 N002
-      → 建议引用 N004: 提到了关键词 空间粒子 但未引用 N004
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
-      → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [4处] 物理学\热力学\温度.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N010: 提到了关键词 体积 但未引用 N010
-    [4处] 青囊管家\knowledge\spum-青囊奥语.md
-      → 建议引用 N009: 提到了关键词 V⁺ 但未引用 N009
-      → 建议引用 N012: 提到了关键词 帧 但未引用 N012
+    [3处] 五行\人元\病历\2026-07-04-曾菊心初始档案-68岁女性.md
+      → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
-      → 建议引用 N020: 提到了关键词 ∇σ 但未引用 N020
-    [3处] 五行\人元\spum-古中医无病实体论-上篇.md
-      → 建议引用 N001: 提到了关键词 存在 但未引用 N001
-      → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N020: 提到了关键词 运动 但未引用 N020
+    [3处] 五行\人元\病历\2026-07-04-曾银鸾初始档案-69岁女性.md
+      → 建议引用 N003: 提到了关键词 边界 但未引用 N003
+      → 建议引用 N005: 提到了关键词 边 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [3处] 五行\人元\病历\曾菊心.md
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
@@ -4863,10 +3204,6 @@ SPUM 跨领域一致性审计报告
       → 建议引用 N004: 提到了关键词 节点 但未引用 N004
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N012: 提到了关键词 帧 但未引用 N012
-    [3处] 元素化学\README.md
-      → 建议引用 N014: 提到了关键词 晶子 但未引用 N014
-      → 建议引用 N015: 提到了关键词 层级 但未引用 N015
-      → 建议引用 N018: 提到了关键词 永恒粒子 但未引用 N018
     [3处] 宇宙学\README.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
       → 建议引用 N006: 提到了关键词 自洽 但未引用 N006
@@ -4895,6 +3232,9 @@ SPUM 跨领域一致性审计报告
     [2处] 五行\人元\病历\高建国.md
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
       → 建议引用 N020: 提到了关键词 运动 但未引用 N020
+    [2处] 五行\人元\脉诊\硬件\脉搏传感器.md
+      → 建议引用 N005: 提到了关键词 连接 但未引用 N005
+      → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [2处] 五行\天元\梅花易数\02.坤为地卦.md
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
       → 建议引用 N020: 提到了关键词 运动 但未引用 N020
@@ -4937,16 +3277,12 @@ SPUM 跨领域一致性审计报告
     [2处] 物理学\凝聚态物理\凝聚态.md
       → 建议引用 N001: 提到了关键词 存在 但未引用 N001
       → 建议引用 N005: 提到了关键词 边 但未引用 N005
-    [1处] docs\SPUM2610\SPUM2610.md
-      → 建议引用 N004: 提到了关键词 空间粒子 但未引用 N004
     [1处] 五行\人元\食材ΔS数据库.md
       → 建议引用 N002: 提到了关键词 差异 但未引用 N002
     [1处] 五行\人元\病历\林梅平.md
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [1处] 五行\人元\病历\曾银鸾\2026-07-07-调理方案.md
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
-    [1处] 五行\人元\病历\曾银鸾\甘伟建.md
-      → 建议引用 N020: 提到了关键词 运动 但未引用 N020
     [1处] 五行\人元\病历\胡瑞廷\王玥茵.md
       → 建议引用 N016: 提到了关键词 12 但未引用 N016
     [1处] 五行\天元\梅花易数\01.乾卦.md
@@ -5000,17 +3336,6 @@ SPUM 跨领域一致性审计报告
     [1处] 宇宙学\地基\可接受数据清单.md
       → 建议引用 N020: 提到了关键词 引力 但未引用 N020
 
-  其余文件 (仅列出前 10):
-    [19处] docs\spum_dark\黑暗的归藏.md
-    [18处] docs\spum_dark\黑暗的拂晓.md
-    [17处] AGENT.md
-    [17处] docs\Spatial_Geometry_Genesis\SPUM_Spatial_Geometry_Genesis.md
-    [17处] docs\Topological_Emergence\SPUM_Topological_Emergence.md
-    [16处] 青囊管家\knowledge\五形-skill.md
-    [15处] docs\Combinatorial_Gauss_Bonnet\SPUM_Combinatorial_Gauss_Bonnet.md
-    [14处] openSPUM\Phase_0\CUDA_空间粒子引擎.md
-    [13处] README.md
-    [13处] docs\spum_dark\黑暗的破晓.md
 
 【6】推导链完整性检查
 ────────────────────────────────────────────────────────────
@@ -5030,132 +3355,144 @@ SPUM 跨领域一致性审计报告
 ────────────────────────────────────────────────────────────
   说明: 各核心节点被引用的文件数
 
-  R1           ⟨P,ε⟩              79 文件 ███████████████████████████████████████
-  R5           不完美定理              78 文件 ███████████████████████████████████████
-  R9           σ=                 58 文件 █████████████████████████████
-  R4           dv/dt≤const        54 文件 ███████████████████████████
-  R6           S向量                33 文件 ████████████████
-  R2           V⁺/V⁻              26 文件 █████████████
-  R8           ΔS                 25 文件 ████████████
-  R7           健康多面体H             24 文件 ████████████
-  R3           离散帧τ               23 文件 ███████████
-  N016         拓扑常数 12            14 文件 ███████
-  N001         宇宙存在               13 文件 ██████
-  N013         不完美                13 文件 ██████
+  R5           不完美定理              85 文件 ████████████████████████████████████████
+  R1           ⟨P,ε⟩              81 文件 ████████████████████████████████████████
+  R9           σ=                 57 文件 ████████████████████████████
+  R4           dv/dt≤const        55 文件 ███████████████████████████
+  R6           S向量                36 文件 ██████████████████
+  R2           V⁺/V⁻              30 文件 ███████████████
+  N016         拓扑常数 12            25 文件 ████████████
+  R7           健康多面体H             25 文件 ████████████
+  R3           离散帧τ               24 文件 ████████████
+  R8           ΔS                 21 文件 ██████████
+  N013         不完美                20 文件 ██████████
+  GT-027       ?                  15 文件 ███████
+  N001         宇宙存在               14 文件 ███████
+  GT-001       连接优先属性             13 文件 ██████
+  GT-005       悬挂端密度δ             13 文件 ██████
+  GT-002       悬挂端不可消除            12 文件 ██████
+  N015         分形约束生长             11 文件 █████
+  GT-003       帧快照                11 文件 █████
   N004         节点/空间粒子            10 文件 █████
   N005         边/连接                9 文件 ████
-  GT-003       帧快照                 8 文件 ████
+  GT-004       完美极限不达              8 文件 ████
   N008         总边数守恒               7 文件 ███
-  N014         晶子                  7 文件 ███
   N018         永恒粒子                7 文件 ███
-  GT-001       连接优先属性              7 文件 ███
-  GT-005       悬挂端密度δ              7 文件 ███
-  GT-002       悬挂端不可消除             7 文件 ███
+  N014         晶子                  7 文件 ███
   N022         SPUM-图论             6 文件 ███
   N002         差异                  6 文件 ███
   SOC-001      G_social            6 文件 ███
-  GT-004       完美极限不达              6 文件 ███
+  GT-006       锚点漂移率Δμ             6 文件 ███
+  GT-007       帧间拓扑距离d_topo        6 文件 ███
+  GT-011       有向/加权→SPUM          6 文件 ███
   SOC-020      慢变迁                 6 文件 ███
-  N015         分形约束生长              5 文件 ██
-  N019         几何发生学               5 文件 ██
-  N012         离散帧                 5 文件 ██
+  GT-008       σ图论定义               6 文件 ███
   N020         运动与引力               5 文件 ██
+  N012         离散帧                 5 文件 ██
+  N019         几何发生学               5 文件 ██
   GT-013       社会学→图论桥             5 文件 ██
+  SOC-008      权力                  5 文件 ██
+  GT-016       物理学→图论桥             5 文件 ██
+  GT-019       HandshakingVerifier    5 文件 ██
+  GT-020       SPUM演化循环            5 文件 ██
+  GT-014       经济学→图论桥             5 文件 ██
+  GT-009       经典节点→SPUM           5 文件 ██
+  GT-015       语言学→图论桥             5 文件 ██
   GT-018       DanglingDetector    5 文件 ██
   GT-010       经典同构→SPUM           5 文件 ██
-  GT-016       物理学→图论桥             5 文件 ██
   GT-017       FrameGraph          5 文件 ██
-  GT-015       语言学→图论桥             5 文件 ██
-  GT-006       锚点漂移率Δμ             5 文件 ██
-  GT-007       帧间拓扑距离d_topo        5 文件 ██
-  GT-019       HandshakingVerifier    5 文件 ██
-  GT-011       有向/加权→SPUM          5 文件 ██
-  GT-009       经典节点→SPUM           5 文件 ██
-  GT-020       SPUM演化循环            5 文件 ██
-  SOC-008      权力                  5 文件 ██
-  GT-014       经济学→图论桥             5 文件 ██
   SOC-011      不平等                 5 文件 ██
-  GT-008       σ图论定义               5 文件 ██
+  GT-028       ?                   5 文件 ██
+  GT-012       经典谱→Δμ谱             5 文件 ██
   N006         闭合网络                4 文件 ██
   N003         边界                  4 文件 ██
   N007         最小度数≥2              4 文件 ██
-  SOC-005      群体定义                4 文件 ██
-  LING-017     语言变化                4 文件 ██
-  LING-005     语音                  4 文件 ██
-  LING-011     句法                  4 文件 ██
-  SOC-014      制度                  4 文件 ██
-  ECON-011     需求                  4 文件 ██
-  SOC-017      文化                  4 文件 ██
-  ECON-014     劳动                  4 文件 ██
-  LING-008     词                   4 文件 ██
-  ECON-017     经济增长                4 文件 ██
   LING-014     语用                  4 文件 ██
-  LING-001     G_ling              4 文件 ██
-  LING-020     语言-认知耦合             4 文件 ██
-  ECON-008     市场                  4 文件 ██
+  LING-017     语言变化                4 文件 ██
   ECON-001     G_econ              4 文件 ██
+  LING-005     语音                  4 文件 ██
+  SOC-014      制度                  4 文件 ██
+  SOC-005      群体定义                4 文件 ██
   ECON-005     价值                  4 文件 ██
   ECON-020     经济危机                4 文件 ██
+  LING-020     语言-认知耦合             4 文件 ██
+  SOC-017      文化                  4 文件 ██
+  ECON-017     经济增长                4 文件 ██
+  ECON-014     劳动                  4 文件 ██
+  LING-001     G_ling              4 文件 ██
+  LING-011     句法                  4 文件 ██
+  ECON-008     市场                  4 文件 ██
+  LING-008     词                   4 文件 ██
+  ECON-011     需求                  4 文件 ██
+  GT-023       ?                   4 文件 ██
+  GT-022       ?                   4 文件 ██
+  GT-025       ?                   4 文件 ██
+  GT-024       ?                   4 文件 ██
+  GT-026       ?                   4 文件 ██
   VSPT-001     VSPT生长拓扑            4 文件 ██
-  GT-012       经典谱→Δμ谱             4 文件 ██
+  GT-032       ?                   4 文件 ██
+  GT-030       ?                   4 文件 ██
+  GT-029       ?                   4 文件 ██
+  GT-021       ?                   4 文件 ██
   SOC-009      层级                  4 文件 ██
   SOC-002      V⁺/V⁻_social        4 文件 ██
-  N010         体积/存在权重             3 文件 █
+  ECON-004     经济不完美               4 文件 ██
   N009         创生事件 V⁺             3 文件 █
   N011         悬挂边删除               3 文件 █
+  N010         体积/存在权重             3 文件 █
   FI-004       引力                  3 文件 █
-  SOC-007      邓巴数                 3 文件 █
-  SOC-016      制度崩溃                3 文件 █
-  SOC-018      语言                  3 文件 █
-  SOC-004      社会不完美定理             3 文件 █
-  SOC-003      σ_social            3 文件 █
+  GT-031       ?                   3 文件 █
   SOC-022      技术变迁                3 文件 █
-  SOC-006      内群体偏好               3 文件 █
-  SOC-019      文化冲突                3 文件 █
+  SOC-007      邓巴数                 3 文件 █
+  SOC-003      σ_social            3 文件 █
+  SOC-016      制度崩溃                3 文件 █
   SOC-015      三重锁定                3 文件 █
   SOC-021      快变迁/革命              3 文件 █
-  ECON-002     交易V⁺/V⁻             3 文件 █
-  ECON-018     经济周期                3 文件 █
-  ECON-007     价格                  3 文件 █
+  SOC-004      社会不完美定理             3 文件 █
+  SOC-006      内群体偏好               3 文件 █
+  SOC-019      文化冲突                3 文件 █
+  SOC-018      语言                  3 文件 █
   ECON-015     资本                  3 文件 █
-  ECON-016     工资与利润               3 文件 █
   ECON-012     供给                  3 文件 █
-  ECON-003     σ_econ              3 文件 █
-  ECON-004     经济不完美               3 文件 █
-  ECON-022     σ重构                 3 文件 █
-  ECON-006     货币                  3 文件 █
-  ECON-010     均衡                  3 文件 █
-  ECON-009     竞争                  3 文件 █
-  ECON-013     分配                  3 文件 █
   ECON-021     系统性风险               3 文件 █
+  ECON-016     工资与利润               3 文件 █
+  ECON-006     货币                  3 文件 █
+  ECON-009     竞争                  3 文件 █
+  ECON-018     经济周期                3 文件 █
+  ECON-013     分配                  3 文件 █
+  ECON-022     σ重构                 3 文件 █
+  ECON-010     均衡                  3 文件 █
+  ECON-007     价格                  3 文件 █
+  ECON-003     σ_econ              3 文件 █
   ECON-019     增长极限                3 文件 █
-  LING-003     σ_ling              3 文件 █
+  ECON-002     交易V⁺/V⁻             3 文件 █
+  LING-002     语言V⁺/V⁻             3 文件 █
+  LING-016     合作原则                3 文件 █
+  LING-015     言语行为                3 文件 █
+  LING-022     翻译与不可译              3 文件 █
+  LING-012     短语结构                3 文件 █
+  LING-010     语义场                 3 文件 █
   LING-019     语言分化                3 文件 █
   LING-009     语义                  3 文件 █
-  LING-002     语言V⁺/V⁻             3 文件 █
-  LING-012     短语结构                3 文件 █
-  LING-007     音系                  3 文件 █
-  LING-016     合作原则                3 文件 █
-  LING-022     翻译与不可译              3 文件 █
-  LING-006     音素                  3 文件 █
   LING-004     语言不完美定理             3 文件 █
-  LING-015     言语行为                3 文件 █
-  LING-021     语言习得                3 文件 █
-  LING-010     语义场                 3 文件 █
-  LING-018     语法化                 3 文件 █
   LING-013     递归                  3 文件 █
+  LING-018     语法化                 3 文件 █
+  LING-007     音系                  3 文件 █
+  LING-021     语言习得                3 文件 █
+  LING-006     音素                  3 文件 █
+  LING-003     σ_ling              3 文件 █
   N017         π 的降级               2 文件 █
   N021         拓扑认知                2 文件 █
   FI-001       强力                  2 文件 █
-  SOC-010      革命                  2 文件 █
   SOC-013      社会流动                2 文件 █
   SOC-012      马太效应                2 文件 █
-  COSM-006     膨胀表象                1 文件 
-  COSM-001     星系子网                1 文件 
+  SOC-010      革命                  2 文件 █
   COSM-004     子图协动                1 文件 
   COSM-003     σ 红移                1 文件 
   COSM-005     σ 梯度引力              1 文件 
+  COSM-001     星系子网                1 文件 
+  COSM-006     膨胀表象                1 文件 
   COSM-002     多中心收缩               1 文件 
+  FI-002       电磁力                 1 文件 
   FI-003       弱力                  1 文件 
   FI-005       四力统一                1 文件 
-  FI-002       电磁力                 1 文件 
