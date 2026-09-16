@@ -152,6 +152,20 @@
           "指标": "图论/spum-图论指标.md"
         }
       },
+      "geometry": {
+        "name": "几何学",
+        "entry": ".trae/skills/spum-geometry/skill.md",
+        "triggers": ["几何", "几何学", "度量", "距离", "角度", "曲率", "维度", "π", "圆周率", "球体", "正二十面体", "Finsler", "Randers", "嵌入度量", "诱导坐标", "几何发生学", "投影不变式", "角度亏损", "高斯-博内", "几何图论", "摆动角", "键角", "配位上限", "矛盾二"],
+        "l2Files": {
+          "公理": "几何学/spum-几何公理.md",
+          "Finsler公设": "几何学/Finsler几何/spum-Finsler公设.md",
+          "Randers度量": "几何学/Finsler几何/spum-Randers度量.md",
+          "矛盾二解答": "几何学/Finsler几何/spum-矛盾二解答.md",
+          "发生学": "几何学/欧氏几何/spum-发生学.md",
+          "组合恒等式": "几何学/欧氏几何/spum-组合恒等式.md",
+          "应用桥": "几何学/spum-几何应用桥.md"
+        }
+      },
       "zhihu": {
         "name": "知乎知识库",
         "entry": ".trae/skills/zhihu-knowledge/skill.md",

@@ -110,6 +110,16 @@ docs/逻辑树.md | network/nodes.txt, network/edges.txt | 仓库概念架构层
 物理学/波动与声学/ | 物理学/skill.md
 物理学/统一理论/ | 物理学/skill.md
 
+几何学/skill.md | .trae/rules/spum-core.md, 图论/skill.md | SPUM 几何学入口——L1~L2 投影层
+几何学/README.md | 几何学/skill.md
+几何学/spum-几何公理.md | 几何学/skill.md | 公理层 GEO-001~008
+几何学/欧氏几何/spum-发生学.md | 几何学/spum-几何公理.md | 欧氏发生学层 GEO-009~017
+几何学/欧氏几何/spum-组合恒等式.md | 几何学/spum-几何公理.md | 组合恒等式层 GEO-018~020
+几何学/Finsler几何/spum-Finsler公设.md | 几何学/spum-几何公理.md | Finsler 公设层 GEO-021~026
+几何学/Finsler几何/spum-Randers度量.md | 几何学/Finsler几何/spum-Finsler公设.md | Randers 度量层 GEO-027~030
+几何学/Finsler几何/spum-矛盾二解答.md | 几何学/Finsler几何/spum-Randers度量.md | 矛盾二解答层 GEO-031~033
+几何学/spum-几何应用桥.md | 几何学/skill.md | 应用桥层 GEO-034~038（物理/宇宙学/化学/图论→几何）
+
 # ══════════════════════════════════════════════════════════
 # 层级 5.5：L1.5 五形诊断语义层
 # ══════════════════════════════════════════════════════════
