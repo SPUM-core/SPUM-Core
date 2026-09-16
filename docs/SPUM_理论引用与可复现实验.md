@@ -19,7 +19,7 @@
 | 锚点永不锁定（双层不完美） | B + C | `tools/repro_core_invariants.py` [4]；`experiments/n015|n016` | 非平稳学习/概念漂移 |
 | 宇宙是离散关系网络（⟨P, ε⟩） | B（哲学-物理纲领） | `spum/` 单元测试 | 因果集、量子图性、Wolfram 超图 |
 | 空间 = 连接关系（背景无关） | B（纲领） | — | Rovelli 圈量子引力、因果集 |
-| 引力 = σ 密度梯度 / 净湮灭，预言 1/r³ | **C 原创预言** | `docs/Subgraph_CoMotion/fit_galaxy.py` | 需观测裁决（对比 MOND/ΛCDM） |
+| 引力 = 空间流（净湮灭驱动；读数 σ 梯度），预言 1/r³ | **C 原创预言** | `docs/Subgraph_CoMotion/fit_galaxy.py` | 需观测裁决（对比 MOND/ΛCDM） |
 | 子图协动替代暗物质解释旋转曲线 | **C 原创模型** | `docs/Subgraph_CoMotion/fit_galaxy.py --nfw` | 对比 NFW：SPARC 175 数据 |
 | 连续是离散的认知投影 / π 降级 | B（立场声明） | — | 离散外微分、Regge 微积分 |
 

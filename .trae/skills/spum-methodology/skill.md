@@ -204,6 +204,6 @@ SPUM-core 的逻辑——⟨P, ε⟩ 离散关系网络、帧演化、悬挂边�
 | `openSPUM/_archive_v1/Phase_3/icosahedron_derivation.py` | 正二十面体几何 → 壳层容量 2n² 的推导（v1 归档） |
 | `openSPUM/_archive_v1/Phase_4/simulate_hydrogen.py` | 氢原子模拟——从规则集到具体物理现象的路径（v1 归档） |
 | `experiments/SPUM拓扑认知框架 P0_P2 完整实验验证报告.md` | 实验验证：神经网络隐藏层中的拓扑结构——方法论的认知投影检验 |
-| `宇宙学/模型/谱线偏移作为σ效应.md` | σ 红移——从规则到可观测预言的完整链路 |
+| `宇宙学/模型/谱线偏移作为σ效应.md` | σ 红移（光子数据链的累积读数）——从规则到可观测预言的完整链路 |
 | `.trae/rules/spum-evolution.md` | 五步帧演化规则的完整定义 |
 | `.trae/rules/spum-reasoning.md` | 推理原则：可还原性、多路径锁定、全回溯无污染 |

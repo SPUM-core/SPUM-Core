@@ -2,8 +2,13 @@
 """
 SPUM 红移验证 — 主入口。
 
-验证 SPUM 宇宙学的核心预言：
-  红移 z = σ_source / σ_obs - 1
+验证 SPUM 宇宙学在**同一星系团内**的局域预言：
+  红移 z = σ_source / σ_obs - 1（局域两端退化读数）
+
+口径（2026-09-16 统一）：红移的通式是**光子数据链的累积读数**
+  z ∝ Σ_k (σ(l_k)−σ₀)/σ₀ ——光子途中不被改造，逐跳追加 σ 记录。
+  两端 σ 之比仅是本包适用的簇内局域退化形式，不是通式。
+  详见 SPUM2610.md §9.1.3 与 .trae/rules/spum-vocabulary.md §三第 6 条。
 
 用法:
     python run.py                       # 全部星系团（默认：内嵌样本）
@@ -32,7 +37,7 @@ from config import config
 
 def main():
     parser = argparse.ArgumentParser(
-        description="SPUM 红移验证 — z = σ_source/σ_obs - 1",
+        description="SPUM 红移验证（簇内局域退化读数 z = σ_source/σ_obs - 1）",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例:
