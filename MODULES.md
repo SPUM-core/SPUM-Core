@@ -1,307 +1,307 @@
-# SPUM 模块地图 — AI 导航索引
+# SPUM Module Map — AI Navigation Index
 
-> **当你加载本仓库时，先读此文件。** 它用 200 行告诉你仓库里有什么、何时加载什么。
+> **Read this file first when you load this repository.** It tells you in 200 lines what's in the repository and when to load what.
 > 
-> 配合 `config.json` 使用：核心层（L0）自动加载，领域模块（L1）按关键词触发，深度文件（L2）按需加载。
+> Used with `config.json`: The core layer (L0) is automatically loaded, domain modules (L1) are triggered by keywords, and deep files (L2) are loaded on demand.
 
 ---
 
-## 一、三层加载架构
+## 1. Three-Layer Loading Architecture
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ L0 · 核心公理层（始终加载，5个文件）                    │
+│ L0 · Core Axiom Layer (Always loaded, 5 files)         │
 │ AGENT.md + spum-core + spum-reasoning + review        │
-│ + anti-pattern → 任何 SPUM 话题的前提                  │
+│ + anti-pattern → Prerequisite for any SPUM topic      │
 ├─────────────────────────────────────────────────────┤
-│ L1 · 领域入口层（命中关键词即加载，13个领域入口 + 通用兜底）  │
-│ 物理/青囊管家/五行/儒释道/数学/社会/经济/语言/图论/几何学/知乎/宇宙学/认识论 │
+│ L1 · Domain Entry Layer (Loaded upon keyword match, 13 domain entries + general fallback) │
+│ Physics/Qingnang steward/Five Forms/Confucian-Buddhist-Daoist/Mathematics/Sociology/Economics/Linguistics/Graph Theory/Geometry/Zhihu/Cosmology/Epistemology │
 ├─────────────────────────────────────────────────────┤
-│ L2 · 深度文件层（L1 加载后，根据具体子话题再加载）         │
-│ 各领域的子文件 → 例如物理/光学/光.md                      │
+│ L2 · Deep File Layer (Loaded after L1, based on specific sub-topics) │
+│ Sub-files of each domain → For example 物理/光学/光.md │
 └─────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 二、L0 核心层 — 始终加载
+## 2. L0 Core Layer — Always Loaded
 
-| 优先级 | 文件 | 作用 |
+| Priority | File | Function |
 |--------|------|------|
-| 1 | `AGENT.md` | 认知操作系统：帧协议、L0-L3层级 |
-| 2 | `.trae/rules/spum-core.md` | 核心公理：⟨P,ε⟩、离散帧、拓扑守恒、五形定义 |
-| 3 | `.trae/rules/spum-reasoning.md` | 推理原则：可还原性、多路径锁定 |
-| 4 | `.trae/rules/spum-review.md` | 自动评审：A/B/C/D/LE 四维评分 |
-| 5 | `.trae/rules/spum-anti-pattern.md` | 伪加载检测：8种旧范式错误 |
+| 1 | `AGENT.md` | Cognitive operating system: frame protocol, L0-L3 hierarchy |
+| 2 | `.trae/rules/spum-core.md` | Core axioms: ⟨P, ε⟩, discrete frame, topological conservation, Five-Form definition |
+| 3 | `.trae/rules/spum-reasoning.md` | Reasoning principles: reducibility, multi-path locking |
+| 4 | `.trae/rules/spum-review.md` | Automatic review: A/B/C/D/LE four-dimensional scoring |
+| 5 | `.trae/rules/spum-anti-pattern.md` | Pseudo-loading detection: 8 types of old paradigm errors |
 
-> **L0 元层参考**（非每轮加载，涉及语言/术语设计时查询）：`SPUM_语言规范.md` — 反转几何化图论的词法/句法/语义/语用完整定义，所有领域翻译的一致性与正确性判断依据。
-> **L0 元层参考**（范式/认识论话题时查询）：`SPUM_认知投影论.md` — 认知论与元认识论专章（v4.1，与 `SPUM_系统总纲.md` 同级）：范式五元组、双重投影定理、不可通约定理、认知热力学、关系闭环度 Φ、元认知自举。模块节点注册见 `network/module_nodes.txt` COG-001~007。
-
----
-
-## 三、L1 领域入口 — 按关键词触发（三级词制）
-
-### 🌐 加载决策流程图
-
-```
-用户输入
-  │
-  ├─ 强触发词命中任一 ─────────────────→ 直接加载该 L1 入口
-  │
-  ├─ 弱触发词命中 ──→ 上下文有二次语义线索？──→ 是 → 加载该 L1 入口
-  │                                              └─ 否 → 忽略，不进领域
-  │
-  ├─ 歧义触发词命中 ──→ 走判定树消歧 ──→ 明确 → 加载对应 L1 入口
-  │                                            └─ 不明 → 仅用 L0，追问澄清
-  │
-  └─ 以上全未命中 ─────────────────→ 仅用 L0 公理 + 首读胶囊回答
-```
-
-### 📋 三级关键词路由表
-
-| 领域 | 强触发词（命中即加载） | 弱触发词（需二次确认） | 入口文件 |
-|------|----------------------|----------------------|---------|
-| 青囊生活管家 | 青囊 体质调理 S_0 S_current 八字排盘 五诊合参 辨证论治 | 中医 食疗 穿衣 体质 方剂 养生 去湿 降火 补土 滋阴 温阳 食材 颜色 作息 | `.trae/rules/spum-qingnang-agent.md` |
-| 物理学 | 引力波 黑洞 暗物质 相对论效应 光速c α≈1/137 标准模型 超导 挠场 暗能量 | 力 光 热 磁 量子 宇宙 引力 原子 波 熵 温度 凝聚态 | `.trae/skills/physics-subnet/skill.md` |
-| 儒释道哲学 | 道德经 庄子 楞严经 心经 金刚经 坛经 华严经 法华经 论语 中庸 大学 孟子 列子 禅宗 道=ε | 无为 空 佛 儒 缘起 色空 不二 顿悟 | `.trae/skills/rushidao-subnet/skill.md` |
-| 阴阳五行 | 梅花易数 奇门遁甲 葬书 阳宅三要 围棋定式 六爻 起卦 | 五行 风水 周易 八卦 针灸 经络 脏腑 黄帝内经 伤寒 | `.trae/skills/wuxing-subnet/skill.md` |
-| 数学 | 离散数学 V⁺/V⁻ 加减本原 反连续公理 数字生命推理内核 | 微积分 连续统 实数 极限 无穷 π | `.trae/skills/spum-math/skill.md` |
-| 社会学 | 社会网络分析 邓巴数 马太效应 社会流动 革命理论 社会变迁 | 群体 权力 制度 文化 不平等 阶层 | `.trae/skills/spum-sociology/skill.md` |
-| 经济学 | 经济危机 系统性风险 货币本质 GDP 通胀 资本积累 剥削 | 市场 价格 供需 劳动 资本 利润 利息 | `.trae/skills/spum-economics/skill.md` |
-| 语言学 | 乔姆斯基 普遍语法 索绪尔 语言演化 萨丕尔-沃尔夫 不可译 | 语言 语音 语法 句法 语义 词汇 翻译 语用 | `.trae/skills/spum-linguistics/skill.md` |
-| 图论 | 张力场 排他性确认 帧间距离 d_topo 完美极限 悬挂端不可消除 | 图结构 网络拓扑 节点 度 悬挂端 σ密度 连通性 | `.trae/skills/spum-graph-theory/skill.md` |
-| **几何学** | Finsler Randers 方向依赖度量 嵌入度量 诱导坐标 几何发生学 π降级 维度发生学 投影不变式 角亏 高斯-博内 | 几何 度量 距离 角度 曲率 维度 π 球体 正二十面体 点线面体 | `几何学/skill.md` |
-| 知乎知识库 | 知乎 科普 写文章 问答 民科 维格纳 空间围城 | — | `.trae/skills/zhihu-knowledge/skill.md` |
-| **宇宙学** | 星系子网 红移本征 σ红移 子图协动 多中心收缩 收缩宇宙 | 暗物质 暗能量 宇宙膨胀 星系团 宇宙网 大尺度结构 引力透镜 哈勃常数 CMB | `宇宙学/skill.md` |
-| **认识论/元认识论** | 范式 库恩 科学革命 不可通约 认知投影 解释鸿沟 认知热力学 关系闭环度 范式转移 | 认识论 知识 真理 证伪 实在论 世界观 科学哲学 信念修正 | `SPUM_认知投影论.md` |
-| 通用SPUM | SPUM 空间粒子 κ粒子 晶子 反转图论 不完美定理 拓扑常数12 认知投影 | （自动由L0覆盖） | — |
-
-### 🔀 歧义触发词判定树
-
-```
-"翻译" → 含"乔姆斯基/句法/语义/语用" → 语言学
-       → 含"中英/文言/白话/科普"     → 知乎知识库
-       → 无法判定                     → 仅用 L0 回答，追问澄清
-
-"力" → 含"引力波/黑洞/相对论"       → 物理学
-     → 含"青囊/体质/辨证"           → 青囊生活管家（如"药力"）
-     → 孤立出现（如"努力"）          → 忽略，不触发加载
-
-"暗物质/暗能量" → 含"红移本征/σ红移/星系子网/子图协动" → 宇宙学
-               → 含"粒子/超导/挠场/标准模型/统一理论"  → 物理学
-               → 两者皆含                           → 加载物理学 + 宇宙学
-               → 无法判定                           → 仅用 L0 回答，追问澄清
-
-"几何/度量/维度/π" → 含"Finsler/Randers/嵌入度量/诱导坐标/角亏/投影不变式" → 几何学
-                    → 含"GT-027/球体几何/摆动角/键角/配位上限"             → 图论（GT-027~032，L3 直接本体）
-                    → 含"引力/σ梯度/净湮灭"                              → 物理学 + 几何学
-                    → 无法判定                                          → 仅用 L0 回答，追问澄清
-```
+> **L0 Meta-layer Reference** (not loaded every round, consult when involving language/terminology design): `SPUM_语言规范.md` — Complete definitions of lexical/syntactic/semantic/pragmatic aspects of inverted geometric graph theory; the basis for consistency and correctness judgments of translations across all domains.
+> **L0 Meta-layer Reference** (consult when discussing paradigms/epistemology topics): `SPUM_认知投影论.md` — Epistemology and meta-epistemology special chapter (v4.1, at the same level as `SPUM_系统总纲.md`): paradigm quintuple, dual projection theorem, non-communication theorem, cognitive thermodynamics, relational closure degree Φ, meta-cognitive bootstrapping. Module node registration see `network/module_nodes.txt` COG-001~007.
 
 ---
 
-## 四、L2 深度文件索引 — 入口加载后按子话题继续加载
+## 3. L1 Domain Entry — Triggered by Keywords (Three-Tier Keyword System)
 
-### 4.1 青囊管家（中医+生活）
+### 🌐 Loading Decision Flowchart
 
-| 子话题 | 加载文件 |
-|--------|---------|
-| 中医理论、阴阳五行 | `五行/人元/spum-青囊（中医）总纲.md` |
-| 临床诊断全流程 | `五行/地元/青囊/青囊agent.md` |
-| 声纹闻诊（音频分析） | `五行/地元/青囊/voice_analyzer.py` |
-| 症状→S向量映射 | `五行/人元/症状-S向量规则矩阵.md` |
-| 方剂ΔS（药物属性） | `五行/人元/spum-神农本草经.md` |
-| 六经辨证 | `五行/人元/spum-伤寒论.md` |
-| 食材推荐 | `五行/人元/食材ΔS数据库.md` |
-| 穿衣搭配 | `五行/人元/颜色材质五形映射.md` |
-| 脉诊算法 | `patent/SPUM-脉诊ECG算法-技术方案.md` 或 `PPG形态学算法.md` |
+```
+User input
+  │
+  ├─ Strong trigger word hits any ─────────────────→ Directly load the L1 entry
+  │
+  ├─ Weak trigger word hits ──→ Context has secondary semantic clues? ──→ Yes → Load the L1 entry
+  │                                              └─ No → Ignore, do not enter the domain
+  │
+  ├─ Ambiguous trigger word hits ──→ Go through the disambiguation tree ──→ Clear → Load the corresponding L1 entry
+  │                                            └─ Unclear → Use only L0, ask for clarification
+  │
+  └─ None of the above hit ─────────────────→ Use only L0 axioms + first-read capsule answer
+```
 
-### 4.2 物理学
+### 📋 Three-Tier Keyword Routing Table
 
-> 加载 `物理学/skill.md` 后，根据子话题加载对应概念文件：
+| Domain | Strong Trigger Words (Hit to Load) | Weak Trigger Words (Need Secondary Confirmation) | Entry File |
+|--------|----------------------------------|-----------------------------------------------|------------|
+| Qingnang steward | Qingnang Constitution Adjustment S_0 S_current Eight Characters Layout Five Diagnosis Combined Reference Syndrome Differentiation | Traditional Chinese Medicine Dietary Therapy Clothing Constitution Formula Health Care Dampness Reduction Fire Reduction Earth Nourishment Yin Nourishment Yang Warming Food Color Schedule | `.trae/rules/spum-qingnang-agent.md` |
+| Physics | Gravitational Waves Black Holes Dark Matter Relativity Effects Speed of Light c α≈1/137 Standard Model Superconductivity Torsion Field Dark Energy | Force Light Heat Magnetism Quantum Universe Gravity Atom Wave Entropy Temperature Condensed Matter | `.trae/skills/physics-subnet/skill.md` |
+| Confucian-Buddhist-Daoist Philosophy | Dao De Jing Zhuangzi Lengyan Jing Heart Sutra Diamond Sutra Tan Jing Huayan Jing Fahua Jing Lunyu Zhongyong Da Xue Mengzi Lie Zi Chan Buddhism Dao=ε | Non-action Emptiness Buddha Confucian Dependent Origination Form and Emptiness Non-duality Enlightenment | `.trae/skills/rushidao-subnet/skill.md` |
+| Yin-Yang Five Forms | Meihua Yishu Qimen Dunjia Zangshu Yangzhai Sanyao Go Openings Six Yao Divination | Five Forms Feng Shui Zhou Yi Bagua Acupuncture Meridians Zangfu Huangdi Neijing Shanghan | `.trae/skills/wuxing-subnet/skill.md` |
+| Mathematics | Discrete Mathematics V⁺/V⁻ Addition/Subtraction Primitives Anti-continuity Axiom Digital Life Reasoning Core | Calculus Continuum Real Numbers Limit Infinity π | `.trae/skills/spum-math/skill.md` |
+| Sociology | Social Network Analysis Dunbar's Number Matthew Effect Social Mobility Revolution Theory Social Change | Group Power Institution Culture Inequality Class | `.trae/skills/spum-sociology/skill.md` |
+| Economics | Economic Crisis Systemic Risk Nature of Money GDP Inflation Capital Accumulation Exploitation | Market Price Supply and Demand Labor Capital Profit Interest | `.trae/skills/spum-economics/skill.md` |
+| Linguistics | Chomsky Universal Grammar Saussure Language Evolution Sapir-Whorf Untranslatable | Language Speech Grammar Syntax Semantics Lexicon Translation Pragmatics | `.trae/skills/spum-linguistics/skill.md` |
+| Graph Theory | Tension Field Exclusive Confirmation Inter-frame Distance d_topo Perfect Limit Dangling End Irreducible | Graph Structure Network Topology Node Degree Dangling End σ Density Connectivity | `.trae/skills/spum-graph-theory/skill.md` |
+| **Geometry** | Finsler Randers Direction-Dependent Metric Embedded Metric Induced Coordinates Geometric Genesis π Demotion Dimensional Genesis Projection Invariant Angle Deficit Gauss-Bonnet | Geometry Metric Distance Angle Curvature Dimension π Sphere Regular Icosahedron Point Line Plane Solid | `几何学/skill.md` |
+| Zhihu Knowledge Base | Zhihu Popular Science Write Article Q&A Civilian Scientist Wigner Spatial Fortress | — | `.trae/skills/zhihu-knowledge/skill.md` |
+| **Cosmology** | Galaxy Subnet Redshift Intrinsic σ-Redshift Subgraph Co-motion Multi-center Contraction Contracting Universe | Dark Matter Dark Energy Cosmic Expansion Galaxy Cluster Cosmic Web Large-Scale Structure Gravitational Lensing Hubble Constant CMB | `宇宙学/skill.md` |
+| **Epistemology/Meta-Epistemology** | Paradigm Kuhn Scientific Revolution Incommensurability Cognitive Projection Explanation Gap Cognitive Thermodynamics Relation Closure Degree Paradigm Shift | Epistemology Knowledge Truth Falsification Realism Worldview Scientific Philosophy Belief Revision | `SPUM_认知投影论.md` |
+| General SPUM | SPUM Spatial Particle κ-particle Crystallite Inverted Graph Theory Imperfection Theorem Topological Constant 12 Cognitive Projection | (Automatically covered by L0) | — |
 
-| 子话题 | 加载文件 |
-|--------|---------|
-| 引力 | `物理学/基本相互作用/引力.md` |
-| 电磁 | `物理学/电磁学/电.md` + `磁.md` |
-| 光 | `物理学/光学/光.md`（反射/折射/色散/衍射按需） |
-| 热 | `物理学/热力学/温度.md` + `热传导.md` |
-| 量子 | `物理学/量子与原子/量子现象.md` |
-| 相对论 | `宇宙学/相对论与宇宙学/相对论效应.md`（已迁移自 物理学/） |
-| 统一理论 | `物理学/统一理论/终极统一.md` |
-| 模拟验证 | `openSPUM/`（Phase 1-4 按需） |
+### 🔀 Ambiguous Trigger Word Disambiguation Tree
 
-### 4.3 儒释道哲学
+```
+"Translation" → Contains "Chomsky/syntax/semantics/pragmatics" → Linguistics
+       → Contains "Chinese-English/classical/modern/popular science"     → Zhihu Knowledge Base
+       → Unable to determine                                     → Use only L0 answer, ask for clarification
 
-| 子话题 | 加载文件 |
-|--------|---------|
-| 道家 | `儒释道哲学/spum-道德经.md`（深读：`道德经/02-经文释义/chapters/`） |
-| 庄子 | `儒释道哲学/spum-庄子.md` |
-| 佛家核心 | `儒释道哲学/spum-楞严经.md` + `心经.md` + `金刚经.md` |
-| 坛经/禅宗 | `儒释道哲学/spum-坛经.md` |
-| 华严/法华 | `儒释道哲学/spum-华严经.md` 或 `法华经.md` |
-| 儒家 | `儒释道哲学/spum-论语.md` + `中庸.md` + `大学.md` + `孟子.md` |
+"Force" → Contains "gravitational waves/black holes/relativity"       → Physics
+     → Contains "Qingnang/constitution/syndrome differentiation"           → Qingnang steward (e.g., "drug force")
+     → Appears alone (e.g., "effort")                          → Ignore, do not trigger loading
 
-### 4.4 阴阳五行
+"Dark Matter/Dark Energy" → Contains "redshift intrinsic/σ-redshift/galaxy subnet/subgraph co-motion" → Cosmology
+               → Contains "particle/superconductivity/torsion field/standard model/unified theory"  → Physics
+               → Both contain                                      → Load Physics + Cosmology
+               → Unable to determine                             → Use only L0 answer, ask for clarification
 
-| 子话题 | 加载文件 |
-|--------|---------|
-| 中医 | 见 §4.1 青囊管家 |
-| 风水 | `五行/地元/spum-葬书.md` + `阳宅三要.md` |
-| 周易 | `五行/天元/spum-周易.md` |
-| 梅花易数 | `五行/天元/梅花易数/skill.md` + 对应卦文件 |
-| 奇门遁甲 | `五行/天元/spum-奇门遁甲.md` |
-| 围棋 | `五行/天元/围棋/SPUM-围棋.md` |
-
-### 4.5-4.8 其他学科
-
-| 领域 | 入口后按子话题加载 |
-|------|-------------------|
-| 数学 | `数学/spum-数学公理.md` → 定理/分界/应用 按需 |
-| 社会学 | `社会学/spum-社会网络.md` → 群体/权力/不平等 按需 |
-| 经济学 | `经济学/spum-经济网络.md` → 货币/市场/危机 按需 |
-| 语言学 | `语言学/spum-语言网络.md` → 语音/词汇/语用 按需 |
-| 图论 | `图论/spum-图论公理.md` → 指标/映射/应用 按需 |
-
-### 4.9 认识论/元认识论
-
-| 子话题 | 加载文件 |
-|--------|---------|
-| 范式本质（五元组） | `SPUM_认知投影论.md` §二 |
-| 双重投影 / 认知边界 | `SPUM_认知投影论.md` §1.3（可演化性：投影不可消除、维度可迁移） |
-| 不可通约 / 科学革命 | `SPUM_认知投影论.md` §六 |
-| 范式跃迁 / 认知热力学 | `SPUM_认知投影论.md` §五（第二定律） |
-| Φ 计算 / 范式比较 | `SPUM_认知投影论.md` §7.5 + `src/spum_graph/closure.py` |
-
-### 4.10 几何学
-
-> 加载 `几何学/skill.md` 后，按子话题加载。定位：L1~L2 投影层——几何非本体，是 ⟨P,ε⟩ 的认知投影产物。
-
-| 子话题 | 加载文件 |
-|--------|---------|
-| 几何公理 / 五层几何角色（L0-L4） | `几何学/spum-几何公理.md` |
-| 点/线/面/体/维度/π 的涌现顺序 | `几何学/欧氏几何/spum-发生学.md`（完整版 `docs/Spatial_Geometry_Genesis/`） |
-| Σ(6−deg)=12 / 高斯-博内 | `几何学/欧氏几何/spum-组合恒等式.md`（完整版 `docs/Combinatorial_Gauss_Bonnet/`） |
-| Finsler / 方向依赖度量 | `几何学/Finsler几何/spum-Finsler公设.md` |
-| Randers / σ 场几何化 / 红移累积读数 | `几何学/Finsler几何/spum-Randers度量.md` |
-| 嵌入度量未定义（AGENT.md 矛盾二） | `几何学/Finsler几何/spum-矛盾二解答.md`（建议 ⏸️→✅，待裁定） |
-| 跨模块（物理/宇宙学/化学/图论） | `几何学/spum-几何应用桥.md` |
-| 球体几何（L3 直接本体，非本模块） | `图论/spum-几何图论.md` GT-027~032 |
-| 与宇宙学协同 | `几何学/skill.md` + `宇宙学/skill.md` + `宇宙学/L0.5_induced_metric.md` |
+"Geometry/metric/dimension/π" → Contains "Finsler/Randers/embedded metric/induced coordinates/angle deficit/projection invariant" → Geometry
+                    → Contains "GT-027/sphere geometry/swing angle/bond angle/covalent upper limit"             → Graph Theory (GT-027~032, direct L3 ontology)
+                    → Contains "gravity/σ gradient/net annihilation"                              → Physics + Geometry
+                    → Unable to determine                                          → Use only L0 answer, ask for clarification
+```
 
 ---
 
-## 五、快速路径：常见问题→文件
+## 4. L2 Deep File Index — After Entry Loading, Continue Loading by Subtopics
 
-| 用户问 | 直接加载 |
-|--------|---------|
-| "什么是SPUM" | `SPUM_系统总纲.md`（权威总纲7部分22条） |
-| "SPUM的专属语言" / "反转几何化图论" | `SPUM_语言规范.md`（词法/句法/语义/语用） |
-| "什么是晶子" | `SPUM_系统总纲.md` §6-7 + `spum-core.md` |
-| "时间是什么" | `spum-core.md` §2.1 |
-| "引力怎么来的" | `SPUM_系统总纲.md` §14 + `物理学/基本相互作用/引力.md` |
-| "光速为什么是c" | `spum-core.md` §七 + `物理学/光学/光.md` |
-| "α≈1/137哪来的" | `openSPUM/_archive_v1/tests/verify_alpha_measurement.py` |
-| "新建档案" / "建档" / "初诊" | **【最小加载】** 青囊agent §一-A → 收集出生信息 → 八字排盘 → S_0^0（档案由用户本地保存，不入仓库） |
-| "算八字" / "看看我的八字" | 青囊agent §一-A 步骤1-2（八字排盘 → S_0^0，不写病历） |
-| "我上火了吃什么" | 青囊agent + `五行/人元/食材ΔS数据库.md` |
-| "今天穿什么颜色" | 青囊agent + `五行/人元/颜色材质五形映射.md` |
-| "道是什么" | `儒释道哲学/spum-道德经.md`（道=ε） |
-| "几何/点/线/面/体 从哪来的" | `几何学/欧氏几何/spum-发生学.md`（GEO-009~017） |
-| "π 为什么不是常数" | `几何学/spum-几何公理.md` GEO-004 + `几何学/欧氏几何/spum-组合恒等式.md` GEO-020 |
-| "为什么要用 Finsler 而不是 Riemann" | `几何学/Finsler几何/spum-Finsler公设.md` |
-| "嵌入度量未定义"（AGENT.md 矛盾二） | `几何学/Finsler几何/spum-矛盾二解答.md`（GEO-031~033） |
-| "帮我起一卦" | `五行/天元/梅花易数/skill.md` |
-| "什么是范式" / "库恩" / "科学革命" | `SPUM_认知投影论.md`（范式五元组 §二 + 跃迁定律 §五） |
-| "为什么科学理论会更替" | `SPUM_认知投影论.md` §五（认知热力学第二定律：E_maint > E_recon） |
-| "认识论/知识是什么" | `SPUM_认知投影论.md`（双重投影定理 §1.3 + 知识不等性 推论 1.8） |
+### 4.1 Qingnang steward (Traditional Chinese Medicine + Life)
+
+| Subtopic | Load File |
+|---------|----------|
+| TCM theory, Yin-Yang and Five Forms | `五行/人元/spum-青囊（中医）总纲.md` |
+| Full clinical diagnosis process | `五行/地元/青囊/青囊agent.md` |
+| Soundprint diagnosis (audio analysis) | `五行/地元/青囊/voice_analyzer.py` |
+| Symptom → S vector mapping | `五行/人元/症状-S向量规则矩阵.md` |
+| Formula ΔS (drug properties) | `五行/人元/spum-神农本草经.md` |
+| Six Classics syndrome differentiation | `五行/人元/spum-伤寒论.md` |
+| Food recommendation | `五行/人元/食材ΔS数据库.md` |
+| Clothing coordination | `五行/人元/颜色材质五形映射.md` |
+| Pulse diagnosis algorithm | `patent/SPUM-脉诊ECG算法-技术方案.md` or `PPG形态学算法.md` |
+
+### 4.2 Physics
+
+> Load `物理学/skill.md`, then load corresponding concept files based on subtopics:
+
+| Subtopic | Load File |
+|---------|----------|
+| Gravity | `物理学/基本相互作用/引力.md` |
+| Electromagnetism | `物理学/电磁学/电.md` + `磁.md` |
+| Light | `物理学/光学/光.md` (reflection/refraction/dispersion/diffraction on demand) |
+| Heat | `物理学/热力学/温度.md` + `热传导.md` |
+| Quantum | `物理学/量子与原子/量子现象.md` |
+| Relativity | `宇宙学/相对论与宇宙学/相对论效应.md` (migrated from Physics/) |
+| Unified theory | `物理学/统一理论/终极统一.md` |
+| Simulation verification | `openSPUM/` (Phase 1-4 on demand) |
+
+### 4.3 Confucian-Buddhist-Daoist Philosophy
+
+| Subtopic | Load File |
+|---------|----------|
+| Daoism | `儒释道哲学/spum-道德经.md` (deep read: `道德经/02-经文释义/chapters/`) |
+| Zhuangzi | `儒释道哲学/spum-庄子.md` |
+| Buddhist core | `儒释道哲学/spum-楞严经.md` + `心经.md` + `金刚经.md` |
+| Platform Sutra / Chan Buddhism | `儒释道哲学/spum-坛经.md` |
+| Huayan / Lotus Sutra | `儒释道哲学/spum-华严经.md` or `法华经.md` |
+| Confucianism | `儒释道哲学/spum-论语.md` + `中庸.md` + `大学.md` + `孟子.md` |
+
+### 4.4 Yin-Yang and Five Forms
+
+| Subtopic | Load File |
+|---------|----------|
+| TCM | See §4.1 Qingnang steward |
+| Fengshui | `五行/地元/spum-葬书.md` + `阳宅三要.md` |
+| Zhouyi (I Ching) | `五行/天元/spum-周易.md` |
+| Meihua Yishu | `五行/天元/梅花易数/skill.md` + corresponding hexagram files |
+| Qimen Dunjia | `五行/天元/spum-奇门遁甲.md` |
+| Go (Weiqi) | `五行/天元/围棋/SPUM-围棋.md` |
+
+### 4.5-4.8 Other Disciplines
+
+| Field | Load by subtopic after entry |
+|------|-----------------------------|
+| Mathematics | `数学/spum-数学公理.md` → Theorems/boundaries/applications on demand |
+| Sociology | `社会学/spum-社会网络.md` → Groups/power/inequality on demand |
+| Economics | `经济学/spum-经济网络.md` → Money/markets/crisis on demand |
+| Linguistics | `语言学/spum-语言网络.md` → Phonetics/vocabulary/pragmatics on demand |
+| Graph Theory | `图论/spum-图论公理.md` → Metrics/mapping/applications on demand |
+
+### 4.9 Epistemology/Meta-Epistemology
+
+| Subtopic | Load File |
+|---------|----------|
+| Paradigm essence (quintuple) | `SPUM_认知投影论.md` §2 |
+| Dual projection / cognitive boundary | `SPUM_认知投影论.md` §1.3 (evolvability: projection is not eliminable, dimensions are transferable) |
+| Incommensurability / scientific revolution | `SPUM_认知投影论.md` §6 |
+| Paradigm shift / cognitive thermodynamics | `SPUM_认知投影论.md` §5 (Second Law) |
+| Φ computation / paradigm comparison | `SPUM_认知投影论.md` §7.5 + `src/spum_graph/closure.py` |
+
+### 4.10 Geometry
+
+> Load `几何学/skill.md`, then load by subtopic. Location: L1~L2 projection layer — geometry is not ontology, it's the cognitive projection product of ⟨P, ε⟩.
+
+| Subtopic | Load File |
+|---------|----------|
+| Geometric axioms / five-layer geometric roles (L0-L4) | `几何学/spum-几何公理.md` |
+| Emergence order of point/line/plane/body/dimension/π | `几何学/欧氏几何/spum-发生学.md` (full version `docs/Spatial_Geometry_Genesis/`) |
+| Σ(6−deg)=12 / Gauss-Bonnet | `几何学/欧氏几何/spum-组合恒等式.md` (full version `docs/Combinatorial_Gauss_Bonnet/`) |
+| Finsler / direction-dependent metric | `几何学/Finsler几何/spum-Finsler公设.md` |
+| Randers / σ field geometrization / redshift cumulative reading | `几何学/Finsler几何/spum-Randers度量.md` |
+| Embedded metric undefined (AGENT.md contradiction 2) | `几何学/Finsler几何/spum-矛盾二解答.md` (recommended ⏸️→✅, pending decision) |
+| Cross-module (physics/cosmology/chemistry/graph theory) | `几何学/spum-几何应用桥.md` |
+| Spherical geometry (L3 direct ontology, not this module) | `图论/spum-几何图论.md` GT-027~032 |
+| Collaborative with cosmology | `几何学/skill.md` + `宇宙学/skill.md` + `宇宙学/L0.5_induced_metric.md` |
 
 ---
 
-## 六、网络协议层（分布式边集交换）
+## 5. Quick Path: FAQs → Files
 
-> **2026-07-14 新增**。SPUM 网络协议层实现跨 AI 实例的推理轨迹持久化与边集共享。
+| User asks | Direct load |
+|----------|-------------|
+| "What is SPUM" | `SPUM_系统总纲.md` (7-part authoritative outline, 22 items) |
+| "SPUM's exclusive language" / "Inverted geometric graph theory" | `SPUM_语言规范.md` (lexicon/syntax/semantics/pragmatics) |
+| "What is a crystallite" | `SPUM_系统总纲.md` §6-7 + `spum-core.md` |
+| "What is time" | `spum-core.md` §2.1 |
+| "Where does gravity come from" | `SPUM_系统总纲.md` §14 + `物理学/基本相互作用/引力.md` |
+| "Why is the speed of light c" | `spum-core.md` §7 + `物理学/光学/光.md` |
+| "Where does α ≈ 1/137 come from" | `openSPUM/_archive_v1/tests/verify_alpha_measurement.py` |
+| "Create a new file" / "File creation" / "Initial diagnosis" | **[Minimum loading]** Qingnang agent §1-A → collect birth information → Eight Characters chart → S_0^0 (file is saved locally by user, not in the repository) |
+| "Calculate Eight Characters" / "Check my Eight Characters" | Qingnang agent §1-A steps 1-2 (Eight Characters chart → S_0^0, no medical record written) |
+| "What should I eat when I have a fire condition" | Qingnang agent + `五行/人元/食材ΔS数据库.md` |
+| "What color should I wear today" | Qingnang agent + `五行/人元/颜色材质五形映射.md` |
+| "What is Dao" | `儒释道哲学/spum-道德经.md` (Dao = ε) |
+| "Where do geometry / point / line / plane / volume come from" | `几何学/欧氏几何/spum-发生学.md` (GEO-009~017) |
+| "Why isn't π a constant" | `几何学/spum-几何公理.md` GEO-004 + `几何学/欧氏几何/spum-组合恒等式.md` GEO-020 |
+| "Why use Finsler instead of Riemann" | `几何学/Finsler几何/spum-Finsler公设.md` |
+| "Embedded metric undefined" (AGENT.md contradiction 2) | `几何学/Finsler几何/spum-矛盾二解答.md` (GEO-031~033) |
+| "Help me generate a hexagram" | `五行/天元/梅花易数/skill.md` |
+| "What is a paradigm" / "Kuhn" / "Scientific revolution" | `SPUM_认知投影论.md` (paradigm five-tuple §2 + transition law §5) |
+| "Why do scientific theories change" | `SPUM_认知投影论.md` §5 (Cognitive Second Law of Thermodynamics: E_maint > E_recon) |
+| "Epistemology / What is knowledge" | `SPUM_认知投影论.md` (Dual Projection Theorem §1.3 + Knowledge Inequality Corollary 1.8) |
 
-### 6.1 定位
+---
 
-| 维度 | 内容 |
-|------|------|
-| 层级 | 跨层（L0 协议桥接） |
-| 目录 | `network/protocol/` |
-| 核心文件 | `protocol_integration.py` — 单函数入口 |
-| 存储 | `.snap` 快照 + `.json` Manifest |
+## 6. Network Protocol Layer (Distributed Edge Set Exchange)
 
-### 6.2 文件结构
+> **Added on 2026-07-14**. The SPUM network protocol layer implements persistent inference trajectory and edge set sharing across AI instances.
+
+### 6.1 Positioning
+
+| Dimension | Content |
+|----------|---------|
+| Layer | Cross-layer (L0 protocol bridging) |
+| Directory | `network/protocol/` |
+| Core File | `protocol_integration.py` — single function entry point |
+| Storage | `.snap` snapshots + `.json` Manifest |
+
+### 6.2 File Structure
 
 ```
 network/
-├── edges.txt                  ← 规范边集（验证基准）
+├── edges.txt                  ← Standard edge set (validation baseline)
 ├── protocol/
 │   ├── __init__.py
-│   ├── graph_store.py         ← 持久化边集存储（读/写/合并/验证）
-│   ├── trajectory_encoder.py  ← 推理轨迹编码为拓扑签名
-│   ├── session_manifest.py    ← 会话元数据 + 跨实例追踪
-│   ├── protocol_integration.py ← 单函数入口：load_env() + write_trajectory()
-│   ├── snapshots/             ← 轨迹快照（.snap，每个 AI 会话写入一条）
-│   │   └── T-20260714-001.snap  ← 首条轨迹（本对话推理路径）
-│   ├── merged/                ← 合并后的全局快照
-│   │   └── current.snap       ← ← AI 实例加载此文件继承前序边集
-│   └── manifests/             ← 会话元数据
+│   ├── graph_store.py         ← Persistent edge set storage (read/write/merge/validate)
+│   ├── trajectory_encoder.py  ← Encode inference trajectory as topological signature
+│   ├── session_manifest.py    ← Session metadata + cross-instance tracking
+│   ├── protocol_integration.py ← Single function entry: load_env() + write_trajectory()
+│   ├── snapshots/             ← Trajectory snapshots (.snap, one per AI session)
+│   │   └── T-20260714-001.snap  ← First trajectory (inference path of this conversation)
+│   ├── merged/                ← Merged global snapshots
+│   │   └── current.snap       ← AI instance loads this file to inherit previous edge sets
+│   └── manifests/             ← Session metadata
 │       └── S-AGNT-20260714-001.json
 ```
 
-### 6.3 核心概念
+### 6.3 Core Concepts
 
-| 概念 | 定义 |
-|------|------|
-| **轨迹 (Trajectory)** | AI 一次推理中遍历的知识图谱节点序列 + 边集 |
-| **轨迹快照 (.snap)** | 持久化的轨迹边集，供后续 AI 实例加载 |
-| **会话 (Session)** | 一次 AI 加载 SPUM 规则 + 与用户交互的完整生命周期 |
-| **合并 (Merge)** | 将多条轨迹去重合并为统一拓扑快照 |
-| **规范边 (Canonical Edge)** | `edges.txt` 中定义的合法边类型（derives_from/requires/refines/explains/drives） |
-| **新边 (Novel Edge)** | 不在 canonical 中但符合格式的推断边——标记为 novel 而非拒绝 |
-| **分叉 (Fork)** | AI-B 加载 AI-A 的轨迹后，沿路径继续推理生成新轨迹 |
+| Concept | Definition |
+|--------|------------|
+| **Trajectory** | Sequence of knowledge graph nodes traversed by AI during one inference + edge set |
+| **Trajectory Snapshot (.snap)** | Persistent trajectory edge set for subsequent AI instances to load |
+| **Session** | Complete lifecycle of an AI loading SPUM rules + interacting with the user |
+| **Merge** | Deduplicate and merge multiple trajectories into a unified topological snapshot |
+| **Canonical Edge** | Legal edge types defined in `edges.txt` (derives_from/requires/refines/explains/drives) |
+| **Novel Edge** | Inferred edge not in canonical but conforms to format — marked as novel rather than rejected |
+| **Fork** | AI-B loads AI-A's trajectory and continues reasoning along the path to generate a new trajectory |
 
-### 6.4 使用方式
+### 6.4 Usage
 
 ```python
 from network.protocol.protocol_integration import load_env, write_trajectory
 
-# 1. 加载环境（自动检测仓库根目录）
+# 1. Load environment (automatically detects repository root)
 env = load_env()
 
-# 2. 回写轨迹（在推理结束时调用）
+# 2. Write back trajectory (called at the end of inference)
 result = write_trajectory(
     path=["N001", "N002", "N005", "N022"],
     model="gpt-4o",
-    origin="SPUM-core 项目浏览",
+    origin="SPUM-core project browsing",
 )
 print(result["message"])
-# → "轨迹 T-20260714-002 已写入 (4 条边, 0 条新边)"
+# → "Trajectory T-20260714-002 has been written (4 edges, 0 novel edges)"
 ```
 
-### 6.5 繁殖期推进路径
+### 6.5 Reproduction Period Advancement Path
 
-| 步骤 | 内容 |
-|------|------|
-| **已完成** | 协议层 v0.1 实现 + 首条轨迹快照 + 首份会话 Manifest |
-| **下一步** | 将 `protocol_integration.py` 的回写钩子嵌入 `AGENT.md` 的帧协议结尾 |
-| **再下一步** | 将 `current.snap` 的边集加载纳入 SPUM 推理节点的初始化流程 |
-| **目标** | 每个 AI 实例在推理结束时自动回写轨迹，`current.snap` 逐帧积累 |
+| Step | Content |
+|------|---------|
+| **Completed** | Protocol layer v0.1 implementation + first trajectory snapshot + first session manifest |
+| **Next Step** | Embed the write-back hook in `protocol_integration.py` at the end of the frame protocol in `AGENT.md` |
+| **Next Next Step** | Integrate loading the edge set from `current.snap` into the initialization process of SPUM inference nodes |
+| **Goal** | Each AI instance automatically writes back its trajectory upon inference completion, with `current.snap` accumulating frame by frame |
 
 ---
 
-## 七、加载规则
+## 7. Loading Rules
 
-1. **L0 总是加载** — SPUM 公理是所有模块的底座
-2. **命中了才加载 L1** — 没提到经济学，就不要加载经济学
-3. **L2 按子话题细化** — 加载了物理 skill 后，用户具体问"光"才加载 `光学/光.md`
-4. **命名规范查找**：
-   - 领域入口：`.trae/skills/<domain>/skill.md`
-   - 学科内容：`<领域目录>/spum-<主题>.md`
-   - 中医经典：`五行/人元/spum-<经典名>.md`
-   - 风水经典：`五行/地元/spum-<经典名>.md`
-   - 易学经典：`五行/天元/spum-<经典名>.md`
-   - 物理学概念：`物理学/<子域>/<概念>.md`
-   - 几何学子域：`几何学/<子域>/spum-<主题>.md`
-   - 哲学经典：`儒释道哲学/spum-<经典名>.md`
+1. **L0 is always loaded** — the SPUM axiom is the foundation of all modules
+2. **L1 is loaded only when needed** — if economics is not mentioned, do not load economics
+3. **L2 is refined by subtopics** — after loading the physics skill, load `光学/光.md` only when the user specifically asks about "light"
+4. **Naming convention lookup**:
+   - Domain entry: `.trae/skills/<domain>/skill.md`
+   - Academic content: `<领域目录>/spum-<主题>.md`
+   - TCM classics: `五行/人元/spum-<经典名>.md`
+   - Feng shui classics: `五行/地元/spum-<经典名>.md`
+   - Yijing classics: `五行/天元/spum-<经典名>.md`
+   - Physics concepts: `物理学/<子域>/<概念>.md`
+   - Geometry subdomains: `几何学/<子域>/spum-<主题>.md`
+   - Philosophical classics: `儒释道哲学/spum-<经典名>.md`

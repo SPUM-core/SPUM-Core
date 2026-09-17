@@ -1,62 +1,62 @@
-# SPUM 速查卡片
+# SPUM Cheat Sheet
 
-> 核心公式、关键数字、最短路径。用于快速锚定 AI 推理坐标系。
-> 完整推导见 `knowledge.md` / `SPUM2610.md`。
+> Core formulas, key numbers, shortest paths. Used to quickly anchor the AI's reasoning coordinate system.
+> For complete derivations see `knowledge.md` / `SPUM2610.md`.
 
 ---
 
-## 核心公式
+## Core Formulas
 
-| 公式 | 含义 | 所属 |
-|------|------|------|
-| ⟨P, ε⟩ | 关系网络宇宙本体 = (节点集, 边集) | L0 公理 |
-| σ = \|P\| / \|ε\| | 空间密度 = 节点数/边数 | L0 |
-| ⟨deg⟩ = 2 / σ | 平均度数 = 2 / 空间密度 | L0 |
-| δ = \|D_τ\| / \|V_τ\| | 悬挂端密度 = 悬挂节点数/总节点数 | L0.5 |
-| Σ(6−deg(v)) = 12 | 闭合子图的欧拉约束 = 拓扑常数 | L0 |
-| μ = M − N + C | 环基数 = 边 − 节点 + 连通分量 | L1.5 木形 |
-| dv/dt ≤ const | 单帧关系变化上限 = 4κ | L0 演化 |
-| c = 4κ / τ | 光速 = 4 × 容量上限 / 帧时长 | L0 涌现 |
-| V⁺ / V⁻ | 创生(加边) / 湮灭(删边) 对偶操作 | L0 演化 |
-| ΔS = S_τ − S_{τ−1} | S 向量帧间变化量 | L1.5 五形 |
+| Formula | Meaning | Layer |
+|---------|---------|-------|
+| ⟨P, ε⟩ | relational network as the cosmic ontology = (node set, edge set) | L0 axiom |
+| σ = \|P\| / \|ε\| | spatial density = number of nodes / number of edges | L0 |
+| ⟨deg⟩ = 2 / σ | average degree = 2 / spatial density | L0 |
+| δ = \|D_τ\| / \|V_τ\| | dangling-end density = number of dangling nodes / total number of nodes | L0.5 |
+| Σ(6−deg(v)) = 12 | Euler constraint of a closed subgraph = topological constant | L0 |
+| μ = M − N + C | cycle rank = edges − nodes + connected components | L1.5 Wood form |
+| dv/dt ≤ const | upper bound on relational change within a single frame = 4κ | L0 evolution |
+| c = 4κ / τ | speed of light = 4 × capacity limit / frame duration | L0 emergence |
+| V⁺ / V⁻ | creation (adding an edge) / annihilation (deleting an edge), the dual operations | L0 evolution |
+| ΔS = S_τ − S_{τ−1} | inter-frame change of the Five-Form vector S | L1.5 Five Forms |
 
-## 关键数字
+## Key Numbers
 
-| 数字 | 来源 | 含义 |
-|------|------|------|
-| **12** | Σ(6−deg) = 12 | 拓扑常数，π 的降级替代。0 层级节点恰好 12 个 |
-| **4π** | 离散高斯-博内 | 角度亏损总和 = 4π，闭合曲面的不变总量 |
-| **22** | nodes.txt | L0 核心节点数（N001–N022） |
-| **33** | edges.txt | 核心推导边数 |
-| **15+** | edges.txt | 模块桥接边数 |
-| **207** | tests/ | 单元测试数（根 `tests/`，`python -m unittest discover -s tests`；OpenSPUM v1 的 224 项已随实现归档至 `_archive_v1/`） |
-| **1/3** | 开口占比 | 带边界高斯-博内导出的开口占比上限 |
-| **D_max = 4κ** | 演化约束 | 单帧单节点最大关系变化容量 |
+| Number | Source | Meaning |
+|--------|--------|---------|
+| **12** | Σ(6−deg) = 12 | topological constant, the demotion-of-π substitute. There are exactly 12 level-0 nodes |
+| **4π** | discrete Gauss-Bonnet | total angle defect = 4π, the invariant total of a closed surface |
+| **22** | nodes.txt | number of L0 core nodes (N001–N022) |
+| **33** | edges.txt | number of core derivation edges |
+| **15+** | edges.txt | number of module bridging edges |
+| **207** | tests/ | number of unit tests (root `tests/`, `python -m unittest discover -s tests`; the 224 tests of OpenSPUM v1 were archived to `_archive_v1/` together with the implementation) |
+| **1/3** | open-boundary ratio | upper bound on the open-boundary ratio derived from Gauss-Bonnet with boundary |
+| **D_max = 4κ** | evolution constraint | maximum relational change capacity of a single node within a single frame |
 
-## 层次简图
-
-```
-L0     ⟨P, ε⟩ 本体基底（22节点, 33边）
-L0.5   SPUM-图论（5公理, GT-001~020）
-L1     应用模块（数学/社会学/经济学/语言学/物理学）
-L1.5   五形诊断语义层（水木土金火）
-L2     儒释道哲学 SPUM 重构（14经典, 57节点）
-L3     代码（src/ + OpenSPUM + experiments/）
-```
-
-## 最短推理路径
+## Layer Diagram
 
 ```
-任何概念 → 回溯到 R1-R9 根节点 → 回溯到 N001-N022 → 确认存在
+L0     ⟨P, ε⟩ ontic substrate (22 nodes, 33 edges)
+L0.5   SPUM Graph Theory (5 axioms, GT-001~020)
+L1     application modules (Mathematics / Sociology / Economics / Linguistics / Physics)
+L1.5   Five-Form diagnostic semantics layer (Water Wood Earth Metal Fire)
+L2     Confucian-Buddhist-Daoist Philosophy SPUM reconstruction (14 classics, 57 nodes)
+L3     code (src/ + OpenSPUM + experiments/)
 ```
 
-## 必须禁止的词汇
+## Shortest Reasoning Path
 
-| 禁用词 | 替代 |
-|--------|------|
-| 波粒二象性 | 光=永恒粒子，传播=σ地形决定 |
-| 时间流逝/时空 | 离散帧计数 |
-| 容器/背景空间 | 泡泡本身就是空间 |
-| 力（作为驱动力） | 创生/湮灭事件 + σ梯度 |
-| 概率/叠加态 | 信息不完备的认知投影 |
-| 大爆炸/起点 | 关系网络变化无始无终 |
+```
+any concept → backtrack to R1-R9 root nodes → backtrack to N001-N022 → confirm existence
+```
+
+## Forbidden Vocabulary
+
+| Forbidden term | Replacement |
+|----------------|-------------|
+| wave-particle duality | light = eternal particle, propagation = determined by the σ terrain |
+| flow of time / spacetime | discrete-frame count |
+| container / background space | the bubbles themselves are space |
+| force (as a driving cause) | creation/annihilation events + σ gradient |
+| probability / superposition state | cognitive projection of incomplete information |
+| Big Bang / starting point | change of the relational network has no beginning and no end |

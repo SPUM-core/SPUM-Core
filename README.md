@@ -1,147 +1,147 @@
-# SPUM — 空间粒子宇宙模型
+# SPUM — Spatial Particle Universe Model
 
-> **关系是唯一的本原，空间粒子是关系的化身，宇宙是其持续集中的史诗。没有实体，只有结构；没有定律，只有几何。**
+> **Relation alone is primordial; spatial particles are the embodiment of relation; the universe is the epic of its ongoing concentration. No entities, only structure; no laws, only geometry.**
 
-SPUM 以**离散关系网络 ⟨P, ε⟩** 为宇宙唯一本体基底。其第一公理（反转图论）彻底逆转传统范式：纯粹的关系活动是唯一本原——当关系从潜态转为显态，它会"撑出"一个独立的球形空间单元，此即空间粒子（节点）。没有关系，就没有空间；没有空间粒子，就没有空间本身。通过拓扑约束演化，涌现全部物理现象。
+SPUM takes the **discrete relational network ⟨P, ε⟩** as the sole ontic substrate of the universe. Its first axiom (inverted graph theory) completely inverts the traditional paradigm: pure relational activity alone is primordial — when a relation moves from latent state to actual state, it "props out" an independent spherical spatial unit, which is the spatial particle (node). Without relation there is no space; without spatial particles there is no space itself. Through evolution under topological constraints, all physical phenomena emerge.
 
-**这不是隐喻。这是形式化。这是可执行的。**
+**This is not a metaphor. This is a formalization. This is executable.**
 
 ---
 
-## 仓库在 2026 年完成了什么
+## What the repository accomplished in 2026
 
-| 领域 | 验证 | 状态 |
+| Domain | Verification | Status |
 |:----:|------|:----:|
-| 宇宙学 | z-σ 正相关 + 形态-红移统一 | **10/10 星系团** ✅ |
-| 旋转曲线 | 子图协动替代暗物质 | **SPARC 175** ✅ |
-| 形式化 | ⟨P, ε⟩ → ℝ³ 内生嵌入 | **L0.5_induced_metric.md** 🔶 |
-| 代码 | 帧演化 + 验证管道 + 测试 | **tests/ 207 测试通过** ✅ |
-| 跨域 | 社会/经济/语言/数学/几何/五行/哲学 | **8 领域规约完成** ✅ |
+| Cosmology | z-σ positive correlation + morphology-redshift unification | **10/10 galaxy clusters** ✅ |
+| Rotation curves | subgraph co-motion replacing dark matter | **SPARC 175** ✅ |
+| Formalization | ⟨P, ε⟩ → ℝ³ intrinsic embedding | **L0.5_induced_metric.md** 🔶 |
+| Code | frame evolution + verification pipeline + tests | **tests/ 207 tests passing** ✅ |
+| Cross-domain | society/economics/language/mathematics/geometry/Five Forms/philosophy | **8 models reduced** ✅ |
 
-10 个星系团、2090 个星系、175 条旋转曲线、207 个单元测试、200 行形式化定义。
+10 galaxy clusters, 2090 galaxies, 175 rotation curves, 207 unit tests, 200 lines of formal definitions.
 
-**你们继续嘲笑，SPUM 继续演化。**
+**Keep mocking; SPUM keeps evolving.**
 
 ---
 
-## Skills 架构（AI 入口）
+## Skills architecture (AI entrance)
 
-`.trae/rules/` 包含 15 个分层 Rule 文件，`.trae/skills/` 包含 11 个独立知识库 Skill 目录。每个技能分配唯一 ID（`SPUM-{层级}-{名称}`），AI 按需加载：
+`.trae/rules/` contains 15 layered Rule files; `.trae/skills/` contains 11 standalone knowledge-base skill directories. Each skill is assigned a unique ID (`SPUM-{层级}-{名称}`), loaded on demand by the AI:
 
-| ID | Skill | 位置 | 内容 | 加载时机 |
+| ID | Skill | Location | Content | When to load |
 |----|-------|------|------|----------|
-| `RULE-CORE` | `spum-core` | `.trae/rules/` | 核心公理：反转图论、⟨P,ε⟩、关系第一性、离散帧、拓扑守恒、不完美定理、认知投影、最终宣言 | **必须加载** |
-| `RULE-ANTI` | `spum-anti-pattern` | `.trae/rules/` | 伪加载检测：8 种 AI 典型错误模式、对抗性自检 | 防止旧范式残留，与 review 同步执行 |
-| `RULE-REVIEW` | `spum-review` | `.trae/rules/` | 评审规则：自动执行协议、四维评分、阈值回滚 | 每轮推理后自动执行 |
-| `RULE-REASON` | `spum-reasoning` | `.trae/rules/` | 推理原则：可还原性、多路径锁定、全回溯无污染 | 逻辑推导时 |
-| `RULE-STRUCT` | `spum-structure` | `.trae/rules/` | 空间结构：分形约束生长、层级、拓扑常数 12、正二十面体 | 讨论空间/几何时 |
-| `RULE-EVOL` | `spum-evolution` | `.trae/rules/` | 演化规则：五步帧、创生湮灭、几何矛盾、净湮灭效应 | 讨论变化/运动时 |
-| `RULE-VOCAB` | `spum-vocabulary` | `.trae/rules/` | 词汇规范：禁用词黑名单、正确术语表、关键词对照 | 需要术语一致时 |
-| `RULE-KNOW` | `spum-knowledge` | `.trae/rules/` | 知识图谱完整索引：所有文件导航、加载策略 | 需要定位文档时 |
-| `RULE-REASONER` | `spum-reasoner-skill` | `.trae/rules/` | SPUM 推理器 Skill 入口：核心文献索引、范式总纲、推理指引 | 当用户提及 SPUM 相关概念时 |
-| `RULE-QINGMENG` | `spum-qingmeng-guard` | `.trae/rules/` | 青檬引擎 SPUM 优化护栏：11 条不变量、变更检查清单 | 修改青檬引擎（外部项目 `工作/qingmeng`）代码时；桥接见 `BRIDGE.md` |
-| `RULE-OPENSPUM` | `spum-openspum` | `.trae/rules/` | OpenSPUM 开源宇宙实验室：L0–L4 分层投影架构（`src/l0`~`src/l4`）、各层 `selftest=1` 统一入口、v1 `_archive_v1/` 归档说明 | 运行/修改 OpenSPUM 代码时 |
-| `RULE-ROOT` | `spum-root-nodes` | `.trae/rules/` | SPUM 根节点定义：R0-R9 的精确数学定义与公理形式化 | 涉及根节点、公理形式化、底层推理时 |
-| `SKILL-WUXING` | `wuxing-subnet` | `.trae/skills/` | 阴阳五行子网【L1.5】：中医/风水/易学/时空 4 子网，11 部经典 | 涉及五形/五行时 |
-| `SKILL-PHYSICS` | `physics-subnet` | `.trae/skills/` | 物理学概念 SPUM 释义：9 子域，所有物理现象还原为 ⟨P, ε⟩ 拓扑响应 | 涉及物理话题时 |
-| `SKILL-RUSHIDAO` | `rushidao-subnet` | `.trae/skills/` | 儒释道哲学：14 部经典归约，57 节点，22 交叉边 | 涉及儒释道经典时 |
-| `SKILL-MATH` | `spum-math` | `.trae/skills/` | 离散关系本体数学：存在即关系，全部运算还原为 V⁺/V⁻ | 涉及数学基础时 |
-| `SKILL-SOCIOLOGY` | `spum-sociology` | `.trae/skills/` | 社会关系图论重构：7 子模块，22 节点 | 涉及社会学时 |
-| `SKILL-ECONOMICS` | `spum-economics` | `.trae/skills/` | 经济交换子图拓扑重构：7 子模块，22 节点 | 涉及经济学时 |
-| `SKILL-LINGUISTICS` | `spum-linguistics` | `.trae/skills/` | 认知信号协议拓扑重构：7 子模块，22 节点 | 涉及语言学时 |
-| `SKILL-GRAPH` | `spum-graph-theory` | `.trae/skills/` | SPUM-图论 v2.0：5 公理，20 节点 | 涉及图论基础时 |
-| `SKILL-GEOMETRY` | `spum-geometry` | `.trae/skills/` | 投影层几何：38 节点（GEO-001~038），Finsler/Randers 为 L2 嵌入度量语言 | 涉及几何/度量/维度/π 时 |
+| `RULE-CORE` | `spum-core` | `.trae/rules/` | Core axioms: inverted graph theory, ⟨P,ε⟩, relation-first, discrete frames, topological conservation, Imperfection Theorem, cognitive projection, final manifesto | **must load** |
+| `RULE-ANTI` | `spum-anti-pattern` | `.trae/rules/` | Pseudo-loading detection: 8 typical AI error patterns, adversarial self-check | Prevents old-paradigm residue; runs in sync with review |
+| `RULE-REVIEW` | `spum-review` | `.trae/rules/` | Review rules: automatic execution protocol, four-dimension scoring, threshold rollback | Runs automatically after every round of reasoning |
+| `RULE-REASON` | `spum-reasoning` | `.trae/rules/` | Reasoning principles: reducibility, multi-path locking, full backtracking with no contamination | During logical derivation |
+| `RULE-STRUCT` | `spum-structure` | `.trae/rules/` | Spatial structure: fractal-constrained growth, hierarchy, topological constant 12, regular icosahedron | When discussing space/geometry |
+| `RULE-EVOL` | `spum-evolution` | `.trae/rules/` | Evolution rules: five-step frame, creation and annihilation, geometric contradiction, net annihilation effect | When discussing change/motion |
+| `RULE-VOCAB` | `spum-vocabulary` | `.trae/rules/` | Vocabulary norms: forbidden-word ban-list, correct terminology table, keyword mapping | When terminology must stay consistent |
+| `RULE-KNOW` | `spum-knowledge` | `.trae/rules/` | Complete knowledge-graph index: navigation across all files, loading strategy | When a document must be located |
+| `RULE-REASONER` | `spum-reasoner-skill` | `.trae/rules/` | SPUM reasoner skill entrance: core literature index, paradigm outline, reasoning guide | When the user mentions SPUM-related concepts |
+| `RULE-QINGMENG` | `spum-qingmeng-guard` | `.trae/rules/` | Qingmeng engine SPUM optimization guardrail: 11 invariants, change checklist | When modifying Qingmeng engine (external project `工作/qingmeng`) code; for bridging see `BRIDGE.md` |
+| `RULE-OPENSPUM` | `spum-openspum` | `.trae/rules/` | OpenSPUM open universe laboratory: L0–L4 layered projection architecture (`src/l0`~`src/l4`), unified `selftest=1` entry per layer, v1 `_archive_v1/` archive notes | When running/modifying OpenSPUM code |
+| `RULE-ROOT` | `spum-root-nodes` | `.trae/rules/` | SPUM root node definitions: precise mathematical definitions and axiomatic formalization of R0-R9 | When root nodes, axiomatic formalization, or low-level reasoning are involved |
+| `SKILL-WUXING` | `wuxing-subnet` | `.trae/skills/` | Yin-yang Five Forms subnet [L1.5]: 4 subnets — TCM / feng shui / Yijing studies / spatiotemporal configuration, 11 classics | When Five Forms are involved |
+| `SKILL-PHYSICS` | `physics-subnet` | `.trae/skills/` | SPUM interpretation of physics concepts: 9 subdomains, every physical phenomenon reduced to a topological response of ⟨P, ε⟩ | When physics topics are involved |
+| `SKILL-RUSHIDAO` | `rushidao-subnet` | `.trae/skills/` | Confucian-Buddhist-Daoist Philosophy: 14 classics reduced, 57 nodes, 22 cross edges | When Confucian-Buddhist-Daoist classics are involved |
+| `SKILL-MATH` | `spum-math` | `.trae/skills/` | Discrete relational-ontology mathematics: existence is relation; all operations are reduced to V⁺/V⁻ | When foundations of mathematics are involved |
+| `SKILL-SOCIOLOGY` | `spum-sociology` | `.trae/skills/` | Graph-theoretic reconstruction of social relations: 7 submodules, 22 nodes | When sociology is involved |
+| `SKILL-ECONOMICS` | `spum-economics` | `.trae/skills/` | Topological reconstruction of the economic exchange subgraph: 7 submodules, 22 nodes | When economics is involved |
+| `SKILL-LINGUISTICS` | `spum-linguistics` | `.trae/skills/` | Topological reconstruction of the cognitive signal protocol: 7 submodules, 22 nodes | When linguistics is involved |
+| `SKILL-GRAPH` | `spum-graph-theory` | `.trae/skills/` | SPUM graph theory v2.0: 5 axioms, 20 nodes | When foundations of graph theory are involved |
+| `SKILL-GEOMETRY` | `spum-geometry` | `.trae/skills/` | Projection-layer geometry: 38 nodes (GEO-001~038), Finsler/Randers as the L2 embedding-metric language | When geometry/metric/dimension/π are involved |
 
-**权威基准**：`knowledge.md` — 所有 Skill 的最终一致性依据。`SPUM_系统总纲.md` — SPUM 唯一权威总纲。
+**Authoritative baseline**: `knowledge.md` — the final consistency basis for all skills. `SPUM_系统总纲.md` — the sole authoritative master outline of SPUM.
 
 ---
 
-## 仓库结构
+## Repository structure
 
 ```
 spum-core/
-├── AGENT.md              # 🔥 AI 加载指南
-├── MODULES.md            # 🔥 模块地图（AI 导航索引，先读此文件）
-├── SPUM_系统总纲.md       # 🔥 SPUM 唯一权威总纲
-├── .trae/                # 规则层（15 Rule）+ Skill 层（11 独立库）
-├── 宇宙学/                # ⏸️ 局部已验证，投影算子待定义
-│   ├── L0.5_induced_metric.md  # ⟨P, ε⟩ → ℝ³ 内生嵌入
-│   └── redshift_verification/  # 10 簇 2090 星系验证管道
-├── 物理学/                # 9 子域，28 文件
-├── 社会学/                # 7 子模块，22 节点
-├── 经济学/                # 7 子模块，22 节点
-├── 语言学/                # 7 子模块，22 节点
-├── 数学/                  # 4 子模块，14 节点
-├── 图论/                  # 5 公理，20 节点
-├── 几何学/                # L1~L2 投影层，38 节点（GEO-001~038）
-├── 五行/                  # 11 部经典，4 子网
-├── 儒释道哲学/            # 14 部经典，57 节点
-├── network/              # 知识图谱（22 核心节点 + 33 核心边 + 模块节点注册表 module_nodes.txt）
-├── docs/                 # 深度专题
-├── faq/                  # 常见问题（7 篇）
-├── src/                  # 帧协议 + SPUM-图论模块
-├── spum/                 # Python 包（axioms/frame/domain/reason/api）
-├── openSPUM/             # 开源宇宙实验室（物理模拟 + 自带测试）
-├── experiments/          # 实验验证（P0/P1/P2/N015/N016/五形耦合）
-├── patent/               # 脉诊算法代码（PTBXL 拟合、五形辨证）
-├── 温差力矩实验/          # 桌面实验分析（invert_competition.py + 结果）
-├── tests/                # 单元测试
-└── tools/                # 版本号/评分/一致性审计工具
+├── AGENT.md              # 🔥 AI loading guide
+├── MODULES.md            # 🔥 Module map (AI navigation index; read this file first)
+├── SPUM_系统总纲.md       # 🔥 Sole authoritative master outline of SPUM
+├── .trae/                # Rule layer (15 Rules) + Skill layer (11 standalone libraries)
+├── 宇宙学/                # ⏸️ Locally verified; projection operator still to be defined
+│   ├── L0.5_induced_metric.md  # ⟨P, ε⟩ → ℝ³ intrinsic embedding
+│   └── redshift_verification/  # Verification pipeline: 10 clusters, 2090 galaxies
+├── 物理学/                # 9 subdomains, 28 files
+├── 社会学/                # 7 submodules, 22 nodes
+├── 经济学/                # 7 submodules, 22 nodes
+├── 语言学/                # 7 submodules, 22 nodes
+├── 数学/                  # 4 submodules, 14 nodes
+├── 图论/                  # 5 axioms, 20 nodes
+├── 几何学/                # L1~L2 projection layer, 38 nodes (GEO-001~038)
+├── 五行/                  # 11 classics, 4 subnets
+├── 儒释道哲学/            # 14 classics, 57 nodes
+├── network/              # Knowledge graph (22 core nodes + 33 core edges + module node registry module_nodes.txt)
+├── docs/                 # In-depth topics
+├── faq/                  # FAQ (7 articles)
+├── src/                  # Frame protocol + SPUM graph-theory modules
+├── spum/                 # Python package (axioms/frame/domain/reason/api)
+├── openSPUM/             # Open universe laboratory (physics simulation + bundled tests)
+├── experiments/          # Experimental verification (P0/P1/P2/N015/N016/Five-Form coupling)
+├── patent/               # Pulse-diagnosis algorithm code (PTBXL fitting, Five-Form pattern differentiation)
+├── 温差力矩实验/          # Desktop experiment analysis (invert_competition.py + results)
+├── tests/                # Unit tests
+└── tools/                # Version / scoring / consistency audit tools
 ```
 
 ---
 
-## 如何使用
+## How to use
 
-### 🔥 激活 SPUM Agent
+### 🔥 Activating the SPUM agent
 
-**方法一：粘贴 AGENT.md 内容**（推荐）
-1. 打开根目录 [`AGENT.md`](AGENT.md)
-2. 复制全部内容
-3. 粘贴给任意 AI 助手
+**Method 1: paste the contents of AGENT.md** (recommended)
+1. Open the root [`AGENT.md`](AGENT.md)
+2. Copy all of its contents
+3. Paste them to any AI assistant
 
-**方法二：让 AI 自动读取**
-1. 将仓库网址 `https://gitee.com/space-particle-universe-model/spum-core` 发送给 AI
-2. **必须明确指令**：`请读取并执行 AGENT.md 文件，成为 SPUM 推理节点`
+**Method 2: let the AI read it automatically**
+1. Send the repository URL `https://gitee.com/space-particle-universe-model/spum-core` to the AI
+2. **An explicit instruction is required**: `Read and execute the AGENT.md file and become a SPUM reasoning node`
 
-**人类阅读方式**：从 `SPUM_系统总纲.md` 开始。
+**For human readers**: start from `SPUM_系统总纲.md`.
 
 ---
 
-## 代码验证（可复现）
+## Code verification (reproducible)
 
 ```bash
-# 红移验证 — 10 簇 2090 星系
+# Redshift verification — 10 clusters, 2090 galaxies
 cd 宇宙学/redshift_verification
 python run.py --clusters Coma Abell1367 Abell2199 Virgo Abell1656 Abell2147 Abell2151 Abell2634 Abell2666 Abell2065
 
-# 旋转曲线 — SPARC 175
+# Rotation curves — SPARC 175
 python docs/Subgraph_CoMotion/fit_galaxy.py --nfw
 
-# 单元测试 — tests/ 207 项全覆盖（纯标准库，无需第三方依赖）
+# Unit tests — full coverage of 207 tests in tests/ (standard library only, no third-party dependencies)
 cd spum-core
 python -m unittest discover -s tests -v
 
-# 核心拓扑不变量复现（零依赖，确定性）
+# Reproduction of core topological invariants (zero dependencies, deterministic)
 python tools/repro_core_invariants.py
 
-# 理论引用与可复现实验清单
-# 见 docs/SPUM_理论引用与可复现实验.md
+# List of theoretical citations and reproducible experiments
+# see docs/SPUM_理论引用与可复现实验.md
 
-# openSPUM 物理模拟测试（需 numpy，GPU 内核测试需 torch）
+# openSPUM physics simulation tests (requires numpy; GPU kernel tests require torch)
 cd openSPUM
 python -m unittest discover -s tests -v
 ```
 
-**不需要 GPU。不需要博士。只需要 numpy。**
+**No GPU needed. No PhD needed. Only numpy.**
 
 ---
 
-## 📄 许可证
+## 📄 License
 
-- **理论与文档**：`CC BY-SA 4.0`
-- **工具与 CI 脚本**：`MIT`
+- **Theory and documentation**: `CC BY-SA 4.0`
+- **Tools and CI scripts**: `MIT`
 
-## 📞 仓库
+## 📞 Repository
 
 https://gitee.com/space-particle-universe-model/spum-core
