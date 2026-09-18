@@ -1,0 +1,9 @@
+{
+  "_comment": "Maps Chinese repo paths (relative to CN repo root) to English repo paths (relative to EN repo root). Only files that have been renamed need an entry here; files that keep the same path are copied as-is.",
+  "map": {
+    "openSPUM/docs/L0L1L2_架构设计.md": "openSPUM/docs/L0L1L2_Architecture.md",
+    "openSPUM/docs/L0_闭合与隔绝_χ2的局部来源.md": "openSPUM/docs/L0_Closure_and_Isolation_chi2.md",
+    "openSPUM/docs/全层回归基线.md": "openSPUM/docs/Full_Layer_Regression_Baseline.md",
+    "openSPUM/docs/本体模型协同推演工作模式.md": "openSPUM/docs/Collaborative_Derivation_Workflow.md"
+  }
+}
