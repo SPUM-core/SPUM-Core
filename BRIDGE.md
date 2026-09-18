@@ -1,7 +1,7 @@
 # Bridge contract · spum-core ⇄ Qingmeng engine
 
 > This file is the **human-readable** bridge contract. The machine-readable version is in the same directory [`bridge/manifest.json`](bridge/manifest.json).
-> Counterpart file on the other side: `C:/Users/macotai/Desktop/工作/qingmeng/BRIDGE.md`
+> Counterpart file on the other side: `../qingmeng/BRIDGE.md`
 
 ## 1. Positioning
 
@@ -10,7 +10,7 @@ This repo **no longer contains Qingmeng code**; the two codebases are zero-coupl
 
 | | spum-core (this repo) | Qingmeng engine (other side) |
 |:---|:---|:---|
-| Path | `C:/Users/macotai/Desktop/工作/spum-core` | `C:/Users/macotai/Desktop/工作/qingmeng` |
+| Path | `.` | `../qingmeng` |
 | Role | Source: defines the axioms, ontology, and derivation graph | Executor: **runs** the axioms into auditable reasoning frames |
 | Artifacts | Axiom rules / node-edge graph / interface contract | Frame snapshots / S vector / consensus report / derivation chain |
 | Entry point | `spum.SPUM` (`from spum import SPUM`) | `qingmeng.QingmengEngine` |
@@ -82,5 +82,5 @@ Artifacts do not enter git (`.gitignore` keeps directory-structure placeholders 
 
 ## 6. Files on the other side
 
-- `C:/Users/macotai/Desktop/工作/qingmeng/BRIDGE.md`
-- `C:/Users/macotai/Desktop/工作/qingmeng/bridge/manifest.json`
+- `../qingmeng/BRIDGE.md`
+- `../qingmeng/bridge/manifest.json`

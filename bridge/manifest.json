@@ -2,14 +2,14 @@
   "schema": "spum-bridge/1.0",
   "self": {
     "project": "spum-core",
-    "root": "C:/Users/macotai/Desktop/工作/spum-core",
+    "root": ".",
     "version": "source-of-truth",
     "role": "source-of-truth",
     "entrypoint": "spum:SPUM"
   },
   "peer": {
     "project": "qingmeng",
-    "root": "C:/Users/macotai/Desktop/工作/qingmeng",
+    "root": "../qingmeng",
     "role": "executor",
     "entrypoint": "qingmeng:QingmengEngine"
   },

@@ -1,7 +1,7 @@
 {
   "tag": "hf-base",
   "backend": "hf",
-  "model": "C:\\Users\\macotai\\models\\Qwen2.5-Coder-7B-Instruct",
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
   "adapter": "",
   "shots": 0,
   "temperature": 0.0,

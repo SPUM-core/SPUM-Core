@@ -4,7 +4,7 @@
 > This is a **research log** (study notes), not an architectural baseline. It records real disk-write timestamps from probes on September 14, 2026, documenting empirical readings and verdicts around six propositions.
 > **Timestamp Convention**: All times are taken from the `LastWriteTime` of probe files (`%TEMP%\spum_*.py`), **no fabrication**; it marks the script's disk-write moment, with actual execution and readings following closely. §0.5 provides the full timeline for that day.
 > The six propositions all originate from user rulings and inquiries: (1) **Can "o face" be "closed"**; (2) **Does the relation pool halve**; (3) **Is it true that "internal=reachable, external=isolated by boundary ⇒ necessarily a sphere"**; (4) **Is χ=2 an axiom input or an emergent local rule**; (5) **Does isolating half at each level give a relation threshold**; (6) **Are numbers the ratio of spherical angles**.
-> All readings are produced by a one-time script (see §7 script index), without GPU, without L0Core, completed purely at the combinatorial level — consistent with the orientation in [L0L1L2_Architecture.md](file:///c:/Users/macotai/Desktop/工作/spum-core/openSPUM/docs/L0L1L2_Architecture.md) §1 "Geometry is a product of the projection layer".
+> All readings are produced by a one-time script (see §7 script index), without GPU, without L0Core, completed purely at the combinatorial level — consistent with the orientation in [L0L1L2_Architecture.md](L0L1L2_Architecture.md) §1 "Geometry is a product of the projection layer".
 > Several conclusions **tighten** previous verbal expressions, two **falsify** original proposals ("deg≤5 ⇒ χ=2" refuted by a semi-icosahedron; "regular icosahedron can demonstrate r-neighborhood distinction" refuted by its distance regularity). All tightening and falsifications are accurately recorded without embellishment.
 
 ---
@@ -318,7 +318,7 @@ Command: `python spum_r2.py` (§II). Candidate derivation skeleton:
 | Genus 3 | 21 | 6~14 | −24 | −24 | −4 | True | True | deg>5, can't go this way |
 | **Half-icosahedron (projective plane)** | 6 | 5~5 | 6 | 6 | **1** | **False** | True | **χ≠2 —— counterexample to deg≤5!** |
 
-**Verdict**: "Trinary closure + deg≤5" **is insufficient to guarantee** χ=2, must add **orientability**. And orientability is exactly SPUM L0's existing data: **`rot[v]` rotation neighbor table is a rotation system = local encoding of orientability** (see [combinatorial_proto.py](file:///c:/Users/macotai/Desktop/工作/spum-core/openSPUM/src/l0/combinatorial_proto.py)).
+**Verdict**: "Trinary closure + deg≤5" **is insufficient to guarantee** χ=2, must add **orientability**. And orientability is exactly SPUM L0's existing data: **`rot[v]` rotation neighbor table is a rotation system = local encoding of orientability** (see [combinatorial_proto.py](../src/l0/combinatorial_proto.py)).
 
 **Half-icosahedron construction**: merge antipodal points of regular icosahedron ⇒ V=6, all deg=5, χ=1, **non-orientable**.
 
@@ -481,7 +481,7 @@ The following are **candidates**, numbered as `L0-B*` to avoid conflict with the
 | `spum_number.py` | Number = ratio of angles: equilateral baseline / general measurement / deviation statistics / two-source convergence / spherical triangle boundary | §4.8 (M1–M5) |
 
 **Toolchain**: `numpy` / `scipy` / `networkx` (VF2 `is_isomorphic`) available; `matplotlib` not available.
-**Execution method**: `C:\Users\macotai\python-sdk\python3.13.2\python.exe spum_xxx.py` (set `$env:PYTHONIOENCODING="utf-8"` before running).
+**Execution method**: `python spum_xxx.py` (set `$env:PYTHONIOENCODING="utf-8"` before running).
 
 **Commit probes**:
 

@@ -466,7 +466,7 @@ zone : all over → "core"; contains ≥1 over → "sh" (boundary of the core); 
 - **Bifurcation N4 (2026-09-13, record → experiment → exclude) // Which route the first item of phase four, "L1 sphere projection", takes**:
   **Cause**: Taking up the fork left by N3. L1 is either a **global embedding solve** or a **local angular capacity projection**.
   **Branches**: ① **N4-A global embedding** — solve `p_v ∈ R³` so that each edge's two endpoint balls are tangent (`|p_u−p_w| = r_u+r_w`) and non-edges do not overlap (`|p_u−p_w| ≥ r_u+r_w`); ② **N4-B local angular capacity projection** — each node **independently**: `deg → radius r(deg)`, `ring order → spherical direction`; zero solve, zero iteration, zero global coordinates.
-  **Evidence script**: `C:\Users\macotai\AppData\Local\Temp\l0_proj_n4.py` (self-contained, `sys.path` already points to `src/l0`).
+  **Evidence script**: `%TEMP%\l0_proj_n4.py` (self-contained, `sys.path` already points to `src/l0`).
 
   **Experimental readings (seed=icosa cap=12 dmin=3, adoption dynamics dense/any, t=0…4):**
   | Test Item | Reading | Verdict |
@@ -489,7 +489,7 @@ zone : all over → "core"; contains ≥1 over → "sh" (boundary of the core); 
 
   > **This local model collaborative verification (`qwen2.5-coder:14b`):** Judged **correct** — V1 (closed triangulation `E=3V−6`), V2 (A2 radius law and `deg_sat=16π`), V3 (gap formula `2r(5)(φ−1)`), V4 (local definition always well-defined, equal degree implies `∇σ≡0`), V6 (`A_v ≤ 2π` is a necessary condition and pure local quantity). Judged **insufficient** — V5: only "number of constraints = number of degrees of freedom" cannot determine general solvability, **linear independence of constraints is also needed** — this prompt led to judgment 1's local criterion. **Two numerical errors** (V3 gap gives 4.61803, correct 4.67812; V7 gives r(3)=1.549, correct 2.93162) ⇒ local model conclusions can be used for **thought verification**, but all numerical values must be verified by code. **(Note: the judged "correct" V6 — "`A_v ≤ 2π` is a necessary condition" — was empirically disproven on 2026-09-13 branch N7, see §7 branch N7 judgment 4.)**
 
-  Reproduce: `C:\Users\macotai\python-sdk\python3.13.2\python.exe C:\Users\macotai\AppData\Local\Temp\l0_proj_n4.py`
+  Reproduce: `python %TEMP%\l0_proj_n4.py`
 
 - **Phase Four First Implementation (2026-09-13) // L1 local projection implemented as per §6.3**: Added `src/l1/l1_projection.py` (pure read-only projection, **not involved in L0 rules**, frame evolution delegated to `l0_core`).
   **§6.3 Four Points Corresponding:** ① Network skeleton `edge_list` (deduplicated undirected edges, directly taken from rotation system ⇒ only needs id + ring order, no coordinates) ② Local direction field `ring_sphere` (adopted in branch N6; `fibonacci_sphere` left as a control) + `radius_of` + `local_frame` (radius `r(deg)=(κ/2)√(deg/π)`, `deg` directions **laid out on the sphere at this point itself** according to `rot[v]` ring order, each point has its own frame) ③ Local quantities `sigma_of` (`σ_v=2/deg`) / `grad_sigma` (`mean_{w~v}σ_w−σ_v`) / `angle_defect` (geometric angle deficit `2π−A_v`, three side lengths taken as `r_i+r_j, r_j+r_k, r_k+r_i`, internal angles determined by cosine law ⇒ pure local `O(F)`; `viol` = `A_v>2π` saddle point reading) ④ `crystallites` (delegated to `find_crystallites`). Entry `project(net)` produces all readings at once.
@@ -511,7 +511,7 @@ zone : all over → "core"; contains ≥1 over → "sh" (boundary of the core); 
 
 - **Bifurcation N5 (2026-09-13, record → experiment → exclude // adopt P2+P3) // How L2 global coordinates (projection artifact) are generated**:
   **Cause**: §6.4 original text only mentions "visualization" in three characters, the generation method is not determined. **Branches**: ① **N5-A Global rigid tangent embedding** (solve `p_v` to make all edges tangent simultaneously)—excluded by N4; ② **N5-B Naive propagation** (BFS + local frames at each point summed independently); ③ **N5-C Aligned propagation** (parallel transport integration along the spanning tree); ④ **N5-D Position constraint projection refinement** (PBD / Gauss-Seidel).
-  **Evidence script**: `C:\Users\macotai\AppData\Local\Temp\l2_proj_n5.py` (three-way comparison P1/P2/P3, including N6 direction field comparison section).
+  **Evidence script**: `%TEMP%\l2_proj_n5.py` (three-way comparison P1/P2/P3, including N6 direction field comparison section).
 
   | Test item | icosa t=0 | icosa t=1 | icosa t=2 | patch t=1 | Verdict |
   |----------|-----------|-----------|-----------|-----------|---------|
@@ -547,7 +547,7 @@ zone : all over → "core"; contains ≥1 over → "sh" (boundary of the core); 
   Reproduce: `…\python3.13.2\python.exe l2_projection.py selftest=1`; `… l2_projection.py seed=icosa nframes=4 cap=12 dmin=3 iters=60`
 - **Bifurcation N7 (2026-09-13, record → experiment → falsification) // Is `A_v ≤ 2π` a necessary condition for three-dimensional tangent embedding**:
   **Cause**: L2 `_demo` exposes contradiction — t=0 (regular icosahedron, isometric ⇒ analytically must be exactly embeddable) PBD only to residual `0.1339`, 6 overlaps; t=1 (§7 bifurcation N4 ruling 1 ruling 12 out-of-bound points) instead to `5e-16`, zero overlaps. **If ruling 1 holds, t=1 cannot have exact embedding.**
-  **Evidence script**: `C:\Users\macotai\AppData\Local\Temp\l2_diag_n7.py`.
+  **Evidence script**: `%TEMP%\l2_diag_n7.py`.
 
   | Test item | Reading | Verdict |
   |----------|--------|---------|
@@ -562,7 +562,7 @@ zone : all over → "core"; contains ≥1 over → "sh" (boundary of the core); 
   2. **N4 ruling 1's handling (do not delete history, change wording)**: `viol` is downgraded from "**global embedding locally impossible criterion**" to **curvature reading** (`l1_projection.angle_defect` docstring and §6.3 have been revised). **N4-A (global embedding solving) thus loses its decisive criterion**, now only three weak evidences remain: ① rigidity count `d = 3V−6−E ≡ 0` (pure triangulation ⇒ zero relaxation; but N4 footnote already points out "equal number of edges" is insufficient to conclude no solution); ② solver unreliable (PBD initialization dependent + v1.x §A.13.3 divergence); ③ paradigm choice (L0 has no geometry, projection layer only needs id + rotation system). **Per maze rules: N4-A not falsified ⇒ path-based derivation** — L2 takes workpiece path (already implemented), "**global / incremental embedding solvability**" is recorded as **open item** (N7 hot start reading is positive sign), to be verified independently later.
   3. **Byproduct**: `holonomy` and `viol` **unrelated** (viol points / non-viol points `1.07×–1.09×`) ⇒ "**curvature cannot be planar accommodated**" and "**local angle overstepping**" are two different things; PBD residual is only an **upper bound**, not evidence of inembeddability.
   4. **This local model collaborative verification (`qwen2.5-coder:14b`)**: judges that "Proposition 2 (`A_v > 2π` ⇒ inevitable overlap) is correct" — **directly conflicts with the reading (a)**, and it itself in Q2 says "`A_v/2π = 1.3820 > 1` does not imply that R³ tangential embedding is impossible" (self-contradictory); Q3 (relaxation residual cannot determine non-existence of exact embedding) judgment aligns with empirical results; judgments on Proposition 1 and 3 are correct. ⇒ **This local model is unreliable in this round, and all decisions must be based on code empirical results** (same failure mode as N4 in §7).
-  Reproduce: `…\python3.13.2\python.exe C:\Users\macotai\AppData\Local\Temp\l2_diag_n7.py`
+  Reproduce: `python %TEMP%\l2_diag_n7.py`
 - **Bifurcation N8 (2026-09-13, record → experiment → exclusion // adopt N8-A, leave N8-B open) // §6.5 missing: what should L3 be projected onto**:
   **Cause**: The user requested "implement L3 global projection according to §6.5" using the same phrasing as "§6.4 → L2". **Verification**: The document has no §6.5, and the full text has no mention of "L3"; under `openSPUM/src/`, there is only `l0/l1/l2` — that is, **a reduction missing** (not an implementation missing).
   **Branch** (both are natural readings of "L3"): ① **N8-A frame sequence layer (cross-frame / time axis)**; ② **N8-B multi-scale layer (structural axis: node → 12 crystallites → 42 clusters → macroscopic shell aggregation)**.
@@ -1113,7 +1113,7 @@ The degree histogram (bucket lower bounds) migrates with V, no longer ×3 overal
 
 **Bifurcation N1 derivation path (2026-09-13, autonomously excluded, maze trace left):**
 
-> Cause: leftover item "V unbounded" — should L0 self-limit? According to the rule "encounter direction choice → record → experiment → exclude; if cannot exclude, bifurcate and derive," walk each branch. Evidence script: `C:\Users\macotai\AppData\Local\Temp\l0_sweep_n1.py`.
+> Cause: leftover item "V unbounded" — should L0 self-limit? According to the rule "encounter direction choice → record → experiment → exclude; if cannot exclude, bifurcate and derive," walk each branch. Evidence script: `%TEMP%\l0_sweep_n1.py`.
 
 | Path | Proposition | Disposition | Evidence |
 |------|-------------|-------------|----------|
@@ -1135,7 +1135,7 @@ drive: slack 12 frames vs 16.83  vs  saturate 9.69 — only changes growth rate,
 > Mechanism: `Σ(6−deg)≡12` is a conserved quantity, not providing an upper bound for V; cap only pins local degrees, cannot pin V; the only knobs that can suppress creation (`conserved` / `vplus=gap`) both **simultaneously shut down annihilation** (once creation stops, over-dense edges quickly deplete ⇒ both sides shut down) ⇒ degenerate to trivial.
 > **Hence adopt N1-C:** L0 only responsible for relational evolution; "observed finite universe" selected by projection layer (L1/L2) when window/granularity is chosen. V unbounded **is not** self-similar inflation (`V/Vprev` non-constant, histogram migration), but **fractal-constrained growth** — locally everywhere finite (`deg ≤ cap`), globally scale-free.
 
-Reproduce: `C:\Users\macotai\python-sdk\python3.13.2\python.exe C:\Users\macotai\AppData\Local\Temp\l0_sweep_n1.py` (self-contained scan; `sys.path` already points to `src/l0`).
+Reproduce: `python %TEMP%\l0_sweep_n1.py` (self-contained scan; `sys.path` already points to `src/l0`).
 
 ### 7.5 σ Field Gradient Emergence Reading (Frozen on 2026-09-15, Direction 4)
 
@@ -1198,16 +1198,16 @@ Command: `python -u probe_sigma_emergence.py seed=icosa nframes=10 cap=12 dmin=3
 
 Reproduce:
 ```
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u probe_sigma_emergence.py selftest=1
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u probe_sigma_emergence.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dense vplus=any
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u probe_sigma_emergence.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dangling vplus=any
+python -u probe_sigma_emergence.py selftest=1
+python -u probe_sigma_emergence.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dense vplus=any
+python -u probe_sigma_emergence.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dangling vplus=any
 ```
 
 **Visualization Products (2026-09-15 addition)**: `src/l0/visualize_evolution.py` — generic L0 evolution multi-panel rendering (3×3 grid: V/E time series, σ field, ★ σ gradient emergence, degree+χ, σ ratio, degree distribution heatmap, t=0/N/2/N network snapshots colored by σ). Depends on matplotlib 3.11.2 (Agg) + networkx 3.6.1; CJK font priority: Microsoft YaHei.
 
 Direction 4 verification figure: `docs/figures/evo_icosa_dense_any_cap12_dmin3_N10.png` (dense/any 10 frames, 456 KB).
 ```
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u visualize_evolution.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dense vplus=any dpi=120
+python -u visualize_evolution.py seed=icosa nframes=10 cap=12 dmin=3 vminus=dense vplus=any dpi=120
 ```
 
 - **Three scenarios minimal teaching demo (2026-09-16) // External "relation rewrite system" scheme reconciliation + `R` parameter CLI exposure**: New `src/l0/demo_minimal.py` (read-only teaching probe, no change to any evolution rules), reconciles three "minimal experiments" from external proposal to current engine; simultaneously exposes `combinatorial_proto.py` CLI with `R=` (only `seed=patch` uses it, default R=2 behavior bit-for-bit identical). Three scenarios 26 assertions all green:
@@ -1224,8 +1224,8 @@ C:\Users\macotai\python-sdk\python3.13.2\python.exe -u visualize_evolution.py se
 
 Reproduce:
 ```
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u demo_minimal.py selftest=1
-C:\Users\macotai\python-sdk\python3.13.2\python.exe -u combinatorial_proto.py seed=patch R=1 nframes=0
+python -u demo_minimal.py selftest=1
+python -u combinatorial_proto.py seed=patch R=1 nframes=0
 ```
 
 ## 8. Key Design Decisions

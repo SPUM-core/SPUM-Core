@@ -1,5 +1,5 @@
 {
-  "base": "C:\\Users\\macotai\\models\\Qwen2.5-Coder-7B-Instruct",
+  "base": "Qwen/Qwen2.5-Coder-7B-Instruct",
   "adapter": "out/lora-spum-v2",
   "out": "out\\merged-spum-v2",
   "params": 7615616512,

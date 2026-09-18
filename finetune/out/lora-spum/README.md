@@ -1,9 +1,9 @@
 ---
-base_model: C:\Users\macotai\models\Qwen2.5-Coder-7B-Instruct
+base_model: Qwen/Qwen2.5-Coder-7B-Instruct
 library_name: peft
 pipeline_tag: text-generation
 tags:
-- base_model:adapter:C:\Users\macotai\models\Qwen2.5-Coder-7B-Instruct
+- base_model:adapter:Qwen/Qwen2.5-Coder-7B-Instruct
 - lora
 - transformers
 ---

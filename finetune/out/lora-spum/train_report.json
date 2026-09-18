@@ -12,7 +12,7 @@
   "lora_r": 16,
   "lora_alpha": 32,
   "max_len": 1024,
-  "base": "C:\\Users\\macotai\\models\\Qwen2.5-Coder-7B-Instruct",
+  "base": "Qwen/Qwen2.5-Coder-7B-Instruct",
   "elapsed_sec": 1608.2,
   "log_history": [
     {

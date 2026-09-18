@@ -29,7 +29,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 HERE = Path(__file__).resolve().parent
-DEFAULT_BASE = r"C:\Users\macotai\models\Qwen2.5-Coder-7B-Instruct"
+DEFAULT_BASE = str(Path.home() / "models" / "Qwen2.5-Coder-7B-Instruct")
 
 TARGET_MODULES = ["q_proj", "k_proj", "v_proj", "o_proj",
                   "gate_proj", "up_proj", "down_proj"]

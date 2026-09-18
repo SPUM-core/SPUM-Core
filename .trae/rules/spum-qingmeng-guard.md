@@ -6,7 +6,7 @@ description: "青檬引擎 SPUM 优化护栏 — 确保 qingmeng_engine 的代�
 # 青檬引擎 SPUM 优化护栏
 
 > **关联外部仓库**：青檬引擎（qingmeng）是独立于本仓库的外部项目，落地于
-> `C:/Users/macotai/Desktop/工作/qingmeng`（Python 引擎 + `weapp/` 小程序），2026-09-14 从本仓分离。
+> `../qingmeng`（Python 引擎 + `weapp/` 小程序），2026-09-14 从本仓分离。
 > 本护栏文件定义了 SPUM 侧对青檬引擎的最低接口契约和合规校验规则。
 > 本仓库自身不含青檬代码；跨仓成果交换走 `BRIDGE.md` + `bridge/manifest.json`，禁止跨仓 import。
 >

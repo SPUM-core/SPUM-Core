@@ -10,9 +10,9 @@
 
 | Item | Value |
 |----|----|
-| Portable Python | `C:\Users\macotai\python-sdk\python3.13.2\python.exe` (**not in PATH**, must write full path) |
+| Python | `python` (3.13.2 at the time of testing) |
 | Ollama service | `http://localhost:11434` |
-| Ollama binary | `C:\Users\macotai\AppData\Local\Programs\Ollama\ollama.exe` (**not in PATH**) |
+| Ollama binary | `ollama` |
 | Code draft model | `qwen2.5-coder:14b` (tested; `temperature=0.2`) |
 | Other available models | `qwen3:14b` (visible on server, not used in this workflow) |
 | Main libraries | cupy 14.2.0 / numpy 2.5.3 / scipy 1.18.1 / torch 2.6.0+cu124 |
@@ -45,10 +45,10 @@ Use **Python `urllib.request` to directly send JSON**, without PowerShell.
 - Output file: `l0_gpu_out{N}.py`
 
 ```python
-import json, urllib.request
+import json, tempfile, urllib.request
 
-SPEC = r"C:\Users\macotai\AppData\Local\Temp\l0_gpu_spec3.txt"
-OUT  = r"C:\Users\macotai\AppData\Local\Temp\l0_gpu_out3.py"
+SPEC = tempfile.gettempdir() + r"\l0_gpu_spec3.txt"
+OUT  = tempfile.gettempdir() + r"\l0_gpu_out3.py"
 
 with open(SPEC, "r", encoding="utf-8") as f:
     prompt = f.read()

@@ -10,7 +10,7 @@
 
 | Item | Value |
 |---|---|
-| Python | `C:\Users\macotai\python-sdk\python3.13.2\python.exe` (3.13.2, portable, not in PATH) |
+| Python | `python` (3.13.2 at the time of testing) |
 | numpy / scipy | 2.5.3 / 1.18.1 |
 | cupy | 14.2.0 (**no CUDA path** ⇒ `l0_gpu` falls back to CPU; this baseline is **pure CPU**) |
 | Encoding | Terminal must have `$env:PYTHONIOENCODING="utf-8"` (to avoid Chinese output corruption) |
@@ -193,7 +193,7 @@ Null-hypothesis control (equal-degree graph icosa t=0): σ range `0.00e+00`, anc
 ## 5. Reproduction commands
 
 ```powershell
-$py = "C:\Users\macotai\python-sdk\python3.13.2\python.exe"
+$py = "python"
 $env:PYTHONIOENCODING = "utf-8"
 $root = "openSPUM\src"
 
