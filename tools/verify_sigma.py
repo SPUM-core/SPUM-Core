@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """stock_sigma_predictor 修复等价性验证"""
 import sys, io, importlib.util, dataclasses, inspect, traceback
+from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-PY = r'd:\spum-core\经济学\stock_sigma_predictor.py'
-PYC = r'd:\spum-core\经济学\__pycache__\stock_sigma_predictor.cpython-311.pyc'
+ECON = Path(__file__).resolve().parent.parent / '经济学'
+PY = str(ECON / 'stock_sigma_predictor.py')
+PYC = str(ECON / '__pycache__' / 'stock_sigma_predictor.cpython-311.pyc')
 
 fails = []
 def check(cond, msg):
@@ -21,7 +23,7 @@ py_compile.compile(PY, doraise=True)
 print('[1] py_compile 语法检查 OK')
 
 # ---------- 2. import .py ----------
-sys.path.insert(0, r'd:\spum-core\经济学')
+sys.path.insert(0, str(ECON))
 import stock_sigma_predictor as new
 print('[2] import 新 .py OK')
 

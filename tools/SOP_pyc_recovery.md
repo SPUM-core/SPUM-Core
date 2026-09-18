@@ -1,16 +1,19 @@
 # .pyc 反编译修复 SOP（Python 3.11）
 
 ## 背景
-SPUM 项目 `d:\spum-core\经济学\` 下的股票预测模块 .py 源文件全部丢失，仅剩 `__pycache__` 下的 .pyc 编译缓存。
+SPUM 项目 `经济学/` 下的股票预测模块 .py 源文件全部丢失，仅剩 `__pycache__` 下的 .pyc 编译缓存。
 已用 pycdc（Decompyle++）反编译出基础版 .py（存在明显损坏），需要逐文件修复使其可导入且与 .pyc 运行时行为等价。
 
 **已完成的文件**（不要动）：`daily_phase.py`、`industry_mapping.py`、`_stock_minge_v2.py` —— 均已通过等价性验证。
 
 ## 关键路径
-- 反编译基础版（待修复）：`d:\spum-core\经济学\<模块名>.py`
-- 权威 .pyc（运行时真相）：`d:\spum-core\经济学\__pycache__\<模块名>.cpython-311.pyc`
-- 辅助工具：`d:\spum-core\tools\pycdc.exe`（反编译，已不用）
-- 分析输出目录：`d:\spum-core\tools\`（可写）
+
+> 以下路径均相对仓库根目录。
+
+- 反编译基础版（待修复）：`经济学\<模块名>.py`
+- 权威 .pyc（运行时真相）：`经济学\__pycache__\<模块名>.cpython-311.pyc`
+- 辅助工具：`tools\pycdc.exe`（反编译，已不用）
+- 分析输出目录：`tools\`（可写）
 
 ## pycdc 对 Python 3.11 的 5 种已知损坏模式（修复重点）
 
@@ -19,7 +22,7 @@ SPUM 项目 `d:\spum-core\经济学\` 下的股票预测模块 .py 源文件全�
 修复：从 .pyc 反射提取字段定义。命令模板：
 ```python
 import importlib.util, dataclasses, inspect
-spec = importlib.util.spec_from_file_location('m', r'd:\spum-core\经济学\__pycache__\<模块名>.cpython-311.pyc')
+spec = importlib.util.spec_from_file_location('m', r'经济学\__pycache__\<模块名>.cpython-311.pyc')
 m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
 f = dataclasses.fields(m.Xxx)
 for x in f: print(x.name, x.type, repr(x.default))
@@ -41,7 +44,7 @@ class Xxx:
 修复：用 dis 还原函数字节码。对能加载的模块直接 dis；对加载失败的模块用 marshal：
 ```python
 import marshal, dis
-f = open(r'd:\spum-core\经济学\__pycache__\<模块名>.cpython-311.pyc', 'rb')
+f = open(r'经济学\__pycache__\<模块名>.cpython-311.pyc', 'rb')
 f.read(16)
 code = marshal.load(f)   # 模块级 code
 for c in code.co_consts:
@@ -88,8 +91,8 @@ def load(name, path):
     m = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(m)
     return m
-old = load('o', r'd:\spum-core\经济学\__pycache__\<模块名>.cpython-311.pyc')
-new = load('n', r'd:\spum-core\经济学\<模块名>.py')
+old = load('o', r'经济学\__pycache__\<模块名>.cpython-311.pyc')
+new = load('n', r'经济学\<模块名>.py')
 # 对比常量、函数输出、类实例行为（构造代表性输入，含边界值）
 ```
 要求：
@@ -110,4 +113,4 @@ new = load('n', r'd:\spum-core\经济学\<模块名>.py')
 - 保持模块公共 API（dir() 可见的非下划线名称）与 .pyc 一致
 - 反编译输出顶部的 `# Source Generated with Decompyle++` 注释可保留
 - 修复后运行验证脚本，全部通过才算完成
-- 完成后在 `d:\spum-core\tools\` 写一个 `<模块名>.done` 标记文件，内容为验证结果摘要
+- 完成后在 `tools\` 写一个 `<模块名>.done` 标记文件，内容为验证结果摘要

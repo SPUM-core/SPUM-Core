@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """spum_cycle.py 修复等价性验证脚本"""
 import sys, os, io, contextlib
-sys.path.insert(0, r'd:\spum-core\经济学')
-os.chdir(r'd:\spum-core\经济学')
+from pathlib import Path
+
+ECON = Path(__file__).resolve().parent.parent / '经济学'
+sys.path.insert(0, str(ECON))
+os.chdir(ECON)
 
 import py_compile
-py_compile.compile(r'd:\spum-core\经济学\spum_cycle.py', doraise=True)
+py_compile.compile(str(ECON / 'spum_cycle.py'), doraise=True)
 print('[PASS] py_compile')
 
 import importlib.util
@@ -15,8 +18,8 @@ def load(name, path):
     spec.loader.exec_module(m)
     return m
 
-old = load('o', r'd:\spum-core\经济学\__pycache__\spum_cycle.cpython-311.pyc')
-new = load('n', r'd:\spum-core\经济学\spum_cycle.py')
+old = load('o', str(ECON / '__pycache__' / 'spum_cycle.cpython-311.pyc'))
+new = load('n', str(ECON / 'spum_cycle.py'))
 print('[PASS] import both')
 
 # 1. 公共 API 一致
