@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """l0_gpu.py — L0 决策层的 GPU 并行实现（阶段三）。
 
-架构基准: docs/L0L1L2_架构设计.md §5（GPU 映射）
+架构基准: docs/L0L1L2_Architecture.md §5（GPU 映射）
 对偶实现: l0_core.py（CPU 内核，本文件的正确性基准）
 
 搬运范围

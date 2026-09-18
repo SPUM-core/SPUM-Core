@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """l1_projection.py — L1 投影层：从 id + 环序生成网络与局部量（不参与 L0 规则）。
 
-架构基准: docs/L0L1L2_架构设计.md §6.3
+架构基准: docs/L0L1L2_Architecture.md §6.3
 路径来源: §7 分岔 N4 —— 采纳 **N4-B 局部角容量投影**，排除 **N4-A 全局嵌入求解**
 
 一句话

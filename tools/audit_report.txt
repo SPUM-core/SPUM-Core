@@ -1413,7 +1413,7 @@ SPUM 跨领域一致性审计报告
     experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-024
     experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-025
     experiments\wuxing_coupling\README.md              引用了未注册的 模块节点: GT-026
-    openSPUM\docs\L0L1L2_架构设计.md                       引用了未注册的 模块节点: GT-032
+    openSPUM\docs\L0L1L2_Architecture.md                       引用了未注册的 模块节点: GT-032
     元素化学\README.md                                     引用了未注册的 模块节点: GT-027
     几何学\Finsler几何\spum-Finsler公设.md                    引用了未注册的 模块节点: GT-027
     几何学\Finsler几何\spum-Finsler公设.md                    引用了未注册的 模块节点: GT-028
@@ -1478,7 +1478,7 @@ SPUM 跨领域一致性审计报告
     experiments\wuxing_coupling\README.md              未注册: GT-024
     experiments\wuxing_coupling\README.md              未注册: GT-025
     experiments\wuxing_coupling\README.md              未注册: GT-026
-    openSPUM\docs\L0L1L2_架构设计.md                       未注册: GT-032
+    openSPUM\docs\L0L1L2_Architecture.md                       未注册: GT-032
     元素化学\README.md                                     未注册: GT-027
     几何学\Finsler几何\spum-Finsler公设.md                    未注册: GT-027
     几何学\Finsler几何\spum-Finsler公设.md                    未注册: GT-028

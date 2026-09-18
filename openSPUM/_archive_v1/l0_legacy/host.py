@@ -1,7 +1,7 @@
 """
 host.py — L1 层：帧调度器与仲裁簿记
 
-架构基准: openSPUM/docs/L0L1L2_架构设计.md §5/§6/§8
+架构基准: openSPUM/docs/L0L1L2_Architecture.md §5/§6/§8
 
 职责（只做仲裁与簿记，不做物理决策）:
     1. 设备缓冲区管理（SoA 分配、潜在池空闲链表）

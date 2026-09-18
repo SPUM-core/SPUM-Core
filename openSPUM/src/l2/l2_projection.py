@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """l2_projection.py — L2 全局投影层：全局坐标 + 全局读数（**工件层，永不回写 L0**）。
 
-架构基准: docs/L0L1L2_架构设计.md §6.4
+架构基准: docs/L0L1L2_Architecture.md §6.4
 路径来源: §7 分岔 N5（L2 全局坐标怎么生成）——采纳 **N5-B 对齐传播 + N5-C 工件精修**，
           排除 N5-A 全局刚性相切嵌入（§7 分岔 N4 已判不可行）
           方向场来自 §7 分岔 N6（环序闭合纬线环 `ring_sphere`，见 `l1_projection`）

@@ -2,7 +2,7 @@
 """visualize_evolution.py — OpenSPUM L0 演化通用可视化模块。
 
 依赖：matplotlib (Agg 后端) + networkx + numpy
-对应锚点：docs/L0L1L2_架构设计.md §7.5（方向 4 σ 场梯度涌现读数）
+对应锚点：docs/L0L1L2_Architecture.md §7.5（方向 4 σ 场梯度涌现读数）
 
 设计
 ----

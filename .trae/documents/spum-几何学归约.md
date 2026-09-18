@@ -61,9 +61,9 @@
 | GEO-009~017 | `docs/Spatial_Geometry_Genesis/SPUM_Spatial_Geometry_Genesis.md` | 精炼索引 |
 | GEO-018~020 | `docs/Combinatorial_Gauss_Bonnet/SPUM_Combinatorial_Gauss_Bonnet.md` | 精炼索引 |
 | GEO-006 | `图论/spum-几何图论.md` GT-028~032 | 分层互补 |
-| GEO-008 | `openSPUM/docs/L0L1L2_架构设计.md` | 形式化补充 |
+| GEO-008 | `openSPUM/docs/L0L1L2_Architecture.md` | 形式化补充 |
 | GEO-025~030 | `宇宙学/L0.5_induced_metric.md` + `induced_metric/embedding.py` | 升级取代 |
-| GEO-019 | `openSPUM/docs/L0_闭合与隔绝_χ2的局部来源.md` B1-B6 | 闭合判据 |
+| GEO-019 | `openSPUM/docs/L0_Closure_and_Isolation_chi2.md` B1-B6 | 闭合判据 |
 | GEO-033 | `AGENT.md` §矛盾二 | 状态升级建议 |
 
 ## 验证

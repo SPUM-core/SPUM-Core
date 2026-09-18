@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """l0_core.py — L0 内核：确定性协商式帧演化。
 
-架构基准: docs/L0L1L2_架构设计.md 第一部分（§2 本体结构 / §3 协商引擎 / §4 帧执行）
+架构基准: docs/L0L1L2_Architecture.md 第一部分（§2 本体结构 / §3 协商引擎 / §4 帧执行）
 复用: combinatorial_proto.RotNet —— 旋转系统与四个保 χ 组合操作（规则已验证）
 
 与原型 combinatorial_proto.py 的区别

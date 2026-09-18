@@ -164,5 +164,5 @@ L4 把每帧的节点按度数变化分入三类事件区——纯组合，无�
 | GEO-001~003 | [spum-core.md](../.trae/rules/spum-core.md) §一~三 | 精炼引用 |
 | GEO-004 | [spum-structure.md](../.trae/rules/spum-structure.md) §二 | 精炼引用 |
 | GEO-006 | [spum-structure.md](../.trae/rules/spum-structure.md) §四 | 精炼引用 |
-| GEO-008 | [L0L1L2_架构设计.md](../openSPUM/docs/L0L1L2_架构设计.md) | 形式化补充 |
-| GEO-019 | [L0_闭合与隔绝.md](../openSPUM/docs/L0_闭合与隔绝_χ2的局部来源.md) B1-B6 | 闭合判据 |
+| GEO-008 | [L0L1L2_架构设计.md](../openSPUM/docs/L0L1L2_Architecture.md) | 形式化补充 |
+| GEO-019 | [L0_闭合与隔绝.md](../openSPUM/docs/L0_Closure_and_Isolation_chi2.md) B1-B6 | 闭合判据 |

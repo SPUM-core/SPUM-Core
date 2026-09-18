@@ -19,8 +19,8 @@ openSPUM/
 │   ├── l3/   l3_projection.py        # L3 帧序列投影：δ / Δμ / d_topo / 闭合判据
 │   └── l4/   l4_evolution.py         # L4 演化观察：净湮灭 / 集中 / 不完美定理
 ├── docs/
-│   ├── L0L1L2_架构设计.md            # 唯一架构基准（含分岔判决 N1~N8、阶段锚点、断言表）
-│   └── 本体模型协同推演工作模式.md    # 本地模型协同推演工作流（5 步 + 7 项审核清单）
+│   ├── L0L1L2_Architecture.md            # 唯一架构基准（含分岔判决 N1~N8、阶段锚点、断言表）
+│   └── Collaborative_Derivation_Workflow.md # 本地模型协同推演工作流（5 步 + 7 项审核清单）
 └── _archive_v1/                      # v1 冻结归档：Phase_0~4 / tests / universe / webviz / l0_legacy
 ```
 
@@ -66,13 +66,13 @@ openSPUM/
 
 ## 四、协同推演工作模式（本地模型）
 
-修改/扩展 OpenSPUM 代码时按 `docs/本体模型协同推演工作模式.md` 推进：
+修改/扩展 OpenSPUM 代码时按 `docs/Collaborative_Derivation_Workflow.md` 推进：
 
 1. 主 agent 写**接口规范**（放 `%TEMP%`，不入仓）
 2. Python `urllib.request` 直发 **`qwen2.5-coder:14b`** @ `http://localhost:11434`（**不要用 PowerShell `Invoke-RestMethod`**）
 3. 主 agent 按 7 项审核清单判定本地草稿
 4. 重写落地（本地草稿**只作骨架**，正确性基准永远是 CPU 参考实现）
-5. 三级验证 + 冻结进度锚点进 `docs/L0L1L2_架构设计.md` §7
+5. 三级验证 + 冻结进度锚点进 `docs/L0L1L2_Architecture.md` §7
 
 硬约束：逐位一致 = 环序 dict + `nid` + 事件计数三者齐备（`state_hash` 不含 `nid`，须单独校验）。
 
@@ -91,7 +91,7 @@ v1 是 **L1 模拟器**（存在全局度数硬顶、O(N³) 全局扫描、力�
 | 场景 | 加载 |
 |------|------|
 | 运行 / 自检 OpenSPUM | 本节 §二 —— `python <layer>.py selftest=1` |
-| 修改任一层的代码 | `docs/L0L1L2_架构设计.md`（§7 分岔判决 + §9 断言表）+ 对应 `src/lN/*.py` |
-| 扩展代码（协同模式） | `docs/本体模型协同推演工作模式.md` |
+| 修改任一层的代码 | `docs/L0L1L2_Architecture.md`（§7 分岔判决 + §9 断言表）+ 对应 `src/lN/*.py` |
+| 扩展代码（协同模式） | `docs/Collaborative_Derivation_Workflow.md` |
 | 理解公理↔代码映射 | `.trae/rules/spum-core.md` + `SPUM_系统总纲.md` |
 | 追溯 v1 历史实现 | `_archive_v1/`（冻结，不维护） |
