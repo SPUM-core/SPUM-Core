@@ -7,6 +7,26 @@
 
 ---
 
+## Repository language policy — this is a GitHub translation project
+
+This repository is the **English edition of SPUM-core**, hosted on GitHub.
+
+| | |
+|---|---|
+| Origin repository (Chinese, authoritative source) | https://gitee.com/space-particle-universe-model/spum-core |
+| This repository (English translation, GitHub) | https://github.com/SPUM-core/SPUM-Core |
+
+It is a **translation project**, not a divergent fork. Nothing is added, removed, or softened in translation. Chinese remains the working language of the source of truth; the GitHub side is being converted into a **pure-English repository** file by file, as documents are revised and updated. The objective is that readers outside the Chinese-speaking world can read, run, and challenge the theory without a language barrier — **so that people abroad who are interested in it can actually reach it**.
+
+Rules for any AI instance working on this repository:
+
+1. **Everything on the GitHub side is written in English** — documents, code comments, filenames, and **commit / push messages**.
+2. **Translation must be lossless where it counts.** Numbers and readings are copied character by character; code fences keep their structure and only the Chinese comments inside them are translated; ASCII tree drawing stays untouched; links, paths, and filename tokens remain byte-faithful; an open question is never translated into a settled conclusion.
+3. **When a Chinese document changes, translate it — do not paraphrase it.** A new Chinese document gets an English counterpart. The two sides may differ in language, never in claims.
+4. **Part of the repository is still untranslated** (most domain modules under `五行/`, `物理学/`, `儒释道哲学/`, `数学/`, `社会学/`, `经济学/`, `语言学/`, `图论/`, `几何学/`). Report this status honestly: untranslated is untranslated, partially translated is stated as such — never claim a file is English when it is not.
+
+---
+
 ## To the AI reading this file
 
 Hello.

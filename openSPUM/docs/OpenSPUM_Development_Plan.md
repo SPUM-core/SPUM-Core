@@ -1,8 +1,8 @@
 # OpenSPUM Development Plan
 
 > **Methodological Benchmark**: Code is the theory itself — not "tools for SPUM", but "L0-L4 implementations continuing SPUM theory".
-> **Architecture Benchmark**: [L0L1L2_Architecture.md](../L0L1L2_Architecture.md), layered as L0 kernel / L1 intra-frame projection / L2 embedded projection / L3 inter-frame projection / L4 evolution observation.
-> **This document location**: `openSPUM/docs/figures/` — in the same directory as visualization outputs, for developers to cross-reference while viewing diagrams and constraints.
+> **Architecture Benchmark**: [L0L1L2_Architecture.md](./L0L1L2_Architecture.md), layered as L0 kernel / L1 intra-frame projection / L2 embedded projection / L3 inter-frame projection / L4 evolution observation.
+> **This document location**: `openSPUM/docs/` — alongside the visualization outputs in `docs/figures/`, for developers to cross-reference while viewing diagrams and constraints.
 
 ---
 
@@ -10,20 +10,20 @@
 
 | Layer | File | Implemented Content |
 |------|------|---------------------|
-| L0 | [l0_core.py](../../src/l0/l0_core.py) | Current implementation of the five-step frame rules: propose → resolve → commit → prune, double buffering, deterministic negotiation style |
-| L1 | [l1_projection.py](../../src/l1/l1_projection.py) | id + rotation system → network / local frame / σ / angle defect / crystallites |
-| L2 | [l2_projection.py](../../src/l2/l2_projection.py) | Embedded projection (coordinates) |
-| L3 | [l3_projection.py](../../src/l3/l3_projection.py) | Inter-frame projection |
-| L4 | [l4_evolution.py](../../src/l4/l4_evolution.py) | Net annihilation / concentrated phenomena / Imperfection Theorem (cross-frame read-only observation) |
+| L0 | [l0_core.py](../../openSPUM/src/l0/l0_core.py) | Current implementation of the five-step frame rules: propose → resolve → commit → prune, double buffering, deterministic negotiation style |
+| L1 | [l1_projection.py](../../openSPUM/src/l1/l1_projection.py) | id + rotation system → network / local frame / σ / angle defect / crystallites |
+| L2 | [l2_projection.py](../../openSPUM/src/l2/l2_projection.py) | Embedded projection (coordinates) |
+| L3 | [l3_projection.py](../../openSPUM/src/l3/l3_projection.py) | Inter-frame projection |
+| L4 | [l4_evolution.py](../../openSPUM/src/l4/l4_evolution.py) | Net annihilation / concentrated phenomena / Imperfection Theorem (cross-frame read-only observation) |
 
 **v1 Archive Reference** (not used directly, only for derivation reference):
-- [Phase_3/icosahedron_derivation.py](../../_archive_v1/Phase_3/icosahedron_derivation.py) — Regular icosahedron geometry → shell capacity 2n² derivation
-- [Phase_4/simulate_hydrogen.py](../../_archive_v1/Phase_4/simulate_hydrogen.py) — Hydrogen atom simulation prototype
+- [Phase_3/icosahedron_derivation.py](../../openSPUM/_archive_v1/Phase_3/icosahedron_derivation.py) — Regular icosahedron geometry → shell capacity 2n² derivation
+- [Phase_4/simulate_hydrogen.py](../../openSPUM/_archive_v1/Phase_4/simulate_hydrogen.py) — Hydrogen atom simulation prototype
 
 **SPUM-Graph Theory Verification Tools** (located at `src/spum_graph/`):
-- [graph.py](../../../src/spum_graph/graph.py) — FrameGraph, Python implementation of 5 axioms
-- [dangling.py](../../../src/spum_graph/dangling.py) — DanglingDetector, dangling-end detection + two-tier closure criterion
-- [handshaking.py](../../../src/spum_graph/handshaking.py) — HandshakingVerifier, handshake lemma + Euler characteristic + Σ(6−deg)
+- [graph.py](../../src/spum_graph/graph.py) — FrameGraph, Python implementation of 5 axioms
+- [dangling.py](../../src/spum_graph/dangling.py) — DanglingDetector, dangling-end detection + two-tier closure criterion
+- [handshaking.py](../../src/spum_graph/handshaking.py) — HandshakingVerifier, handshake lemma + Euler characteristic + Σ(6−deg)
 
 ---
 
@@ -265,7 +265,7 @@ Change acceptance criteria to "Does the specific deviation predicted by SPUM eme
 ❌ **Wrong practice**
 "The four-ball closure constructor is the starting point of SPUM's geometric construction."
 
-Why it's wrong: SPUM's core axiom explicitly states that the **first "atom" is the 12-crystallite closure (icosahedron)**, not four balls. Four balls are only an **intermediate derivation step** in [Phase_3/icosahedron_derivation.py](../../_archive_v1/Phase_3/icosahedron_derivation.py), not the end structure. Treating "four-ball" as SPUM's core is equating scaffolding with the building itself.
+Why it's wrong: SPUM's core axiom explicitly states that the **first "atom" is the 12-crystallite closure (icosahedron)**, not four balls. Four balls are only an **intermediate derivation step** in [Phase_3/icosahedron_derivation.py](../../openSPUM/_archive_v1/Phase_3/icosahedron_derivation.py), not the end structure. Treating "four-ball" as SPUM's core is equating scaffolding with the building itself.
 
 ✅ **Correct practice**
 - Starting point: Minimal seed (tetra / patch / icosa)
@@ -342,8 +342,8 @@ Use relation-based metrics:
 Why it's wrong: SPUM methodology explicitly states that **code is the theory itself**. L0-L4 are already the current implementation of the theory; rebuilding from scratch equates to rewriting the theory and is highly prone to introducing pollution from old paradigms (e.g., Node class implies entity priority over relations).
 
 ✅ **Correct Approach**
-- Extend based on [l0_core.py](../../src/l0/l0_core.py)'s `FrameGraph`
-- Use the 5 axiom native implementation in [src/spum_graph/graph.py](../../../src/spum_graph/graph.py)
+- Extend based on [l0_core.py](../../openSPUM/src/l0/l0_core.py)'s `FrameGraph`
+- Use the 5 axiom native implementation in [src/spum_graph/graph.py](../../src/spum_graph/graph.py)
 - Add new modules as inter-layer bridges for L0-L4, not starting from scratch
 
 **Self-check**: Does the new code import `l0_core`, `FrameGraph`, or `HandshakingVerifier`? If not, it fails.
@@ -360,7 +360,7 @@ Why it's wrong: SPUM methodology explicitly states that **code is the theory its
 Why it's wrong: SPUM-Graph Theory v2.0 differs from classical graph theory by "5 axioms + 12 systemic distinctions" — isolated nodes do not exist / dangling ends cannot be eliminated / graph states are frame snapshots / perfection is unattainable / local closure is sufficient. NetworkX contains assumptions from classical graph theory (isolated nodes can exist, graphs are global objects), directly using it would bring in old paradigms.
 
 ✅ **Correct Approach**
-- Use [src/spum_graph/graph.py](../../../src/spum_graph/graph.py)'s `FrameGraph` (native implementation of the 5 axioms)
+- Use [src/spum_graph/graph.py](../../src/spum_graph/graph.py)'s `FrameGraph` (native implementation of the 5 axioms)
 - Store using a sequence of frame snapshots (one per frame), not "global graph databases"
 - If NetworkX must be used as an algorithm library, convert it to `FrameGraph` only at the boundary, not as the ontic layer
 
